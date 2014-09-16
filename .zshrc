@@ -200,6 +200,7 @@ alias ctree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias drmi="docker images | awk '{ print $3 }' | xargs docker rmi"
 alias drm="docker ps -aq | xargs docker rm"
 alias dst="docker ps -q | xargs docker stop"
+alias npmg="npm list -g --depth=0"
 # }}}
 
 # Website Deployment {{{
