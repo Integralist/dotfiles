@@ -1,0 +1,35 @@
+*vim-clojure-highlight.txt*	Highlight Clojure ns references
+
+Requires |fireplace|.
+
+On |BufRead| of a *.clj file, |b:clojure_syntax_keywords| is populated with a
+dictionary of local, referred, and aliased vars keyed by identifier type. The
+syntax for the current buffer is then reloaded.
+
+|b:clojure_syntax_without_core_keywords| is also set, which means that vars
+excluded from clojure.core are no longer highlighted in the buffer.
+
+This will fail silently if fireplace is unable to connect to an nREPL server.
+
+					*:ClojureHighlightReferences*
+
+Manually trigger highlighting for the current buffer. Useful in mappings.
+
+					*:ToggleClojureHighlightReferences*
+
+Toggle highlighting globally.
+
+					*g:clojure_highlight_local_vars*
+
+Local public vars are highlighted by default. To disable:
+>
+	let g:clojure_highlight_local_vars = 0
+<
+					*g:clojure_highlight_references*
+
+vim-clojure-highlight can be disabled by default:
+>
+	let g:clojure_highlight_references = 0
+<
+
+ vim:tw=78:noet:sw=8:sts=8:ts=8:ft=help:norl:
