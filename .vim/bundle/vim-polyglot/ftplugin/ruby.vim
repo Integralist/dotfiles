@@ -28,7 +28,7 @@ if exists("loaded_matchit") && !exists("b:match_words")
 	\ ':' .
 	\ '\<\%(else\|elsif\|ensure\|when\|rescue\|break\|redo\|next\|retry\)\>' .
 	\ ':' .
-	\ '\<end\>' .
+        \ '\%(^\|[^.\:@$]\)\@<=\<end\:\@!\>' .
 	\ ',{:},\[:\],(:)'
 
   let b:match_skip =
@@ -69,8 +69,8 @@ endif
 
 function! s:query_path(root)
   let code = "print $:.join %q{,}"
-  if &shell =~# 'sh' && $PATH !~# '\s'
-    let prefix = 'env PATH='.$PATH.' '
+  if &shell =~# 'sh'
+    let prefix = 'env PATH='.shellescape($PATH).' '
   else
     let prefix = ''
   endif
@@ -190,15 +190,16 @@ if !exists("g:no_plugin_maps") && !exists("g:no_ruby_maps")
   endif
 
   if maparg("\<C-]>",'n') == ''
-    nnoremap <silent> <buffer> <C-]>       :<C-U>exe  v:count1."tag <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> g<C-]>      :<C-U>exe         "tjump <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> g]          :<C-U>exe       "tselect <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W>]      :<C-U>exe v:count1."stag <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W><C-]>  :<C-U>exe v:count1."stag <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W>g<C-]> :<C-U>exe        "stjump <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W>g]     :<C-U>exe      "stselect <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W>}      :<C-U>exe          "ptag <C-R>=RubyCursorIdentifier()<CR>"<CR>
-    nnoremap <silent> <buffer> <C-W>g}     :<C-U>exe        "ptjump <C-R>=RubyCursorIdentifier()<CR>"<CR>
+    cnoremap <buffer> <SID>foldopen <Bar>if &foldopen =~# 'tag'<Bar>exe 'norm! zv'<Bar>endif
+    nnoremap <silent> <script> <buffer> <C-]>       :<C-U>exe  v:count1."tag <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> g<C-]>      :<C-U>exe         "tjump <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> g]          :<C-U>exe       "tselect <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> <C-W>]      :<C-U>exe v:count1."stag <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> <C-W><C-]>  :<C-U>exe v:count1."stag <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> <C-W>g<C-]> :<C-U>exe        "stjump <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> <C-W>g]     :<C-U>exe      "stselect <C-R>=RubyCursorIdentifier()<CR>"<SID>foldopen<CR>
+    nnoremap <silent> <script> <buffer> <C-W>}      :<C-U>exe          "ptag <C-R>=RubyCursorIdentifier()<CR>"<CR>
+    nnoremap <silent> <script> <buffer> <C-W>g}     :<C-U>exe        "ptjump <C-R>=RubyCursorIdentifier()<CR>"<CR>
     let b:undo_ftplugin = b:undo_ftplugin
           \."| sil! exe 'nunmap <buffer> <C-]>'| sil! exe 'nunmap <buffer> g<C-]>'| sil! exe 'nunmap <buffer> g]'"
           \."| sil! exe 'nunmap <buffer> <C-W>]'| sil! exe 'nunmap <buffer> <C-W><C-]>'"
@@ -276,12 +277,12 @@ function! RubyBalloonexpr()
 endfunction
 
 function! s:searchsyn(pattern,syn,flags,mode)
+  let cnt = v:count1
   norm! m'
   if a:mode ==# 'v'
     norm! gv
   endif
   let i = 0
-  let cnt = v:count ? v:count : 1
   while i < cnt
     let i = i + 1
     let line = line('.')

@@ -56,7 +56,10 @@ An ELEMENT always includes any leading MACRO CHARACTERS.
 ## Mappings
 
 All default mappings can be changed via the `g:sexp_mappings` variable. Every
-mapping is bound to a `<Plug>` mapping, which may be used for any purpose.
+mapping is available as a `<Plug>` mapping, which may be used for any purpose.
+
+Users who desire more explicit, opt-in configuration should refer to
+`:help sexp-explicit-mappings`.
 
 Comprehensive documentation is available at `:help vim-sexp`. The following is
 a brief summary.
@@ -118,7 +121,7 @@ current COMPOUND FORM or ELEMENT.
 
 The last two commands are also known as `barfage` and `slurpage` in [paredit.el][].
 
-### Cursor Insertion (normal, visual)
+### Cursor Insertion (normal)
 
 * `<LocalLeader>h` inserts the cursor at the head of the current COMPOUND FORM
 * `<LocalLeader>l` inserts the cursor at the tail of the current COMPOUND FORM

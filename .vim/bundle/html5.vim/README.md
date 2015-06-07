@@ -1,6 +1,6 @@
 # html5.vim
 
-HTML5 + inline SVG omnicomplete funtion, indent and syntax for Vim.
+HTML5 + inline SVG omnicomplete function, indent and syntax for Vim.
 Based on the default htmlcomplete.vim.
 
 ## Feature
@@ -17,6 +17,10 @@ Use [Vundle][] or [pathogen.vim][] is recommended.
 
 [Vundle]:https://github.com/gmarik/vundle
 [pathogen.vim]:https://github.com/tpope/vim-pathogen
+
+For Vundle:
+
+    Plugin 'othree/html5.vim'
 
 ## Configure
 
@@ -79,7 +83,7 @@ THE SOFTWARE.
 
 [html5.vim]:http://www.vim.org/scripts/script.php?script_id=3236
 
-[microdata]:http://dev.w3.org/html5/md/
+[microdata]:http://www.w3.org/TR/microdata/
 [RDFa]:http://www.w3.org/TR/rdfa-syntax/
 [aria]:http://www.w3.org/TR/wai-aria/
 

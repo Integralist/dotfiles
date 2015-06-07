@@ -28,7 +28,7 @@ servers = (
     chatnet = "bbc";
     port = "6697";
     use_ssl = "yes";
-    ssl_cert = "/Users/markmcdonnell/Box Sync/Work/BBC/Certificates/Certificate.pem";
+    ssl_cert = "/home/integralist/.pki/bbc/Certificate.pem";
     ssl_verify = "yes";
     autoconnect = "yes";
   }

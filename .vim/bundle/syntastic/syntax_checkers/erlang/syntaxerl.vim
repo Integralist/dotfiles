@@ -9,7 +9,7 @@
 "             See http://sam.zoy.org/wtfpl/COPYING for more details.
 "============================================================================
 
-if exists("g:loaded_syntastic_erlang_syntaxerl_checker")
+if exists('g:loaded_syntastic_erlang_syntaxerl_checker')
     finish
 endif
 
@@ -38,3 +38,5 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
+
+" vim: set sw=4 sts=4 et fdm=marker:

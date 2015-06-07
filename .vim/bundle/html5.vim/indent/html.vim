@@ -36,7 +36,7 @@ let b:did_indent = 1
 
 " [-- local settings (must come before aborting the script) --]
 setlocal indentexpr=HtmlIndentGet(v:lnum)
-setlocal indentkeys=o,O,*<Return>,<>>,{,}
+setlocal indentkeys=o,O,*<Return>,<>>,{,},!^F
 
 
 let s:tags = []
@@ -61,6 +61,8 @@ call add(s:tags, 'dfn')
 call add(s:tags, 'dir')
 call add(s:tags, 'div')
 call add(s:tags, 'dl')
+call add(s:tags, 'dt')
+call add(s:tags, 'dd')
 call add(s:tags, 'em')
 call add(s:tags, 'fieldset')
 call add(s:tags, 'font')
@@ -125,10 +127,14 @@ call add(s:tags, 'meter')
 call add(s:tags, 'nav')
 call add(s:tags, 'output')
 call add(s:tags, 'progress')
+call add(s:tags, 'picture')
+call add(s:tags, 'rb')
 call add(s:tags, 'rp')
 call add(s:tags, 'rt')
+call add(s:tags, 'rtc')
 call add(s:tags, 'ruby')
 call add(s:tags, 'section')
+call add(s:tags, 'source')
 call add(s:tags, 'summary')
 call add(s:tags, 'time')
 call add(s:tags, 'video')
@@ -185,6 +191,7 @@ if exists('g:html_exclude_tags')
     endfor
 endif
 let s:html_indent_tags = join(s:tags, '\|')
+let s:html_indent_tags = s:html_indent_tags.'\|\w\+\(-\w\+\)\+'
 if exists('g:html_indent_tags')
     let s:html_indent_tags = s:html_indent_tags.'\|'.g:html_indent_tags
 endif
@@ -279,7 +286,7 @@ fun! HtmlIndentGet(lnum)
     if   0 < searchpair(js, '', jse, 'nWb')
     \ && 0 < searchpair(js, '', jse, 'nW')
         " we're inside javascript
-        if getline(searchpair(js, '', '</script>', 'nWb')) !~ '<script [^>]*type=["'']\?text\/\(html\|template\)'
+        if getline(searchpair(js, '', '</script>', 'nWb')) !~ '<script [^>]*type=["'']\?text\/\(html\|\(ng-\)\?template\)'
         \ && getline(lnum) !~ js && getline(a:lnum) !~ jse
             if restore_ic == 0
               setlocal noic

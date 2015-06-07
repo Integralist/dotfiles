@@ -2,10 +2,11 @@
 
 Usage                                          |gist-vim-usage| 
 Tips                                           |gist-vim-tips| 
-Requirements                                   |gist-vim-requirements| 
 License                                        |gist-vim-license| 
 Install                                        |gist-vim-install| 
+Requirements                                   |gist-vim-requirements| 
 Setup                                          |gist-vim-setup| 
+FAQ                                            |gist-vim-faq| 
 
 This is a vimscript for creating gists (http://gist.github.com) 
 
@@ -18,7 +19,7 @@ USAGE                                                 *:Gist* *gist-vim-usage*
 
     :Gist
 <
-- Post selected text to gist, using defualt privacy option.
+- Post selected text to gist, using default privacy option.
   This applies to all permutations listed below (except multi). >
 
     :'<,'>Gist
@@ -105,6 +106,10 @@ USAGE                                                 *:Gist* *gist-vim-usage*
 >
     :Gist -ls
 <
+- Open the gist on browser after you post or update it.
+>
+    :Gist -b
+<
 ==============================================================================
 TIPS                                                           *gist-vim-tips*
 
@@ -142,9 +147,22 @@ If you want to show your private gists with ":Gist -l": >
 
     let g:gist_show_privates = 1
 <
+If you want your gist to be private by default: >
+
+    let g:gist_post_private = 1
+<
+If you want your gist to be anonymous by default: >
+
+    let g:gist_post_anonymous = 1
+<
 If you want to edit all files for gists containing more than one: >
 
     let g:gist_get_multiplefile = 1
+<
+
+If you want to use on GitHub Enterprise: >
+
+    let g:gist_api_url = 'http://your-github-enterprise-domain/api/v3'
 <
 
 If you want to update a gist, embed >
@@ -155,12 +173,17 @@ in your local file, then call >
 
     :Gist
 >
-==============================================================================
-REQUIREMENTS                                           *gist-vim-requirements*
 
-  - curl command (http://curl.haxx.se/)
-  - webapi-vim (https://github.com/mattn/webapi-vim)
-  - and, if you want to use your git profile, the git command-line client.
+If you want to update a gist when only |:w!|: >
+
+    " :w and :w! update a gist.
+    let g:gist_update_on_write = 1
+
+    " Only :w! updates a gist.
+    let g:gist_update_on_write = 2
+>
+All other values are treated as 1.
+This variable's value is 1 by default.
 
 ==============================================================================
 LICENSE                                                     *gist-vim-license*
@@ -191,32 +214,53 @@ LICENSE                                                     *gist-vim-license*
 ==============================================================================
 INSTALL                                                     *gist-vim-install*
 
-Copy gist.vim to your plugin directory.
-
-gist.vim will create a curl cookie-jar file in your runtimepath.
+Copy following files into your plugin directory.
 
 rtp:
+  - autoload/gist.vim
   - plugin/gist.vim
-  - cookies/github
 
-If you want to uninstall gist.vim, remember to also remove "cookies/github".
+If you want to uninstall gist.vim, remember to also remove `~/.gist-vim`.
+
+You need to install webapi-vim also:
+
+  http://www.vim.org/scripts/script.php?script_id=4019
+
+If you want to use latest one:
+
+  https://github.com/mattn/webapi-vim
+
+==============================================================================
+REQUIREMENTS                                           *gist-vim-requirements*
+
+  - curl command (http://curl.haxx.se/)
+  - webapi-vim (https://github.com/mattn/webapi-vim)
+  - and, if you want to use your git profile, the git command-line client.
 
 ==============================================================================
 SETUP                                                       *gist-vim-setup*
 
-This plugin uses github API v3. Setting value is stored in `~/.gist.vim`.
+This plugin uses GitHub API v3. Setting value is stored in `~/.gist-vim`.
 gist-vim have two ways to access APIs.
 
-First, you need to set your Github username in global git config:
+First, you need to set your GitHub username in global git config:
 >
     $ git config --global github.user Username
 <
 Then, gist.vim will ask for your password to create an authorization when you
 first use it.  The password is not stored and only the OAuth access token will
 be kept for later use.  You can revoke the token at any time from the list of
-"Authorized applications" on Github's "Account Settings" page.
+"Authorized applications" on GitHub's "Account Settings" page.
 (https://github.com/settings/applications)
 
+If you have two-factor authentication enabled on GitHub, you'll see the message
+"Must specify two-factor authentication OTP code." In this case, you need to
+create a "Personal Access Token" on GitHub's "Account Settings" page
+(https://github.com/settings/applications) and place it in a file 
+named ~/.gist-vim like this:
+>
+    token xxxxx
+<
 If you happen to have your password already written in ~/.gitconfig like
 below:
 >
@@ -228,6 +272,14 @@ Then, add following into your ~/.vimrc
     let g:gist_use_password_in_gitconfig = 1
 <
 This is not secure at all, so strongly discouraged.
+
+NOTE: the username is optional if you only send anonymous gists.
+
+==============================================================================
+FAQ                                                           *gist-vim-faq*
+
+Q. :Gist give Forbidden error
+A. Try to delete ~/.gist-vim. And authenticate again.
 
 ==============================================================================
 THANKS                                                     *gist-vim-thanks*

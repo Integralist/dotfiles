@@ -17,8 +17,8 @@ let s:list_envs = ['itemize', 'enumerate', 'description']
 " indent on \left( and on \(, but not on (
 " indent on \left[ and on \[, but not on [
 " indent on \left\{ and on {, but not on \{
-let s:open_pat = '\\\@<!\%(\\begin\|\\left\|\\(\|\\\[\|{\)'
-let s:close_pat = '\\\@<!\%(\\end\|\\right\|\\)\|\\\]\|}\)'
+let s:open_pat = '\\\@<!\%(\\begin\|\\left\a\@!\|\\(\|\\\[\|{\)'
+let s:close_pat = '\\\@<!\%(\\end\|\\right\a\@!\|\\)\|\\\]\|}\)'
 let s:list_open_pat = '\\\@<!\\begin{\%(' . join(s:list_envs, '\|') . '\)}'
 let s:list_close_pat	= '\\\@<!\\end{\%(' . join(s:list_envs, '\|') . '\)}'
 
@@ -89,5 +89,48 @@ function! LatexBox_TexIndent()
 	return indent(lnum_prev) + n * &sw
 endfunction
 " }}}
+
+" Restore cursor position, window position, and last search after running a
+" command.
+function! Latexbox_CallIndent()
+  " Save the current cursor position.
+  let cursor = getpos('.')
+
+  " Save the current window position.
+  normal! H
+  let window = getpos('.')
+  call setpos('.', cursor)
+
+  " Get first non-whitespace character of current line.
+  let line_start_char = matchstr(getline('.'), '\S')
+
+  " Get initial tab position.
+  let initial_tab = stridx(getline('.'), line_start_char)
+
+  " Execute the command.
+  execute 'normal! =='
+
+  " Get tab position difference.
+  let difference = stridx(getline('.'), line_start_char) - initial_tab
+
+  " Set new cursor Y position based on calculated difference.
+  let cursor[2] = cursor[2] + difference
+
+  " Restore the previous window position.
+  call setpos('.', window)
+  normal! zt
+
+  " Restore the previous cursor position.
+  call setpos('.', cursor)
+endfunction
+
+" autocmd to call indent after completion
+" 7.3.598
+if v:version > 703 || (v:version == 703 && has('patch598'))
+	augroup LatexBox_Completion
+		autocmd!
+		autocmd CompleteDone <buffer> call Latexbox_CallIndent()
+	augroup END
+endif
 
 " vim:fdm=marker:ff=unix:noet:ts=4:sw=4

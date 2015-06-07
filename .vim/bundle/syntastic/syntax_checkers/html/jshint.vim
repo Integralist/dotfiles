@@ -14,28 +14,22 @@ if exists('g:loaded_syntastic_html_jshint_checker')
 endif
 let g:loaded_syntastic_html_jshint_checker = 1
 
-if !exists('g:syntastic_jshint_exec')
-    let g:syntastic_jshint_exec = 'jshint'
-endif
-
-if !exists('g:syntastic_html_jshint_conf')
-    let g:syntastic_html_jshint_conf = ''
-endif
-
 let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_html_jshint_IsAvailable() dict
-    let exe = expand(g:syntastic_jshint_exec)
-    return executable(exe) &&
-        \ syntastic#util#versionIsAtLeast(syntastic#util#getVersion(exe . ' --version'), [2,4])
+    call syntastic#log#deprecationWarn('jshint_exec', 'html_jshint_exec')
+    if !executable(self.getExec())
+        return 0
+    endif
+    return syntastic#util#versionIsAtLeast(self.getVersion(), [2, 4])
 endfunction
 
 function! SyntaxCheckers_html_jshint_GetLocList() dict
-    let makeprg = self.makeprgBuild({
-        \ 'exe': expand(g:syntastic_jshint_exec),
-        \ 'args': (g:syntastic_html_jshint_conf != '' ? '--config ' . g:syntastic_html_jshint_conf : ''),
-        \ 'args_after': '--verbose --extract always' })
+    call syntastic#log#deprecationWarn('html_jshint_conf', 'html_jshint_args',
+        \ "'--config ' . syntastic#util#shexpand(OLD_VAR)")
+
+    let makeprg = self.makeprgBuild({ 'args_after': '--verbose --extract always' })
 
     let errorformat = '%A%f: line %l\, col %v\, %m \(%t%*\d\)'
 
@@ -53,4 +47,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:

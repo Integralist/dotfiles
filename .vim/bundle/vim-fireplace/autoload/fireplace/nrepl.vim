@@ -34,14 +34,24 @@ function! fireplace#nrepl#for(transport) abort
   let client.transport = a:transport
   let client.session = client.process({'op': 'clone', 'session': 0})['new-session']
   let client.describe = client.process({'op': 'describe', 'verbose?': 1})
-  if client.describe.versions.nrepl.major == 0 &&
+  if get(client.describe.versions.nrepl, 'major', -1) == 0 &&
         \ client.describe.versions.nrepl.minor < 2
     throw 'nREPL: 0.2.0 or higher required'
   endif
-  if client.has_op('classpath')
+  " Handle boot, which sets a fake.class.path entry
+  let response = client.process({'op': 'eval', 'code':
+        \ '[(System/getProperty "path.separator") (System/getProperty "fake.class.path")]', 'session': ''})
+  let cpath = response.value[-1][5:-2]
+  if cpath !=# 'nil'
+    let cpath = eval(cpath)
+    if !empty(cpath)
+      let client._path = split(cpath, response.value[-1][2])
+    endif
+  endif
+  if !has_key(client, '_path') && client.has_op('classpath')
     let response = client.message({'op': 'classpath'})[0]
-    if type(get(response, 'value')) == type([])
-      let client._path = response.value
+    if type(get(response, 'classpath')) == type([])
+      let client._path = response.classpath
     endif
   endif
   if !has_key(client, '_path')
@@ -147,13 +157,16 @@ function! s:nrepl_eval(expr, ...) dict abort
   endif
   try
     let response = self.process(msg)
-  catch /^Vim:Interrupt$/
-    if has_key(msg, 'session')
-      call self.message({'op': 'interrupt', 'session': msg.session, 'interrupt-id': msg.id}, 'ignore')
+  finally
+    if !exists('response')
+      let session = get(msg, 'session', self.session)
+      if !empty(session)
+        call self.message({'op': 'interrupt', 'session': session, 'interrupt-id': msg.id}, 'ignore')
+      endif
+      throw 'Clojure: Interrupt'
     endif
-    throw 'Clojure: Interrupt'
   endtry
-  if has_key(response, 'ns') && !has_key(options, 'ns')
+  if has_key(response, 'ns') && empty(get(options, 'ns'))
     let self.ns = response.ns
   endif
 
@@ -175,7 +188,12 @@ function! s:extract_last_stacktrace(nrepl, session) abort
     endif
   endif
   let format_st = '(symbol (str "\n\b" (apply str (interleave (repeat "\n") (map str (.getStackTrace *e)))) "\n\b\n"))'
-  let stacktrace = split(get(split(a:nrepl.process({'op': 'eval', 'code': '['.format_st.' *3 *2 *1]', 'ns': 'user', 'session': a:session}).value[0], "\n\b\n"), 1, ""), "\n")
+  let response = a:nrepl.process({'op': 'eval', 'code': '['.format_st.' *3 *2 *1]', 'ns': 'user', 'session': a:session})
+  try
+    let stacktrace = split(get(split(response.value[0], "\n\b\n"), 1, ""), "\n")
+  catch
+    throw string(response)
+  endtry
   call a:nrepl.message({'op': 'eval', 'code': '(*1 1)', 'ns': 'user', 'session': a:session})
   call a:nrepl.message({'op': 'eval', 'code': '(*2 2)', 'ns': 'user', 'session': a:session})
   call a:nrepl.message({'op': 'eval', 'code': '(*3 3)', 'ns': 'user', 'session': a:session})
@@ -189,6 +207,9 @@ function! s:nrepl_prepare(msg) dict abort
   let msg = copy(a:msg)
   if !has_key(msg, 'id')
     let msg.id = fireplace#nrepl#next_id()
+  endif
+  if empty(get(msg, 'ns', 1))
+    unlet msg.ns
   endif
   if empty(get(msg, 'session', 1))
     unlet msg.session

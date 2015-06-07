@@ -81,6 +81,64 @@ function! fireplace#ns_complete(A, L, P) abort
   return filter(map(matches, 's:to_ns(v:val)'), 'a:A ==# "" || a:A ==# v:val[0 : strlen(a:A)-1]')
 endfunction
 
+let s:short_types = {
+      \ 'function': 'f',
+      \ 'macro': 'm',
+      \ 'var': 'v',
+      \ 'special-form': 's',
+      \ 'class': 'c',
+      \ 'keyword': 'k',
+      \ 'local': 'l',
+      \ 'namespace': 'n',
+      \ 'field': 'i',
+      \ 'method': 'f',
+      \ 'static-field': 'i',
+      \ 'static-method': 'f',
+      \ 'resource': 'r'
+      \ }
+
+function! s:candidate(val) abort
+  let type = get(a:val, 'type', '')
+  let arglists = get(a:val, 'arglists', [])
+  return {
+        \ 'word': get(a:val, 'candidate'),
+        \ 'kind': get(s:short_types, type, type),
+        \ 'info': get(a:val, 'doc', ''),
+        \ 'menu': empty(arglists) ? '' : '(' . join(arglists, ' ') . ')'
+        \ }
+endfunction
+
+function! s:get_complete_context() abort
+  " Find toplevel form
+  " If cursor is on start parenthesis we don't want to find the form
+  " If cursor is on end parenthesis we want to find the form
+  let [line1, col1] = searchpairpos('(', '', ')', 'Wrnb', g:fireplace#skip)
+  let [line2, col2] = searchpairpos('(', '', ')', 'Wrnc', g:fireplace#skip)
+
+  if (line1 == 0 && col1 == 0) || (line2 == 0 && col2 == 0)
+    return ""
+  endif
+
+  if line1 == line2
+    let expr = getline(line1)[col1-1 : col2-1]
+  else
+    let expr = getline(line1)[col1-1 : -1] . ' '
+          \ . join(getline(line1+1, line2-1), ' ')
+          \ . getline(line2)[0 : col2-1]
+  endif
+
+  " Calculate the position of cursor inside the expr
+  if line1 == line('.')
+    let p = col('.') - col1
+  else
+    let p = strlen(getline(line1)[col1-1 : -1])
+          \ + strlen(join(getline(line1 + 1, line('.') - 1), ' '))
+          \ + col('.')
+  endif
+
+  return strpart(expr, 0, p) . '__prefix__' . strpart(expr, p)
+endfunction
+
 function! fireplace#omnicomplete(findstart, base) abort
   if a:findstart
     let line = getline('.')[0 : col('.')-2]
@@ -89,12 +147,21 @@ function! fireplace#omnicomplete(findstart, base) abort
     try
 
       if fireplace#op_available('complete')
-        let response = fireplace#message({'op': 'complete', 'symbol': a:base})
-        if type(get(response[0], 'value')) == type([])
-          if type(get(response[0].value, 0)) == type([])
-            return map(response[0].value[0], '{"word": v:val}')
-          elseif type(get(response[0].value, 0)) == type('')
-            return map(response[0].value, '{"word": v:val}')
+        let response = fireplace#message({
+              \ 'op': 'complete',
+              \ 'symbol': a:base,
+              \ 'extra-metadata': ['arglists', 'doc'],
+              \ 'context': s:get_complete_context()
+              \ })
+        let trans = '{"word": (v:val =~# ''[./]'' ? "" : matchstr(a:base, ''^.\+/'')) . v:val}'
+        let value = get(response[0], 'value', get(response[0], 'completions'))
+        if type(value) == type([])
+          if type(get(value, 0)) == type({})
+            return map(value, 's:candidate(v:val)')
+          elseif type(get(value, 0)) == type([])
+            return map(value[0], trans)
+          elseif type(get(value, 0)) == type('')
+            return map(value, trans)
           else
             return []
           endif
@@ -226,9 +293,9 @@ function! s:repl.piggieback(arg, ...) abort
   elseif a:arg =~# '^\d\{1,5}$'
     call connection.eval("(require 'cljs.repl.browser)")
     let port = matchstr(a:arg, '^\d\{1,5}$')
-    let arg = ' :repl-env (cljs.repl.browser/repl-env :port '.port.')'
+    let arg = ' (cljs.repl.browser/repl-env :port '.port.')'
   else
-    let arg = ' :repl-env ' . a:arg
+    let arg = ' ' . a:arg
   endif
   let response = connection.eval('(cemerick.piggieback/cljs-repl'.arg.')')
 
@@ -523,7 +590,7 @@ function! fireplace#platform(...) abort
 
   let portfile = findfile('.nrepl-port', '.;')
   if !empty(portfile)
-    call fireplace#register_port_file(portfile, fnamemodify(portfile, ':h'))
+    call fireplace#register_port_file(portfile, fnamemodify(portfile, ':p:h'))
   endif
   silent doautocmd User FireplacePreConnect
 
@@ -757,7 +824,7 @@ function! fireplace#evalparse(expr, ...) abort
 endfunction
 
 function! fireplace#query(expr, ...) abort
-  return firepalce#evalparse(a:expr, a:0 ? a:1 : {})
+  return fireplace#evalparse(a:expr, a:0 ? a:1 : {})
 endfunction
 
 " Section: Quickfix
@@ -810,7 +877,7 @@ augroup END
 
 " Section: Eval
 
-let fireplace#skip = 'synIDattr(synID(line("."),col("."),1),"name") =~? "comment\\|string\\|char"'
+let fireplace#skip = 'synIDattr(synID(line("."),col("."),1),"name") =~? "comment\\|string\\|char\\|regexp"'
 
 function! s:opfunc(type) abort
   let sel_save = &selection
@@ -1048,7 +1115,7 @@ xnoremap <silent> <Plug>FireplaceMacroExpand  :<C-U>call <SID>macroexpandop(visu
 nnoremap <silent> <Plug>FireplaceCountMacroExpand  :<C-U>call <SID>macroexpandop(v:count)<CR>
 nnoremap <silent> <Plug>Fireplace1MacroExpand :<C-U>set opfunc=<SID>macroexpand1op<CR>g@
 xnoremap <silent> <Plug>Fireplace1MacroExpand :<C-U>call <SID>macroexpand1op(visualmode())<CR>
-nnoremap <silent> <Plug>Fireplace1MacroExpand :<C-U>call <SID>macroexpand1op(v:count)<CR>
+nnoremap <silent> <Plug>FireplaceCount1MacroExpand :<C-U>call <SID>macroexpand1op(v:count)<CR>
 
 nnoremap <silent> <Plug>FireplaceEdit   :<C-U>set opfunc=<SID>editop<CR>g@
 xnoremap <silent> <Plug>FireplaceEdit   :<C-U>call <SID>editop(visualmode())<CR>
@@ -1169,6 +1236,8 @@ function! fireplace#info(symbol) abort
     let response = fireplace#message({'op': 'info', 'symbol': a:symbol})[0]
     if type(get(response, 'value')) == type({})
       return response.value
+    elseif has_key(response, 'file')
+      return response
     endif
   endif
   let cmd =
@@ -1393,7 +1462,7 @@ endfunction
 
 function! s:K() abort
   let word = expand('<cword>')
-  let java_candidate = matchstr(word, '^\%(\w\+\.\)*\u\l\w*\ze\%(\.\|\/\w\+\)\=$')
+  let java_candidate = matchstr(word, '^\%(\w\+\.\)*\u\l[[:alnum:]$]*\ze\%(\.\|\/\w\+\)\=$')
   if java_candidate !=# ''
     return 'Javadoc '.java_candidate
   else
@@ -1434,6 +1503,7 @@ function! fireplace#capture_test_run(expr, ...) abort
         \ .    ' (:fail :error)'
         \ .    ' (let [{file :file line :line test :name} (meta (last clojure.test/*testing-vars*))]'
         \ .      ' (clojure.test/with-test-out'
+        \ .        ' (clojure.test/inc-report-counter (:type m))'
         \ .        ' (println (clojure.string/join "\t" [file line (name (:type m)) test]))'
         \ .        ' (when (seq clojure.test/*testing-contexts*) (println (clojure.test/testing-contexts-str)))'
         \ .        ' (when-let [message (:message m)] (println message))'

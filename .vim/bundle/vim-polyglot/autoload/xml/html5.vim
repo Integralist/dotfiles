@@ -324,7 +324,7 @@ endif
 
 " Ref: http://dev.w3.org/html5/markup/
 " Version: Draft 05 April 2011
-let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data', 'content', 'shadow']
+let phrasing_elements = ['a', 'em', 'strong', 'small', 'mark', 'abbr', 'dfn', 'i', 'b', 'u', 'code', 'var', 'samp', 'kbd', 'sup', 'sub', 'q', 'cite', 'span', 'bdo', 'bdi', 'br', 'wbr', 'ins', 'del', 'img', 'picture', 'embed', 'object', 'iframe', 'map', 'area', 'script', 'noscript', 'ruby', 'video', 'audio', 'input', 'textarea', 'select', 'button', 'label', 'output', 'datalist', 'keygen', 'progress', 'command', 'canvas', 'time', 'meter', 'data', 'content', 'shadow']
 
 let metadata_elements = ['link', 'style', 'meta', 'script', 'noscript', 'command']
 
@@ -342,7 +342,7 @@ let abutton_dec = 'details\\|embed\\|iframe\\|keygen\\|label\\|menu\\|select\\|t
 
 let g:xmldata_html5 = {
 \ 'vimxmlentities': ['AElig', 'Aacute', 'Acirc', 'Agrave', 'Alpha', 'Aring', 'Atilde', 'Auml', 'Beta', 'Ccedil', 'Chi', 'Dagger', 'Delta', 'ETH', 'Eacute', 'Ecirc', 'Egrave', 'Epsilon', 'Eta', 'Euml', 'Gamma', 'Iacute', 'Icirc', 'Igrave', 'Iota', 'Iuml', 'Kappa', 'Lambda', 'Mu', 'Ntilde', 'Nu', 'OElig', 'Oacute', 'Ocirc', 'Ograve', 'Omega', 'Omicron', 'Oslash', 'Otilde', 'Ouml', 'Phi', 'Pi', 'Prime', 'Psi', 'Rho', 'Scaron', 'Sigma', 'THORN', 'Tau', 'Theta', 'Uacute', 'Ucirc', 'Ugrave', 'Upsilon', 'Uuml', 'Xi', 'Yacute', 'Yuml', 'Zeta', 'aacute', 'acirc', 'acute', 'aelig', 'agrave', 'alefsym', 'alpha', 'amp', 'and', 'ang', 'apos', 'aring', 'asymp', 'atilde', 'auml', 'bdquo', 'beta', 'brvbar', 'bull', 'cap', 'ccedil', 'cedil', 'cent', 'chi', 'circ', 'clubs', 'cong', 'copy', 'crarr', 'cup', 'curren', 'dArr', 'dagger', 'darr', 'deg', 'delta', 'diams', 'divide', 'eacute', 'ecirc', 'egrave', 'empty', 'emsp', 'ensp', 'epsilon', 'equiv', 'eta', 'eth', 'euml', 'euro', 'exist', 'fnof', 'forall', 'frac12', 'frac14', 'frac34', 'frasl', 'gamma', 'ge', 'gt', 'hArr', 'harr', 'hearts', 'hellip', 'iacute', 'icirc', 'iexcl', 'igrave', 'image', 'infin', 'int', 'iota', 'iquest', 'isin', 'iuml', 'kappa', 'lArr', 'lambda', 'lang', 'laquo', 'larr', 'lceil', 'ldquo', 'le', 'lfloor', 'lowast', 'loz', 'lrm', 'lsaquo', 'lsquo', 'lt', 'macr', 'mdash', 'micro', 'middot', 'minus', 'mu', 'nabla', 'nbsp', 'ndash', 'ne', 'ni', 'not', 'notin', 'nsub', 'ntilde', 'nu', 'oacute', 'ocirc', 'oelig', 'ograve', 'oline', 'omega', 'omicron', 'oplus', 'or', 'ordf', 'ordm', 'oslash', 'otilde', 'otimes', 'ouml', 'para', 'part', 'permil', 'perp', 'phi', 'pi', 'piv', 'plusmn', 'pound', 'prime', 'prod', 'prop', 'psi', 'quot', 'rArr', 'radic', 'rang', 'raquo', 'rarr', 'rceil', 'rdquo', 'real', 'reg', 'rfloor', 'rho', 'rlm', 'rsaquo', 'rsquo', 'sbquo', 'scaron', 'sdot', 'sect', 'shy', 'sigma', 'sigmaf', 'sim', 'spades', 'sub', 'sube', 'sum', 'sup', 'sup1', 'sup2', 'sup3', 'supe', 'szlig', 'tau', 'there4', 'theta', 'thetasym', 'thinsp', 'thorn', 'tilde', 'times', 'trade', 'uArr', 'uacute', 'uarr', 'ucirc', 'ugrave', 'uml', 'upsih', 'upsilon', 'uuml', 'weierp', 'xi', 'yacute', 'yen', 'yuml', 'zeta', 'zwj', 'zwnj'],
-\ 'vimxmlroot': ['html'],
+\ 'vimxmlroot': ['html', 'head', 'body'] + flow_elements, 
 \ 'a': [
     \ filter(copy(flow_elements), "!(v:val =~ '". abutton_dec ."')"),
     \ extend(copy(global_attributes), {'name': [], 'href': [], 'target': [], 'rel': linktypes, 'hreflang': lang_tag, 'media': [], 'type': []}) 
@@ -545,7 +545,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'iframe': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', '']})
+    \ extend(copy(global_attributes), {'src': [], 'srcdoc': [], 'name': [], 'width': [], 'height': [], 'sandbox': ['allow-same-origin', 'allow-forms', 'allow-scripts'], 'seamless': ['seamless', '']})
 \ ],
 \ 'img': [
     \ [],
@@ -553,7 +553,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'input': [
     \ [],
-    \ extend(copy(global_attributes), {'type': ['text', 'password', 'checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'hidden', 'image', 'datetime', 'datetime-local', 'date', 'month', 'time', 'week', 'number', 'range', 'email', 'url', 'search', 'tel', 'coloe'], 'name': [], 'disabled': ['disabled', ''], 'form': [], 'maxlength': [], 'readonly': ['readonly', ''], 'size': [], 'value': [], 'autocomplete': ['on', 'off'], 'autofocus': ['autofocus', ''], 'list': [], 'pattern': [], 'required': ['required', ''], 'placeholder': [], 'checked': ['checked'], 'accept': [], 'multiple': ['multiple', ''], 'alt': [], 'src': [], 'height': [], 'width': [], 'min': [], 'max': [], 'step': [], 'formenctype': ['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'], 'formmethod': ['get', 'post', 'put', 'delete'], 'formtarget': [], 'formnovalidate': ['formnovalidate', '']})
+    \ extend(copy(global_attributes), {'type': ['text', 'password', 'checkbox', 'radio', 'button', 'submit', 'reset', 'file', 'hidden', 'image', 'datetime', 'datetime-local', 'date', 'month', 'time', 'week', 'number', 'range', 'email', 'url', 'search', 'tel', 'color'], 'name': [], 'disabled': ['disabled', ''], 'form': [], 'maxlength': [], 'readonly': ['readonly', ''], 'size': [], 'value': [], 'autocomplete': ['on', 'off'], 'autofocus': ['autofocus', ''], 'list': [], 'pattern': [], 'required': ['required', ''], 'placeholder': [], 'checked': ['checked'], 'accept': [], 'multiple': ['multiple', ''], 'alt': [], 'src': [], 'height': [], 'width': [], 'min': [], 'max': [], 'step': [], 'formenctype': ['application/x-www-form-urlencoded', 'multipart/form-data', 'text/plain'], 'formmethod': ['get', 'post', 'put', 'delete'], 'formtarget': [], 'formnovalidate': ['formnovalidate', '']})
 \ ],
 \ 'ins': [
     \ flow_elements,
@@ -601,7 +601,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'meta': [
     \ [],
-    \ extend(copy(global_attributes), {'name': [], 'http-equiv': ['refresh', 'default-style', 'content-type'], 'content': [], 'charset': charset})
+    \ extend(copy(global_attributes), {'name': ['application-name', 'author', 'description', 'generator', 'referrer', 'creator', 'googlebot', 'publisher', 'robots', 'slurp', 'viewport', 'theme-color'], 'http-equiv': ['refresh', 'default-style', 'content-type'], 'content': [], 'charset': charset})
 \ ],
 \ 'meter': [
     \ phrasing_elements,
@@ -643,6 +643,10 @@ let g:xmldata_html5 = {
     \ [],
     \ extend(copy(global_attributes), {'name': [], 'value': []})
 \ ],
+\ 'picture': [
+    \ flow_elements + ['source'],
+    \ global_attributes
+\ ],
 \ 'pre': [
     \ phrasing_elements,
     \ global_attributes
@@ -655,6 +659,10 @@ let g:xmldata_html5 = {
     \ phrasing_elements,
     \ extend(copy(global_attributes), {'cite': []})
 \ ],
+\ 'rb': [
+    \ phrasing_elements,
+    \ global_attributes
+\ ],
 \ 'rp': [
     \ phrasing_elements,
     \ global_attributes
@@ -663,8 +671,12 @@ let g:xmldata_html5 = {
     \ phrasing_elements,
     \ global_attributes
 \ ],
-\ 'ruby': [
+\ 'rtc': [
     \ phrasing_elements + ['rp', 'rt'],
+    \ global_attributes
+\ ],
+\ 'ruby': [
+    \ phrasing_elements + ['rb', 'rp', 'rt', 'rtc'],
     \ global_attributes
 \ ],
 \ 'samp': [
@@ -693,7 +705,7 @@ let g:xmldata_html5 = {
 \ ],
 \ 'source': [
     \ [],
-    \ extend(copy(global_attributes), {'src': [], 'type': [], 'media': []})
+    \ extend(copy(global_attributes), {'src': [], 'type': [], 'media': [], 'srcset': [], 'sizes': []})
 \ ],
 \ 'span': [
     \ phrasing_elements,

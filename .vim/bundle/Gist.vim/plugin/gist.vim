@@ -11,16 +11,13 @@ if &cp || (exists('g:loaded_gist_vim') && g:loaded_gist_vim)
 endif
 let g:loaded_gist_vim = 1
 
-if !exists('g:github_user') && !executable('git')
-  echohl ErrorMsg | echomsg "Gist: require 'git' command" | echohl None
-  finish
-endif
+function! s:CompleteArgs(arg_lead,cmdline,cursor_pos)
+    return ["-p", "-P", "-a", "-m", "-e", "-s", "-d", "+1", "-1", "-f", "-c", "-l", "-la", "-ls", "-b",
+                \ "--listall", "--liststar", "--list", "--multibuffer", "--private", "--public", "--anonymous", "--description", "--clipboard",
+                \ "--rawurl", "--delete", "--edit", "--star", "--unstar", "--fork", "--browser"
+                \ ]
+endfunction
 
-if !executable('curl')
-  echohl ErrorMsg | echomsg "Gist: require 'curl' command" | echohl None
-  finish
-endif
-
-command! -nargs=? -range=% Gist :call gist#Gist(<count>, <line1>, <line2>, <f-args>)
+command! -nargs=? -range=% -complete=customlist,s:CompleteArgs Gist :call gist#Gist(<count>, <line1>, <line2>, <f-args>)
 
 " vim:set et:

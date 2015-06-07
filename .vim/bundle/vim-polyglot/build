@@ -3,6 +3,7 @@
 set -E
 
 DIRS="syntax indent compiler autoload ftplugin ftdetect after/syntax after/indent after/ftplugin after/ftdetect"
+DIRS_BASIC="syntax indent ftdetect after/syntax after/indent after/ftdetect"
 
 download() {
   for pack in $1; do
@@ -21,17 +22,19 @@ extract() {
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    directories="DIRS$(printf "$pack" | cut -d ':' -f 3)"
+    subtree="$(printf "$pack" | cut -d ':' -f 4)"
     printf -- "- [$name](https://github.com/$path) ("
 
     subdirs=""
-    for subdir in $DIRS; do
-      if [ -d "$dir/$subdir" ]; then
+    for subdir in ${!directories}; do
+      if [ -d "${dir}${subtree:-/}${subdir}" ]; then
         base="$(basename "$subdir")"
         if [[ "$subdirs" != *"$base"* ]]; then
           subdirs="$subdirs, $base"
         fi
 
-        copy_dir "$dir" "$subdir"
+        copy_dir "${dir}${subtree}" "$subdir"
       fi
     done
 
@@ -43,8 +46,9 @@ extract() {
     name="$(printf "$pack" | cut -d ':' -f 1)"
     path="$(printf "$pack" | cut -d ':' -f 2)"
     dir="tmp/$(printf "$path" | cut -d '/' -f 2)"
+    subtree="$(printf "$pack" | cut -d ':' -f 4)"
 
-    if [ -d "$dir/plugin" ]; then
+    if [ -d "$dir${subtree:-/}plugin" ]; then
       printf "Possible error (plugin directory exists): $path\n"
     fi
   done
@@ -67,27 +71,33 @@ concat_ftdetect() {
 
 PACKS="
   arduino:sudar/vim-arduino-syntax
+  blade:xsbeats/vim-blade
   c++11:octol/vim-cpp-enhanced-highlight
   c/c++:vim-jp/cpp-vim
   clojure:guns/vim-clojure-static
   coffee-script:kchmck/vim-coffee-script
-  csv:chrisbra/csv.vim
+  css:JulesWang/css.vim
   cucumber:tpope/vim-cucumber
   dockerfile:honza/dockerfile.vim
   elixir:elixir-lang/vim-elixir
-  erlang:oscarh/vimerl
+  emberscript:heartsentwined/vim-ember-script
+  emblem:heartsentwined/vim-emblem
+  erlang:hcs42/vim-erlang-runtime
   git:tpope/vim-git
-  go:jnwhiteh/vim-golang
+  go:fatih/vim-go:_BASIC
   haml:tpope/vim-haml
   handlebars:mustache/vim-mustache-handlebars
   haskell:travitch/hasksyn
+  haxe:yaymukund/vim-haxe
   html5:othree/html5.vim
   jade:digitaltoad/vim-jade
+  jasmine:glanotte/vim-jasmine
   javascript:pangloss/vim-javascript
-  json:leshill/vim-json
+  json:sheerun/vim-json
   jst:briancollins/vim-jst
   latex:LaTeX-Box-Team/LaTeX-Box
   less:groenewege/vim-less
+  liquid:tpope/vim-liquid
   markdown:tpope/vim-markdown
   nginx:mutewinter/nginx.vim
   ocaml:jrk/vim-ocaml
@@ -95,9 +105,10 @@ PACKS="
   opencl:petRUShka/vim-opencl
   perl:vim-perl/vim-perl
   php:StanAngeloff/php.vim
-  puppet:ajf/puppet-vim
+  puppet:rodjek/vim-puppet
+  powershell:Persistent13/vim-ps1
   protobuf:uarun/vim-protobuf
-  python:vim-scripts/python.vim--Vasiliev
+  python:mitsuhiko/vim-python-combined
   r-lang:vim-scripts/R.vim
   rspec:sheerun/rspec.vim
   ruby:vim-ruby/vim-ruby
@@ -106,15 +117,21 @@ PACKS="
   scala:derekwyatt/vim-scala
   slim:slim-template/vim-slim
   stylus:wavded/vim-stylus
+  systemd:kurayama/systemd-vim-syntax
+  swift:toyamarinyon/vim-swift
   textile:timcharper/textile.vim
-  tmux:acustodioo/vim-tmux
+  tmux:tejr/vim-tmux
   tomdoc:duwanis/tomdoc.vim
   typescript:leafgarland/typescript-vim
   vbnet:vim-scripts/vbnet.vim
+  thrift:solarnz/thrift.vim
+  toml:cespare/vim-toml
   twig:beyondwords/vim-twig
   xls:vim-scripts/XSLT-syntax
   yard:sheerun/vim-yardoc
-  css-color:gorodinskiy/vim-coloresque
+  vala:tkztmk/vim-vala
+  vm:lepture/vim-velocity
+  css-color:ap/vim-css-color
 "
 
 rm -rf tmp

@@ -21,9 +21,10 @@
 syn keyword htmlTagName contained article aside audio canvas command
 syn keyword htmlTagName contained datalist details dialog embed figcaption figure footer
 syn keyword htmlTagName contained header hgroup keygen main mark meter menu nav output
-syn keyword htmlTagName contained progress ruby rt rp section source summary time track video data
+syn keyword htmlTagName contained progress ruby rt rp rb rtc section source summary time track video data
 syn keyword htmlTagName contained template content shadow
 syn keyword htmlTagName contained wbr bdi
+syn keyword htmlTagName contained picture
 
 " SVG tags
 " http://www.w3.org/TR/SVG/
@@ -42,7 +43,7 @@ syn keyword htmlTagName contained missing-glyph mpath
 syn keyword htmlTagName contained text textPath tref tspan vkern
 
 " Custom Element
-syn match htmlTagName contained "\<[a-z_]\+\(\-[a-z_]\+\)\+\>"
+syn match htmlTagName contained "\<[a-z_]\([a-z0-9_.]\+\)\?\(\-[a-z0-9_.]\+\)\+\>"
 
 " HTML 5 arguments
 " Core Attributes
@@ -68,17 +69,21 @@ syn keyword htmlArg contained autoplay preload controls loop poster media kind c
 " <form>, <input>, <button>
 syn keyword htmlArg contained form autocomplete autofocus list min max step
 syn keyword htmlArg contained formaction autofocus formenctype formmethod formtarget formnovalidate
-syn keyword htmlArg contained required placeholder
+syn keyword htmlArg contained required placeholder pattern
 " <command>, <details>, <time>
 syn keyword htmlArg contained label icon open datetime pubdate
 " <script>
 syn keyword htmlArg contained async
 " <content>
 syn keyword htmlArg contained select
+" <iframe>
+syn keyword htmlArg contained seamless srcdoc sandbox
+" <picture>
+syn keyword htmlArg contained srcset sizes
 
 " Custom Data Attributes
 " http://dev.w3.org/html5/spec/elements.html#embedding-custom-non-visible-data
-syn match   htmlArg "\<\(data\(\-[a-z]\+\)\+\)\=\>" contained
+syn match   htmlArg "\<\(data\-\([a-z_][a-z0-9_.\-]*\)\+\)\=\>" contained
 
 " Microdata
 " http://dev.w3.org/html5/md/

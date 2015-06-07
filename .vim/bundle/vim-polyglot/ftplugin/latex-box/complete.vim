@@ -24,7 +24,7 @@ if !exists('g:LatexBox_cite_pattern')
 	let g:LatexBox_cite_pattern = '\C\\\a*cite\a*\*\?\(\[[^\]]*\]\)*\_\s*{'
 endif
 if !exists('g:LatexBox_ref_pattern')
-	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\|labelc\)\?ref\*\?\_\s*{'
+	let g:LatexBox_ref_pattern = '\C\\v\?\(eq\|page\|[cC]\|labelc\|name\|auto\)\?ref\*\?\_\s*{'
 endif
 
 if !exists('g:LatexBox_completion_environments')
@@ -255,14 +255,14 @@ function! LatexBox_BibSearch(regexp)
 		if has('win32')
 			let l:old_shellslash = &l:shellslash
 			setlocal noshellslash
-			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+			call system('cd ' . shellescape(LatexBox_GetTexRoot()) .
 						\ ' & bibtex -terse '
-						\ . fnamemodify(auxfile, ':t') . ' >nul'
+						\ . fnamemodify(auxfile, ':t') . ' >nul')
 			let &l:shellslash = l:old_shellslash
 		else
-			silent execute '! cd ' shellescape(LatexBox_GetTexRoot()) .
+			call system('cd ' . shellescape(LatexBox_GetTexRoot()) .
 						\ ' ; bibtex -terse '
-						\ . fnamemodify(auxfile, ':t') . ' >/dev/null'
+						\ . fnamemodify(auxfile, ':t') . ' >/dev/null')
 		endif
 
 		let lines = split(substitute(join(readfile(bblfile), "\n"),
@@ -328,6 +328,7 @@ function! LatexBox_BibComplete(regexp)
 		let type = printf('%-' . s:type_length . 's', type)
 		let auth = m['author'] == '' ? ''    :       m['author'][:20] . ' '
 		let auth = substitute(auth, '\~', ' ', 'g')
+		let auth = substitute(auth, ',.*\ze', ' et al. ', '')
 		let year = m['year']   == '' ? ''    : '(' . m['year']   . ')'
 		let w = { 'word': m['key'],
 				\ 'abbr': type . auth . year,
@@ -365,7 +366,8 @@ function! s:ExtractLabels()
 		let curname = strpart( getline( lblline ), lblbegin, nameend - lblbegin - 1 )
 
 		" Ignore cref entries (because they are duplicates)
-		if curname =~ "\@cref\|cref\@"
+		if curname =~# "@cref$"
+		    let [lblline, lblbegin] = searchpos( '\\newlabel{', 'ecW' )
 			continue
 		endif
 
@@ -457,7 +459,8 @@ function! s:GetLabelCache(file)
 
 	if !has_key(s:LabelCache , a:file) || s:LabelCache[a:file][0] != getftime(a:file)
 		" Open file in temporary split window for label extraction.
-		silent execute '1sp +let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . fnameescape(a:file)
+		let main_tex_file = LatexBox_GetMainTexFile()
+		silent execute '1sp +let\ b:main_tex_file=main_tex_file|let\ labels=s:ExtractLabels()|let\ inputs=s:ExtractInputs()|quit! ' . fnameescape(a:file)
 		let s:LabelCache[a:file] = [ getftime(a:file), labels, inputs ]
 	endif
 

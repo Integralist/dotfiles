@@ -25,8 +25,20 @@ setlocal efm+=%E!\ %m
 " More info for undefined control sequences
 setlocal efm+=%Z<argument>\ %m
 
+" More info for some errors
+setlocal efm+=%Cl.%l\ %m
+
 " Show or ignore warnings
 if g:LatexBox_show_warnings
+	" Parse biblatex warnings
+	setlocal efm+=%-C(biblatex)%.%#in\ t%.%#
+	setlocal efm+=%-C(biblatex)%.%#Please\ v%.%#
+	setlocal efm+=%-C(biblatex)%.%#LaTeX\ a%.%#
+	setlocal efm+=%-Z(biblatex)%m
+
+	" Parse hyperref warnings
+	setlocal efm+=%-C(hyperref)%.%#on\ input\ line\ %l.
+
 	for w in g:LatexBox_ignore_warnings
 		let warning = escape(substitute(w, '[\,]', '%\\\\&', 'g'), ' ')
 		exe 'setlocal efm+=%-G%.%#'. warning .'%.%#'
@@ -44,6 +56,7 @@ endif
 
 " Push file to file stack
 setlocal efm+=%+P**%f
+setlocal efm+=%+P**\"%f\"
 
 " Ignore unmatched lines
 setlocal efm+=%-G%.%#
@@ -51,14 +64,24 @@ setlocal efm+=%-G%.%#
 
 " Vim Windows {{{
 
-" Width of vertical splits
+" Type of split, "new" for horiz. "vnew" for vert.
+if !exists('g:LatexBox_split_type')
+	let g:LatexBox_split_type = "vnew"
+endif
+
+" Length of vertical splits
+if !exists('g:LatexBox_split_length')
+	let g:LatexBox_split_length = 15
+endif
+
+" Width of horizontal splits
 if !exists('g:LatexBox_split_width')
 	let g:LatexBox_split_width = 30
 endif
 
-" Where vertical splits appear
+" Where splits appear
 if !exists('g:LatexBox_split_side')
-	let g:LatexBox_split_side = "leftabove"
+	let g:LatexBox_split_side = "aboveleft"
 endif
 
 " Resize when split?
@@ -114,8 +137,8 @@ function! LatexBox_GetMainTexFile()
 	endif
 
 	" 5. borrow the Vim-Latex-Suite method of finding it
-	if Tex_GetMainFileName() != expand('%:p')
-		let b:main_tex_file = Tex_GetMainFileName()
+	if LatexBox_GetMainFileName() != expand('%:p')
+		let b:main_tex_file = LatexBox_GetMainFileName()
 		return b:main_tex_file
 	endif
 
@@ -127,6 +150,8 @@ endfunction
 function! s:PromptForMainFile()
 	let saved_dir = getcwd()
 	execute 'cd ' . fnameescape(expand('%:p:h'))
+
+	" Prompt for file
 	let l:file = ''
 	while !filereadable(l:file)
 		let l:file = input('main LaTeX file: ', '', 'file')
@@ -135,6 +160,16 @@ function! s:PromptForMainFile()
 		endif
 	endwhile
 	let l:file = fnamemodify(l:file, ':p')
+
+	" Make persistent
+	let l:persistent = ''
+	while l:persistent !~ '\v^(y|n)'
+		let l:persistent = input('make choice persistent? (y, n) ')
+		if l:persistent == 'y'
+			call writefile([], l:file . '.latexmain')
+		endif
+	endwhile
+
 	execute 'cd ' . fnameescape(saved_dir)
 	return l:file
 endfunction
@@ -144,7 +179,13 @@ function! LatexBox_GetTexRoot()
 	return fnamemodify(LatexBox_GetMainTexFile(), ':h')
 endfunction
 
-function! LatexBox_GetTexBasename(with_dir)
+function! LatexBox_GetBuildBasename(with_dir)
+	" 1. Check for g:LatexBox_jobname
+	if exists('g:LatexBox_jobname')
+		return g:LatexBox_jobname
+	endif
+
+	" 2. Get the basename from the main tex file
 	if a:with_dir
 		return fnamemodify(LatexBox_GetMainTexFile(), ':r')
 	else
@@ -155,48 +196,48 @@ endfunction
 function! LatexBox_GetAuxFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0) . '.aux'
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0) . '.aux'
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0) . '.aux'
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0) . '.aux'
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.aux'
+	return LatexBox_GetBuildBasename(1) . '.aux'
 endfunction
 
 function! LatexBox_GetLogFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0) . '.log'
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0) . '.log'
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0) . '.log'
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0) . '.log'
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.log'
+	return LatexBox_GetBuildBasename(1) . '.log'
 endfunction
 
 function! LatexBox_GetOutputFile()
 	" 1. check for b:build_dir variable
 	if exists('b:build_dir') && isdirectory(b:build_dir)
-		return b:build_dir . '/' . LatexBox_GetTexBasename(0)
+		return b:build_dir . '/' . LatexBox_GetBuildBasename(0)
 					\ . '.' . g:LatexBox_output_type
 	endif
 
 	" 2. check for g:LatexBox_build_dir variable
 	if exists('g:LatexBox_build_dir') && isdirectory(g:LatexBox_build_dir)
-		return g:LatexBox_build_dir . '/' . LatexBox_GetTexBasename(0)
+		return g:LatexBox_build_dir . '/' . LatexBox_GetBuildBasename(0)
 					\ . '.' . g:LatexBox_output_type
 	endif
 
 	" 3. use the base name of main tex file
-	return LatexBox_GetTexBasename(1) . '.' . g:LatexBox_output_type
+	return LatexBox_GetBuildBasename(1) . '.' . g:LatexBox_output_type
 endfunction
 " }}}
 
@@ -204,25 +245,37 @@ endfunction
 
 " Default pdf viewer
 if !exists('g:LatexBox_viewer')
-	if has('win32')
-		" On windows, 'running' a file will open it with the default program
-		let g:LatexBox_viewer = ''
-	else
-		let g:LatexBox_viewer = 'xdg-open'
+	" On windows, 'running' a file will open it with the default program
+	let s:viewer = ''
+	if has('unix')
+	  " echo -n necessary as uname -s will append \n otherwise
+      let s:uname = system('echo -n $(uname -s)')
+	  if s:uname == "Darwin"
+		  let s:viewer = 'open'
+	  else
+		  let s:viewer = 'xdg-open'
+	  endif
 	endif
+	let g:LatexBox_viewer = s:viewer
 endif
 
-function! LatexBox_View()
+function! LatexBox_View(...)
+	let lvargs = join(a:000, ' ')
 	let outfile = LatexBox_GetOutputFile()
 	if !filereadable(outfile)
 		echomsg fnamemodify(outfile, ':.') . ' is not readable'
 		return
 	endif
-	let cmd = g:LatexBox_viewer . ' ' . shellescape(outfile)
+	let cmd = g:LatexBox_viewer . ' ' . lvargs . ' ' . shellescape(outfile)
 	if has('win32')
-		let cmd = '!start /b' . cmd . ' >nul'
+		let cmd = '!start /b ' . cmd . ' >nul'
 	else
-		let cmd = '!' . cmd . ' &>/dev/null &'
+		let cmd = '!' . cmd . ' '
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd .= ' >/dev/null ^/dev/null &'
+		else
+			let cmd .= ' &>/dev/null &'
+		endif
 	endif
 	silent execute cmd
 	if !has("gui_running")
@@ -230,7 +283,7 @@ function! LatexBox_View()
 	endif
 endfunction
 
-command! LatexView call LatexBox_View()
+command! -nargs=* LatexView call LatexBox_View('<args>')
 " }}}
 
 " In Comment {{{

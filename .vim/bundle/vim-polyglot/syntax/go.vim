@@ -10,7 +10,9 @@
 "     let OPTION_NAME = 0
 "   in your ~/.vimrc file to disable particular options. You can also write:
 "     let OPTION_NAME = 1
-"   to enable particular options. At present, all options default to on.
+"   to enable particular options. 
+"   At present, all options default to on, except highlight of:
+"   functions, methods and structs.
 "
 "   - go_highlight_array_whitespace_error
 "     Highlights white space after "[]".
@@ -29,20 +31,44 @@ if exists("b:current_syntax")
   finish
 endif
 
-if !exists("go_highlight_array_whitespace_error")
-  let go_highlight_array_whitespace_error = 1
+if !exists("g:go_highlight_array_whitespace_error")
+  let g:go_highlight_array_whitespace_error = 1
 endif
-if !exists("go_highlight_chan_whitespace_error")
-  let go_highlight_chan_whitespace_error = 1
+
+if !exists("g:go_highlight_chan_whitespace_error")
+  let g:go_highlight_chan_whitespace_error = 1
 endif
-if !exists("go_highlight_extra_types")
-  let go_highlight_extra_types = 1
+
+if !exists("g:go_highlight_extra_types")
+  let g:go_highlight_extra_types = 1
 endif
-if !exists("go_highlight_space_tab_error")
-  let go_highlight_space_tab_error = 1
+
+if !exists("g:go_highlight_space_tab_error")
+  let g:go_highlight_space_tab_error = 1
 endif
-if !exists("go_highlight_trailing_whitespace_error")
-  let go_highlight_trailing_whitespace_error = 1
+
+if !exists("g:go_highlight_trailing_whitespace_error")
+  let g:go_highlight_trailing_whitespace_error = 1
+endif
+
+if !exists("g:go_highlight_operators")
+	let g:go_highlight_operators = 0
+endif
+
+if !exists("g:go_highlight_functions")
+	let g:go_highlight_functions = 0
+endif
+
+if !exists("g:go_highlight_methods")
+	let g:go_highlight_methods = 0
+endif
+
+if !exists("g:go_highlight_structs")
+	let g:go_highlight_structs = 0
+endif
+
+if !exists("g:go_highlight_build_constraints")
+    let g:go_highlight_build_constraints = 0
 endif
 
 syn case match
@@ -81,16 +107,16 @@ hi def link     goComplexes         Type
 
 " Treat func specially: it's a declaration at the start of a line, but a type
 " elsewhere. Order matters here.
-syn match       goType              /\<func\>/
-syn match       goDeclaration       /^func\>/
+syn match       goDeclaration       /\<func\>/
+
 
 " Predefined functions and values
 syn keyword     goBuiltins          append cap close complex copy delete imag len
 syn keyword     goBuiltins          make new panic print println real recover
-syn keyword     goConstants         iota true false nil
+syn keyword     goBoolean           iota true false nil
 
 hi def link     goBuiltins          Keyword
-hi def link     goConstants         Keyword
+hi def link     goBoolean           Boolean
 
 " Comments; their contents
 syn keyword     goTodo              contained TODO FIXME XXX BUG
@@ -121,9 +147,11 @@ hi def link     goEscapeError       Error
 syn cluster     goStringGroup       contains=goEscapeOctal,goEscapeC,goEscapeX,goEscapeU,goEscapeBigU,goEscapeError
 syn region      goString            start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=@goStringGroup
 syn region      goRawString         start=+`+ end=+`+
+syn match       goFormatSpecifier   /%[#0\-\ \+\*]*[vTtbcdoqxXUeEfgGsp]/ contained containedin=goString
 
 hi def link     goString            String
 hi def link     goRawString         String
+hi def link 	goFormatSpecifier   goSpecialString
 
 " Characters; their contents
 syn cluster     goCharacterGroup    contains=goEscapeOctal,goEscapeC,goEscapeX,goEscapeU,goEscapeBigU
@@ -162,12 +190,12 @@ syn match       goImaginary         "\<\d\+[Ee][-+]\d\+i\>"
 hi def link     goImaginary         Number
 
 " Spaces after "[]"
-if go_highlight_array_whitespace_error != 0
+if g:go_highlight_array_whitespace_error != 0
   syn match goSpaceError display "\(\[\]\)\@<=\s\+"
 endif
 
 " Spacing errors around the 'chan' keyword
-if go_highlight_chan_whitespace_error != 0
+if g:go_highlight_chan_whitespace_error != 0
   " receive-only annotation on chan type
   syn match goSpaceError display "\(<-\)\@<=\s\+\(chan\>\)\@="
   " send-only annotation on chan type
@@ -177,25 +205,87 @@ if go_highlight_chan_whitespace_error != 0
 endif
 
 " Extra types commonly seen
-if go_highlight_extra_types != 0
+if g:go_highlight_extra_types != 0
   syn match goExtraType /\<bytes\.\(Buffer\)\>/
-  syn match goExtraType /\<io\.\(Reader\|Writer\|ReadWriter\|ReadWriteCloser\)\>/
+  syn match goExtraType /\<io\.\(Reader\|ReadSeeker\|ReadWriter\|ReadCloser\|ReadWriteCloser\|Writer\|WriteCloser\|Seeker\)\>/
   syn match goExtraType /\<reflect\.\(Kind\|Type\|Value\)\>/
   syn match goExtraType /\<unsafe\.Pointer\>/
 endif
 
 " Space-tab error
-if go_highlight_space_tab_error != 0
+if g:go_highlight_space_tab_error != 0
   syn match goSpaceError display " \+\t"me=e-1
 endif
 
 " Trailing white space error
-if go_highlight_trailing_whitespace_error != 0
+if g:go_highlight_trailing_whitespace_error != 0
   syn match goSpaceError display excludenl "\s\+$"
 endif
 
 hi def link     goExtraType         Type
 hi def link     goSpaceError        Error
+
+
+
+" included from: https://github.com/athom/more-colorful.vim/blob/master/after/syntax/go.vim
+"
+" Comments; their contents
+syn keyword     goTodo              contained NOTE
+hi def link     goTodo              Todo
+
+
+" Operators; 
+if g:go_highlight_operators != 0
+	" match single-char operators:          - + % < > ! & | ^ * =
+	" and corresponding two-char operators: -= += %= <= >= != &= |= ^= *= ==
+	syn match goOperator /[-+%<>!&|^*=]=\?/
+	" match / and /=
+	syn match goOperator /\/\%(=\|\ze[^/*]\)/
+	" match two-char operators:               << >> &^
+	" and corresponding three-char operators: <<= >>= &^=
+	syn match goOperator /\%(<<\|>>\|&^\)=\?/
+	" match remaining two-char operators: := && || <- ++ --
+	syn match goOperator /:=\|||\|<-\|++\|--/
+	" match ...
+	syn match goOperator /\.\.\./
+endif
+hi def link     goOperator					Operator
+
+" Functions; 
+if g:go_highlight_functions != 0
+	syn match goFunction							/\(func\s\+\)\@<=\w\+\((\)\@=/
+	syn match goFunction							/\()\s\+\)\@<=\w\+\((\)\@=/
+endif
+hi def link     goFunction					Function
+
+" Methods; 
+if g:go_highlight_methods != 0
+	syn match goMethod								/\(\.\)\@<=\w\+\((\)\@=/
+endif
+hi def link     goMethod						Type
+
+" Structs; 
+if g:go_highlight_structs != 0
+	syn match goStruct								/\(.\)\@<=\w\+\({\)\@=/
+	syn match goStructDef							/\(type\s\+\)\@<=\w\+\(\s\+struct\s\+{\)\@=/
+endif
+hi def link     goStruct						Function
+hi def link     goStructDef         Function
+
+" Build Constraints
+if g:go_highlight_build_constraints != 0
+    syn keyword goBuildOs           contained ignore cgo android darwin dragonfly freebsd linux nacl netbsd openbsd plan9 solaris windows 
+    syn keyword goBuildArch         contained 386 amd64 amd64p32 arm
+    syn match   goBuildDirective    display contained "+build"
+    syn region  goBuildComment      start="//\s*+build" end="$" contains=goBuildDirective,goBuildOs,goBuildArch
+    syn region  goBuildComment      start="/\*\s*+build" end="\*/" contains=goBuildDirective,goBuildOs,goBuildArch
+endif
+
+hi def link     goBuildComment      Comment
+hi def link     goBuildOs           Type
+hi def link     goBuildArch         Type
+hi def link     goBuildDirective    PreProc
+
 
 " Search backwards for a global declaration to start processing the syntax.
 "syn sync match goSync grouphere NONE /^\(const\|var\|type\|func\)\>/

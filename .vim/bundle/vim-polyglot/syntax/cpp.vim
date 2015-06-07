@@ -1,8 +1,8 @@
 " Vim syntax file
 " Language:	C++
-" Current Maintainer:	vim-jp (https://github.com/vim-jp/cpp-vim)
+" Current Maintainer:	vim-jp (https://github.com/vim-jp/vim-cpp)
 " Previous Maintainer:	Ken Shan <ccshan@post.harvard.edu>
-" Last Change:	2012 Jun 14
+" Last Change:	2015 Mar 1
 
 " For version 5.x: Clear all syntax items
 " For version 6.x: Quit when a syntax file was already loaded
@@ -32,16 +32,21 @@ syn match cppCast		"\<\(const\|static\|dynamic\|reinterpret\)_cast\s*$"
 syn keyword cppStorageClass	mutable
 syn keyword cppStructure	class typename template namespace
 syn keyword cppBoolean		true false
+syn keyword cppConstant		__cplusplus
 
 " C++ 11 extensions
 if !exists("cpp_no_cpp11")
   syn keyword cppType		override final
   syn keyword cppExceptions	noexcept
-  syn keyword cppStorageClass	constexpr decltype
+  syn keyword cppStorageClass	constexpr decltype thread_local
   syn keyword cppConstant	nullptr
-  " A C++11 raw-string literal. It tries to follow 2.14.5 and 2.14.5.2 of the
-  " standard.
-  syn region cppRawString matchgroup=cppRawDelim start=+\%(u8\=\|[LU]\)\=R"\z(\%([ ()\\\d9-\d12]\@![\d0-\d127]\)\{,16}\)(+ end=+)\z1"+ contains=@Spell
+  syn keyword cppConstant	ATOMIC_FLAG_INIT ATOMIC_VAR_INIT
+  syn keyword cppConstant	ATOMIC_BOOL_LOCK_FREE ATOMIC_CHAR_LOCK_FREE
+  syn keyword cppConstant	ATOMIC_CHAR16_T_LOCK_FREE ATOMIC_CHAR32_T_LOCK_FREE
+  syn keyword cppConstant	ATOMIC_WCHAR_T_LOCK_FREE ATOMIC_SHORT_LOCK_FREE
+  syn keyword cppConstant	ATOMIC_INT_LOCK_FREE ATOMIC_LONG_LOCK_FREE
+  syn keyword cppConstant	ATOMIC_LLONG_LOCK_FREE ATOMIC_POINTER_LOCK_FREE
+  syn region cppRawString	matchgroup=cppRawStringDelimiter start=+\%(u8\|[uLU]\)\=R"\z([[:alnum:]_{}[\]#<>%:;.?*\+\-/\^&|~!=,"']\{,16}\)(+ end=+)\z1"+ contains=@Spell
 endif
 
 " The minimum and maximum operators in GNU C++
@@ -65,7 +70,7 @@ if version >= 508 || !exists("did_cpp_syntax_inits")
   HiLink cppStructure		Structure
   HiLink cppBoolean		Boolean
   HiLink cppConstant		Constant
-  HiLink cppRawDelim		cFormat
+  HiLink cppRawStringDelimiter	Delimiter
   HiLink cppRawString		String
   delcommand HiLink
 endif

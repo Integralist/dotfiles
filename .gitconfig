@@ -3,17 +3,14 @@
 	email = mark.mcdx@gmail.com
 
 [alias]
-    up = "!git remote update -p; git merge --ff-only @{u}"
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
     st = status
-    sts = status -sb
     unstage = reset HEAD --
 
 [core]
 	excludesfile = ~/.gitignore_global
     editor = vim
     ignorecase = false
-    ; pager = `brew --prefix git`/share/git-core/contrib/diff-highlight/diff-highlight | less
 
 [color]
 	ui = true
@@ -43,8 +40,10 @@
 
 [branch "develop"]
     rebase = true
+
 [mergetool]
 	prompt = true
+
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3

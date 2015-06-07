@@ -23,6 +23,9 @@ endif
 if ! exists('g:LatexBox_quickfix')
 	let g:LatexBox_quickfix = 1
 endif
+if ! exists('g:LatexBox_personal_latexmkrc')
+	let g:LatexBox_personal_latexmkrc = 0
+endif
 
 " }}}
 
@@ -138,7 +141,7 @@ endfunction
 
 function! LatexBox_Latexmk(force)
 	" Define often used names
-	let basepath = LatexBox_GetTexBasename(1)
+	let basepath = LatexBox_GetBuildBasename(1)
 	let basename = fnamemodify(basepath, ':t')
 	let texroot = shellescape(LatexBox_GetTexRoot())
 	let mainfile = fnameescape(fnamemodify(LatexBox_GetMainTexFile(), ':t'))
@@ -163,7 +166,11 @@ function! LatexBox_Latexmk(force)
 	elseif match(&shell, '/tcsh$') >= 0
 		let env = 'setenv max_print_line ' . max_print_line . '; '
 	else
-		let env = 'max_print_line=' . max_print_line
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let env = 'set max_print_line ' . max_print_line . '; and '
+		else
+			let env = 'max_print_line=' . max_print_line
+		endif
 	endif
 
 	" Set environment options
@@ -174,10 +181,16 @@ function! LatexBox_Latexmk(force)
 		" Make sure to switch drive as well as directory
 		let cmd = 'cd /D ' . texroot . ' && '
 	else
-		let cmd = 'cd ' . texroot . ' && '
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd = 'cd ' . texroot . '; and '
+		else
+			let cmd = 'cd ' . texroot . ' && '
+		endif
 	endif
 	let cmd .= env . ' latexmk'
-	let cmd .= ' -' . g:LatexBox_output_type
+	if ! g:LatexBox_personal_latexmkrc
+		let cmd .= ' -' . g:LatexBox_output_type
+	endif
 	let cmd .= ' -quiet '
 	let cmd .= g:LatexBox_latexmk_options
 	if a:force
@@ -198,7 +211,11 @@ function! LatexBox_Latexmk(force)
 	if has('win32')
 		let cmd .= ' >nul'
 	else
-		let cmd .= ' &>/dev/null'
+		if fnamemodify(&shell, ':t') ==# 'fish'
+			let cmd .= ' >/dev/null ^/dev/null'
+		else
+			let cmd .= ' &>/dev/null'
+		endif
 	endif
 
 	if g:LatexBox_latexmk_async
@@ -352,7 +369,7 @@ function! LatexBox_LatexmkClean(cleanall)
 		return
 	endif
 
-	let basename = LatexBox_GetTexBasename(1)
+	let basename = LatexBox_GetBuildBasename(1)
 
 	if has_key(g:latexmk_running_pids, basename)
 		echomsg "don't clean when latexmk is running"
@@ -413,22 +430,59 @@ function! LatexBox_LatexErrors(status, ...)
 	if a:status < 0
 		botright copen
 	else
-		" Write status message to screen
-		redraw
-		if a:status > 0 || len(getqflist())>1
-			echomsg 'Compiling to ' . g:LatexBox_output_type . ' ... failed!'
-		else
-			echomsg 'Compiling to ' . g:LatexBox_output_type . ' ... success!'
-		endif
-
 		" Only open window when an error/warning is detected
-		if g:LatexBox_quickfix
+		if g:LatexBox_quickfix >= 3
+					\ ? s:log_contains_error(log)
+					\ : g:LatexBox_quickfix > 0
 			belowright cw
-			if g:LatexBox_quickfix==2
+			if g:LatexBox_quickfix == 2 || g:LatexBox_quickfix == 4
 				wincmd p
 			endif
 		endif
+		redraw
+
+		" Write status message to screen
+		if a:status > 0 || len(getqflist())>1
+			if s:log_contains_error(log)
+				let l:status_msg = ' ... failed!'
+			else
+				let l:status_msg = ' ... there were warnings!'
+			endif
+		else
+			let l:status_msg = ' ... success!'
+		endif
+		echomsg 'Compiling to ' . g:LatexBox_output_type . l:status_msg
 	endif
+endfunction
+
+" Redefine uniq() for compatibility with older Vim versions (< 7.4.218)
+function! s:uniq(list)
+        if exists('*uniq')
+                return uniq(a:list)
+        elseif len(a:list) <= 1
+                return a:list
+        endif
+
+        let last_element = get(a:list,0)
+        let uniq_list = [last_element]
+
+        for i in range(1, len(a:list)-1)
+                let next_element = get(a:list, i)
+                if last_element == next_element
+                        continue
+                endif
+                let last_element = next_element
+                call add(uniq_list, next_element)
+        endfor
+        return uniq_list
+endfunction
+
+function! s:log_contains_error(file)
+	let lines = readfile(a:file)
+	let lines = filter(lines, 'v:val =~ ''^.*:\d\+: ''')
+	let lines = s:uniq(map(lines, 'matchstr(v:val, ''^.*\ze:\d\+:'')'))
+	let lines = filter(lines, 'filereadable(fnameescape(v:val))')
+	return len(lines) > 0
 endfunction
 " }}}
 
@@ -448,7 +502,7 @@ function! LatexBox_LatexmkStatus(detailed)
 			echo "latexmk is running (" . plist . ")"
 		endif
 	else
-		let basename = LatexBox_GetTexBasename(1)
+		let basename = LatexBox_GetBuildBasename(1)
 		if has_key(g:latexmk_running_pids, basename)
 			echo "latexmk is running"
 		else
@@ -462,12 +516,12 @@ endfunction
 function! LatexBox_LatexmkStop(silent)
 	if empty(g:latexmk_running_pids)
 		if !a:silent
-			let basepath = LatexBox_GetTexBasename(1)
+			let basepath = LatexBox_GetBuildBasename(1)
 			let basename = fnamemodify(basepath, ':t')
 			echoerr "latexmk is not running for `" . basename . "'"
 		endif
 	else
-		let basepath = LatexBox_GetTexBasename(1)
+		let basepath = LatexBox_GetBuildBasename(1)
 		let basename = fnamemodify(basepath, ':t')
 		if has_key(g:latexmk_running_pids, basepath)
 			call s:kill_latexmk_process(g:latexmk_running_pids[basepath])

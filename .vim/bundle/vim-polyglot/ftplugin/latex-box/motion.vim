@@ -345,24 +345,22 @@ function! s:ReadTOC(auxfile, texfile, ...)
 		endif
 		" parse section number
 		let secnum = ''
-		if len(tree[1]) > 3 && empty(tree[1][1])
-			call remove(tree[1], 1)
+		let tree = tree[1]
+		if len(tree) > 3 && empty(tree[1])
+			call remove(tree, 1)
 		endif
-		if len(tree[1]) > 1 && tree[1][0] =~ '\(numberline\|tocsection\)'
-			if !empty(tree[1][1])
-				let secnum = LatexBox_TreeToTex(tree[1][1])
-				let secnum = substitute(secnum, '\\\S\+\s', '', 'g')
-				let secnum = substitute(secnum, '\\\S\+{\(.\{-}\)}', '\1', 'g')
-				let secnum = substitute(secnum, '^{\+\|}\+$', '', 'g')
-			endif
-			let tree = tree[1][2:]
-		else
-			let tree = tree[1]
+		if len(tree) > 1 && type(tree[0]) == type("") && tree[0] =~ '^\\\(\(chapter\)\?numberline\|tocsection\)'
+			let secnum = LatexBox_TreeToTex(tree[1])
+			let secnum = substitute(secnum, '\\\S\+\s', '', 'g')
+			let secnum = substitute(secnum, '\\\S\+{\(.\{-}\)}', '\1', 'g')
+			let secnum = substitute(secnum, '^{\+\|}\+$', '', 'g')
+			call remove(tree, 1)
 		endif
 		" parse section title
 		let text = LatexBox_TreeToTex(tree)
-		let text = substitute(text, '^{\+\|}\+$', '', 'g')
-		let text = substitute(text, '\*',         '', 'g')
+		let text = substitute(text, '^{\+\|}\+$',                 '', 'g')
+		let text = substitute(text, '\m^\\\(no\)\?\(chapter\)\?numberline\s*', '', '')
+		let text = substitute(text, '\*',                         '', 'g')
 
 		" add TOC entry
 		call add(fileindices[texfile], len(toc))
@@ -381,6 +379,21 @@ function! LatexBox_TOC(...)
 
 	" Check if window already exists
 	let winnr = bufwinnr(bufnr('LaTeX TOC'))
+	" Two types of splits, horizontal and vertical
+	let l:hori = "new"
+	let l:vert = "vnew"
+
+	" Set General Vars and initialize size
+	let l:type = g:LatexBox_split_type
+	let l:size = 10
+
+	" Size detection
+	if l:type == l:hori
+	  let l:size = g:LatexBox_split_length
+	elseif l:type == l:vert
+	  let l:size = g:LatexBox_split_width
+	endif
+
 	if winnr >= 0
 		if a:0 == 0
 			silent execute winnr . 'wincmd w'
@@ -388,13 +401,12 @@ function! LatexBox_TOC(...)
 			" Supplying an argument to this function causes toggling instead
 			" of jumping to the TOC window
 			if g:LatexBox_split_resize
-				silent exe "set columns-=" . g:LatexBox_split_width
+				silent exe "set columns-=" . l:size
 			endif
 			silent execute 'bwipeout' . bufnr('LaTeX TOC')
 		endif
 		return
 	endif
-
 	" Read TOC
 	let [toc, fileindices] = s:ReadTOC(LatexBox_GetAuxFile(),
 									 \ LatexBox_GetMainTexFile())
@@ -405,9 +417,10 @@ function! LatexBox_TOC(...)
 
 	" Create TOC window and set local settings
 	if g:LatexBox_split_resize
-		silent exe "set columns+=" . g:LatexBox_split_width
+		silent exe "set columns+=" . l:size
 	endif
-	silent exe g:LatexBox_split_side g:LatexBox_split_width . 'vnew LaTeX\ TOC'
+	silent exe g:LatexBox_split_side l:size . l:type . ' LaTeX\ TOC'
+
 	let b:toc = toc
 	let b:toc_numbers = 1
 	let b:calling_win = bufwinnr(calling_buf)

@@ -11,7 +11,7 @@ let b:did_indent = 1
 setlocal nosmartindent
 
 setlocal indentexpr=GetElixirIndent()
-setlocal indentkeys+==end,=else:,=match:,=elsif:,=catch:,=after:,=rescue:
+setlocal indentkeys+=0=end,0=else,0=match,0=elsif,0=catch,0=after,0=rescue
 
 if exists("*GetElixirIndent")
   finish
@@ -25,6 +25,7 @@ let s:block_skip   = "synIDattr(synID(line('.'),col('.'),1),'name') =~? '" . s:s
 let s:block_start  = 'do\|fn'
 let s:block_middle = 'else\|match\|elsif\|catch\|after\|rescue'
 let s:block_end    = 'end'
+let s:symbols_end  = '\]\|}'
 let s:arrow        = '^.*->$'
 let s:pipeline     = '^\s*|>.*$'
 
@@ -59,7 +60,11 @@ function! GetElixirIndent()
 
     let ind += opened_symbol * &sw
 
-    if current_line =~ '^\s*\(\]\|}\)'
+    if last_line =~ '^\s*\(' . s:symbols_end . '\)'
+      let ind += &sw
+    endif
+
+    if current_line =~ '^\s*\(' . s:symbols_end . '\)'
       let ind -= &sw
     endif
 
@@ -68,9 +73,16 @@ function! GetElixirIndent()
     endif
 
     " if line starts with pipeline
+    " and last line contains pipeline(s)
+    " align them
+    if last_line =~ '|>.*$' &&
+          \ current_line =~ s:pipeline
+      let ind = float2nr(match(last_line, '|>') / &sw) * &sw
+
+    " if line starts with pipeline
     " and last line is an attribution
     " indents pipeline in same level as attribution
-    if current_line =~ s:pipeline &&
+    elseif current_line =~ s:pipeline &&
           \ last_line =~ '^[^=]\+=.\+$'
       let b:old_ind = ind
       let ind = float2nr(matchend(last_line, '=\s*[^ ]') / &sw) * &sw

@@ -10,7 +10,7 @@
 "
 "============================================================================
 
-if exists("g:loaded_syntastic_lua_luac_checker")
+if exists('g:loaded_syntastic_lua_luac_checker')
     finish
 endif
 let g:loaded_syntastic_lua_luac_checker = 1
@@ -21,14 +21,14 @@ set cpo&vim
 function! SyntaxCheckers_lua_luac_GetHighlightRegex(pos)
     let result = ''
     let near = matchstr(a:pos['text'], '\mnear ''\zs[^'']\+\ze''')
-    if near != ''
+    if near !=# ''
         if near ==# '<eof>'
             let p = getpos('$')
             let a:pos['lnum'] = p[1]
             let a:pos['col'] = p[2]
             let result = '\%' . p[2] . 'c'
         else
-            let result = '\V' . near
+            let result = '\V' . escape(near, '\')
         endif
 
         " XXX the following piece of code is evil, and is likely to break
@@ -38,7 +38,7 @@ function! SyntaxCheckers_lua_luac_GetHighlightRegex(pos)
         "if open != ''
         "    let line = str2nr(matchstr(a:pos['text'], '\m(to close ''[^'']\+'' at line \zs[0-9]\+\ze)'))
         "    let group = a:pos['type'] ==? 'E' ? 'SyntasticError' : 'SyntasticWarning'
-        "    call matchadd(group, '\%' . line . 'l\V' . open)
+        "    call matchadd(group, '\%' . line . 'l\V' . escape(open, '\'))
         "endif
     endif
     return result
@@ -47,7 +47,7 @@ endfunction
 function! SyntaxCheckers_lua_luac_GetLocList() dict
     let makeprg = self.makeprgBuild({ 'args_after': '-p' })
 
-    let errorformat =  'luac: %#%f:%l: %m'
+    let errorformat = 'luac: %#%f:%l: %m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,
@@ -62,4 +62,4 @@ call g:SyntasticRegistry.CreateAndRegisterChecker({
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
-" vim: set et sts=4 sw=4:
+" vim: set sw=4 sts=4 et fdm=marker:
