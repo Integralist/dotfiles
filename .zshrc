@@ -1,6 +1,7 @@
 # Some of the Zsh awesomeness seen below was originally found here...
 # http://zanshin.net/2013/02/02/zsh-configuration-from-the-ground-up/
 
+#
 # Exports {{{
 export NETWORK_LOCATION="$(/usr/sbin/scselect 2>&1 | egrep '^ \* ' | sed 's:.*(\(.*\)):\1:')"
 export GREP_OPTIONS='--color=auto'
