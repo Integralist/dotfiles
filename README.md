@@ -82,3 +82,15 @@ sudo apt-get install tmux
 - `sudo apt-get install xclip` and `xclip -sel clip < ~/.ssh/id_rsa.pub` then `ssh -T git@github.com`
 - `git config --global user.email "mark.mcdx@gmail.com"`
 - `git config --global user.name "Mark McDonnell"`
+
+### Docker
+
+- `wget -qO- https://get.docker.com/ | sh`
+- `sudo usermod -aG docker integralist`
+
+### Docker Compose
+
+- `sudo curl -L https://github.com/docker/compose/releases/download/1.2.0/docker-compose-`uname -s`-`uname -m` -o docker-compose`
+- `sudo mv docker-compose /usr/local/bin/`
+- `sudo chmod +x /usr/local/bin/docker-compose`
+- `docker-compose --version`
