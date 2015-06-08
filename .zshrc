@@ -59,6 +59,10 @@ function disable_reith() {
   unset SOCKS_PROXY
 }
 
+function copy_sshkey() {
+  xclip -sel clip < ~/.ssh/$1_rsa.pub
+}
+
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
 alias getcommit="git log -1 | cut -d ' ' -f 2 | head -n 1 | xclip -sel clip"
 alias vp="vim +PluginInstall +qall"
