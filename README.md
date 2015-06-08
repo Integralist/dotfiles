@@ -36,6 +36,7 @@ Look in home directory for `monitors.xml` and rename it to anything else (then r
 - `sudo apt-get install zsh` and `sudo chsh -s $(which zsh)` and then restart
 - `sudo apt-get install git`
 - `sudo apt-get install curl`
+- `sudo apt-get install default-jre` and `java -version`
 
 ### Neovim
 
