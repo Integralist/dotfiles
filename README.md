@@ -79,7 +79,8 @@ sudo apt-get install tmux
 - Setup ssh keys for github use, `cd ~/.ssh`, `ssh-keygen -t rsa -b 4096 -C "mark.mcdx@gmail.com"` and saved to `github_rsa`
 - Start the ssh-agent `eval "$(ssh-agent -s)"`
 - Add the ssh key to the agent `ssh-add ~/.ssh/github_rsa`
-- `sudo apt-get install xclip` and `xclip -sel clip < ~/.ssh/id_rsa.pub` then `ssh -T git@github.com`
+- `sudo apt-get install xclip` and `xclip -sel clip < ~/.ssh/github_rsa.pub` and paste into GitHub gui.
+- Then `ssh -T git@github.com` to test the set-up is working
 - `git config --global user.email "mark.mcdx@gmail.com"`
 - `git config --global user.name "Mark McDonnell"`
 
