@@ -29,7 +29,7 @@ servers = (
     port = "6697";
     use_ssl = "yes";
     ssl_cert = "/Users/M/.pki/bbc/Certificate.pem";
-    ssl_verify = "yes";
+    ssl_verify = "no";
     autoconnect = "yes";
   }
 );
