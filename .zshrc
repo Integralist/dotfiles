@@ -67,3 +67,6 @@ alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
 alias getcommit="git log -1 | cut -d ' ' -f 2 | head -n 1 | xclip -sel clip"
 alias vp="vim +PluginInstall +qall"
 alias sshkey="ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
+alias irc="irssi"
+
+eval "$(rbenv init -)"
