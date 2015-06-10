@@ -71,7 +71,7 @@ set timeout timeoutlen=1000 ttimeoutlen=100
 set laststatus=2
 
 " Set the status line to something useful
-set statusline=%f\ %m\ %=L:%l/%L\ %c\ (%p%%)
+set statusline=%f\ %m\ %=L:%l/%L\ C:%c\ (%p%%)
 
 " UTF encoding
 set encoding=utf-8
