@@ -174,7 +174,7 @@ filetype plugin indent on
 colorscheme Tomorrow-Night
 
 " NeoVim shortcut for quick terminal exit
-:silent! tnoremap § <C-\><C-n>
+:silent! tnoremap <Esc> <C-\><C-n>
 
 fun! StripTrailingWhitespace()
   " Don't strip on these filetypes
