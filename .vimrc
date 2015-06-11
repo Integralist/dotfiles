@@ -113,6 +113,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
+Plugin 'chriskempson/vim-tomorrow-theme'
+
 Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
@@ -167,6 +169,9 @@ Plugin 'vim-scripts/camelcasemotion'
 " Closing settings required by Vundle
 call vundle#end()
 filetype plugin indent on
+
+" set background=dark
+colorscheme Tomorrow-Night
 
 " NeoVim shortcut for quick terminal exit
 :silent! tnoremap § <C-\><C-n>
