@@ -204,3 +204,6 @@ fun! SetDiffColours()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 autocmd FilterWritePre * call SetDiffColours()
+
+" Map § key to :nohlsearch (or :noh for short)
+map § :nohlsearch<CR>
