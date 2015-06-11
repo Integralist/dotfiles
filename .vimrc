@@ -120,17 +120,17 @@ Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
   let g:go_fmt_command = "goimports"
 Plugin 'godlygeek/tabular'
-  map <Leader>e :Tabularize /=<cr>
-  map <Leader>c :Tabularize /:<cr>
-  map <Leader>es :Tabularize /=\zs<cr>
-  map <Leader>cs :Tabularize /:\zs<cr>
+  map <Leader>e :Tabularize /=<CR>
+  map <Leader>c :Tabularize /:<CR>
+  map <Leader>es :Tabularize /=\zs<CR>
+  map <Leader>cs :Tabularize /:\zs<CR>
 Plugin 'guns/vim-clojure-highlight'
 Plugin 'guns/vim-clojure-static'
 Plugin 'guns/vim-sexp'
 Plugin 'kana/vim-textobj-user' " Dependant for vim-textobj-rubyblock
 Plugin 'kien/ctrlp.vim'
   map <leader>t <C-p>
-  map <leader>y :CtrlPBuffer<cr>
+  map <leader>y :CtrlPBuffer<CR>
   let g:ctrlp_show_hidden=1
   let g:ctrlp_working_path_mode=0
   let g:ctrlp_max_height=30
