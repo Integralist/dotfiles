@@ -6,10 +6,10 @@
 - Homebrew
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
   - `brew install rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch`
-- Neovim
-  - `vim +PluginInstall +qall`
 - Java JDK, Vagrant and VirtualBox
 - Clone dotfiles repo and extract required files (including `.gitconfig`)
+- Neovim
+  - `vim +PluginInstall +qall`
 
 ### GitHub
 
