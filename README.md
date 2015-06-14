@@ -19,4 +19,4 @@
 - `pbcopy < ~/.ssh/github_rsa.pub` and paste into GitHub gui.
 - Then `ssh -T git@github.com` to test the set-up is working
 - `git config --global user.email "mark.mcdx@gmail.com"`
-- `git config --global user.name "Mark McDonnell"`
+- `git config --global user.name "Integralist"`
