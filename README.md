@@ -4,8 +4,8 @@
   - Copy certificates to `~/.pki/bbc`
   - `mkdir -p ~/Projects/Shell` and download [Antigen](http://antigen.sharats.me/) `antigen.zsh`
 - Homebrew
-  - `brew tap neovim/neovim` 
-  - `brew install rbenv ruby-build irssi leiningen neovim reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch`
+  - `brew tap neovim/neovim && brew install --HEAD neovim` 
+  - `brew install rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch`
 - Neovim
   - `vim +PluginInstall +qall`
 - Java JDK, Vagrant and VirtualBox
