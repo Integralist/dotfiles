@@ -25,7 +25,7 @@
 
 - Setup "Box Sync" and "Dropbox"
   - `mkdir -p ~/.pki/bbc` then copy in certificates
-  - `mkdir -p ~/Projects/Shell` and download [Antigen](http://antigen.sharats.me/) `antigen.zsh`
+  - `mkdir -p ~/Projects/Shell` and download [`antigen.zsh`](https://github.com/zsh-users/antigen/blob/master/antigen.zsh)
 - Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html), [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Boot2Docker](https://github.com/boot2docker/osx-installer/releases)
 - Homebrew
   - `brew update`
