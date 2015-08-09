@@ -3,6 +3,7 @@
 ### Configuration
 
 - Keyboard keypress speed (and smart quotes off) via System Preferences
+- Show Battery Percentage and Date/Time via System Preferences
 - Install Google Chrome, login and sync
 - AppStore: Slack and Twitter
 - MacDown (http://macdown.uranusjr.com/)
