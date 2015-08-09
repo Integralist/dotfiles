@@ -1,5 +1,11 @@
 # dotfiles
 
+### Configuration
+
+- Keyboard keypress speed (and smart quotes off) via System Preferences
+- Install Google Chrome, login and sync
+- AppStore: Slack and Twitter
+
 ### GitHub
 
 - Setup ssh keys for github use, `cd ~/.ssh`, `ssh-keygen -t rsa -b 4096 -C "mark.mcdx@gmail.com"` and saved to `github_rsa`
@@ -17,8 +23,9 @@
   - `mkdir -p ~/Projects/Shell` and download [Antigen](http://antigen.sharats.me/) `antigen.zsh`
 - Homebrew
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
-  - `brew install rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch`
+  - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go boot2docker`
 - Java JDK, Vagrant and VirtualBox
 - Clone dotfiles repo and extract required files (including `.gitconfig`)
 - Neovim
   - `vim +PluginInstall +qall`
+- Terminal theme
