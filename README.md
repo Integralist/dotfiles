@@ -5,6 +5,7 @@
 - Keyboard keypress speed (and smart quotes off) via System Preferences
 - Install Google Chrome, login and sync
 - AppStore: Slack and Twitter
+- Terminal: switch to Zsh shell (`chsh -s /bin/zsh`)
 
 ### GitHub
 
