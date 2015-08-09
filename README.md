@@ -26,10 +26,10 @@
 - Setup "Box Sync" and "Dropbox"
   - `mkdir -p ~/.pki/bbc` then copy in certificates
   - `mkdir -p ~/Projects/Shell` and download [Antigen](http://antigen.sharats.me/) `antigen.zsh`
+- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Homebrew
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
   - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go boot2docker`
-- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Clone this dotfiles repo and extract required files (e.g. `cd ~/Projects/Shell/dotfiles/ && mv .*~.git ~/`)
 - Neovim
   - `vim +PluginInstall +qall`
