@@ -5,7 +5,7 @@
 - Keyboard keypress speed (and smart quotes off) via System Preferences
 - Show Battery Percentage and Date/Time via System Preferences
 - Install Google Chrome, login and sync
-- AppStore: Slack and Twitter
+- AppStore: Slack, Twitter and Caffeine
 - MacDown (http://macdown.uranusjr.com/)
 - Terminal: 
   - Zsh shell (`chsh -s /bin/zsh`)
