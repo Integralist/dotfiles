@@ -28,7 +28,7 @@
 - Homebrew
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
   - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go boot2docker`
-- Java JDK, Vagrant and VirtualBox
+- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Mac%20OS%20X%20build%20instructions)
 - Clone dotfiles repo and extract required files (including `.gitconfig`)
 - Neovim
   - `vim +PluginInstall +qall`
