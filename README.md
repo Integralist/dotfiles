@@ -34,4 +34,5 @@
 - Clone this dotfiles repo and extract required files (e.g. `cd ~/Projects/Shell/dotfiles/ && mv .*~.git ~/`)
 - Neovim
   - `vim +PluginInstall +qall`
+  - Double check Vim plugins that [need re-cloning](https://github.com/Integralist/dotfiles/tree/minimal-mac-version-of-linux-version/.vim/bundle)
 - Terminal theme
