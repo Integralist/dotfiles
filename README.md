@@ -29,7 +29,7 @@
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
   - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go boot2docker`
 - Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- Clone dotfiles repo and extract required files (including `.gitconfig`)
+- Clone this dotfiles repo and extract required files (e.g. `cd ~/Projects/Shell/dotfiles/ && mv .*~.git ~/`)
 - Neovim
   - `vim +PluginInstall +qall`
 - Terminal theme
