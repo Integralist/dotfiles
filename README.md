@@ -33,6 +33,7 @@
   - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go`
 - Clone this dotfiles repo and extract required files (e.g. `cd ~/Projects/Shell/dotfiles/ && mv .*~.git ~/`)
 - Neovim
+  - Delete all folders inside `~/.vim/bundle`
+  - `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
   - `vim +PluginInstall +qall`
-  - Double check Vim plugins that [need re-cloning](https://github.com/Integralist/dotfiles/tree/minimal-mac-version-of-linux-version/.vim/bundle)
 - Terminal theme
