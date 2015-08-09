@@ -23,7 +23,7 @@
 ### Software
 
 - Setup "Box Sync" and "Dropbox"
-  - Copy certificates to `~/.pki/bbc`
+  - `mkdir -p ~/.pki/bbc` then copy in certificates
   - `mkdir -p ~/Projects/Shell` and download [Antigen](http://antigen.sharats.me/) `antigen.zsh`
 - Homebrew
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
