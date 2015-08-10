@@ -37,3 +37,6 @@
   - `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim`
   - `vim +PluginInstall +qall`
 - Terminal theme
+- Golang
+  - `go get golang.org/x/tools/cmd/goimports`
+  - `mkdir -p ~/Projects/golang`
