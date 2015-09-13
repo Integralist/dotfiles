@@ -41,3 +41,13 @@ alias irc="irssi"
 alias r="source ~/.zshrc"
 
 eval "$(rbenv init -)"
+
+eval export DOCKER_TLS_VERIFY="1"
+export DOCKER_HOST="tcp://192.168.99.100:2376"
+export DOCKER_CERT_PATH="/Users/M/.docker/machine/machines/dev"
+export DOCKER_MACHINE_NAME="dev"
+
+eval "$(docker-machine env dev)"
+
+# Golang gb dependency gets blatted by my shell's git alias for 'git branch'
+unalias gb
