@@ -13,9 +13,13 @@
 
 ### GitHub
 
-- Setup ssh keys for github use, `cd ~/.ssh`, `ssh-keygen -t rsa -b 4096 -C "mark.mcdx@gmail.com"` and saved to `github_rsa`
-- Start the ssh-agent `eval "$(ssh-agent -s)"`
-- Add the ssh key to the agent `ssh-add ~/.ssh/github_rsa` (use `-K` flag for adding to Mac OSX Keychain for persistence)
+- Setup ssh keys for github use:  
+`cd ~/.ssh`, `ssh-keygen -t rsa -b 4096 -C "mark.mcdx@gmail.com"` and saved to `github_rsa`
+- Start the ssh-agent:  
+`eval "$(ssh-agent -s)"`
+- Add the ssh key to the agent:  
+`ssh-add ~/.ssh/github_rsa`  
+(use `-K` flag for adding to Mac OSX Keychain for persistence)
 - `pbcopy < ~/.ssh/github_rsa.pub` and paste into GitHub gui.
 - Then `ssh -T git@github.com` to test the set-up is working
 - `git config --global user.email "mark.mcdx@gmail.com"`
@@ -26,7 +30,7 @@
 - Setup "Box Sync" and "Dropbox"
   - `mkdir -p ~/.pki/bbc` then copy in certificates
   - `mkdir -p ~/Projects/Shell` and download [`antigen.zsh`](https://github.com/zsh-users/antigen/blob/master/antigen.zsh)
-- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html), [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Boot2Docker](https://github.com/boot2docker/osx-installer/releases)
+- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html), [VirtualBox](https://www.virtualbox.org/wiki/Downloads) and [Docker Machine](https://www.docker.com/toolbox)
 - Homebrew
   - `brew update`
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
