@@ -119,6 +119,9 @@ Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'ervandew/supertab'
 Plugin 'fatih/vim-go'
   let g:go_fmt_command = "goimports"
+  let g:go_metalinter_autosave = 1
+  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 Plugin 'godlygeek/tabular'
   map <Leader>e :Tabularize /=<CR>
   map <Leader>c :Tabularize /:<CR>
