@@ -34,7 +34,7 @@ function rubo() {
     --cpu-shares 1024 \
     --rm=true \
     --volume $(pwd):/app \
-    bbcnews/rubocop-config --format simple --fail-level F
+    bbcnews/rubocop-config --format simple --fail-level F | grep '^F:\|=='
 }
 
 function copy_sshkey() {
