@@ -29,6 +29,14 @@ export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
 export PATH=$HOME/Projects/golang/bin:$PATH
 
+function rubo() {
+  docker run \
+    --cpu-shares 1024 \
+    --rm=true \
+    --volume $(pwd):/app \
+    bbcnews/rubocop-config --format simple --fail-level F
+}
+
 function copy_sshkey() {
   pbcopy < ~/.ssh/$1_rsa.pub
 }
