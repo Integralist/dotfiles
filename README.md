@@ -8,6 +8,7 @@
 - AppStore: Slack, Twitter and Caffeine
 - MacDown (http://macdown.uranusjr.com/)
 - Terminal: 
+  - Bash shell (`brew install bash; echo /usr/local/bin/bash | sudo tee -a /etc/shells; chsh -s /usr/local/bin/bash`)
   - Zsh shell (`chsh -s /bin/zsh`)
   - Xcode (`xcode-select --install`)
 
