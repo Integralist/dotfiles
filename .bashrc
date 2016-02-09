@@ -25,6 +25,9 @@
 # https://github.com/git/git/blob/8976500cbbb13270398d3b3e07a17b8cc7bff43f/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
+# show asterisk if there are unstaged changes
+export GIT_PS1_SHOWDIRTYSTATE=true
+
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
 
