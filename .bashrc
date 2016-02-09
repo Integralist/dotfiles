@@ -166,11 +166,12 @@ fi
 
 function prompt_right() {
   # need the correct number of spaces after \A to allow for 00:00 time display
-  echo -e "\e[0;36m\A   \e[0m"
+  # echo -e "\e[0;36m\A   \e[0m"
+  echo -e ""
 }
 function prompt_left() {
   # __git_ps1 function sourced from ~/.git-prompt.sh
-  echo -e "\e[33m\]\u. \[\e[31m\]\w\[\e[00m\]$num_jobs\e[32m\]$(__git_ps1)\e[00m\]\$ "
+  echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;32m\A\e[0m"
 }
 function prompt() {
     compensate=11
