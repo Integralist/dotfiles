@@ -26,6 +26,11 @@
 - `git config --global user.email "mark.mcdx@gmail.com"`
 - `git config --global user.name "Integralist"`
 
+> Note: you can also try out git-diff-fancy  
+> `npm install -g diff-so-fancy`  
+> One time: `git diff | diff-highlight | diff-so-fancy`  
+> Permanent: `git config --global core.pager "diff-so-fancy | less --tabs=1,5 -R"`
+
 ### Software
 
 - Setup "Box Sync" and "Dropbox"
