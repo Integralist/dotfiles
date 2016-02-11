@@ -207,6 +207,8 @@ alias irc="irssi"
 alias ls="ls -GpF"
 alias ll="ls -laGpF"
 alias r="source ~/.bashrc"
+alias cm="git checkout master"
+alias c-="git checkout -"
 
 eval "$(rbenv init -)"
 eval "$(docker-machine env dev)"
