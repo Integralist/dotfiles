@@ -40,7 +40,7 @@
 - Homebrew
   - `brew update`
   - `brew tap neovim/neovim && brew install --HEAD neovim` 
-  - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go wrk`
+  - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go wrk ngrok`
 - Clone this dotfiles repo and extract required files (e.g. `cd ~/Projects/Shell/dotfiles/ && mv .*~.git ~/`)
 - Neovim
   - Delete all folders inside `~/.vim/bundle`
