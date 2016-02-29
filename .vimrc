@@ -113,6 +113,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
+" Colour Schemes
 Plugin 'chriskempson/vim-tomorrow-theme'
 
 Plugin 'ekalinin/Dockerfile.vim'
