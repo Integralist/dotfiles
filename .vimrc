@@ -154,6 +154,7 @@ Plugin 'sheerun/vim-polyglot'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimfiler.vim'
 Plugin 'tpope/vim-commentary'
+  map <leader><leader><leader> gcc
 Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-fireplace'
 Plugin 'tpope/vim-leiningen'
