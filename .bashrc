@@ -104,6 +104,7 @@ export GOPATH=$HOME/Projects/golang
 export PATH=$HOME/Projects/golang/bin:$PATH
 export EDITOR="vim"
 export GIT_PS1_SHOWCOLORHINTS=true
+# export PROMPT_DIRTRIM=4 # truncate start of long path
 
 # Colored man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
