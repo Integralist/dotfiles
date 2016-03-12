@@ -25,9 +25,6 @@
 # https://github.com/git/git/blob/8976500cbbb13270398d3b3e07a17b8cc7bff43f/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
-# show asterisk if there are unstaged changes
-export GIT_PS1_SHOWDIRTYSTATE=true
-
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
 
@@ -101,9 +98,15 @@ export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export DOCKER_TLS_VERIFY=1
 export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
-export PATH=$HOME/Projects/golang/bin:$PATH
+export PATH=$HOME/Projects/golang/bin/:$HOME/dotvim/voom:$PATH
 export EDITOR="vim"
 export GIT_PS1_SHOWCOLORHINTS=true
+export GIT_PS1_SHOWDIRTYSTATE=true     # * for unstage changes (+ staged but uncommitted changes)
+export GIT_PS1_SHOWSTASHSTATE=true     # $ for stashed changes
+export GIT_PS1_SHOWUNTRACKEDFILES=true # % for untracked files
+export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed to upstream
+                                       # < for commits on upstream not merged with HEAD
+                                       # = HEAD points to same commit as upstream
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
 # Colored man pages
