@@ -201,12 +201,12 @@ function rubo() {
 }
 
 read -r -d '' git_icons <<- EOF
-* for unstaged changes
+* unstaged changes
 + staged but uncommitted changes
-$ for stashed changes
-% for untracked files
-> for local commits on HEAD not pushed to upstream
-< for commits on upstream not merged with HEAD
+$ stashed changes
+% untracked files
+> local commits on HEAD not pushed to upstream
+< commits on upstream not merged with HEAD
 = HEAD points to same commit as upstream
 EOF
 
