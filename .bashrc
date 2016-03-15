@@ -90,7 +90,7 @@ export EDITOR="vim"
 
 # git specific configurations
 export GIT_PS1_SHOWCOLORHINTS=true
-export GIT_PS1_SHOWDIRTYSTATE=true     # * for unstage changes (+ staged but uncommitted changes)
+export GIT_PS1_SHOWDIRTYSTATE=true     # * for unstaged changes (+ staged but uncommitted changes)
 export GIT_PS1_SHOWSTASHSTATE=true     # $ for stashed changes
 export GIT_PS1_SHOWUNTRACKEDFILES=true # % for untracked files
 export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed to upstream
@@ -200,6 +200,16 @@ function rubo() {
     bbcnews/rubocop-config --format simple --fail-level F | grep '^F:\|=='
 }
 
+read -r -d '' git_icons <<- EOF
+* for unstaged changes
++ staged but uncommitted changes
+$ for stashed changes
+% for untracked files
+> for local commits on HEAD not pushed to upstream
+< for commits on upstream not merged with HEAD
+= HEAD points to same commit as upstream
+EOF
+
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
 alias getcommit="git log -1 | cut -d ' ' -f 2 | head -n 1 | pbcopy"
 alias sshkey="ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
@@ -210,6 +220,7 @@ alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
 alias mutt="cd ~/Downloads/mutt && mutt"
+alias wut='echo "$git_icons"'
 
 eval "$(rbenv init -)"
 eval "$(docker-machine env dev)"
