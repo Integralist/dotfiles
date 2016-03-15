@@ -209,6 +209,7 @@ alias ll="ls -laGpF"
 alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
+alias mutt="cd ~/Downloads/mutt && mutt"
 
 eval "$(rbenv init -)"
 eval "$(docker-machine env dev)"
