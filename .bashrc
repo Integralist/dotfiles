@@ -46,22 +46,6 @@ shopt -s histappend
 # save multi-line commands as one command
 shopt -s cmdhist
 
-# record each line as it gets issued
-export PROMPT_COMMAND='history -a'
-
-# set a larger history
-export HISTSIZE=500000
-export HISTFILESIZE=100000
-
-# avoid duplicate entries
-export HISTCONTROL="erasedups:ignoreboth"
-
-# don't record some commands
-export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history"
-
-# useful timestamp format
-export HISTTIMEFORMAT='%F %T '
-
 # shopt -p
 # will show all available settings
 
@@ -84,7 +68,7 @@ shopt -s dotglob 2>/dev/null
 # specify other paths to look inside of when autocompleting
 CDPATH=".:~/Projects"
 
-# environment variables
+# custom environment variables
 export DROPBOX="$HOME/Dropbox"
 export BBC="$HOME/Projects/BBC"
 export GITHUB_USER="integralist"
@@ -92,6 +76,8 @@ export DEV_CERT_PATH="$HOME/.pki/bbc"
 export DEV_CERT_PEM="$HOME/.pki/bbc/Certificate.pem"
 export DEV_CERT_P12="$HOME/.pki/bbc/Certificate.p12"
 export CLOUD_CERT_PEM="$HOME/.pki/bbc/cloud-ca.pem"
+
+# application configuration
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
@@ -100,6 +86,9 @@ export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
 export PATH=$HOME/Projects/golang/bin/:$HOME/dotvim/voom:$PATH
 export EDITOR="vim"
+# export PROMPT_DIRTRIM=4 # truncate start of long path
+
+# git specific configurations
 export GIT_PS1_SHOWCOLORHINTS=true
 export GIT_PS1_SHOWDIRTYSTATE=true     # * for unstage changes (+ staged but uncommitted changes)
 export GIT_PS1_SHOWSTASHSTATE=true     # $ for stashed changes
@@ -107,8 +96,6 @@ export GIT_PS1_SHOWUNTRACKEDFILES=true # % for untracked files
 export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed to upstream
                                        # < for commits on upstream not merged with HEAD
                                        # = HEAD points to same commit as upstream
-# export PROMPT_DIRTRIM=4 # truncate start of long path
-
 # Colored man pages
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;31m'
@@ -117,6 +104,16 @@ export LESS_TERMCAP_se=$'\E[0m'
 export LESS_TERMCAP_so=$'\E[01;44;33m'
 export LESS_TERMCAP_ue=$'\E[0m'
 export LESS_TERMCAP_us=$'\E[01;32m'
+
+# terminal configuration
+export PROMPT_COMMAND='history -a' # record each line as it gets issued
+
+# history configuration
+export HISTSIZE=500000
+export HISTFILESIZE=100000
+export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
+export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
+export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 
 # force colours
 force_color_prompt=yes
@@ -205,7 +202,6 @@ function rubo() {
 
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
 alias getcommit="git log -1 | cut -d ' ' -f 2 | head -n 1 | pbcopy"
-alias vp="vim +PluginInstall! +qall"
 alias sshkey="ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
 alias irc="irssi"
 alias ls="ls -GpF"
