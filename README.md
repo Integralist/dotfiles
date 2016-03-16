@@ -51,3 +51,4 @@
   - `go get golang.org/x/tools/cmd/goimports`
   - `mkdir -p ~/Projects/golang`
   - `go get github.com/svent/sift` (`sift --files 'c*\.go' -n package`)
+- Run `:set spell` after installing NeoVim (otherwise you'll see an error in future about it not being set)
