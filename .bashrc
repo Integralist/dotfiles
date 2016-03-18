@@ -84,7 +84,7 @@ export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export DOCKER_TLS_VERIFY=1
 export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
-export PATH=$HOME/Projects/golang/bin/:$HOME/dotvim/voom:$PATH
+export PATH=$HOME/Projects/golang/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
 export EDITOR="vim"
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
@@ -219,6 +219,7 @@ alias ll="ls -laGpF"
 alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
+alias gcp="git cherry-pick -"
 alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 
