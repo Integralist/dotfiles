@@ -105,80 +105,63 @@ set showmatch
 " t opens file in new tab split window
 let g:netrw_liststyle=3
 
-" Set-up required by Vundle
-" Launch vim and run :PluginInstall
-" To install from command line: vim +PluginInstall +qall
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
-
-" Colour Schemes
-Plugin 'chriskempson/vim-tomorrow-theme'
-
-Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'ervandew/supertab'
-Plugin 'fatih/vim-go'
-  let g:go_fmt_command = "goimports"
-  let g:go_metalinter_autosave = 1
-  let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-  let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
-Plugin 'godlygeek/tabular'
-  map <Leader>e :Tabularize /=<CR>
-  map <Leader>c :Tabularize /:<CR>
-  map <Leader>es :Tabularize /=\zs<CR>
-  map <Leader>cs :Tabularize /:\zs<CR>
-Plugin 'guns/vim-clojure-highlight'
-Plugin 'guns/vim-clojure-static'
-Plugin 'guns/vim-sexp'
-Plugin 'kana/vim-textobj-user' " Dependant for vim-textobj-rubyblock
-Plugin 'kien/ctrlp.vim'
-  map <leader>t <C-p>
-  map <leader>y :CtrlPBuffer<CR>
-  let g:ctrlp_show_hidden=1
-  let g:ctrlp_working_path_mode=0
-  let g:ctrlp_max_height=30
-  let g:ctrlp_arg_map = 1 " Override <C-o> to provide options for how to open files
-  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " Use Ag for searching instead of VimScript (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
-  let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$' " Directories to ignore when fuzzy finding
-Plugin 'kien/rainbow_parentheses.vim'
-Plugin 'mileszs/ack.vim'
-  let g:ackprg = 'ag --nogroup --nocolor --column'
-Plugin 'nelstrom/vim-textobj-rubyblock' " Relies on vim-textobj-user
-  runtime macros/matchit.vim
-Plugin 'othree/html5.vim'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/syntastic'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimfiler.vim'
-Plugin 'tpope/vim-commentary'
-  map <leader><leader><leader> gcc
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-fireplace'
-Plugin 'tpope/vim-leiningen'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-sexp-mappings-for-regular-people'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/Gist.vim'
-  let g:github_user = $GITHUB_USER
-  let g:gist_detect_filetype = 1
-  let g:gist_open_browser_after_post = 1
-Plugin 'vim-scripts/camelcasemotion'
-  map <silent> w <Plug>CamelCaseMotion_w
-  map <silent> b <Plug>CamelCaseMotion_b
-  map <silent> e <Plug>CamelCaseMotion_e
-  sunmap w
-  sunmap b
-  sunmap e
-
-" Closing settings required by Vundle
-call vundle#end()
+execute pathogen#infect()
 filetype plugin indent on
 
 " set background=dark
-colorscheme Tomorrow-Night
+" colorscheme Tomorrow-Night-Eighties
+colorscheme nofrils-light
+
+" vim-go
+let g:go_fmt_command = "goimports"
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
+" tabular
+map <Leader>e :Tabularize /=<CR>
+map <Leader>c :Tabularize /:<CR>
+map <Leader>es :Tabularize /=\zs<CR>
+map <Leader>cs :Tabularize /:\zs<CR>
+
+" ctrlp
+map <leader>t <C-p>
+map <leader>y :CtrlPBuffer<CR>
+let g:ctrlp_show_hidden=1
+let g:ctrlp_working_path_mode=0
+let g:ctrlp_max_height=30
+let g:ctrlp_arg_map = 1 " Override <C-o> to provide options for how to open files
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " Use Ag for searching instead of VimScript (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
+let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$' " Directories to ignore when fuzzy finding
+
+" ack
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
+" vim-textobj-rubyblock
+runtime macros/matchit.vim
+
+" vim-commentary
+xmap <leader><leader><leader> <Plug>Commentary
+nmap <leader><leader><leader> <Plug>Commentary
+omap <leader><leader><leader> <Plug>Commentary
+nmap <leader><leader><leader> <Plug>CommentaryLine
+
+" gist
+let g:github_user = $GITHUB_USER
+let g:gist_detect_filetype = 1
+let g:gist_open_browser_after_post = 1
+
+" camelcase
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+
+" nofrils
+let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
 
 " NeoVim shortcut for quick terminal exit
 :silent! tnoremap <Esc> <C-\><C-n>
