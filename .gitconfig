@@ -1,49 +1,56 @@
 [user]
-	name = Integralist
-	email = mark.mcdx@gmail.com
+  name = Integralist
+  email = mark.mcdx@gmail.com
 
 [alias]
-    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-    st = status
-    unstage = reset HEAD --
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  st = status
+  unstage = reset HEAD --
 
 [core]
-	excludesfile = ~/.gitignore_global
-    editor = vim
-    ignorecase = false
+  excludesfile = ~/.gitignore_global
+  editor = nvim
+  ignorecase = false
 
 [color]
-	ui = true
-	commit = red
+  ui = true
+  commit = red
 
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+  current = yellow reverse
+  local = yellow
+  remote = green
 
 [color "diff"]
-	meta = yellow
-	frag = magenta
-	old = red
-	new = green
+  meta = yellow
+  frag = magenta
+  old = red
+  new = green
 
 [color "status"]
-	added = red
-	changed = blue
-	untracked = magenta
+  added = red
+  changed = blue
+  untracked = magenta
 
 [push]
-    default = upstream
+  default = upstream
 
 [apply]
-    whitespace = nowarn
+  whitespace = nowarn
 
 [branch "develop"]
-    rebase = true
+  rebase = true
 
 [mergetool]
-	prompt = true
+  prompt = true
 
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+[color "diff-highlight"]
+  oldNormal = red bold
+  oldHighlight = red bold 52
+  newNormal = green bold
+  newHighlight = green bold 22
