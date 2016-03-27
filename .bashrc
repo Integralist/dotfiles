@@ -22,7 +22,7 @@
 #
 # this allows you to use <C-n> and <C-p> to tab through the ambigious cd suggestions
 
-# https://github.com/git/git/blob/8976500cbbb13270398d3b3e07a17b8cc7bff43f/contrib/completion/git-prompt.sh
+# https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
 # tells Readline to perform filename completion in a case-insensitive fashion

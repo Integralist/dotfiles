@@ -1,50 +1,52 @@
 # dotfiles
 
-### Configuration
+```bash
+curl -LSso ~/bootstrap.sh https://raw.githubusercontent.com/Integralist/dotfiles/master/bootstrap.sh
+/bin/bash bootstrap.sh
+```
 
-- Keyboard keypress speed (and smart quotes off) via System Preferences
-- Show Battery Percentage and Date/Time via System Preferences
-- Install Google Chrome, login and sync
+### Software
+
+- Install Google Chrome (login and sync)
 - AppStore: Slack, Twitter and Caffeine
 - MacDown (http://macdown.uranusjr.com/)
-- Terminal: 
-  - Bash shell (`brew install bash; echo /usr/local/bin/bash | sudo tee -a /etc/shells; chsh -s /usr/local/bin/bash`)
-  - Xcode (`xcode-select --install`)
 
 ### GitHub
 
 - Setup ssh keys for github use:  
-`cd ~/.ssh`, `ssh-keygen -t rsa -b 4096 -C "mark.mcdx@gmail.com"` and saved to `github_rsa`
+  ```bash
+  cd ~/.ssh && sshkey # github_rsa
+  ```
 - Start the ssh-agent:  
-`eval "$(ssh-agent -s)"`
+  ```bash
+  eval "$(ssh-agent -s)"
+  ```
 - Add the ssh key to the agent:  
-`ssh-add ~/.ssh/github_rsa`  
-(use `-K` flag for adding to Mac OSX Keychain for persistence)
-- `pbcopy < ~/.ssh/github_rsa.pub` and paste into GitHub gui.
-- Then `ssh -T git@github.com` to test the set-up is working
-- `git config --global user.email "mark.mcdx@gmail.com"`
-- `git config --global user.name "Integralist"`
+  ```bash
+  ssh-add -K ~/.ssh/github_rsa # -K for Mac OS X keychain persistence
+  ```
+- Get copy of public key:  
+  ```bash
+  pbcopy < ~/.ssh/github_rsa.pub # paste into GitHub GUI
+  ```
+- Test setup:  
+  ```bash
+  ssh -T git@github.com
+  ```
 
 > Note: you can also try out git-diff-fancy  
 > `npm install -g diff-so-fancy`  
 > One time: `git diff | diff-highlight | diff-so-fancy`  
 > Permanent: `git config --global core.pager "diff-so-fancy | less --tabs=1,5 -R"`
 
-### Software
+### Miscellaneous
 
-- Setup "Box Sync" and "Dropbox"
-  - `mkdir -p ~/.pki/bbc` then copy in certificates
+- Install "Box Sync" and "Dropbox"
+- Then copy in your certificates:  
+  ```bash
+  mkdir -p ~/.pki/bbc
+  ```
 - Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- Homebrew
-  - `brew update`
-  - `brew tap neovim/neovim && brew install --HEAD neovim` 
-  - `brew install curl --with-openssl --with-nghttp2 && brew link curl --force`
-  - `brew install git rbenv ruby-build irssi leiningen reattach-to-user-namespace siege terminal-notifier the_silver_searcher tmux tree gpg watch go wrk ngrok docker docker-machine`
-- Download from this dotfiles repo any folders/files you require (e.g. `.bashrc`)
-- Neovim
-  - [Setup Voom for Vim Plugins](http://www.integralist.co.uk/posts/bash-vim-configuration.html#9)
-  - Run `:set spell` after installing NeoVim (otherwise you'll see an error in future about it not being set)
-- Terminal theme
 - Golang
   - `go get golang.org/x/tools/cmd/goimports`
   - `mkdir -p ~/Projects/golang`
