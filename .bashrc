@@ -81,7 +81,6 @@ export CLOUD_CERT_PEM="$HOME/.pki/bbc/cloud-ca.pem"
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
-export DOCKER_TLS_VERIFY=1
 export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
 export PATH=$HOME/Projects/golang/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
@@ -224,4 +223,3 @@ alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 
 eval "$(rbenv init -)"
-eval "$(docker-machine env dev)"
