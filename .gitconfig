@@ -6,6 +6,7 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   st = status
   unstage = reset HEAD --
+  cloner = clone --recursive
 
 [core]
   excludesfile = ~/.gitignore_global
@@ -31,6 +32,9 @@
   added = red
   changed = blue
   untracked = magenta
+
+[fetch]
+  recurseSubmodules = true # still requires: git clone --recursive ...
 
 [push]
   default = upstream
