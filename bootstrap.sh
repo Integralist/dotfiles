@@ -93,6 +93,7 @@ packages=(\
   ruby-build\
   siege\
   sift\
+  speedtest-cli\
   terminal-notifier\
   the_silver_searcher\
   tmate\
