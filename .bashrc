@@ -221,5 +221,6 @@ alias c-="git checkout -"
 alias gcp="git cherry-pick -"
 alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
+alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
 
 eval "$(rbenv init -)"
