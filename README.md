@@ -39,6 +39,16 @@ curl -LSso ~/bootstrap.sh https://raw.githubusercontent.com/Integralist/dotfiles
 > One time: `git diff | diff-highlight | diff-so-fancy`  
 > Permanent: `git config --global core.pager "diff-so-fancy | less --tabs=1,5 -R"`
 
+### GPG
+
+- Create key `gpg --gen-key` (or import it if you already have one: `gpg --import`)
+- Add it to GitHub config `git config --global user.signingkey <hash>` (e.g. `4096R/12345678` then hash would be `12345678`)
+- Now when tagging git commits you'll use `-s` instead of `-a`
+
+> Note: if you have two separate git users  
+> then don't use `--global` flag and instead  
+> run command from root of each git repo
+
 ### Miscellaneous
 
 - Install "Box Sync" and "Dropbox"
