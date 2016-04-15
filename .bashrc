@@ -224,5 +224,6 @@ alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PEM | copy
+alias be="bundle exec"
 
 eval "$(rbenv init -)"
