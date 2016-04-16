@@ -57,7 +57,7 @@ brew tap neovim/neovim && brew install --HEAD neovim
 mkdir -p ~/.vim/{autoload,bundle}
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
-curl -LSso ~/usr/local/bin/voom https://raw.githubusercontent.com/airblade/voom/master/voom
+curl -LSso /usr/local/bin/voom https://raw.githubusercontent.com/airblade/voom/master/voom
 alias voom="VIM_DIR=~/.vim voom"
 voom
 
