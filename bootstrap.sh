@@ -201,7 +201,9 @@ git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
 
 # GitHub setup
-mkdir ~/.ssh && cd ~/.ssh && sshkey # sshkey is .bashrc alias
+mkdir ~/.ssh 
+curl -LSso ~/.ssh/config https://raw.githubusercontent.com/Integralist/dotfiles/master/.ssh/config
+cd ~/.ssh && sshkey # sshkey is .bashrc alias
 eval "$(ssh-agent -s)"
 printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub\n\n"
 ssh -T git@github.com
