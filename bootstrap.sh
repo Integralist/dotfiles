@@ -218,12 +218,6 @@ brew cask install java
 brew cask install macdown
 brew cask install vlc
 
-# Install applications from Mac App Store
-mas install 411246225 # Caffeine
-mas install 458034879 # Dash
-mas install 803453959 # Slack
-mas install 409789998 # Twitter
-
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/Projects/golang
 go get golang.org/x/tools/cmd/goimports
@@ -233,3 +227,10 @@ echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
 echo --color --format documentation --format=Nc > ~/.rspec
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 rm ~/smyck.terminal
+
+# Install applications from Mac App Store
+#mas install 411246225 # Caffeine
+#mas install 458034879 # Dash
+#mas install 803453959 # Slack
+#mas install 409789998 # Twitter
+printf \n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n""
