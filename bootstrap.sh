@@ -173,14 +173,14 @@ git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset 
 git config --global --add alias.st status
 git config --global --add alias.unstage "reset HEAD --"
 git config --global --add apply.whitespace nowarn
-git config --global --add color.branch.current yellow reverse
+git config --global --add color.branch.current "yellow reverse"
 git config --global --add color.branch.local yellow
 git config --global --add color.branch.remote green
 git config --global --add color.commit red
-git config --global --add color.diff-highlight.newhighlight green bold 22
-git config --global --add color.diff-highlight.newnormal green bold
-git config --global --add color.diff-highlight.oldhighlight red bold 52
-git config --global --add color.diff-highlight.oldnormal red bold
+git config --global --add color.diff-highlight.newhighlight "green bold 22"
+git config --global --add color.diff-highlight.newnormal "green bold"
+git config --global --add color.diff-highlight.oldhighlight "red bold 52"
+git config --global --add color.diff-highlight.oldnormal "red bold"
 git config --global --add color.diff.frag magenta
 git config --global --add color.diff.meta yellow
 git config --global --add color.diff.new green
