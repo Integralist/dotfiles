@@ -65,3 +65,14 @@ Otherwise here's a breakdown of what we need...
   - `go get golang.org/x/tools/cmd/goimports`
   - `mkdir -p ~/Projects/golang`
   - `go get github.com/svent/sift` (`sift --files 'c*\.go' -n package`)
+
+### Docker
+
+If you're unable to utilise the new Docker for Mac beta, then you'll need to manually install Vagrant and Virtual Box, along with Docker Machine and Docker Compose:
+
+- `brew cask install virtualbox`
+- `brew cask install vagrant`
+- `brew install docker-machine`
+- `brew install docker-compose`
+- `docker-machine create --driver virtualbox local`
+- `echo eval "$(docker-machine env local)" >> ~/.bashrc`
