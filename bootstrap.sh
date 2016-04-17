@@ -157,6 +157,7 @@ brew cask install box-sync
 brew cask install caffeine
 brew cask install dropbox
 brew cask install google-chrome
+brew cask install java
 brew cask install macdown
 brew cask install vlc
 
