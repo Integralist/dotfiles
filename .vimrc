@@ -7,6 +7,10 @@ syntax on
 " Don't worry about trying to support old school Vi features
 set nocompatible
 
+" Disable Mouse (this is something that only recently affected me within NeoVim)
+" Seemed using the mouse to select some text would make NeoVim jump into VISUAL mode?
+set mouse=
+
 " No backup files
 set nobackup
 
