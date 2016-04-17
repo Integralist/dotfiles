@@ -57,7 +57,7 @@ Otherwise here's a breakdown of what we need...
 
 - Install "Box Sync" and "Dropbox"
 - Then copy in your certificates:  
-  ```bash
+  ```
   mkdir -p ~/.pki/bbc
   ```
 - Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
