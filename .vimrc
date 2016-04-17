@@ -109,8 +109,7 @@ execute pathogen#infect()
 filetype plugin indent on
 
 " set background=dark
-" colorscheme Tomorrow-Night-Eighties
-colorscheme nofrils-light
+colorscheme github
 
 " vim-go
 let g:go_fmt_command = "goimports"

@@ -1,4 +1,5 @@
 chriskempson/vim-tomorrow-theme
+endel/vim-github-colorscheme
 ekalinin/Dockerfile.vim
 ervandew/supertab
 fatih/vim-go

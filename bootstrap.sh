@@ -4,7 +4,14 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+# Enable hidden files in Finder (use toggle_hidden function from ~/.bashrc)
+defaults write com.apple.finder AppleShowAllFiles YES
+
+# Show all file extensions in Finder
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
 # Decrease delay between repeated keys
+defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 0
 defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
@@ -18,6 +25,39 @@ defaults write com.apple.TextEdit SmartDashes -bool false
 defaults write com.apple.menuextra.clock "DateFormat" "EEE d MMM  HH:mm:ss"
 defaults write com.apple.menuextra.clock "FlashDateSeparators" 0
 defaults write com.apple.menuextra.clock "IsAnalog" 0
+
+# Configure Mouse Seconday Button
+defaults write com.apple.mouse "enableSecondaryClick" 1
+defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -string "TwoButton"
+
+# Enable snap-to-grid for icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:arrangeBy grid" ~/Library/Preferences/com.apple.finder.plist
+
+# Increase grid spacing for icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:gridSpacing 100" ~/Library/Preferences/com.apple.finder.plist
+
+# Increase the size of icons on the desktop and in other icon views
+/usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :FK_StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+/usr/libexec/PlistBuddy -c "Set :StandardViewSettings:IconViewSettings:iconSize 80" ~/Library/Preferences/com.apple.finder.plist
+
+# Expand the following File Info panes:
+# “General”, “Open with”, and “Sharing & Permissions”
+defaults write com.apple.finder FXInfoPanesExpanded -dict \
+	General -bool true \
+	OpenWith -bool true \
+	Privileges -bool true
+
+# Don’t automatically rearrange Spaces based on most recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Setup Terminal preferences
+defaults write com.apple.Terminal "Default Window Settings" Smyck
+defaults write com.apple.Terminal "Startup Window Settings" Smyck
 
 # Install xcode
 xcode-select --install
@@ -130,46 +170,46 @@ logs
 .vagrant*
 EOF
 
-git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-git config --global alias.st status
-git config --global alias.unstage "reset HEAD --"
-git config --global apply.whitespace nowarn
-git config --global color.branch.current yellow reverse
-git config --global color.branch.local yellow
-git config --global color.branch.remote green
-git config --global color.commit red
-git config --global color.diff-highlight.newhighlight=green bold 22
-git config --global color.diff-highlight.newnormal=green bold
-git config --global color.diff-highlight.oldhighlight=red bold 52
-git config --global color.diff-highlight.oldnormal=red bold
-git config --global color.diff.frag magenta
-git config --global color.diff.meta yellow
-git config --global color.diff.new green
-git config --global color.diff.old red
-git config --global color.status.added red
-git config --global color.status.changed blue
-git config --global color.status.untracked magenta
-git config --global color.ui true
-git config --global core.editor nvim
-git config --global core.excludesfile ~/.gitignore-global
-git config --global core.ignorecase false
-git config --global merge.conflictstyle diff3
-git config --global merge.tool vimdiff
-git config --global mergetool.prompt true
-git config --global push.default upstream
-git config --global url.git@github.com:.insteadof https://github.com/
-git config --global user.email mark.mcdx@gmail.com
-git config --global user.name Integralist
+git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+git config --global --add alias.st status
+git config --global --add alias.unstage "reset HEAD --"
+git config --global --add apply.whitespace nowarn
+git config --global --add color.branch.current yellow reverse
+git config --global --add color.branch.local yellow
+git config --global --add color.branch.remote green
+git config --global --add color.commit red
+git config --global --add color.diff-highlight.newhighlight green bold 22
+git config --global --add color.diff-highlight.newnormal green bold
+git config --global --add color.diff-highlight.oldhighlight red bold 52
+git config --global --add color.diff-highlight.oldnormal red bold
+git config --global --add color.diff.frag magenta
+git config --global --add color.diff.meta yellow
+git config --global --add color.diff.new green
+git config --global --add color.diff.old red
+git config --global --add color.status.added red
+git config --global --add color.status.changed blue
+git config --global --add color.status.untracked magenta
+git config --global --add color.ui true
+git config --global --add core.editor nvim
+git config --global --add core.excludesfile ~/.gitignore-global
+git config --global --add core.ignorecase false
+git config --global --add merge.conflictstyle diff3
+git config --global --add merge.tool vimdiff
+git config --global --add mergetool.prompt true
+git config --global --add push.default upstream
+git config --global --add url.git@github.com:.insteadof https://github.com/
+git config --global --add user.email mark.mcdx@gmail.com
+git config --global --add user.name Integralist
 
 # Install applications from Mac App Store
-mas installed 411246225 # Caffeine
-mas installed 458034879 # Dash
-mas installed 549083868 # Display Menu
-mas installed 409789998 # Twitter
+mas install 411246225 # Caffeine
+mas install 458034879 # Dash
+mas install 549083868 # Display Menu
+mas install 409789998 # Twitter
 
 # Miscellaneous
 echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
 echo --color --format documentation --format=Nc > ~/.rspec
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
-open ~/smyck.terminal
+open ~/smyck.terminal # don't forget to set theme as default

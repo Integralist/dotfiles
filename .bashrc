@@ -199,6 +199,20 @@ function rubo() {
     bbcnews/rubocop-config --format simple --fail-level F | grep '^F:\|=='
 }
 
+function toggle_hidden() {
+  setting=$(defaults read com.apple.finder AppleShowAllFiles)
+
+  if [ $setting == "NO" ]; then
+    echo "Enabling hidden files"
+    defaults write com.apple.finder AppleShowAllFiles YES
+  else
+    echo "Disabling hidden files"
+    defaults write com.apple.finder AppleShowAllFiles NO
+  fi
+
+  killall Finder
+}
+
 read -r -d '' git_icons <<- EOF
 * unstaged changes
 + staged but uncommitted changes
