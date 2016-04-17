@@ -83,7 +83,7 @@ export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
-export PATH=$HOME/Projects/golang/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
+export PATH=$HOME/Projects/golang/bin:/usr/local/sbin:$PATH
 export EDITOR="vim"
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
