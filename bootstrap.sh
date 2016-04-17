@@ -56,6 +56,8 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 defaults write com.apple.dock mru-spaces -bool false
 
 # Setup Terminal preferences
+curl -LSso ~/smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
+open ~/smyck.terminal
 defaults write com.apple.Terminal "Default Window Settings" Smyck
 defaults write com.apple.Terminal "Startup Window Settings" Smyck
 
@@ -211,5 +213,3 @@ mas install 409789998 # Twitter
 echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
 echo --color --format documentation --format=Nc > ~/.rspec
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
-curl -LSso ~/smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
-open ~/smyck.terminal # don't forget to set theme as default
