@@ -205,11 +205,18 @@ git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
 
 # GitHub setup
-mkdir ~/.ssh 
+mkdir ~/.ssh
 curl -LSso ~/.ssh/config https://raw.githubusercontent.com/Integralist/dotfiles/master/.ssh/config
 cd ~/.ssh && sshkey # sshkey is .bashrc alias
 eval "$(ssh-agent -s)"
-printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub\n\n"
+printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub"
+printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+fi
 ssh -T git@github.com
 
 # Install some apps via Brew Cask
@@ -237,4 +244,4 @@ rm ~/smyck.terminal
 #mas install 458034879 # Dash
 #mas install 803453959 # Slack
 #mas install 409789998 # Twitter
-printf \n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n""
+printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
