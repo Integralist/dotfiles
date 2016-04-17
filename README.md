@@ -18,23 +18,23 @@ Otherwise here's a breakdown of what we need...
 ### GitHub
 
 - Setup ssh keys for github use:  
-  ```bash
+  ```
   cd ~/.ssh && sshkey # github_rsa
   ```
 - Start the ssh-agent:  
-  ```bash
+  ```
   eval "$(ssh-agent -s)"
   ```
 - Add the ssh key to the agent:  
-  ```bash
+  ```
   ssh-add -K ~/.ssh/github_rsa # -K for Mac OS X keychain persistence
   ```
 - Get copy of public key:  
-  ```bash
+  ```
   pbcopy < ~/.ssh/github_rsa.pub # paste into GitHub GUI
   ```
 - Test setup:  
-  ```bash
+  ```
   ssh -T git@github.com
   ```
 
