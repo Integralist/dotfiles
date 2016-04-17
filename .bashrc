@@ -38,7 +38,10 @@ bind "set show-all-if-ambiguous on"
 bind "set bell-style none"
 
 # enable vi like bindings (http://blog.sanctum.geek.nz/vi-mode-in-bash/)
-set -o vi
+#set -o vi
+
+# enable emacs like bindings (<C-a> and <C-e> for start and end of line shortcuts)
+set -o emacs
 
 # append to the history file, don't overwrite it
 shopt -s histappend
