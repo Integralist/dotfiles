@@ -47,10 +47,7 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.mouse MouseButtonMode -
 
 # Expand the following File Info panes:
 # “General”, “Open with”, and “Sharing & Permissions”
-defaults write com.apple.finder FXInfoPanesExpanded -dict \
-	General -bool true \
-	OpenWith -bool true \
-	Privileges -bool true
+defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true OpenWith -bool true Privileges -bool true Preview -bool false
 
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
@@ -58,8 +55,8 @@ defaults write com.apple.dock mru-spaces -bool false
 # Setup Terminal preferences
 curl -LSso ~/smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
 open ~/smyck.terminal
-defaults write com.apple.Terminal "Default Window Settings" Smyck
-defaults write com.apple.Terminal "Startup Window Settings" Smyck
+defaults write com.apple.Terminal "Default Window Settings" smyck
+defaults write com.apple.Terminal "Startup Window Settings" smyck
 
 # Install xcode
 xcode-select --install
@@ -151,22 +148,6 @@ do
   brew install $package
 done
 
-# Install some apps via Brew Cask
-brew cask
-brew cask install box-sync
-brew cask install caffeine
-brew cask install dropbox
-brew cask install google-chrome
-brew cask install java
-brew cask install macdown
-brew cask install vlc
-
-# Install applications from Mac App Store
-mas install 411246225 # Caffeine
-mas install 458034879 # Dash
-mas install 803453959 # Slack
-mas install 409789998 # Twitter
-
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 
@@ -219,6 +200,28 @@ git config --global --add url.git@github.com:.insteadof https://github.com/
 git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
 
+# GitHub setup
+mkdir ~/.ssh && cd ~/.ssh && sshkey # sshkey is .bashrc alias
+eval "$(ssh-agent -s)"
+printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub\n\n"
+ssh -T git@github.com
+
+# Install some apps via Brew Cask
+brew cask
+brew cask install box-sync
+brew cask install caffeine
+brew cask install dropbox
+brew cask install google-chrome
+brew cask install java
+brew cask install macdown
+brew cask install vlc
+
+# Install applications from Mac App Store
+mas install 411246225 # Caffeine
+mas install 458034879 # Dash
+mas install 803453959 # Slack
+mas install 409789998 # Twitter
+
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/Projects/golang
 go get golang.org/x/tools/cmd/goimports
@@ -227,3 +230,4 @@ go get golang.org/x/tools/cmd/goimports
 echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
 echo --color --format documentation --format=Nc > ~/.rspec
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
+rm ~/smyck.terminal
