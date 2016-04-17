@@ -1,9 +1,13 @@
 # dotfiles
 
+If you want to just get going then execute:
+
 ```bash
 curl -LSso ~/bootstrap.sh https://raw.githubusercontent.com/Integralist/dotfiles/master/bootstrap.sh
 /bin/bash bootstrap.sh
 ```
+
+Otherwise here's a breakdown of what we need...
 
 ### Software
 

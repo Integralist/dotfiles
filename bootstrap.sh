@@ -151,6 +151,21 @@ do
   brew install $package
 done
 
+# Install some apps via Brew Cask
+brew cask
+brew cask install box-sync
+brew cask install caffeine
+brew cask install dropbox
+brew cask install google-chrome
+brew cask install macdown
+brew cask install vlc
+
+# Install applications from Mac App Store
+mas install 411246225 # Caffeine
+mas install 458034879 # Dash
+mas install 803453959 # Slack
+mas install 409789998 # Twitter
+
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 
@@ -203,11 +218,9 @@ git config --global --add url.git@github.com:.insteadof https://github.com/
 git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
 
-# Install applications from Mac App Store
-mas install 411246225 # Caffeine
-mas install 458034879 # Dash
-mas install 549083868 # Display Menu
-mas install 409789998 # Twitter
+# Configure Golang (~/.bashrc already sets GOPATH)
+mkdir -p ~/Projects/golang
+go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
 echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
