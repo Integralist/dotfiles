@@ -227,6 +227,7 @@ brew cask install dropbox
 brew cask install google-chrome
 brew cask install java
 brew cask install macdown
+brew cask install spotify
 brew cask install vlc
 
 # Configure Golang (~/.bashrc already sets GOPATH)
