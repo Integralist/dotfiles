@@ -131,6 +131,7 @@ packages=(\
   netcat\
   ngrok\
   node\
+  python3\
   rbenv\
   reattach-to-user-namespace\
   ruby-build\
@@ -151,6 +152,10 @@ for package in "${packages[@]}"
 do
   brew install $package
 done
+
+# Install Python Syntax Checker
+sudo easy_install pip
+sudo pip install flake8
 
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh

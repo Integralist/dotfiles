@@ -65,6 +65,9 @@ Otherwise here's a breakdown of what we need...
   - `go get golang.org/x/tools/cmd/goimports`
   - `mkdir -p ~/Projects/golang`
   - `go get github.com/svent/sift` (`sift --files 'c*\.go' -n package`)
+- Python
+  - `sudo easy_install pip`
+  - `sudo pip install flake8` 
 
 ### Docker
 
