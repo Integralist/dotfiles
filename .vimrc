@@ -115,6 +115,19 @@ filetype plugin indent on
 " set background=dark
 colorscheme github
 
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" easily switch between python 2 and 3
+map p2 :let g:syntastic_python_python_exec = "/usr/bin/python"<CR>:w<CR>
+map p3 :let g:syntastic_python_python_exec = "/usr/local/bin/python3"<CR>:w<CR>
+
 " vim-go
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
