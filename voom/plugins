@@ -8,6 +8,7 @@ guns/vim-clojure-highlight
 guns/vim-clojure-static
 guns/vim-sexp
 kana/vim-textobj-user
+kevinw/pyflakes-vim
 kien/ctrlp.vim
 kien/rainbow_parentheses.vim
 m-kat/aws-vim
