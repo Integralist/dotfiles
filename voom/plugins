@@ -8,12 +8,12 @@ guns/vim-clojure-highlight
 guns/vim-clojure-static
 guns/vim-sexp
 kana/vim-textobj-user
-kevinw/pyflakes-vim
 kien/ctrlp.vim
 kien/rainbow_parentheses.vim
 m-kat/aws-vim
 mileszs/ack.vim
 nelstrom/vim-textobj-rubyblock
+nvie/vim-flake8
 othree/html5.vim
 plasticboy/vim-markdown
 robertmeta/nofrils
