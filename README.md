@@ -68,6 +68,7 @@ Otherwise here's a breakdown of what we need...
 - Python
   - `sudo easy_install pip`
   - `sudo pip install flake8` 
+  - `sudo pip install pylint`
 
 ### Docker
 
