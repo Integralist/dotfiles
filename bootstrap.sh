@@ -157,6 +157,7 @@ done
 sudo easy_install pip
 sudo pip install flake8
 sudo pip install pylint
+sudo pip install virtualenv
 
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
