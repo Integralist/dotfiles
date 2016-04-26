@@ -131,7 +131,7 @@ packages=(\
   netcat\
   ngrok\
   node\
-  python3\
+  pyenv\
   rbenv\
   reattach-to-user-namespace\
   ruby-build\
@@ -154,10 +154,7 @@ do
 done
 
 # Install Python Syntax Checker
-sudo easy_install pip
-sudo pip install flake8
-sudo pip install pylint
-sudo pip install virtualenv
+pip install pylint
 
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh

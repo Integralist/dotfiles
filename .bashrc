@@ -244,3 +244,4 @@ alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PEM | copy
 alias be="bundle exec"
 
 eval "$(rbenv init -)"
+eval "$(pyenv init -)"

@@ -127,10 +127,6 @@ let g:syntastic_check_on_wq = 0
 " configure pylint to disable certain annoying messages about docstrings
 let g:syntastic_python_pylint_args="-d C0111"
 
-" easily switch between python 2 and 3
-map p2 :let g:syntastic_python_python_exec = "/usr/bin/python"<CR>:w<CR>
-map p3 :let g:syntastic_python_python_exec = "/usr/local/bin/python3"<CR>:w<CR>
-
 " vim-go
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
