@@ -88,6 +88,7 @@ export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
 export PATH=$HOME/Projects/golang/bin:/usr/local/sbin:$PATH
 export EDITOR="vim"
+export HOMEBREW_NO_ANALYTICS=1
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
 # git specific configurations
