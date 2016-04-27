@@ -124,8 +124,9 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" configure pylint to disable certain annoying messages about docstrings
-let g:syntastic_python_pylint_args="-d C0111"
+" configure pylint to disable certain annoying messages
+" http://pylint-messages.wikidot.com/all-codes
+let g:syntastic_python_pylint_args="-d C0111,R0201"
 
 " vim-go
 let g:go_fmt_command = "goimports"
