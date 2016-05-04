@@ -126,7 +126,7 @@ let g:syntastic_check_on_wq = 0
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
-let g:syntastic_python_pylint_args="-d C0111,R0201"
+let g:syntastic_python_pylint_args="-d C0103,C0111,R0201"
 
 " vim-go
 let g:go_fmt_command = "goimports"
