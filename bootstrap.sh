@@ -120,6 +120,7 @@ packages=(\
   docker-compose-completion\
   docker-machine\
   docker\
+  fzf \
   gem-completion\
   gist\
   git\
