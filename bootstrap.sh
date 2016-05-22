@@ -254,3 +254,4 @@ rm ~/smyck.terminal
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
 
 keybase login
+# keybase prove twitter integralist
