@@ -127,6 +127,7 @@ packages=(\
   go\
   gpg\
   irssi\
+  keybase \
   leiningen\
   mutt\
   netcat\
@@ -251,3 +252,5 @@ rm ~/smyck.terminal
 #mas install 803453959 # Slack
 #mas install 409789998 # Twitter
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
+
+keybase login
