@@ -255,3 +255,4 @@ printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Stor
 
 keybase login
 # keybase prove twitter integralist
+# keybase prove github integralist
