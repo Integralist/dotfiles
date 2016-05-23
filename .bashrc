@@ -86,7 +86,7 @@ export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
 export GOPATH=$HOME/Projects/golang
-export PATH=$HOME/Projects/golang/bin:/usr/local/sbin:$PATH
+export PATH=$HOME/Projects/golang/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
 export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 # export PROMPT_DIRTRIM=4 # truncate start of long path
@@ -217,6 +217,10 @@ function toggle_hidden() {
   killall Finder
 }
 
+function gms() {
+  git merge --squash $1
+}
+
 read -r -d '' git_icons <<- EOF
 * unstaged changes
 + staged but uncommitted changes
@@ -241,8 +245,10 @@ alias gcp="git cherry-pick -"
 alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
-alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PEM | copy
+alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
