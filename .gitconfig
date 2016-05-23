@@ -1,8 +1,8 @@
 # https://git-scm.com/docs/git-config
 
 [alias]
-	st = status
-	unstage = reset HEAD --
+  st = status
+  unstage = reset HEAD --
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
 [apply]
@@ -12,7 +12,7 @@
   rebase = true
 
 [color]
-	ui = true
+  ui = true
   commit = red
 
 [color "diff"]
@@ -33,9 +33,9 @@
   untracked = white
 
 [core]
-	editor = nvim
-	excludesfile = ~/.gitignore-global
-	ignorecase = false
+  editor = nvim
+  excludesfile = ~/.gitignore-global
+  ignorecase = false
 
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
@@ -51,8 +51,8 @@
   default = upstream
 
 [url "git@github.com:"]
-	insteadof = https://github.com/
+  insteadof = https://github.com/
 
 [user]
-	name = Integralist
+  name = Integralist
   email = mark.mcdx@gmail.com
