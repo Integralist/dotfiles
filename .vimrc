@@ -10,7 +10,6 @@ set nocompatible
 " Disable Mouse (this is something that only recently affected me within NeoVim)
 " Seemed using the mouse to select some text would make NeoVim jump into VISUAL mode?
 set mouse=
-
 " No backup files
 set nobackup
 
@@ -121,8 +120,10 @@ let g:netrw_liststyle=3
 execute pathogen#infect()
 filetype plugin indent on
 
-" set background=dark
-colorscheme github
+set background=dark
+colorscheme Tomorrow-Night
+" colorscheme nofrils-light
+" colorscheme github
 
 " syntastic
 set statusline+=%#warningmsg#
