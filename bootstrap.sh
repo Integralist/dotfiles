@@ -53,10 +53,10 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 defaults write com.apple.dock mru-spaces -bool false
 
 # Setup Terminal preferences
-curl -LSso ~/smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
-open ~/smyck.terminal
-defaults write com.apple.Terminal "Default Window Settings" smyck
-defaults write com.apple.Terminal "Startup Window Settings" smyck
+curl -LSso ~/SolarizedDark.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Solarized-Dark.terminal
+open ~/SolarizedDark.terminal
+defaults write com.apple.Terminal "Default Window Settings" SolarizedDark
+defaults write com.apple.Terminal "Startup Window Settings" SolarizedDark
 
 # Install xcode
 xcode-select --install
@@ -237,14 +237,15 @@ brew cask install spotify
 brew cask install vlc
 
 # Configure Golang (~/.bashrc already sets GOPATH)
-mkdir -p ~/Projects/golang
+mkdir -p ~/code/go
 go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
 echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
 echo --color --format documentation --format=Nc > ~/.rspec
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
-rm ~/smyck.terminal
+rm ~/SolarizedDark.terminal
+npm install -g tldr # https://github.com/tldr-pages/tldr
 
 # Install applications from Mac App Store
 #mas install 411246225 # Caffeine
