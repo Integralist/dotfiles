@@ -110,6 +110,9 @@ set lazyredraw
 " Highlight a matching [{()}] when cursor is placed on start/end character
 set showmatch
 
+" Use Sift (https://sift-tool.org/) for :grep command
+set grepprg=sift\ -n\ -X\ log\ --binary-skip\ $*
+
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 " P opens file in previously focused window
 " o opens file in new horizontal split window
