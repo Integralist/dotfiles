@@ -120,6 +120,7 @@ colorscheme Tomorrow-Night
 " colorscheme github
 
 " syntastic
+" use :SyntasticInfo for debugging issues
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
