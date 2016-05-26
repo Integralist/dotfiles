@@ -63,15 +63,6 @@ set shiftwidth=2
 " Turn on line numbers
 set number
 
-" Use relative line numbers
-set relativenumber
-
-" Configure relative line numbers off at certain times
-autocmd FocusLost * :set number | set norelativenumber
-autocmd FocusGained * :set relativenumber | set nonumber
-autocmd InsertEnter * :set number | set norelativenumber
-autocmd InsertLeave * :set relativenumber | set nonumber
-
 " Highlight tailing whitespace
 set list listchars=tab:\ \ ,trail:·
 
