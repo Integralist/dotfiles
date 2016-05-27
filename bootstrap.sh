@@ -58,6 +58,16 @@ open ~/SolarizedDark.terminal
 defaults write com.apple.Terminal "Default Window Settings" SolarizedDark
 defaults write com.apple.Terminal "Startup Window Settings" SolarizedDark
 
+printf "\n\nDon't forget to change the terminal font to menlo (and double check theme is set to default)"
+printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
 # Install xcode
 xcode-select --install
 
@@ -102,7 +112,7 @@ alias voom='VIM_DIR=~/.vim voom'
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-voom
+voomr
 
 nvim -E -s <<EOF
 :set spell
@@ -222,6 +232,7 @@ if [ $cont == "y" ] || [ $cont == "Y" ] ; then
   echo "Cool, let's keep going..."
 else
   echo "OK let's stop here and you can continue on manually"
+  exit
 fi
 ssh -T git@github.com
 
@@ -255,4 +266,4 @@ printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Stor
 
 keybase login
 # keybase prove twitter integralist
-# keybase prove github integralist  
+# keybase prove github integralist
