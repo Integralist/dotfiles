@@ -256,6 +256,7 @@ curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/m
 curl -LSso ~/.gitignore-global https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitignore-global
 curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
 curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
+curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
 npm install -g tldr # https://github.com/tldr-pages/tldr
