@@ -226,15 +226,14 @@ fi
 ssh -T git@github.com
 
 # Install some apps via Brew Cask
-brew cask
-brew cask install box-sync
-brew cask install caffeine
-brew cask install dropbox
-brew cask install google-chrome
-brew cask install java
-brew cask install macdown
-brew cask install spotify
-brew cask install vlc
+brew cask install --appdir="/Applications" caffeine
+brew cask install --appdir="/Applications" dropbox
+brew cask install --appdir="/Applications" google-chrome
+brew cask install --appdir="/Applications" google-drive
+brew cask install --appdir="/Applications" java
+brew cask install --appdir="/Applications" macdown
+brew cask install --appdir="/Applications" spotify
+brew cask install --appdir="/Applications" vlc
 
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/code/go
@@ -256,4 +255,4 @@ printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Stor
 
 keybase login
 # keybase prove twitter integralist
-# keybase prove github integralist
+# keybase prove github integralist  
