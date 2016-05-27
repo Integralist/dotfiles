@@ -57,6 +57,7 @@ curl -LSso ~/SolarizedDark.terminal https://raw.githubusercontent.com/Integralis
 open ~/SolarizedDark.terminal
 defaults write com.apple.Terminal "Default Window Settings" SolarizedDark
 defaults write com.apple.Terminal "Startup Window Settings" SolarizedDark
+rm ~/SolarizedDark.terminal
 
 printf "\n\nDon't forget to change the terminal font to menlo (and double check theme is set to default)"
 printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
@@ -255,7 +256,6 @@ curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/maste
 curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
-rm ~/SolarizedDark.terminal
 npm install -g tldr # https://github.com/tldr-pages/tldr
 
 # Install applications from Mac App Store
