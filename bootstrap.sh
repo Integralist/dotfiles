@@ -252,7 +252,7 @@ go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
 curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
-curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
+curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
 rm ~/SolarizedDark.terminal
