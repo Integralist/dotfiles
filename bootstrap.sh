@@ -251,9 +251,10 @@ mkdir -p ~/code/go
 go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
-echo COMMAND open %s > ~/.urlview # use <Ctrl-b> within mutt to activate
-echo --color --format documentation --format=Nc > ~/.rspec
+curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
+curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
+curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
 rm ~/SolarizedDark.terminal
 npm install -g tldr # https://github.com/tldr-pages/tldr
 
