@@ -115,9 +115,10 @@ execute pathogen#infect()
 filetype plugin indent on
 
 set background=dark
-colorscheme Tomorrow-Night
-" colorscheme nofrils-light
+colorscheme integralist
 " colorscheme github
+" colorscheme Tomorrow-Night
+" colorscheme nofrils-light
 
 " syntastic
 " use :SyntasticInfo for debugging issues
