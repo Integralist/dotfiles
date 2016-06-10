@@ -130,6 +130,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
 let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'jruby']
+let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
