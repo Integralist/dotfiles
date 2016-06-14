@@ -23,10 +23,12 @@
   old = red
 
 [color "diff-highlight"]
-  newHighlight = green bold 22
-  newNormal = green bold
-  oldHighlight = red bold 52
-  oldNormal = red bold
+  # for some reason my terminal theme needs pink to be set for the
+  # actual colors (red/green) to standout more clearly??
+  newhighlight = pink bold 22
+  newnormal = pink bold
+  oldhighlight = pink bold 52
+  oldnormal = pink bold
 
 [color "status"]
   added = red
