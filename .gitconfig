@@ -4,6 +4,7 @@
   st = status
   unstage = reset HEAD --
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  log = log --graph
 
 [apply]
   whitespace = nowarn
@@ -40,12 +41,20 @@
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
 
+[interactive]
+	diffFilter = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight
+
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
   tool = vimdiff
 
 [mergetool]
   prompt = true
+
+[pager]
+	log = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
+	show = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
+	diff = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
 
 [push]
   default = upstream
