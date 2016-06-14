@@ -167,9 +167,6 @@ do
   brew install $package
 done
 
-# Install Python Syntax Checker
-pip install pylint
-
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 
@@ -272,6 +269,9 @@ npm install -g tldr # https://github.com/tldr-pages/tldr
 #mas install 803453959 # Slack
 #mas install 409789998 # Twitter
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
+
+# Install Python Syntax Checker
+printf "-> pip install pylint <- don't forget\n\n"
 
 keybase login
 # keybase prove twitter integralist
