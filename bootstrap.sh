@@ -221,6 +221,10 @@ git config --global --add push.default upstream
 git config --global --add url.git@github.com:.insteadof https://github.com/
 git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
+git config --global --add pager.log '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
+git config --global --add pager.show '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
+git config --global --add pager.diff '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
+git config --global --add interactive.diffFilter /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight
 
 # GitHub setup
 mkdir ~/.ssh
