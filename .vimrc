@@ -114,8 +114,10 @@ let g:netrw_liststyle=3
 execute pathogen#infect()
 filetype plugin indent on
 
+let g:default_theme="integralist"
+
 set background=dark
-colorscheme integralist
+execute 'colorscheme ' . g:default_theme
 " colorscheme github
 " colorscheme Tomorrow-Night
 " colorscheme nofrils-light
@@ -206,6 +208,10 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 
 " See `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
+
+" Set different colorscheme for Bash and VimL scripts
+autocmd BufEnter *.sh,*.vimrc colorscheme fahrenheit
+autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
