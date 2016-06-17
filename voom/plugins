@@ -3,6 +3,7 @@ endel/vim-github-colorscheme
 ekalinin/Dockerfile.vim
 ervandew/supertab
 fatih/vim-go
+fcpg/vim-fahrenheit
 godlygeek/tabular
 guns/vim-clojure-highlight
 guns/vim-clojure-static
@@ -13,7 +14,6 @@ kien/rainbow_parentheses.vim
 m-kat/aws-vim
 mileszs/ack.vim
 nelstrom/vim-textobj-rubyblock
-nvie/vim-flake8
 othree/html5.vim
 plasticboy/vim-markdown
 robertmeta/nofrils
