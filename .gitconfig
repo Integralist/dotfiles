@@ -40,11 +40,14 @@
   excludesfile = ~/.gitignore-global
   ignorecase = false
 
+[diff]
+  compactionHeuristic = true
+
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
 
 [interactive]
-	diffFilter = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight
+  diffFilter = ~/diff-highlight
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
@@ -54,9 +57,9 @@
   prompt = true
 
 [pager]
-	log = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
-	show = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
-	diff = /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less
+  log = ~/diff-highlight | less
+  show = ~/diff-highlight | less
+  diff = ~/diff-highlight | less
 
 [push]
   default = upstream
