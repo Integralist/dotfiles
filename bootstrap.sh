@@ -53,11 +53,11 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 defaults write com.apple.dock mru-spaces -bool false
 
 # Setup Terminal preferences
-curl -LSso ~/SolarizedDark.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Solarized-Dark.terminal
-open ~/SolarizedDark.terminal
-defaults write com.apple.Terminal "Default Window Settings" SolarizedDark
-defaults write com.apple.Terminal "Startup Window Settings" SolarizedDark
-rm ~/SolarizedDark.terminal
+curl -LSso ~/Smyck.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Smyck.terminal
+open ~/Smyck.terminal
+defaults write com.apple.Terminal "Default Window Settings" Smyck
+defaults write com.apple.Terminal "Startup Window Settings" Smyck
+rm ~/Smyck.terminal
 
 printf "\n\nDon't forget to change the terminal font to menlo (and double check theme is set to default)"
 printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
