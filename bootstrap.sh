@@ -188,6 +188,9 @@ logs
 .vagrant*
 EOF
 
+curl -LSso ~/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
+chmod +x ~/diff-highlight
+
 git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 git config --global --add alias.st status
 git config --global --add alias.unstage "reset HEAD --"
@@ -218,10 +221,10 @@ git config --global --add push.default upstream
 git config --global --add url.git@github.com:.insteadof https://github.com/
 git config --global --add user.email mark.mcdx@gmail.com
 git config --global --add user.name Integralist
-git config --global --add pager.log '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
-git config --global --add pager.show '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
-git config --global --add pager.diff '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
-git config --global --add interactive.diffFilter /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight
+git config --global --add pager.log '~/diff-highlight | less'
+git config --global --add pager.show '~/diff-highlight | less'
+git config --global --add pager.diff '~/diff-highlight | less'
+git config --global --add interactive.diffFilter ~/diff-highlight
 git config --global --add diff.compactionHeuristic true
 
 # GitHub setup
