@@ -222,6 +222,7 @@ git config --global --add pager.log '/usr/local/Cellar/git/2.9.0/share/git-core/
 git config --global --add pager.show '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
 git config --global --add pager.diff '/usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight | less'
 git config --global --add interactive.diffFilter /usr/local/Cellar/git/2.9.0/share/git-core/contrib/diff-highlight/diff-highlight
+git config --global --add diff.compactionHeuristic true
 
 # GitHub setup
 mkdir ~/.ssh
