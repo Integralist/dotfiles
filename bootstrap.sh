@@ -105,13 +105,14 @@ brew tap neovim/neovim && brew install --HEAD neovim
 
 # Configure NeoVim/Vim
 mkdir -p ~/.vim/{autoload,bundle,colors}
-curl -LSso ~/.vim/colors https://raw.githubusercontent.com/Integralist/dotfiles/master/.vim/colors/integralist.vim
+curl -LSso ~/.vim/colors/integralist.vim https://raw.githubusercontent.com/Integralist/dotfiles/master/.vim/colors/integralist.vim
 curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
 curl -LSso ~/.vim/plugins https://raw.githubusercontent.com/Integralist/dotfiles/master/voom/plugins
 curl -LSso /usr/local/bin/voom https://raw.githubusercontent.com/airblade/voom/master/voom
 chmod 744 /usr/local/bin/voom
 alias voom='VIM_DIR=~/.vim voom'
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
+# mkdir -p .config/nvim
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 voom
