@@ -114,7 +114,7 @@ alias voom='VIM_DIR=~/.vim voom'
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
-voomr
+voom
 
 nvim -E -s <<EOF
 :set spell
