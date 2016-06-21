@@ -245,6 +245,7 @@ fi
 ssh -T git@github.com
 
 # Install some apps via Brew Cask
+brew cask
 brew cask install --appdir="/Applications" caffeine
 brew cask install --appdir="/Applications" dropbox
 brew cask install --appdir="/Applications" google-chrome
