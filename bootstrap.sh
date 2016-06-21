@@ -139,6 +139,7 @@ packages=(\
   git\
   go\
   gpg\
+  gpg-agent\
   irssi\
   keybase \
   leiningen\
@@ -269,6 +270,10 @@ curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/m
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
 npm install -g tldr # https://github.com/tldr-pages/tldr
+
+# Needed to add your GPG keys to the agent
+# http://linux.die.net/man/1/gpg-agent 
+eval $(gpg-agent --daemon)
 
 # Install applications from Mac App Store
 #mas install 411246225 # Caffeine
