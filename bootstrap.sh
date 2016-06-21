@@ -232,6 +232,7 @@ mkdir ~/.ssh
 curl -LSso ~/.ssh/config https://raw.githubusercontent.com/Integralist/dotfiles/master/.ssh/config
 cd ~/.ssh && sshkey # sshkey is .bashrc alias
 eval "$(ssh-agent -s)"
+ssh-add -K ~/.ssh/github_rsa
 printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub"
 printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
 read cont
