@@ -73,22 +73,17 @@ CDPATH=".:~/Projects"
 
 # custom environment variables
 export DROPBOX="$HOME/Dropbox"
-export BBC="$HOME/Projects/BBC"
 export GITHUB_USER="integralist"
-export DEV_CERT_PATH="$HOME/.pki/bbc"
-export DEV_CERT_PEM="$HOME/.pki/bbc/Certificate.pem"
-export DEV_CERT_P12="$HOME/.pki/bbc/Certificate.p12"
-export CLOUD_CERT_PEM="$HOME/.pki/bbc/cloud-ca.pem"
 
 # application configuration
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
-export BBC_COSMOS_TOOLS_CERT=$DEV_CERT_PEM
-export GOPATH=$HOME/Projects/golang
-export PATH=$HOME/Projects/golang/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
+export GOPATH=$HOME/code/go
+export PATH=$HOME/code/go/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
 export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
+export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
 # git specific configurations
@@ -247,6 +242,8 @@ alias wut='echo "$git_icons"'
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
+alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
+alias sshvm="ssh root@rig.dev"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
