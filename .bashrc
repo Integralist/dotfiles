@@ -243,7 +243,8 @@ alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/c
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
 alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
-alias sshvm="ssh root@rig.dev"
+alias sshvm="ssh rig.dev"
+alias gr="cd ../$(basename $(pwd))" # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
