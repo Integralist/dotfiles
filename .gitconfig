@@ -4,7 +4,7 @@
   st = status
   unstage = reset HEAD --
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  log = log --graph
+  logg = log --graph # you can't alias over existing commands (so I couldn't do `log = ...`)
   logme = log --graph --author='Mark McDonnell'
 
 [apply]
