@@ -216,6 +216,22 @@ function gms() {
   git merge --squash $1
 }
 
+function gr {
+  local path=$(basename $(pwd))
+  cd "../$path" # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
+}
+
+function pt {
+  local app=$1
+  local env=${2:-stage}
+
+  if [ -z "$1" ]; then
+    printf "\n\tUse: pt <service> [env=stage]\n"
+  else
+    papertrail -f "docker/$env/$app"
+  fi
+}
+
 read -r -d '' git_icons <<- EOF
 * unstaged changes
 + staged but uncommitted changes
@@ -244,7 +260,6 @@ alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
 alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
 alias sshvm="ssh rig.dev"
-alias gr="cd ../$(basename $(pwd))" # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
