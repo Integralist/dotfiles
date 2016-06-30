@@ -138,6 +138,9 @@ let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 " http://pylint-messages.wikidot.com/all-codes
 let g:syntastic_python_pylint_args="-d C0103,C0111,R0201"
 
+" vim-flake8
+let g:flake8_ignore="E302"
+
 " vim-go
 let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
@@ -216,6 +219,10 @@ autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
 " Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
+
+" Run Flake8 when writing a Python file
+autocmd BufWritePost *.py if exists(':Flake8') | :call Flake8() | endif
+" autocmd BufWritePost *.py call Flake8()
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
