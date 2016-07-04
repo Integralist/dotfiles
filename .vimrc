@@ -137,7 +137,7 @@ let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
-let g:syntastic_python_pylint_args="-d C0103,C0111,R0201"
+let g:syntastic_python_pylint_args="-d C0103,C0111,F0401,R0201,R0903,W0703"
 
 " vim-flake8
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
