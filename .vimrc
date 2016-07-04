@@ -223,8 +223,7 @@ autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
 " Run Flake8 when writing a Python file
-autocmd BufWritePost *.py if exists(':Flake8') | :call Flake8() | endif
-" autocmd BufWritePost *.py call Flake8()
+autocmd BufWritePost *.py :call Flake8()
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
