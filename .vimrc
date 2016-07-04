@@ -131,9 +131,11 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
+let g:syntastic_aggregate_errors = 1
 let g:syntastic_python_checkers = ['flake8', 'pylint']
 let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'jruby']
 let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
+let g:syntastic_loc_list_height = 5
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
