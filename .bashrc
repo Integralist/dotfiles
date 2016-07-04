@@ -260,6 +260,8 @@ alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
 alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
 alias sshvm="ssh rig.dev"
+alias drm="docker rm $(docker ps -a -q)"
+alias drmi="docker rmi $(docker images -q)"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
