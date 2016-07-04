@@ -131,6 +131,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 1
+let g:syntastic_python_checkers = ['flake8', 'pylint']
 let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'jruby']
 let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 
@@ -139,7 +140,8 @@ let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
 let g:syntastic_python_pylint_args="-d C0103,C0111,R0201"
 
 " vim-flake8
-let g:flake8_ignore="E302"
+" http://pep8.readthedocs.io/en/latest/intro.html#error-codes
+let g:syntastic_python_flake8_args='--ignore=F821,E302,E501'
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -213,7 +215,7 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
 " Set different colorscheme for Bash and VimL scripts
-autocmd BufEnter *.sh,*.vimrc colorscheme fahrenheit
+autocmd BufEnter *.sh,*.vimrc colorscheme Tomorrow
 autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
