@@ -282,8 +282,12 @@ eval $(gpg-agent --daemon)
 #mas install 409789998 # Twitter
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
 
-# Install Python Syntax Checker
-printf "-> pip install pylint <- don't forget\n\n"
+# Install Python Stuff
+mkdir -p ~/code/python
+cd ~/code/python
+pyenv install 3.5.1
+pyenv local 3.5.1
+pip install pylint flake8 flake8-quotes pep8-naming
 
 keybase login
 # keybase prove twitter integralist
