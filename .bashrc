@@ -76,6 +76,7 @@ export DROPBOX="$HOME/Dropbox"
 export GITHUB_USER="integralist"
 
 # application configuration
+export LSCOLORS="dxfxcxdxbxegedabagacad" # http://geoff.greer.fm/lscolors/
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
@@ -94,14 +95,18 @@ export GIT_PS1_SHOWUNTRACKEDFILES=true # % for untracked files
 export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed to upstream
                                        # < for commits on upstream not merged with HEAD
                                        # = HEAD points to same commit as upstream
-# Colored man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'
-export LESS_TERMCAP_md=$'\E[01;31m'
-export LESS_TERMCAP_me=$'\E[0m'
-export LESS_TERMCAP_se=$'\E[0m'
-export LESS_TERMCAP_so=$'\E[01;44;33m'
-export LESS_TERMCAP_ue=$'\E[0m'
-export LESS_TERMCAP_us=$'\E[01;32m'
+
+# Commented out the below settings since creating my own Mac OS terminal theme
+# As these colours seemed a little redundant
+#
+# # Colored man pages
+# export LESS_TERMCAP_mb=$'\E[01;31m'
+# export LESS_TERMCAP_md=$'\E[01;31m'
+# export LESS_TERMCAP_me=$'\E[0m'
+# export LESS_TERMCAP_se=$'\E[0m'
+# export LESS_TERMCAP_so=$'\E[01;44;33m'
+# export LESS_TERMCAP_ue=$'\E[0m'
+# export LESS_TERMCAP_us=$'\E[01;32m'
 
 # terminal configuration
 export PROMPT_COMMAND='history -a' # record each line as it gets issued
@@ -170,7 +175,7 @@ function prompt_right() {
 }
 function prompt_left() {
   # __git_ps1 function sourced from ~/.git-prompt.sh
-  echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;32m\A\e[0m"
+  echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;37m(\A)\e[0m"
 }
 function prompt() {
     compensate=11
@@ -184,8 +189,11 @@ function cd {
 
   PROMPT_COMMAND=prompt
 
-  # After each command, append to the history file and reread it
-  export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+  # Disabled following because it seems to be pointless now?
+  # That or I just don't know what it was really doing originally?
+  #
+  # # After each command, append to the history file and reread it...
+  # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
   return $RET
 }
@@ -265,3 +273,6 @@ alias drmi="docker rmi $(docker images -q)"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
+
+export NVM_DIR="/Users/markmcdonnell/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
