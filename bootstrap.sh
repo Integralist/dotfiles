@@ -53,11 +53,11 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 defaults write com.apple.dock mru-spaces -bool false
 
 # Setup Terminal preferences
-curl -LSso ~/Tomorrow-Night.terminal https://raw.githubusercontent.com/Integralist/dotfiles/master/terminal-themes/Tomorrow-Night.terminal
-open ~/Tomorrow-Night.terminal
-defaults write com.apple.Terminal "Default Window Settings" Tomorrow-Night
-defaults write com.apple.Terminal "Startup Window Settings" Tomorrow-Night
-rm ~/Tomorrow-Night.terminal
+curl -LSso ~/Integralist.terminal https://raw.githubusercontent.com/Integralist/mac-os-terminal-theme-integralist/master/Integralist.terminal
+open ~/Integralist.terminal
+defaults write com.apple.Terminal "Default Window Settings" Integralist
+defaults write com.apple.Terminal "Startup Window Settings" Integralist
+rm ~/Integralist.terminal
 
 printf "\n\nDon't forget to change the terminal font to menlo (and double check theme is set to default)"
 printf "\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
