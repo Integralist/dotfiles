@@ -13,7 +13,9 @@ kien/ctrlp.vim
 kien/rainbow_parentheses.vim
 m-kat/aws-vim
 mileszs/ack.vim
+morhetz/gruvbox
 nelstrom/vim-textobj-rubyblock
+nvie/vim-flake8
 othree/html5.vim
 plasticboy/vim-markdown
 robertmeta/nofrils
