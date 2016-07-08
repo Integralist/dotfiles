@@ -114,13 +114,10 @@ let g:netrw_liststyle=3
 execute pathogen#infect()
 filetype plugin indent on
 
-let g:default_theme="integralist"
+let g:default_theme="gruvbox"
 
 set background=dark
 execute 'colorscheme ' . g:default_theme
-" colorscheme github
-" colorscheme Tomorrow-Night
-" colorscheme nofrils-light
 
 " syntastic
 " use :SyntasticInfo for debugging issues
@@ -143,7 +140,8 @@ let g:syntastic_python_pylint_args="-d C0103,C0111,F0401,R0201,R0903,W0703"
 
 " vim-flake8
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
-let g:syntastic_python_flake8_args='--ignore=F821,E302,E501'
+" https://github.com/PyCQA/pep8-naming
+let g:syntastic_python_flake8_args='--ignore=E302,E501,F821,N805'
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -217,7 +215,7 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
 " Set different colorscheme for Bash and VimL scripts
-autocmd BufEnter *.sh,*.vimrc colorscheme Tomorrow
+autocmd BufEnter *.sh,*.vimrc colorscheme github
 autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
