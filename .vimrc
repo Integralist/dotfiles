@@ -136,12 +136,12 @@ let g:syntastic_loc_list_height = 5
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
-let g:syntastic_python_pylint_args="-d C0103,C0111,F0401,R0201,R0903,W0703"
+let g:syntastic_python_pylint_args="-d C0103,C0111,C0301,F0401,R0201,R0903,W0703"
 
 " vim-flake8
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " https://github.com/PyCQA/pep8-naming
-let g:syntastic_python_flake8_args='--ignore=E302,E501,F821,N805'
+" let g:syntastic_python_flake8_args='--ignore=E302,E501,F821,N805'
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -222,8 +222,11 @@ autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
 autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
+" Disabled the following as I was unable to pass the --ignore flag to it
+" Also, it's a bit redundant as Syntastic was handling things for me any way
+"
 " Run Flake8 when writing a Python file
-autocmd BufWritePost *.py :call Flake8()
+" autocmd BufWritePost *.py :call Flake8()
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
