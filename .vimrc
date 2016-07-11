@@ -141,7 +141,7 @@ let g:syntastic_python_pylint_args="-d C0103,C0111,C0301,F0401,R0201,R0903,W0703
 " vim-flake8
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " https://github.com/PyCQA/pep8-naming
-" let g:syntastic_python_flake8_args='--ignore=E302,E501,F821,N805'
+let g:syntastic_python_flake8_args='--ignore=E302,E501,F821,N805'
 
 " vim-go
 let g:go_fmt_command = "goimports"
