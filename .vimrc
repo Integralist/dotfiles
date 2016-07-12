@@ -216,7 +216,7 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 
 " Set different colorscheme for Bash and VimL scripts
 autocmd BufEnter *.sh,*.vimrc colorscheme github
-autocmd BufLeave *.sh,*.vimrc execute 'colorscheme ' . g:default_theme
+autocmd BufLeave *.sh,*.vimrc execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
@@ -227,6 +227,10 @@ autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'm
 "
 " Run Flake8 when writing a Python file
 " autocmd BufWritePost *.py :call Flake8()
+
+" Run Goyo plugin on Markdown files for when I'm writing blog posts
+autocmd Bufread,BufEnter *.md execute 'normal zR' | execute 'Goyo'
+autocmd BufLeave *.md execute 'Goyo!'
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
