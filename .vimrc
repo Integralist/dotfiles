@@ -215,8 +215,8 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
 " Set different colorscheme for Bash and VimL scripts
-autocmd BufEnter *.sh,*.vimrc colorscheme github
-autocmd BufLeave *.sh,*.vimrc execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
+autocmd BufEnter *.sh,*.vimrc,*.txt colorscheme github
+autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
