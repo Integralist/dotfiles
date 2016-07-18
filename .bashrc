@@ -270,6 +270,7 @@ alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
 alias sshvm="ssh rig.dev"
 alias drm="docker rm $(docker ps -a -q)"
 alias drmi="docker rmi $(docker images -q)"
+alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
