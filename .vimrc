@@ -139,7 +139,7 @@ let g:syntastic_loc_list_height = 5
 
 " configure pylint to disable certain annoying messages
 " http://pylint-messages.wikidot.com/all-codes
-let g:syntastic_python_pylint_args="-d C0103,C0111,C0301,F0401,R0201,R0903,W0703"
+let g:syntastic_python_pylint_args="-d C0103,C0111,C0301,F0401,R0201,R0903,W0231,W0703"
 
 " vim-flake8
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
@@ -234,6 +234,9 @@ autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'm
 " Run Goyo plugin on Markdown files for when I'm writing blog posts
 autocmd Bufread,BufEnter *.md,*.txt execute 'normal zR' | execute 'Goyo'
 autocmd BufLeave *.md,*.txt execute 'Goyo!'
+
+" Automatically reload vimrc when it's saved
+autocmd BufWritePost .vimrc so ~/.vimrc
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
