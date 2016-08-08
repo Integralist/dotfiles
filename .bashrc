@@ -261,6 +261,7 @@ alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
 alias gcp="git cherry-pick -"
+alias gpr="git pull --rebase origin master"
 alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 alias gitupstream="echo git branch -u origin/\<branch\>"
