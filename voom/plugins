@@ -2,6 +2,7 @@ chriskempson/vim-tomorrow-theme
 endel/vim-github-colorscheme
 ekalinin/Dockerfile.vim
 ervandew/supertab
+evanmiller/nginx-vim-syntax
 fatih/vim-go
 fcpg/vim-fahrenheit
 godlygeek/tabular
