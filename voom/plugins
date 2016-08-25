@@ -24,6 +24,7 @@ scrooloose/syntastic
 sheerun/vim-polyglot
 Shougo/unite.vim
 Shougo/vimfiler.vim
+smerrill/vcl-vim-plugin
 tpope/vim-commentary
 tpope/vim-endwise
 tpope/vim-fireplace
