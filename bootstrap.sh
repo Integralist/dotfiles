@@ -140,6 +140,7 @@ packages=(\
   go\
   gpg\
   gpg-agent\
+  imagemagick\
   irssi\
   keybase \
   leiningen\
