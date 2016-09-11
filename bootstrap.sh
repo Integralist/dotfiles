@@ -167,7 +167,11 @@ packages=(\
 )
 for package in "${packages[@]}"
 do
-  brew install $package
+  if [[ "$package" == "wireshark" ]]; then
+    brew install $package --with-qt5 # brew cat wireshark (shows options)
+  else
+    brew install $package
+  fi
 done
 
 # Configure Git
