@@ -277,6 +277,15 @@ alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
 
+function resize {
+  # brew install imagemagick
+  printf 'Usage:\n\toriginal, newname (default: original), quality (default: 70)\n\n'
+  local original=$1
+  local newname=${2:-$original}
+  local quality=${3:-70}
+  convert -resize "790>" -quality $quality "$original.png" "$newname.jpg"
+}
+
 # lazyload nvm
 # all props goes to http://broken-by.me/lazy-load-nvm/
 # grabbed from reddit @ https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
