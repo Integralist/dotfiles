@@ -234,9 +234,21 @@ function pt {
   local env=${2:-stage}
 
   if [ -z "$1" ]; then
-    printf "\n\tUse: pt <service> [env=stage]\n"
+    printf "\n\tUse: pt <service:site_router> [env=stage]\n"
   else
     papertrail -f "docker/$env/$app"
+  fi
+}
+
+function pt_search {
+  local app=$1
+  local search=$2
+  local env=${3:-stage}
+
+  if [ -z "$1" ]; then
+    printf "\n\tUse: pt_search <service:site_router> <search:smoke_tests> [env=stage]\n"
+  else
+    pt $app $env | grep $search | awk '{print $0,"\n"}'
   fi
 }
 
