@@ -1,7 +1,6 @@
 chriskempson/vim-tomorrow-theme
 endel/vim-github-colorscheme
 ekalinin/Dockerfile.vim
-ervandew/supertab
 evanmiller/nginx-vim-syntax
 fatih/vim-go
 fcpg/vim-fahrenheit
@@ -15,14 +14,15 @@ kana/vim-textobj-user
 kien/ctrlp.vim
 kien/rainbow_parentheses.vim
 m-kat/aws-vim
+maxboisvert/vim-simple-complete
 mileszs/ack.vim
 morhetz/gruvbox
 nelstrom/vim-textobj-rubyblock
+neomake/neomake
 nvie/vim-flake8
 othree/html5.vim
 plasticboy/vim-markdown
 robertmeta/nofrils
-scrooloose/syntastic
 sheerun/vim-polyglot
 Shougo/unite.vim
 Shougo/vimfiler.vim
