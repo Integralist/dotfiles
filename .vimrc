@@ -122,29 +122,48 @@ let g:default_theme="gruvbox"
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
-" syntastic
-" use :SyntasticInfo for debugging issues
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 1
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_python_checkers = ['flake8', 'pylint']
-let g:syntastic_ruby_checkers = ['rubocop', 'mri', 'jruby']
-let g:syntastic_go_checkers = ['go', 'golint', 'govet', 'errcheck']
-let g:syntastic_loc_list_height = 5
-
-" configure pylint to disable certain annoying messages
-" http://pylint-messages.wikidot.com/all-codes
-let g:syntastic_python_pylint_args="-d C0103,C0111,C0301,F0401,R0201,R0903,W0231,W0703"
-
-" vim-flake8
+    " \ 'args': ['--ignore=E731,F821,N805',  '--format=default'],
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
-" https://github.com/PyCQA/pep8-naming
-let g:syntastic_python_flake8_args='--ignore=F821,N805'
+let g:neomake_python_flake8_maker = {
+    \ 'args': ['--format=default'],
+    \ 'errorformat':
+        \ '%E%f:%l: could not compile,%-Z%p^,' .
+        \ '%A%f:%l:%c: %t%n %m,' .
+        \ '%A%f:%l: %t%n %m,' .
+        \ '%-G%.%#',
+    \ }
+
+" http://pylint-messages.wikidot.com/all-codes
+let g:neomake_python_pylint_maker = {
+  \ 'args': [
+  \ '-d', 'C0301',
+  \ '-f', 'text',
+  \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
+  \ '-r', 'n'
+  \ ],
+  \ 'errorformat':
+  \ '%A%f:%l:%c:%t: %m,' .
+  \ '%A%f:%l: %m,' .
+  \ '%A%f:(%l): %m,' .
+  \ '%-Z%p^%.%#,' .
+  \ '%-G%.%#',
+  \ }
+
+let g:neomake_python_enabled_makers = ['flake8', 'pylint']
+let g:neomake_open_list=2
+let g:neomake_list_height=5
+let g:neomake_verbose=3
+
+" let g:neomake_warning_sign = {
+"   \ 'text': 'W',
+"   \ 'texthl': 'WarningMsg',
+"   \ }
+" let g:neomake_error_sign = {
+"   \ 'text': 'E',
+"   \ 'texthl': 'ErrorMsg',
+"   \ }
+
+autocmd BufWritePost,BufWinEnter * Neomake
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -212,7 +231,7 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
 autocmd FileType sh,cucumber,ruby,yaml,zsh,vim setlocal shiftwidth=2 tabstop=2 expandtab
-autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
+autocmd FileType php,python setlocal shiftwidth=4 tabstop=4 expandtab
 
 " See `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
