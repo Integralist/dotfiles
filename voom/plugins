@@ -9,6 +9,7 @@ godlygeek/tabular
 guns/vim-clojure-highlight
 guns/vim-clojure-static
 guns/vim-sexp
+jamessan/vim-gnupg
 junegunn/goyo.vim
 kana/vim-textobj-user
 kien/ctrlp.vim
