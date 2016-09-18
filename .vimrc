@@ -163,7 +163,7 @@ let g:neomake_verbose=3
 "   \ 'texthl': 'ErrorMsg',
 "   \ }
 
-autocmd BufWritePost,BufWinEnter * Neomake
+autocmd BufWritePost,BufWinEnter * silent Neomake
 
 " vim-go
 let g:go_fmt_command = "goimports"
