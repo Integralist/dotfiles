@@ -122,32 +122,36 @@ let g:default_theme="gruvbox"
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
-    " \ 'args': ['--ignore=E731,F821,N805',  '--format=default'],
-" http://pep8.readthedocs.io/en/latest/intro.html#error-codes
-let g:neomake_python_flake8_maker = {
-    \ 'args': ['--format=default'],
-    \ 'errorformat':
-        \ '%E%f:%l: could not compile,%-Z%p^,' .
-        \ '%A%f:%l:%c: %t%n %m,' .
-        \ '%A%f:%l: %t%n %m,' .
-        \ '%-G%.%#',
-    \ }
+" let g:neomake_python_flake8_maker = {
+"     \ 'args': ['--ignore=E731,F821,N805',  '--format=default'],
+"     \ 'errorformat':
+"         \ '%E%f:%l: could not compile,%-Z%p^,' .
+"         \ '%A%f:%l:%c: %t%n %m,' .
+"         \ '%A%f:%l: %t%n %m,' .
+"         \ '%-G%.%#',
+"     \ }
 
+" let g:neomake_python_pylint_maker = {
+"   \ 'args': [
+"   \ '-d', 'C0111,C0103',
+"   \ '-f', 'text',
+"   \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
+"   \ '-r', 'n'
+"   \ ],
+"   \ 'errorformat':
+"   \ '%A%f:%l:%c:%t: %m,' .
+"   \ '%A%f:%l: %m,' .
+"   \ '%A%f:(%l): %m,' .
+"   \ '%-Z%p^%.%#,' .
+"   \ '%-G%.%#',
+"   \ }
+
+" http://pep8.readthedocs.io/en/latest/intro.html#error-codes
+let g:neomake_python_flake8_args = ['--ignore', '']
+
+" Seems you can use codes OR the actual error identifiers
 " http://pylint-messages.wikidot.com/all-codes
-let g:neomake_python_pylint_maker = {
-  \ 'args': [
-  \ '-d', 'C0301',
-  \ '-f', 'text',
-  \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
-  \ '-r', 'n'
-  \ ],
-  \ 'errorformat':
-  \ '%A%f:%l:%c:%t: %m,' .
-  \ '%A%f:%l: %m,' .
-  \ '%A%f:(%l): %m,' .
-  \ '%-Z%p^%.%#,' .
-  \ '%-G%.%#',
-  \ }
+let g:neomake_python_pylint_args = ['-d', 'missing-docstring,invalid-name']
 
 let g:neomake_python_enabled_makers = ['flake8', 'pylint']
 let g:neomake_open_list=2
