@@ -261,6 +261,7 @@ brew cask install --appdir="/Applications" java
 brew cask install --appdir="/Applications" macdown
 brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" vlc
+brew cask install --appdir="/Applications" licecap
 
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/code/go
