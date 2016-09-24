@@ -76,6 +76,7 @@ export DROPBOX="$HOME/Dropbox"
 export GITHUB_USER="integralist"
 
 # application configuration
+export GOOGLER_COLORS=bjdxxy # https://github.com/jarun/googler/
 export LSCOLORS="dxfxcxdxbxegedabagacad" # http://geoff.greer.fm/lscolors/
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
