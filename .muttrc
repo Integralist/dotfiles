@@ -54,22 +54,22 @@ macro index,pager U  O  "Mark as unread"
 # COLORS
 color attachment brightmagenta black
 color error brightwhite magenta   # errors yell at you in pink/magenta
-color hdrdefault red black   # headers
+color hdrdefault yellow black   # headers
 color indicator black brightyellow # currently selected message
 color markers brightcyan black  # the + for wrapped pager lines
 color message brightcyan black  # informational messages, not mail
 color normal white black    # plain text
-color quoted green black  # quoted text
+color quoted magenta black  # quoted text
 color search brightgreen black # hilite search patterns in the pager
 color signature red black    # signature (after "-- ") is red
 color status white red # status bar is yellow *on blue*
 color tilde blue black  # ~'s after message body
-color tree red black    # thread tree in index menu is magenta
+color tree red black    # thread tree in index menu
 color signature brightred black
 color underline yellow black
 color header cyan black ^(From|Subject): # Important headers
-color body magenta black "(ftp|http)://[^ ]+"  # picks up URLs
-color body magenta black [-a-z_0-9.]+@[-a-z_0-9.]+
+color body green black "(ftp|http)://[^ ]+"  # picks up URLs
+color body green black [-a-z_0-9.]+@[-a-z_0-9.]+
 
 #  Coloring quoted text - coloring the first 7 levels:
 color quoted    cyan black
@@ -87,7 +87,7 @@ color body  yellow black "[;:][)/(|]"
 color body  green black "[[:alpha:]]\+://[^ ]*"
 
 color index brightyellow black ~N      # New
-color index yellow black ~O              # Old
-color index magenta black ~F
+color index magenta black ~O           # Old
+color index red black ~F
 color index blue black ~T
 color index red black ~D
