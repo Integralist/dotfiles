@@ -104,8 +104,8 @@ set showmatch
 " <C-x><C-k> for word autocomplete
 set dictionary=/usr/share/dict/words
 
-" Use Sift (https://sift-tool.org/) for :grep command
-set grepprg=sift\ -n\ -X\ log\ --binary-skip\ $*
+" Use Ag for :grep command (would use Sift but it doesn't work well)
+set grepprg=ag\ --nogroup\ --nocolor
 
 " Set built-in file system explorer to use layout similar to the NERDTree plugin
 " P opens file in previously focused window
@@ -121,30 +121,6 @@ let g:default_theme="gruvbox"
 
 set background=dark
 execute 'colorscheme ' . g:default_theme
-
-" let g:neomake_python_flake8_maker = {
-"     \ 'args': ['--ignore=E731,F821,N805',  '--format=default'],
-"     \ 'errorformat':
-"         \ '%E%f:%l: could not compile,%-Z%p^,' .
-"         \ '%A%f:%l:%c: %t%n %m,' .
-"         \ '%A%f:%l: %t%n %m,' .
-"         \ '%-G%.%#',
-"     \ }
-
-" let g:neomake_python_pylint_maker = {
-"   \ 'args': [
-"   \ '-d', 'C0111,C0103',
-"   \ '-f', 'text',
-"   \ '--msg-template="{path}:{line}:{column}:{C}: [{symbol}] {msg}"',
-"   \ '-r', 'n'
-"   \ ],
-"   \ 'errorformat':
-"   \ '%A%f:%l:%c:%t: %m,' .
-"   \ '%A%f:%l: %m,' .
-"   \ '%A%f:(%l): %m,' .
-"   \ '%-Z%p^%.%#,' .
-"   \ '%-G%.%#',
-"   \ }
 
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 let g:neomake_python_flake8_args = ['--ignore', '']
@@ -247,12 +223,6 @@ autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'col
 " Specify syntax highlighting for specific files
 autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
-
-" Disabled the following as I was unable to pass the --ignore flag to it
-" Also, it's a bit redundant as Syntastic was handling things for me any way
-"
-" Run Flake8 when writing a Python file
-" autocmd BufWritePost *.py :call Flake8()
 
 " Run Goyo plugin on Markdown files for when I'm writing blog posts
 autocmd Bufread,BufEnter *.md,*.txt execute 'normal zR' | execute 'Goyo'
