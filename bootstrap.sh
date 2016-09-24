@@ -141,6 +141,7 @@ packages=(\
   googler\
   gpg\
   gpg-agent\
+  httpstat\
   imagemagick\
   irssi\
   keybase \
