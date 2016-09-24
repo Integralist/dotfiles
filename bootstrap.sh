@@ -138,6 +138,7 @@ packages=(\
   gist\
   git\
   go\
+  googler\
   gpg\
   gpg-agent\
   imagemagick\
