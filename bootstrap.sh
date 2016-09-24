@@ -126,11 +126,13 @@ EOF
 brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 
 # Install other brew packages
+# e.g. coreutils gives us 'shred' command (or gshred)
 packages=(\
   ag\
   argon/mas/mas\
   bash-completion\
   bundler-completion\
+  coreutils\
   docker-compose-completion\
   docker-machine\
   docker\
@@ -182,6 +184,25 @@ curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/con
 
 # Configure Googler
 curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/googler/master/auto-completion/bash/googler-completion.bash
+
+# Configure Mutt
+# You need a Google app password:
+# https://security.google.com/settings/security/apppasswords
+mkdir -p ~/.mutt/cache/{headers,bodies}
+touch ~/.mutt/certificates
+echo set imap_pass="<google-app-password>" > ~/.mutt/passwords
+echo set smtp_pass="<google-app-password>" >> ~/.mutt/passwords
+
+printf "\n\nYou need to change the password in ~/.mutt/passwords:\n\n\tgpg -r mark.mcdx@gmail.com -e ~/.mutt/passwords &&\n\tgshred ~/.mutt/passwords &&\n\trm ~/.mutt/passwords\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
+curl -LSso ~/.muttrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc
 
 cat > ~/.gitignore-global <<EOF
 # bundler
