@@ -1,0 +1,93 @@
+# http://www.mutt.org/doc/manual/
+
+# decrypt passwords
+source "gpg -d ~/.mutt/passwords.gpg |"
+
+# Change the following six lines to match your Gmail account details
+set imap_user = "mark.mcdx@gmail.com"
+set smtp_url = "smtp://mark.mcdx@smtp.gmail.com:587/"
+set from = "mark.mcdx@gmail.com"
+set realname = "Mark McDonnell"
+
+# Change the following line to a different editor you prefer.
+set editor = "vim"
+
+# Configuration
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX" # default view would otherwise be 'All Mail'
+set imap_check_subscribed
+set hostname = gmail.com
+set mail_check = 15
+set timeout = 30
+set imap_keepalive = 300
+set postponed = "+[GMail]/Drafts"
+set record = "+[GMail]/Sent Mail"
+set trash = "imaps://imap.gmail.com/[Gmail]/Trash"
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+set move = no
+set include = yes # include previous email as quote when replying
+set sort = 'threads'
+set sort_aux = 'reverse-last-date-received'
+set auto_tag = yes
+set pager_stop = yes # prevent opening the next message when reached the end of current message
+ignore "Authentication-Results:"
+ignore "DomainKey-Signature:"
+ignore "DKIM-Signature:"
+hdr_order Date From To Cc
+alternative_order text/plain text/html *
+auto_view text/html
+bind editor <Tab> complete-query
+bind editor ^T complete
+bind editor <space> noop # You need the "noop" bind so that the line editor accepts IMAP folders with spaces in their names
+macro index,pager d "<save-message>=[Gmail]/Trash<enter><enter>" "Trash"
+macro index gi "<change-folder>=INBOX<enter>" "Go to inbox"
+macro index ga "<change-folder>=[Gmail]/All Mail<enter>" "Go to all mail"
+macro index gs "<change-folder>=[Gmail]/Starred<enter>" "Go to starred messages"
+macro index gd "<change-folder>=[Gmail]/Drafts<enter>" "Go to drafts"
+macro index,pager gt "=[Gmail]/Sent Mail" "Go to 'Sent Mail'"
+macro index,pager gl ?       "Go to 'Label'"
+macro index,pager I  O  "Mark as read"
+macro index,pager U  O  "Mark as unread"
+
+# COLORS
+color attachment brightmagenta black
+color error brightwhite magenta   # errors yell at you in pink/magenta
+color hdrdefault red black   # headers
+color indicator black brightyellow # currently selected message
+color markers brightcyan black  # the + for wrapped pager lines
+color message brightcyan black  # informational messages, not mail
+color normal white black    # plain text
+color quoted green black  # quoted text
+color search brightgreen black # hilite search patterns in the pager
+color signature red black    # signature (after "-- ") is red
+color status white red # status bar is yellow *on blue*
+color tilde blue black  # ~'s after message body
+color tree red black    # thread tree in index menu is magenta
+color signature brightred black
+color underline yellow black
+color header cyan black ^(From|Subject): # Important headers
+color body magenta black "(ftp|http)://[^ ]+"  # picks up URLs
+color body magenta black [-a-z_0-9.]+@[-a-z_0-9.]+
+
+#  Coloring quoted text - coloring the first 7 levels:
+color quoted    cyan black
+color quoted1   yellow black
+color quoted2   red black
+color quoted3   green black
+color quoted4   cyan black
+color quoted5   yellow black
+color quoted6   red black
+color quoted7   green black
+
+#  Colorize smileys:  :-)  ;-)  :-/  :-(
+color body  yellow black "[;:]-[)/(|]"
+color body  yellow black "[;:][)/(|]"
+color body  green black "[[:alpha:]]\+://[^ ]*"
+
+color index brightyellow black ~N      # New
+color index yellow black ~O              # Old
+color index magenta black ~F
+color index blue black ~T
+color index red black ~D
