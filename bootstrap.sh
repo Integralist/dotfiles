@@ -178,6 +178,9 @@ done
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
 
+# Configure Googler
+curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/googler/master/auto-completion/bash/googler-completion.bash
+
 cat > ~/.gitignore-global <<EOF
 # bundler
 .gem
