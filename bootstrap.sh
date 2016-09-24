@@ -127,6 +127,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 
 # Install other brew packages
 packages=(\
+  ag\
   argon/mas/mas\
   bash-completion\
   bundler-completion\
