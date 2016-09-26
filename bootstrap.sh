@@ -190,10 +190,27 @@ curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/goo
 # https://security.google.com/settings/security/apppasswords
 mkdir -p ~/.mutt/cache/{headers,bodies}
 touch ~/.mutt/certificates
-echo set imap_pass="<google-app-password>" > ~/.mutt/passwords
-echo set smtp_pass="<google-app-password>" >> ~/.mutt/passwords
+
+cat > ~/.mutt/passwords <<EOF
+set imap_pass="<google-app-password>"
+set smtp_pass="<google-app-password>"
+EOF
 
 printf "\n\nYou need to change the password in ~/.mutt/passwords:\n\n\tgpg -r mark.mcdx@gmail.com -e ~/.mutt/passwords &&\n\tgshred ~/.mutt/passwords &&\n\trm ~/.mutt/passwords\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
+cat > ~/.mutt/passwords-buzzfeed <<EOF
+set imap_pass="<google-app-password>"
+set smtp_pass="<google-app-password>"
+EOF
+
+printf "\n\nYou need to change the password in ~/.mutt/passwords-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/passwords-buzzfeed &&\n\tgshred ~/.mutt/passwords-buzzfeed &&\n\trm ~/.mutt/passwords-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
 read cont
 if [ $cont == "y" ] || [ $cont == "Y" ] ; then
   echo "Cool, let's keep going..."
@@ -322,7 +339,27 @@ cd ~/code/python2
 pyenv install 2.7.6
 pyenv local 2.7.6
 pip install goobook
-goobook authenticate
+
+echo <google-app-password> >> ~/.mutt/password-buzzfeed
+
+printf "\n\nYou need to change the password in ~/.mutt/password-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/password-buzzfeed &&\n\tgshred ~/.mutt/password-buzzfeed &&\n\trm ~/.mutt/password-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
+touch ~/.goobook_cache
+cat > ~/.goobookrc <<EOF
+[DEFAULT]
+email: mark.mcdonnell@buzzfeed.com
+passwordeval: gpg --batch -d ~/.mutt/password-buzzfeed.gpg
+max_results: 9999
+cache_filename: ~/.goobook_cache
+cache_expiry_hours: 24
+EOF
 
 cd ~/code/python
 pyenv install 3.5.1
