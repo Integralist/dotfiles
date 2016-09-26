@@ -6,6 +6,7 @@ source "gpg -d ~/.mutt/passwords.gpg |"
 # Change the following six lines to match your Gmail account details
 set imap_user = "mark.mcdx@gmail.com"
 set smtp_url = "smtp://mark.mcdx@smtp.gmail.com:587/"
+set smtp_authenticators = "gssapi:login"
 set from = "mark.mcdx@gmail.com"
 set realname = "Mark McDonnell"
 
