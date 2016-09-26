@@ -316,7 +316,14 @@ eval $(gpg-agent --daemon)
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
 
 # Install Python Stuff
-mkdir -p ~/code/python
+mkdir -p ~/code/{python,python2}
+
+cd ~/code/python2
+pyenv install 2.7.6
+pyenv local 2.7.6
+pip install goobook
+goobook authenticate
+
 cd ~/code/python
 pyenv install 3.5.1
 pyenv local 3.5.1
