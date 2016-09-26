@@ -6,6 +6,7 @@ source "gpg -d ~/.mutt/passwords-buzzfeed.gpg |"
 # Change the following six lines to match your Gmail account details
 set imap_user = "mark.mcdonnell@buzzfeed.com"
 set smtp_url = "smtp://mark.mcdonnell@buzzfeed.com@smtp.gmail.com:587/"
+set smtp_authenticators = "gssapi:login"
 set from = "mark.mcdonnell@buzzfeed.com"
 set realname = "Mark McDonnell"
 
