@@ -339,26 +339,12 @@ cd ~/code/python2
 pyenv install 2.7.6
 pyenv local 2.7.6
 pip install goobook
+goobook authenticate
 
-echo <google-app-password> >> ~/.mutt/password-buzzfeed
-
-printf "\n\nYou need to change the password in ~/.mutt/password-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/password-buzzfeed &&\n\tgshred ~/.mutt/password-buzzfeed &&\n\trm ~/.mutt/password-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
-read cont
-if [ $cont == "y" ] || [ $cont == "Y" ] ; then
-  echo "Cool, let's keep going..."
-else
-  echo "OK let's stop here and you can continue on manually"
-  exit
-fi
-
-touch ~/.goobook_cache
 cat > ~/.goobookrc <<EOF
 [DEFAULT]
 email: mark.mcdonnell@buzzfeed.com
-passwordeval: gpg --batch -d ~/.mutt/password-buzzfeed.gpg
-max_results: 9999
-cache_filename: ~/.goobook_cache
-cache_expiry_hours: 24
+oauth_db_filename: ~/.goobook_auth.json
 EOF
 
 cd ~/code/python
