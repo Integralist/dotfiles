@@ -306,6 +306,7 @@ brew cask install --appdir="/Applications" macdown
 brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" vlc
 brew cask install --appdir="/Applications" licecap
+brew cask install --appdir="/Applications" dripcap # packet analyser (like Wireshark)
 
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/code/go
