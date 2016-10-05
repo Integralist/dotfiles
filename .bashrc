@@ -290,6 +290,7 @@ alias drm="docker rm $(docker ps -a -q)"
 alias drmi="docker rmi $(docker images -q)"
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
+alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
