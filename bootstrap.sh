@@ -153,6 +153,7 @@ packages=(\
   netcat\
   ngrok\
   node\
+  pstree\
   pyenv\
   rbenv\
   reattach-to-user-namespace\
