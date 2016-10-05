@@ -125,11 +125,11 @@ execute 'colorscheme ' . g:default_theme
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " +
 " https://github.com/PyCQA/pep8-naming
-let g:neomake_python_flake8_args = ['--ignore', 'N802']
+let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802']
 
 " Seems you can use codes OR the actual error identifiers
 " http://pylint-messages.wikidot.com/all-codes
-let g:neomake_python_pylint_args = ['-d', 'missing-docstring,invalid-name']
+let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ['-d', 'missing-docstring,invalid-name']
 
 let g:neomake_python_enabled_makers = ['flake8', 'pylint']
 let g:neomake_open_list=2
