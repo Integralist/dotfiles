@@ -145,6 +145,7 @@ packages=(\
   rbenv\
   reattach-to-user-namespace\
   ruby-build\
+  shellcheck\
   siege\
   sift\
   speedtest-cli\
