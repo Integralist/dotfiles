@@ -145,6 +145,8 @@ let g:neomake_verbose=3
 "   \ 'texthl': 'ErrorMsg',
 "   \ }
 
+let g:neomake_bash_enabled_makers = ['shellcheck']
+
 autocmd BufWritePost,BufWinEnter * silent Neomake
 
 " vim-go
