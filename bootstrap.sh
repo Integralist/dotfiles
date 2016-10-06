@@ -83,22 +83,8 @@ chsh -s /usr/local/bin/bash
 
 # Configure Bash
 curl -LSso ~/.bashrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.bashrc
-
-cat > ~/.bash_profile <<EOF
-if [ -f $HOME/.bashrc ]; then
-  source ~/.bashrc
-  cd .
-fi
-
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  source $(brew --prefix)/etc/bash_completion
-fi
-EOF
-
-cat > ~/.inputrc <<EOF
-TAB: menu-complete
-"\e[Z": "\e-1\C-i"
-EOF
+curl -LSso ~/.bash_profile https://raw.githubusercontent.com/Integralist/dotfiles/master/.bash_profile
+curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.inputrc
 
 # Install NeoVim
 brew tap neovim/neovim && brew install --HEAD neovim
@@ -117,6 +103,7 @@ ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 voom
 
+# Ensure NeoVim is configured with spell checking options
 nvim -E -s <<EOF
 :set spell
 :quit
@@ -126,7 +113,7 @@ EOF
 brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 
 # Install other brew packages
-# e.g. coreutils gives us 'shred' command (or gshred)
+# e.g. coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
 packages=(\
   ag\
   argon/mas/mas\
@@ -222,67 +209,53 @@ fi
 
 curl -LSso ~/.muttrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc
 
-cat > ~/.gitignore-global <<EOF
-# bundler
-.gem
-.bin
-.ruby-version
-failed_cukes.sh
-
-# miscellaneous
-*.DS_Store
-.sass-cache
-.grunt
-tags
-*.swp
-logs
-*.log
-.vagrant*
-EOF
+curl -LSso ~/.gitignore-global https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitignore-global
 
 curl -LSso ~/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
 chmod +x ~/diff-highlight
 
-git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-git config --global --add alias.st status
-git config --global --add alias.unstage "reset HEAD --"
-git config --global --add apply.whitespace nowarn
-git config --global --add color.branch.current "yellow reverse"
-git config --global --add color.branch.local yellow
-git config --global --add color.branch.remote green
-git config --global --add color.commit red
-git config --global --add color.diff-highlight.newhighlight "green bold 22"
-git config --global --add color.diff-highlight.newnormal "green bold"
-git config --global --add color.diff-highlight.oldhighlight "red bold 52"
-git config --global --add color.diff-highlight.oldnormal "red bold"
-git config --global --add color.diff.frag magenta
-git config --global --add color.diff.meta yellow
-git config --global --add color.diff.new green
-git config --global --add color.diff.old red
-git config --global --add color.status.added red
-git config --global --add color.status.changed blue
-git config --global --add color.status.untracked magenta
-git config --global --add color.ui true
-git config --global --add core.editor nvim
-git config --global --add core.excludesfile ~/.gitignore-global
-git config --global --add core.ignorecase false
-git config --global --add merge.conflictstyle diff3
-git config --global --add merge.tool vimdiff
-git config --global --add mergetool.prompt true
-git config --global --add push.default upstream
-git config --global --add url.git@github.com:.insteadof https://github.com/
-git config --global --add user.email mark.mcdx@gmail.com
-git config --global --add user.name Integralist
-git config --global --add pager.log '~/diff-highlight | less'
-git config --global --add pager.show '~/diff-highlight | less'
-git config --global --add pager.diff '~/diff-highlight | less'
-git config --global --add interactive.diffFilter ~/diff-highlight
-git config --global --add diff.compactionHeuristic true
+curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitconfig
+
+# git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+# git config --global --add alias.st status
+# git config --global --add alias.unstage "reset HEAD --"
+# git config --global --add apply.whitespace nowarn
+# git config --global --add color.branch.current "yellow reverse"
+# git config --global --add color.branch.local yellow
+# git config --global --add color.branch.remote green
+# git config --global --add color.commit red
+# git config --global --add color.diff-highlight.newhighlight "green bold 22"
+# git config --global --add color.diff-highlight.newnormal "green bold"
+# git config --global --add color.diff-highlight.oldhighlight "red bold 52"
+# git config --global --add color.diff-highlight.oldnormal "red bold"
+# git config --global --add color.diff.frag magenta
+# git config --global --add color.diff.meta yellow
+# git config --global --add color.diff.new green
+# git config --global --add color.diff.old red
+# git config --global --add color.status.added red
+# git config --global --add color.status.changed blue
+# git config --global --add color.status.untracked magenta
+# git config --global --add color.ui true
+# git config --global --add core.editor nvim
+# git config --global --add core.excludesfile ~/.gitignore-global
+# git config --global --add core.ignorecase false
+# git config --global --add merge.conflictstyle diff3
+# git config --global --add merge.tool vimdiff
+# git config --global --add mergetool.prompt true
+# git config --global --add push.default upstream
+# git config --global --add url.git@github.com:.insteadof https://github.com/
+# git config --global --add user.email mark.mcdx@gmail.com
+# git config --global --add user.name Integralist
+# git config --global --add pager.log '~/diff-highlight | less'
+# git config --global --add pager.show '~/diff-highlight | less'
+# git config --global --add pager.diff '~/diff-highlight | less'
+# git config --global --add interactive.diffFilter ~/diff-highlight
+# git config --global --add diff.compactionHeuristic true
 
 # GitHub setup
 mkdir ~/.ssh
 curl -LSso ~/.ssh/config https://raw.githubusercontent.com/Integralist/dotfiles/master/.ssh/config
-cd ~/.ssh && sshkey # sshkey is .bashrc alias
+cd ~/.ssh && sshkey # sshkey is a .bashrc alias
 eval "$(ssh-agent -s)"
 ssh-add -K ~/.ssh/github_rsa
 printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub"
