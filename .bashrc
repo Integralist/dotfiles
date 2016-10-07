@@ -166,20 +166,20 @@ export color_prompt=yes
 # Which also dynamically displays the number of background jobs \j in the current terminal
 # As well as dynamically displays git branch if available
 
-num_jobs=$(jobs | wc -l)
-
-if [ "$num_jobs" -eq 0 ]; then
-  num_jobs=""
-else
-  num_jobs=" (\j)"
-fi
-
 function prompt_right() {
   # need the correct number of spaces after \A to allow for 00:00 time display
   # echo -e "\e[0;36m\A   \e[0m"
   echo -e ""
 }
 function prompt_left() {
+  num_jobs=$(jobs | wc -l)
+
+  if [ "$num_jobs" -eq 0 ]; then
+    num_jobs=""
+  else
+    num_jobs=" (\j)"
+  fi
+
   # __git_ps1 function sourced from ~/.git-prompt.sh
   echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;37m(\A)\e[0m"
 }
@@ -188,21 +188,33 @@ function prompt() {
     PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
 
+# Shouldn't need the following function any more now that I'm using github.com/rcaloras/bash-preexec
+#
 # override builtin cd so it resets command prompt when changing directories
-function cd {
-  builtin cd "$@"
-  RET=$?
+# function cd {
+#   builtin cd "$@"
+#   RET=$?
 
-  PROMPT_COMMAND=prompt
+#   PROMPT_COMMAND=prompt
 
-  # Disabled following because it seems to be pointless now?
-  # That or I just don't know what it was really doing originally?
-  #
-  # # After each command, append to the history file and reread it...
-  # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+#   # Disabled following because it seems to be pointless now?
+#   # That or I just don't know what it was really doing originally?
+#   #
+#   # # After each command, append to the history file and reread it...
+#   # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
 
-  return $RET
-}
+#   return $RET
+# }
+
+# Shouldn't need the following function any more now that I'm using github.com/rcaloras/bash-preexec
+#
+# function gr {
+# 	# TODO automate this so you don't have to automatically run it
+#   #      as it also effects the ability to show the current job numbers
+#   local path
+# 	path=$(basename "$(pwd)")
+#   cd "../$path" || return  # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
+# }
 
 function rubo() {
   docker run \
@@ -230,27 +242,19 @@ function gms() {
   git merge --squash "$1"
 }
 
-function gr {
-	# TODO automate this so you don't have to automatically run it
-  #      as it also effects the ability to show the current job numbers
-  local path
-	path=$(basename "$(pwd)")
-  cd "../$path" || return  # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
-}
-
 function pt {
-  local app=$1
+  local service=$1
   local env=${2:-stage}
   local query=$3
   local group=${4:-rig-stage}
 
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
-    printf "\n\tpt site_router stage test=mark"
-    printf "\n\tpapertrail -g GROUP_NAME —min-time='10 minutes ago' —max-time='now' 'program:PROGRAM_NAME' 'query'\n"
+    printf "\n\tpt site_router web-public test=mark rig-web-public"
+    printf "\n\tpapertrail -f -g \"<group>\" -min-time=\"10 minutes ago\" -max-time=\"now\" \"program:<program> AND <query>\"\n"
   else
-    echo papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
-    papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
+    # papertrail -f -g "rig-stage" "program:docker/stage/site_router AND test=mark123456"
+    eval "papertrail -f -g \"$group\" \"program:docker/$env/$service AND $query\""
   fi
 }
 
@@ -334,3 +338,13 @@ npm() {
   lazynvm
   npm "$@"
 }
+
+# https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
+source ~/.bash-preexec.sh
+
+# preexec executes just BEFORE a command is executed
+# preexec() { echo "just typed $1"; }
+
+# precmd executes just AFTER a command is executed, but before the prompt is shown
+# precmd() { echo "printing the prompt"; }
+precmd() { prompt; }
