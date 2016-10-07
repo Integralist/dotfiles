@@ -1,29 +1,5 @@
 #!/usr/bin/env bash
 
-# update Bash version
-#
-# brew install bash;
-# echo /usr/local/bin/bash | sudo tee -a /etc/shells
-# chsh -s /usr/local/bin/bash
-#
-# with mac osx remember to add the following to your ~/.bash_profile
-#
-# if [ -f $HOME/.bashrc ]; then
-#   source ~/.bashrc
-#   cd .
-# fi
-#
-# if [ -f $(brew --prefix)/etc/bash_completion ]; then
-#   source $(brew --prefix)/etc/bash_completion
-# fi
-#
-# also create an .inputrc with the following content
-#
-# TAB: menu-complete
-# "\e[Z": "\e-1\C-i"
-#
-# this allows you to use <C-n> and <C-p> to tab through the ambigious cd suggestions
-
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
@@ -42,9 +18,6 @@ bind "set show-all-if-ambiguous on"
 # no bell sound on error
 bind "set bell-style none"
 
-# enable vi like bindings (http://blog.sanctum.geek.nz/vi-mode-in-bash/)
-#set -o vi
-
 # enable emacs like bindings (<C-a> and <C-e> for start and end of line shortcuts)
 set -o emacs
 
@@ -53,9 +26,6 @@ shopt -s histappend
 
 # save multi-line commands as one command
 shopt -s cmdhist
-
-# shopt -p
-# will show all available settings
 
 # no need to type cd (works for .. but not -, although alias -- -='cd -' fixes it)
 shopt -s autocd 2>/dev/null
@@ -74,7 +44,7 @@ shopt -s extglob 2>/dev/null
 shopt -s dotglob 2>/dev/null
 
 # specify other paths to look inside of when autocompleting
-CDPATH=".:~/Projects"
+CDPATH=".:~/code"
 
 # custom environment variables
 export DROPBOX="$HOME/Dropbox"
@@ -101,18 +71,6 @@ export GIT_PS1_SHOWUNTRACKEDFILES=true # % for untracked files
 export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed to upstream
                                        # < for commits on upstream not merged with HEAD
                                        # = HEAD points to same commit as upstream
-
-# Commented out the below settings since creating my own Mac OS terminal theme
-# As these colours seemed a little redundant
-#
-# # Colored man pages
-# export LESS_TERMCAP_mb=$'\E[01;31m'
-# export LESS_TERMCAP_md=$'\E[01;31m'
-# export LESS_TERMCAP_me=$'\E[0m'
-# export LESS_TERMCAP_se=$'\E[0m'
-# export LESS_TERMCAP_so=$'\E[01;44;33m'
-# export LESS_TERMCAP_ue=$'\E[0m'
-# export LESS_TERMCAP_us=$'\E[01;32m'
 
 # terminal configuration
 export PROMPT_COMMAND='history -a' # record each line as it gets issued
@@ -159,18 +117,10 @@ export color_prompt=yes
 # 46: Cyan background
 # 47: White background
 
-# simple left prompt example:
-# PS1='\e[01;33m\]\u:\[\e[31m\]\w\[\e[00m\] (\j) (\A)\$ '
-
-# Much more complex left AND right solution (http://superuser.com/a/517110)
-# Which also dynamically displays the number of background jobs \j in the current terminal
-# As well as dynamically displays git branch if available
-
 function prompt_right() {
-  # need the correct number of spaces after \A to allow for 00:00 time display
-  # echo -e "\e[0;36m\A   \e[0m"
   echo -e ""
 }
+
 function prompt_left() {
   num_jobs=$(jobs | wc -l)
 
@@ -180,41 +130,13 @@ function prompt_left() {
     num_jobs=" (\j)"
   fi
 
-  # __git_ps1 function sourced from ~/.git-prompt.sh
   echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;37m(\A)\e[0m"
 }
+
 function prompt() {
     compensate=11
     PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
-
-# Shouldn't need the following function any more now that I'm using github.com/rcaloras/bash-preexec
-#
-# override builtin cd so it resets command prompt when changing directories
-# function cd {
-#   builtin cd "$@"
-#   RET=$?
-
-#   PROMPT_COMMAND=prompt
-
-#   # Disabled following because it seems to be pointless now?
-#   # That or I just don't know what it was really doing originally?
-#   #
-#   # # After each command, append to the history file and reread it...
-#   # export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
-
-#   return $RET
-# }
-
-# Shouldn't need the following function any more now that I'm using github.com/rcaloras/bash-preexec
-#
-# function gr {
-# 	# TODO automate this so you don't have to automatically run it
-#   #      as it also effects the ability to show the current job numbers
-#   local path
-# 	path=$(basename "$(pwd)")
-#   cd "../$path" || return  # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
-# }
 
 function rubo() {
   docker run \
@@ -253,7 +175,6 @@ function pt {
     printf "\n\tpt site_router web-public test=mark rig-web-public"
     printf "\n\tpapertrail -f -g \"<group>\" -min-time=\"10 minutes ago\" -max-time=\"now\" \"program:<program> AND <query>\"\n"
   else
-    # papertrail -f -g "rig-stage" "program:docker/stage/site_router AND test=mark123456"
     eval "papertrail -f -g \"$group\" \"program:docker/$env/$service AND $query\""
   fi
 }
@@ -271,7 +192,6 @@ function gcb {
     git checkout -b "$1"
   fi
 }
-
 
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
@@ -346,5 +266,4 @@ source ~/.bash-preexec.sh
 # preexec() { echo "just typed $1"; }
 
 # precmd executes just AFTER a command is executed, but before the prompt is shown
-# precmd() { echo "printing the prompt"; }
 precmd() { prompt; }
