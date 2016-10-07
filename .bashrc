@@ -246,11 +246,11 @@ function pt {
 
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
-		printf "\n\tpt site_router stage test=mark"
+    printf "\n\tpt site_router stage test=mark"
     printf "\n\tpapertrail -g GROUP_NAME —min-time='10 minutes ago' —max-time='now' 'program:PROGRAM_NAME' 'query'\n"
   else
     echo papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
-		papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
+    papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
   fi
 }
 
