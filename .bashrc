@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # update Bash version
 #
 # brew install bash;
@@ -123,10 +125,10 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 
 # force colours
-force_color_prompt=yes
+export force_color_prompt=yes
 
 # use colour prompt
-color_prompt=yes
+export color_prompt=yes
 
 # \e indicates escape sequence (sometimes you'll see \033)
 # the m indicates you've provided a colour sequence
@@ -166,7 +168,7 @@ color_prompt=yes
 
 num_jobs=$(jobs | wc -l)
 
-if [ $num_jobs -eq 0 ]; then
+if [ "$num_jobs" -eq 0 ]; then
   num_jobs=""
 else
   num_jobs=" (\j)"
@@ -183,7 +185,7 @@ function prompt_left() {
 }
 function prompt() {
     compensate=11
-    PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+${compensate}))" "$(prompt_right)" "$(prompt_left)")
+    PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
 
 # override builtin cd so it resets command prompt when changing directories
@@ -206,14 +208,14 @@ function rubo() {
   docker run \
     --cpu-shares 1024 \
     --rm=true \
-    --volume $(pwd):/app \
+    --volume "$(pwd):/app" \
     bbcnews/rubocop-config --format simple --fail-level F | grep '^F:\|=='
 }
 
 function toggle_hidden() {
   setting=$(defaults read com.apple.finder AppleShowAllFiles)
 
-  if [ $setting == "NO" ]; then
+  if [ "$setting" == "NO" ]; then
     echo "Enabling hidden files"
     defaults write com.apple.finder AppleShowAllFiles YES
   else
@@ -225,38 +227,42 @@ function toggle_hidden() {
 }
 
 function gms() {
-  git merge --squash $1
+  git merge --squash "$1"
 }
 
 function gr {
-  local path=$(basename $(pwd))
-  cd "../$path" # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
+	# TODO automate this so you don't have to automatically run it
+  #      as it also effects the ability to show the current job numbers
+  local path
+	path=$(basename "$(pwd)")
+  cd "../$path" || return  # fixes issue when `git checkout -b <branch>` doesn't update the shell's prompt
 }
 
 function pt {
   local app=$1
   local env=${2:-stage}
+  local query=$3
+  local group=${4:-rig-stage}
 
   if [ -z "$1" ]; then
-    printf "\n\tUse: pt <service:site_router> [env=stage]\n"
+    printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
+		printf "\n\tpt site_router stage test=mark"
+    printf "\n\tpapertrail -g GROUP_NAME —min-time='10 minutes ago' —max-time='now' 'program:PROGRAM_NAME' 'query'\n"
   else
-    papertrail -f "docker/$env/$app"
+    echo papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
+		papertrail -f -g "$group" "program:docker/$env/$app" "'$query'"
   fi
 }
 
-function pt_search {
-  local app=$1
-  local search=$2
-  local env=${3:-stage}
-
-  if [ -z "$1" ]; then
-    printf "\n\tUse: pt_search <service:site_router> <search:smoke_tests> [env=stage]\n"
-  else
-    pt $app $env | grep $search | awk '{print $0,"\n"}'
-  fi
+function dash {
+  local docs=$1
+  local query=$2
+  open "dash://$docs:$query"
 }
 
-read -r -d '' git_icons <<- EOF
+# We use _ to indicate an unused variable
+# Otherwise shellcheck will kick up a stink
+read -r -d '' _ <<- EOF
 * unstaged changes
 + staged but uncommitted changes
 $ stashed changes
@@ -272,37 +278,28 @@ alias getcommit="git log -1 | cut -d ' ' -f 2 | head -n 1 | pbcopy"
 alias sshkey="ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
 alias irc="irssi"
 alias ls="ls -GpF"
-alias ll="ls -laGpFHh"
+alias ll="ls -laGpFH"
 alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
 alias gcp="git cherry-pick -"
 alias gpr="git pull --rebase origin master"
-alias mutt="cd ~/Downloads/mutt && mutt"
 alias wut='echo "$git_icons"'
 alias gitupstream="echo git branch -u origin/\<branch\>"
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
-alias v="$HOME/code/buzzfeed/mono/scripts/rig_vm"
+alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias sshvm="ssh rig.dev"
-alias drm="docker rm $(docker ps -a -q)"
-alias drmi="docker rmi $(docker images -q)"
+alias drm='docker rm $(docker ps -a -q)'
+alias drmi='docker rmi $(docker images -q)'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+alias nvimupdate="brew reinstall --HEAD neovim"
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
 alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
-
-function resize {
-  # brew install imagemagick
-  printf 'Usage:\n\toriginal, newname (default: original), quality (default: 70)\n\n'
-  local original=$1
-  local newname=${2:-$original}
-  local quality=${3:-70}
-  convert -resize "790>" -quality $quality "$original.png" "$newname.jpg"
-}
 
 # lazyload nvm
 # all props goes to http://broken-by.me/lazy-load-nvm/
@@ -316,15 +313,15 @@ lazynvm() {
 
 nvm() {
   lazynvm
-  nvm $@
+  nvm "$@"
 }
 
 node() {
   lazynvm
-  node $@
+  node "$@"
 }
 
 npm() {
   lazynvm
-  npm $@
+  npm "$@"
 }
