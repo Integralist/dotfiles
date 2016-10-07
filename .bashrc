@@ -260,6 +260,15 @@ function dash {
   open "dash://$docs:$query"
 }
 
+function gcb {
+  if [ -z "$1" ]; then
+    printf "\n\tUse: gcb some-branch-name\n"
+  else
+    git checkout -b "$1"
+  fi
+}
+
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 read -r -d '' _ <<- EOF
