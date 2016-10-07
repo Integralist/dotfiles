@@ -185,9 +185,17 @@ function dash {
   open "dash://$docs:$query"
 }
 
+function gc {
+  if [ -z "$1" ]; then
+    printf "\n\tUse: gc some-existing-branch-name\n"
+  else
+    git checkout "$1"
+  fi
+}
+
 function gcb {
   if [ -z "$1" ]; then
-    printf "\n\tUse: gcb some-branch-name\n"
+    printf "\n\tUse: gcb some-new-branch-name (branch will be created)\n"
   else
     git checkout -b "$1"
   fi
