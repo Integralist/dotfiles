@@ -134,7 +134,7 @@ let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + [
 let g:neomake_python_enabled_makers = ['flake8', 'pylint']
 
 " https://github.com/koalaman/shellcheck/wiki/SC1091
-let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1091']
+let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
 " General Neomake configuration
