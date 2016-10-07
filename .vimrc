@@ -145,7 +145,7 @@ let g:neomake_verbose=3
 "   \ 'texthl': 'ErrorMsg',
 "   \ }
 
-let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-x']
+let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1091']
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
 autocmd BufWritePost,BufWinEnter * silent Neomake
