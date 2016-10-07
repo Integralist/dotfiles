@@ -82,6 +82,7 @@ echo /usr/local/bin/bash | sudo tee -a /etc/shells
 chsh -s /usr/local/bin/bash
 
 # Configure Bash
+curl -LSso ~/.bash-preexec.sh https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
 curl -LSso ~/.bashrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.bashrc
 curl -LSso ~/.bash_profile https://raw.githubusercontent.com/Integralist/dotfiles/master/.bash_profile
 curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.inputrc
