@@ -145,6 +145,7 @@ let g:neomake_verbose=3
 "   \ 'texthl': 'ErrorMsg',
 "   \ }
 
+let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-x']
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
 autocmd BufWritePost,BufWinEnter * silent Neomake
@@ -233,7 +234,7 @@ autocmd Bufread,BufEnter *.md,*.txt execute 'normal zR' | execute 'Goyo'
 autocmd BufLeave *.md,*.txt execute 'Goyo!'
 
 " Automatically reload vimrc when it's saved
-autocmd BufWritePost .vimrc so ~/.vimrc
+" autocmd BufWritePost .vimrc so ~/.vimrc
 
 " Rainbow parenthesis always on!
 autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
