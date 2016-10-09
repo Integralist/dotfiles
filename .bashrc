@@ -203,7 +203,8 @@ function gcb {
 
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
-read -r -d '' _ <<- EOF
+# shellcheck disable=SC2034
+read -r -d '' git_icons <<- EOF
 * unstaged changes
 + staged but uncommitted changes
 $ stashed changes
@@ -223,8 +224,10 @@ alias ll="ls -laGpFHh"
 alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
+alias gb="git branch"
 alias gcp="git cherry-pick -"
 alias gpr="git pull --rebase origin master"
+alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 alias gitupstream="echo git branch -u origin/\<branch\>"
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
@@ -266,6 +269,9 @@ npm() {
   lazynvm
   npm "$@"
 }
+
+# Setup File Search AutoComplete
+[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
 source ~/.bash-preexec.sh
