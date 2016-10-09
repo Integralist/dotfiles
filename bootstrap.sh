@@ -87,6 +87,10 @@ curl -LSso ~/.bashrc https://raw.githubusercontent.com/Integralist/dotfiles/mast
 curl -LSso ~/.bash_profile https://raw.githubusercontent.com/Integralist/dotfiles/master/.bash_profile
 curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.inputrc
 
+# Setup File Search AutoComplete
+git clone https://github.com/pindexis/qfc $HOME/.qfc
+printf '\n# Setup File Search AutoComplete[C\n[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"' >> ~/.bashrc
+
 # Install NeoVim
 brew tap neovim/neovim && brew install --HEAD neovim
 
