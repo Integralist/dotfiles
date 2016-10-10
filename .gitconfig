@@ -3,7 +3,7 @@
 [alias]
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
-  logme = log --graph --author='Mark McDonnell'
+  logme = log --graph --author='Integralist'
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   st = status
   unstage = reset HEAD --
