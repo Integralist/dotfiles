@@ -319,6 +319,7 @@ mkdir -p ~/code/{python,python2}
 cd ~/code/python2
 pyenv install 2.7.6
 pyenv local 2.7.6
+pip install --upgrade neovim
 pip install goobook
 goobook authenticate
 
@@ -331,6 +332,7 @@ EOF
 cd ~/code/python
 pyenv install 3.5.1
 pyenv local 3.5.1
+pip install --upgrade neovim
 pip install pylint flake8 flake8-quotes pep8-naming
 
 keybase login
