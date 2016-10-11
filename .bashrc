@@ -40,8 +40,20 @@ shopt -s checkwinsize 2>/dev/null
 # use extra globing features. See man bash, search extglob.
 shopt -s extglob 2>/dev/null
 
+# ensure globs that match nothing raise an appropriate error
+shopt -s failglob 2>/dev/null
+
 # include .files when globbing.
 shopt -s dotglob 2>/dev/null
+
+# case insensitive globbing
+shopt -s nocaseglob 2>/dev/null
+
+# can be useful to utilise the gnu style error message format
+shopt -s gnu_errfmt 2>/dev/null
+
+# ensure SIGHUP is sent to all jobs when an interactive login shell exits
+shopt -s huponexit 2>/dev/null
 
 # specify other paths to look inside of when autocompleting
 CDPATH=".:~/code"
@@ -134,8 +146,9 @@ function prompt_left() {
 }
 
 function prompt() {
-    compensate=11
-    PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
+  compensate=11
+  unset PS1
+  PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
 
 function rubo() {
@@ -270,7 +283,7 @@ npm() {
   npm "$@"
 }
 
-# Setup File Search AutoComplete
+# Setup File Search AutoComplete (Ctrl-f, type to filter, arrow to look inside folders)
 [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
