@@ -40,9 +40,6 @@ shopt -s checkwinsize 2>/dev/null
 # use extra globing features. See man bash, search extglob.
 shopt -s extglob 2>/dev/null
 
-# ensure globs that match nothing raise an appropriate error
-shopt -s failglob 2>/dev/null
-
 # include .files when globbing.
 shopt -s dotglob 2>/dev/null
 
