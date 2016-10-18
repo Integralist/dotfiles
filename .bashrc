@@ -235,6 +235,7 @@ alias r="source ~/.bashrc"
 alias cm="git checkout master"
 alias c-="git checkout -"
 alias gb="git branch"
+alias gbd="git branch -D"
 alias gcp="git cherry-pick -"
 alias gpr="git pull --rebase origin master"
 alias wat='echo "$git_icons"'
