@@ -343,4 +343,4 @@ keybase login
 # keybase prove twitter integralist
 # keybase prove github integralist
 
-printf "\nDon't forget to:\n\n\t%s\n" "ln -s ~/.password-store ~/Google\ Drive/Keys/Pass/.password-store/"
+printf "\nDon't forget to:\n\n\t%s\n" "ln -s ~/Google\ Drive/Keys/Pass/.password-store/ ~/.password-store"
