@@ -6,6 +6,9 @@ source ~/.git-prompt.sh
 # https://github.com/jarun/googler/blob/master/auto-completion/bash/googler-completion.bash
 source ~/googler-completion.bash
 
+# https://git.zx2c4.com/password-store/plain/src/completion/pass.bash-completion
+source ~/pass.bash-completion
+
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
 
