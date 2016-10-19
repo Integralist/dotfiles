@@ -342,3 +342,5 @@ pip install pylint flake8 flake8-quotes pep8-naming
 keybase login
 # keybase prove twitter integralist
 # keybase prove github integralist
+
+printf "\nDon't forget to:\n\n\t%s\n" "ln -s ~/.password-store ~/Google\ Drive/Keys/Pass/.password-store/"
