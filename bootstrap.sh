@@ -87,6 +87,9 @@ curl -LSso ~/.bashrc https://raw.githubusercontent.com/Integralist/dotfiles/mast
 curl -LSso ~/.bash_profile https://raw.githubusercontent.com/Integralist/dotfiles/master/.bash_profile
 curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.inputrc
 
+# Sort out passwordstore.org autocompletion (sourced from .bashrc)
+curl https://git.zx2c4.com/password-store/plain/src/completion/pass.bash-completion -o ~/pass.bash-completion
+
 # Setup File Search AutoComplete
 git clone https://github.com/pindexis/qfc $HOME/.qfc
 #printf '\n# Setup File Search AutoComplete\n[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"' >> ~/.bashrc
