@@ -145,6 +145,7 @@ packages=(\
   netcat\
   ngrok\
   node\
+  pass\
   pstree\
   pyenv\
   rbenv\
