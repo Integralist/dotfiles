@@ -132,9 +132,9 @@ packages=(\
   gem-completion\
   gist\
   git\
+  gnupg2\
   go\
   googler\
-  gpg\
   gpg-agent\
   httpstat\
   imagemagick\
