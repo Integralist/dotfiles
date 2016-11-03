@@ -7,13 +7,46 @@ curl -LSso ~/bootstrap.sh https://raw.githubusercontent.com/Integralist/dotfiles
 /bin/bash bootstrap.sh
 ```
 
-Otherwise here's a breakdown of what we need...
+> Although I would instead recommend manually executing each line of `bootstrap.sh` manually as it allows you to deal with runtime errors (e.g. slow connections or missing configuration etc) a lot more easily and also means you can bypass things you don't need
+
+## Setup
+
+So here's some key software that I like to setup manually...
+
+### GPG
+
+One of the most important things (for me) is to get my GPG keys setup. Once you have GPG installed, pull your private key from wherever you have it stored (e.g. external USB stick), then execute:
+
+```sh
+gpg --import <private-key>
+gpg --export <key-id> # public key by default
+```
+
+I have a private repo with a git repository host, which stores my existing GPG files:
+
+```sh
+pass init "<key-id>" # create new pass store (~/.password-store)
+                     # ln -s ~/sync-location/.password-store/ ~/.password-store
+pass git init
+pass git remote add origin <git-host>
+pass git pull
+```
+
+Don't forget you can sign your git commits:
+
+```sh
+git config --global user.signingkey <key-id>
+```
+
+If `gpg --list-keys` shows `4096R/12345678`, then your `<key-id>` would be `12345678`
+
+If you have two separate git users, then don't use the `--global` flag.  
+Instead, run the command from the root of each git repo.
 
 ### Software
 
 - Install Google Chrome (login and sync)
-- AppStore: Slack, Twitter and Caffeine
-- MacDown (http://macdown.uranusjr.com/)
+- AppStore: Slack, Twitter, Dash and Caffeine
 
 ### GitHub
 
@@ -38,37 +71,18 @@ Otherwise here's a breakdown of what we need...
   ssh -T git@github.com
   ```
 
-> Note: you can also try out git-diff-fancy  
-> `npm install -g diff-so-fancy`  
-> One time: `git diff | diff-highlight | diff-so-fancy`  
-> Permanent: `git config --global core.pager "diff-so-fancy | less --tabs=1,5 -R"`
+### Cloud
 
-### GPG
+- "Google Drive"
 
-- Create key `gpg --gen-key` (or import it if you already have one: `gpg --import`)
-- Add it to GitHub config `git config --global user.signingkey <hash>` (e.g. `4096R/12345678` then hash would be `12345678`)
-- Now when tagging git commits you'll use `-s` instead of `-a`
+### Virtualisation
 
-> Note: if you have two separate git users  
-> then don't use `--global` flag and instead  
-> run command from root of each git repo
-
-### Miscellaneous
-
-- Install "Box Sync" and "Dropbox"
-- Then copy in your certificates:  
-  ```
-  mkdir -p ~/.pki/bbc
-  ```
-- Java JDK, [Vagrant](https://www.vagrantup.com/downloads.html) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
-- Golang
-  - `go get golang.org/x/tools/cmd/goimports`
-  - `mkdir -p ~/Projects/golang`
-  - `go get github.com/svent/sift` (`sift --files 'c*\.go' -n package`)
+- [Vagrant](https://www.vagrantup.com/downloads.html)
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 
 ### Docker
 
-If you're unable to utilise the new Docker for Mac beta, then you'll need to manually install Vagrant and Virtual Box, along with Docker Machine and Docker Compose:
+If you're unable to utilise the new Docker for Mac (hardware requirements might prevent you), then you'll need to manually install Vagrant and Virtual Box, along with Docker Machine and Docker Compose:
 
 - `brew cask install virtualbox`
 - `brew cask install vagrant`
@@ -76,3 +90,9 @@ If you're unable to utilise the new Docker for Mac beta, then you'll need to man
 - `brew install docker-compose`
 - `docker-machine create --driver virtualbox local`
 - `echo eval "$(docker-machine env local)" >> ~/.bashrc`
+
+### Programming
+
+- [Python](https://www.python.org/)
+- [Golang](https://golang.org/)
+  - `go get golang.org/x/tools/cmd/goimports`
