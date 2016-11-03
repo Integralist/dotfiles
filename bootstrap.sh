@@ -122,6 +122,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 packages=(\
   ag\
   argon/mas/mas\
+  asciinema\
   bash-completion\
   bundler-completion\
   coreutils\
