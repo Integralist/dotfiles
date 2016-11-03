@@ -73,7 +73,9 @@ Instead, run the command from the root of each git repo.
 
 ### Cloud
 
-- "Google Drive"
+Don't forget to download the relevant software for your cloud provider of choice
+
+e.g. Google Drive, Dropbox, Box etc
 
 ### Virtualisation
 
@@ -96,3 +98,4 @@ If you're unable to utilise the new Docker for Mac (hardware requirements might 
 - [Python](https://www.python.org/)
 - [Golang](https://golang.org/)
   - `go get golang.org/x/tools/cmd/goimports`
+- `npm install -g t-get`
