@@ -161,6 +161,7 @@ packages=(\
   tmux\
   tree\
   urlview\
+  vim\
   watch\
   wget\
   wireshark\
