@@ -188,6 +188,17 @@ curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/goo
 mkdir -p ~/.mutt/cache/{headers,bodies}
 touch ~/.mutt/certificates
 
+# Use ~/.mailcap file with Mutt and view_attachment.sh
+curl -LSso ~/.mutt/view_attachment.sh https://raw.githubusercontent.com/luciano-fiandesio/dotfiles/master/.mutt/view_attachment.sh
+
+cat > ~/.mailcap <<EOF
+image/gif; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+image/jpeg; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+application/pdf; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+text/html; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+text/plain; nvim %s
+EOF
+
 cat > ~/.mutt/passwords <<EOF
 set imap_pass="<google-app-password>"
 set smtp_pass="<google-app-password>"
