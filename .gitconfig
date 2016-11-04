@@ -1,7 +1,8 @@
 # https://git-scm.com/docs/git-config
+# https://git-scm.com/docs/pretty-formats
 
 [alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
   logme = log --graph --author='Integralist'
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
@@ -72,3 +73,4 @@
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
+	signingkey = 561C861B
