@@ -14,6 +14,7 @@ set realname = "Mark McDonnell"
 set editor = "vim"
 
 # Configuration
+set index_format = "%4C %Z %{%b %d} %-15.15L (%?l?%4l&%4c?) %s <%A>" # http://www.mutt.org/doc/manual/#index-format
 set folder = "imaps://imap.gmail.com:993"
 set spoolfile = "+INBOX" # default view would otherwise be 'All Mail'
 set imap_check_subscribed
