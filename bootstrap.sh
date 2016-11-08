@@ -52,7 +52,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict General -bool true Ope
 # Don’t automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
-# Setup Terminal preferences
+# Configure Terminal
 curl -LSso ~/Integralist.terminal https://raw.githubusercontent.com/Integralist/mac-os-terminal-theme-integralist/master/Integralist.terminal
 open ~/Integralist.terminal
 defaults write com.apple.Terminal "Default Window Settings" Integralist
@@ -103,7 +103,6 @@ curl -LSso /usr/local/bin/voom https://raw.githubusercontent.com/airblade/voom/m
 chmod 744 /usr/local/bin/voom
 alias voom='VIM_DIR=~/.vim voom'
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
-# mkdir -p .config/nvim
 ln -s ~/.vim ~/.config/nvim
 ln -s ~/.vimrc ~/.config/nvim/init.vim
 voom
@@ -119,6 +118,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 
 # Install other brew packages
 # e.g. coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
+#      exif is used by .gitattributes
 packages=(\
   ag\
   argon/mas/mas\
@@ -129,6 +129,7 @@ packages=(\
   docker-compose-completion\
   docker-machine\
   docker\
+  exif\
   fzf \
   gem-completion\
   gist\
@@ -178,64 +179,15 @@ done
 
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
-
-# Configure Googler
-curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/googler/master/auto-completion/bash/googler-completion.bash
-
-# Configure Mutt
-# You need a Google app password:
-# https://security.google.com/settings/security/apppasswords
-mkdir -p ~/.mutt/cache/{headers,bodies}
-touch ~/.mutt/certificates
-
-# Use ~/.mailcap file with Mutt and view_attachment.sh
-curl -LSso ~/.mutt/view_attachment.sh https://raw.githubusercontent.com/luciano-fiandesio/dotfiles/master/.mutt/view_attachment.sh
-
-cat > ~/.mailcap <<EOF
-image/gif; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-image/jpeg; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-application/pdf; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-text/html; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-text/plain; nvim %s
-EOF
-
-cat > ~/.mutt/passwords <<EOF
-set imap_pass="<google-app-password>"
-set smtp_pass="<google-app-password>"
-EOF
-
-printf "\n\nYou need to change the password in ~/.mutt/passwords:\n\n\tgpg -r mark.mcdx@gmail.com -e ~/.mutt/passwords &&\n\tgshred ~/.mutt/passwords &&\n\trm ~/.mutt/passwords\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
-read cont
-if [ $cont == "y" ] || [ $cont == "Y" ] ; then
-  echo "Cool, let's keep going..."
-else
-  echo "OK let's stop here and you can continue on manually"
-  exit
-fi
-
-cat > ~/.mutt/passwords-buzzfeed <<EOF
-set imap_pass="<google-app-password>"
-set smtp_pass="<google-app-password>"
-EOF
-
-printf "\n\nYou need to change the password in ~/.mutt/passwords-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/passwords-buzzfeed &&\n\tgshred ~/.mutt/passwords-buzzfeed &&\n\trm ~/.mutt/passwords-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
-read cont
-if [ $cont == "y" ] || [ $cont == "Y" ] ; then
-  echo "Cool, let's keep going..."
-else
-  echo "OK let's stop here and you can continue on manually"
-  exit
-fi
-
-curl -LSso ~/.muttrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc
-
+curl -LSso ~/.gitattributes https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitattributes
 curl -LSso ~/.gitignore-global https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitignore-global
+curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitconfig
 
 curl -LSso ~/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
 chmod +x ~/diff-highlight
 
-curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitconfig
-
+# If you need to configure Git manually...
+#
 # git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
 # git config --global --add alias.st status
 # git config --global --add alias.unstage "reset HEAD --"
@@ -289,6 +241,73 @@ else
 fi
 ssh -T git@github.com
 
+# Configure Googler
+curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/googler/master/auto-completion/bash/googler-completion.bash
+
+# Configure Mutt
+# You need a Google app password:
+# https://security.google.com/settings/security/apppasswords
+mkdir -p ~/.mutt/cache/{headers,bodies}
+touch ~/.mutt/certificates
+
+# Use ~/.mailcap file with Mutt and view_attachment.sh
+curl -LSso ~/.mutt/view_attachment.sh https://raw.githubusercontent.com/luciano-fiandesio/dotfiles/master/.mutt/view_attachment.sh
+
+cat > ~/.mailcap <<EOF
+image/gif; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+image/jpeg; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+application/pdf; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+text/html; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
+text/plain; nvim %s
+EOF
+
+cat > ~/.mutt/passwords <<EOF
+set imap_pass="<google-app-password>"
+set smtp_pass="<google-app-password>"
+EOF
+
+printf "\n\nYou need to change the password in ~/.mutt/passwords:\n\n\tgpg -r mark.mcdx@gmail.com -e ~/.mutt/passwords &&\n\tgshred ~/.mutt/passwords &&\n\trm ~/.mutt/passwords\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
+cat > ~/.mutt/passwords-buzzfeed <<EOF
+set imap_pass="<google-app-password>"
+set smtp_pass="<google-app-password>"
+EOF
+
+printf "\n\nYou need to change the password in ~/.mutt/passwords-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/passwords-buzzfeed &&\n\tgshred ~/.mutt/passwords-buzzfeed &&\n\trm ~/.mutt/passwords-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
+read cont
+if [ $cont == "y" ] || [ $cont == "Y" ] ; then
+  echo "Cool, let's keep going..."
+else
+  echo "OK let's stop here and you can continue on manually"
+  exit
+fi
+
+curl -LSso ~/.muttrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc
+curl -LSso ~/.muttrc-buzzfeed https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc-buzzfeed
+curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
+
+# Configure Golang (~/.bashrc already sets GOPATH)
+mkdir -p ~/code/go
+go get golang.org/x/tools/cmd/goimports
+
+# Miscellaneous
+curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
+curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
+curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
+curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
+npm install -g tldr # https://github.com/tldr-pages/tldr
+
+# Needed to add your GPG keys to the agent
+# http://linux.die.net/man/1/gpg-agent 
+eval $(gpg-agent --daemon)
+
 # Install some apps via Brew Cask
 brew cask
 brew cask install --appdir="/Applications" caffeine
@@ -302,24 +321,6 @@ brew cask install --appdir="/Applications" vlc
 brew cask install --appdir="/Applications" licecap
 brew cask install --appdir="/Applications" dripcap # packet analyser (like Wireshark)
 
-# Configure Golang (~/.bashrc already sets GOPATH)
-mkdir -p ~/code/go
-go get golang.org/x/tools/cmd/goimports
-
-# Miscellaneous
-curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitconfig
-curl -LSso ~/.gitignore-global https://raw.githubusercontent.com/Integralist/dotfiles/master/.gitignore-global
-curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
-curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
-curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
-curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
-curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
-npm install -g tldr # https://github.com/tldr-pages/tldr
-
-# Needed to add your GPG keys to the agent
-# http://linux.die.net/man/1/gpg-agent 
-eval $(gpg-agent --daemon)
-
 # Install applications from Mac App Store
 #mas install 411246225 # Caffeine
 #mas install 458034879 # Dash
@@ -327,7 +328,7 @@ eval $(gpg-agent --daemon)
 #mas install 409789998 # Twitter
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
 
-# Install Python Stuff
+# Configure Python
 mkdir -p ~/code/{python,python2}
 
 cd ~/code/python2
