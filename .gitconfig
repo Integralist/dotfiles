@@ -46,6 +46,9 @@
 [diff]
   compactionHeuristic = true
 
+[diff "exif"]
+	textconv = exiftool
+
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
 
