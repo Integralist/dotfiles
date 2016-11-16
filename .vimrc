@@ -137,6 +137,11 @@ let g:neomake_python_enabled_makers = ['flake8', 'pylint']
 let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
+let g:neomake_c_enabled_makers = ['clang']
+
+let g:neomake_js_enabled_makers = ['eslint']
+let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
+
 " General Neomake configuration
 let g:neomake_open_list=2
 let g:neomake_list_height=5
@@ -145,7 +150,7 @@ let g:neomake_verbose=3
 " Run Neomake whenever we enter or write a buffer
 autocmd BufWritePost,BufWinEnter * silent Neomake
 
-" The following configuration is useful if you don't like 
+" The following configuration is useful if you don't like
 " the icons (which are provided by default) for highlighting errors/warnings
 "
 " let g:neomake_warning_sign = {
