@@ -304,7 +304,8 @@ curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles
 curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 npm install -g tldr # https://github.com/tldr-pages/tldr
-npm install -g eslint 
+npm install -g eslint
+npm install -g babel-eslint
 
 # Needed to add your GPG keys to the agent
 # http://linux.die.net/man/1/gpg-agent 
