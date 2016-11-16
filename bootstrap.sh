@@ -298,11 +298,13 @@ mkdir -p ~/code/go
 go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
+curl -LSso ~/eslint.config.js https://raw.githubusercontent.com/Integralist/dotfiles/master/eslint.config.js
 curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
 curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 npm install -g tldr # https://github.com/tldr-pages/tldr
+npm install -g eslint 
 
 # Needed to add your GPG keys to the agent
 # http://linux.die.net/man/1/gpg-agent 
