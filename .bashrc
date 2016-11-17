@@ -180,15 +180,16 @@ function gms() {
 function pt {
   local service=$1
   local env=${2:-stage}
-  local query=$3
+  local query="AND $3"
   local group=${4:-rig-stage}
 
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
     printf "\n\tpt site_router web-public test=mark rig-web-public"
-    printf "\n\tpapertrail -f -g \"<group>\" -min-time=\"10 minutes ago\" -max-time=\"now\" \"program:<program> AND <query>\"\n"
+    printf "\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" \"program:<program> AND <query>\""
+    printf "\n\tpapertrail -f -g \"rig-prod\" --min=\"20 minutes ago\" --max=\"now\" \"program:docker/prod/bpager\"\n"
   else
-    eval "papertrail -f -g \"$group\" \"program:docker/$env/$service AND $query\""
+    eval "papertrail -f -g \"$group\" \"program:docker/$env/$service $query\""
   fi
 }
 
