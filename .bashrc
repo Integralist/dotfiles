@@ -84,10 +84,8 @@ export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed 
                                        # < for commits on upstream not merged with HEAD
                                        # = HEAD points to same commit as upstream
 
-# terminal configuration
-export PROMPT_COMMAND='history -a' # record each line as it gets issued
-
 # history configuration
+history -a # record each line as it gets issued
 export HISTSIZE=500000
 export HISTFILESIZE=100000
 export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
