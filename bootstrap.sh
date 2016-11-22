@@ -299,6 +299,7 @@ go get golang.org/x/tools/cmd/goimports
 
 # Miscellaneous
 curl -LSso ~/eslint.config.js https://raw.githubusercontent.com/Integralist/dotfiles/master/eslint.config.js
+curl -LSso ~/.pylintrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.pylintrc
 curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
 curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
