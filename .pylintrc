@@ -1,0 +1,7 @@
+[DEFAULT]
+max-line-length=120
+
+[TYPECHECK]
+/* for pylint no-member complaints */
+ignored-modules = ujson
+ignored-classes = ujson
