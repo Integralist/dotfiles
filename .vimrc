@@ -216,6 +216,10 @@ let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
 " NeoVim shortcut for quick terminal exit
 :silent! tnoremap <Esc> <C-\><C-n>
 
+" Allow substitutions to dynamically be represented in the buffer
+" https://asciinema.org/a/92207
+:silent! set inccommand=nosplit
+
 fun! StripTrailingWhitespace()
   " Don't strip on these filetypes
   if &ft =~ 'markdown'
