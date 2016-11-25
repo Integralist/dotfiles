@@ -184,8 +184,8 @@ function pt {
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
     printf "\n\tpt site_router web-public test=mark rig-web-public"
-    printf "\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" \"program:<program> AND <query>\""
-    printf "\n\tpapertrail -f -g \"rig-prod\" --min=\"20 minutes ago\" --max=\"now\" \"program:docker/prod/bpager\"\n"
+    printf "\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
+    printf "\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" program:<program> \"<query> AND <query>\""
   else
     eval "papertrail -f -g \"$group\" \"program:docker/$env/$service $query\""
   fi
@@ -252,7 +252,7 @@ alias sshvm="ssh rig.dev"
 alias drm='docker rm $(docker ps -a -q)'
 alias drmi='docker rmi $(docker images -q)'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
-alias nvimupdate="brew reinstall --HEAD neovim"
+alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
 alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias uid='echo $(uuidgen)'
