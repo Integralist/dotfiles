@@ -252,8 +252,8 @@ autocmd BufLeave *.md,*.txt execute 'Goyo!'
 " Automatically reload vimrc when it's saved
 " autocmd BufWritePost .vimrc so ~/.vimrc
 
-" Rainbow parenthesis always on!
-autocmd VimEnter * if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
+" Rainbow parentheses always on for Clojure scripts
+autocmd VimEnter *.clj if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
 
 " Change colourscheme when diffing
 fun! SetDiffColours()
