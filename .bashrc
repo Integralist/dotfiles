@@ -56,7 +56,8 @@ shopt -s gnu_errfmt 2>/dev/null
 shopt -s huponexit 2>/dev/null
 
 # specify other paths to look inside of when autocompleting
-CDPATH=".:~/code"
+# disabled as I don't use it and it ends up confusing me later
+# CDPATH=".:~/code"
 
 # custom environment variables
 export DROPBOX="$HOME/Dropbox"
