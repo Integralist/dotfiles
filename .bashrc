@@ -184,9 +184,10 @@ function pt {
 
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
-    printf "\n\tpt site_router web-public test=mark rig-web-public"
-    printf "\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
-    printf "\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" program:<program> \"<query> AND <query>\""
+    printf "\n\n\tpt site_router web-public test=mark rig-web-public"
+    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
+    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"2 hours ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 5' AND 'upstream (bpager'\""
+    printf "\n\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" program:<program> \"<query> AND <query>\"\n"
   else
     eval "papertrail -f -g \"$group\" \"program:docker/$env/$service $query\""
   fi
@@ -211,6 +212,14 @@ function gcb {
     printf "\n\tUse: gcb some-new-branch-name (branch will be created)\n"
   else
     git checkout -b "$1"
+  fi
+}
+
+function dotf {
+  if [ -z "$1" ]; then
+    pushd "$PWD" && dotfiles && popd
+  else
+    pushd "$1" && dotfiles && popd
   fi
 }
 
