@@ -223,6 +223,13 @@ function dotf {
   fi
 }
 
+function merge-diff {
+  # show all of the commits that were merged in by <commit>
+  # but none of the commits that were already on the branch
+  # you get to see this (sort of) when using my `git lg` alias (see my .gitconfig)
+  git log "$1^-"
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
