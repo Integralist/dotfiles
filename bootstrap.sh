@@ -119,6 +119,8 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 # Install other brew packages
 # e.g. coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
 #      exif is used by .gitattributes
+#      task is https://taskwarrior.org/
+#      googler is for searching Google from terminal
 packages=(\
   ag\
   argon/mas/mas\
@@ -157,6 +159,7 @@ packages=(\
   siege\
   sift\
   speedtest-cli\
+  task\
   terminal-notifier\
   the_silver_searcher\
   tmate\
