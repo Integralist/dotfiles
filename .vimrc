@@ -107,15 +107,19 @@ set dictionary=/usr/share/dict/words
 " Use Ag for :grep command (would use Sift but it doesn't work well)
 set grepprg=ag\ --nogroup\ --nocolor
 
-" Set built-in file system explorer to use layout similar to the NERDTree plugin
-" P opens file in previously focused window
-" o opens file in new horizontal split window
-" v opens file in new vertical split window
-" t opens file in new tab split window
-let g:netrw_liststyle=3
-
-" Allow netrw to remove non-empty local directories
-let g:netrw_localrmdir='rm -r'
+" NetRW settings (see :NetrwSettings)
+map <Leader>z :Lexplore<CR> " Left menu draw like NERDTree
+let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage
+let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
+let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
+let g:netrw_hide=0 " Show ALL files
+let g:netrw_list_hide= '*/\.git,*/\.DS_Store$' " Ignore certain files and directories
+let g:netrw_sizestyle="h" " Human readable file sizes
+let g:netrw_liststyle=3 " Set built-in file system explorer to use layout similar to the NERDTree plugin
+                        " P opens file in previously focused window
+                        " o opens file in new horizontal split window
+                        " v opens file in new vertical split window
+                        " t opens file in new tab split window
 
 execute pathogen#infect()
 filetype plugin indent on
@@ -256,8 +260,8 @@ autocmd Bufread,BufNewFile *.spv set filetype=php
 autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
 " Run Goyo plugin on Markdown files for when I'm writing blog posts
-autocmd Bufread,BufEnter *.md,*.txt execute 'normal zR' | execute 'Goyo'
-autocmd BufLeave *.md,*.txt execute 'Goyo!'
+autocmd Bufread,BufEnter *.md execute 'normal zR' | execute 'Goyo'
+autocmd BufLeave *.md execute 'Goyo!'
 
 " Automatically reload vimrc when it's saved
 " autocmd BufWritePost .vimrc so ~/.vimrc
