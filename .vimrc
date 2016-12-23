@@ -114,6 +114,9 @@ set grepprg=ag\ --nogroup\ --nocolor
 " t opens file in new tab split window
 let g:netrw_liststyle=3
 
+" Allow netrw to remove non-empty local directories
+let g:netrw_localrmdir='rm -r'
+
 execute pathogen#infect()
 filetype plugin indent on
 
@@ -138,6 +141,13 @@ let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + [
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
 let g:neomake_c_enabled_makers = ['clang']
+
+let g:neomake_rust_enabled_makers = ['cargo']
+augroup my_neomake_cmds
+  autocmd!
+  " Have neomake run cargo when Rust files are saved.
+  autocmd BufWritePost *.rs Neomake! cargo
+augroup END
 
 let g:neomake_js_enabled_makers = ['eslint']
 let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
