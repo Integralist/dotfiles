@@ -8,6 +8,7 @@ godlygeek/tabular
 guns/vim-clojure-highlight
 guns/vim-clojure-static
 guns/vim-sexp
+Integralist/gruvbox
 itchyny/lightline.vim
 jamessan/vim-gnupg
 junegunn/goyo.vim
@@ -17,7 +18,6 @@ kien/rainbow_parentheses.vim
 m-kat/aws-vim
 maxboisvert/vim-simple-complete
 mileszs/ack.vim
-morhetz/gruvbox
 nelstrom/vim-textobj-rubyblock
 neomake/neomake
 nvie/vim-flake8
