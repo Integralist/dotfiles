@@ -357,6 +357,11 @@ pyenv local 3.5.1
 pip install --upgrade neovim
 pip install pylint flake8 flake8-quotes pep8-naming
 
+# Install Rust, Cargo and Rustup
+# https://www.rust-lang.org/en-US/install.html
+curl https://sh.rustup.rs -sSf | sh 
+rustc --version
+
 keybase login
 # keybase prove twitter integralist
 # keybase prove github integralist
