@@ -361,6 +361,13 @@ pip install pylint flake8 flake8-quotes pep8-naming
 # https://www.rust-lang.org/en-US/install.html
 curl https://sh.rustup.rs -sSf | sh 
 rustc --version
+rustup --version
+cargo --version
+
+# Rust auto-completion for Homebrew install of Bash
+if [ -f $(brew --prefix)/etc/bash_completion.d ]; then
+  rustup completions bash > $(brew --prefix)/etc/bash_completion.d/rustup.bash-completion
+fi
 
 keybase login
 # keybase prove twitter integralist
