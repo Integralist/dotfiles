@@ -200,7 +200,7 @@ let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " Use Ag for searching ins
 let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$' " Directories to ignore when fuzzy finding
 
 " ack
-let g:ackprg = 'ag --nogroup --nocolor --column'
+let g:ackprg = 'ag --column --smart-case'
 
 " vim-textobj-rubyblock
 runtime macros/matchit.vim
