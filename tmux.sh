@@ -22,7 +22,7 @@ else
   tmux send-keys -t work:4 'cd ~/code/python && ipython' 'C-m'
 
   # IRC
-  tmux new-window -n 'ipython' -t work:5
+  tmux new-window -n 'irc' -t work:5
   tmux send-keys -t work:5 'irc' 'C-m'
 
   # Rust Code Project
