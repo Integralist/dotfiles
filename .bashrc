@@ -276,6 +276,7 @@ alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 p
 alias uid='echo $(uuidgen)'
 alias datesec='date +%s'
 alias ascii='man 7 ascii'
+alias tmuxy='bash ~/tmux.sh'
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
