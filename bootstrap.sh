@@ -307,6 +307,7 @@ curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/maste
 curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
 curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
+curl -LSso ~/tmux.sh https://raw.githubusercontent.com/Integralist/dotfiles/master/tmux.sh
 npm install -g tldr # https://github.com/tldr-pages/tldr
 npm install -g eslint
 npm install -g babel-eslint
