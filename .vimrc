@@ -88,6 +88,7 @@ set splitright
 
 " Highlight the current line
 set cursorline
+highlight CursorLine cterm=NONE ctermbg=white ctermfg=darkred
 
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
