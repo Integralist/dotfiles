@@ -92,7 +92,7 @@ set cursorline
 " We have to use a last minute event (VimEnter)
 " Otherwise the colourscheme overrides our CursorLine
 fun! SetCursorLine()
-  highlight CursorLine cterm=NONE ctermbg=white ctermfg=darkred
+  highlight CursorLine cterm=NONE ctermbg=214 ctermfg=darkred
 endfun
 autocmd VimEnter * call SetCursorLine()
 
