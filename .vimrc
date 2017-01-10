@@ -109,7 +109,6 @@ set grepprg=ag\ --nogroup\ --nocolor
 
 " NetRW settings (see :NetrwSettings)
 map <Leader>z :Lexplore<CR> " Left menu draw like NERDTree
-let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage
 let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
 let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
 let g:netrw_hide=0 " Show ALL files
