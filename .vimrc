@@ -88,7 +88,13 @@ set splitright
 
 " Highlight the current line
 set cursorline
-highlight CursorLine cterm=NONE ctermbg=white ctermfg=darkred
+
+" We have to use a last minute event (VimEnter)
+" Otherwise the colourscheme overrides our CursorLine
+fun! SetCursorLine()
+  highlight CursorLine cterm=NONE ctermbg=white ctermfg=darkred
+endfun
+autocmd VimEnter * call SetCursorLine()
 
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
