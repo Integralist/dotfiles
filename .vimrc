@@ -94,7 +94,7 @@ set cursorline
 fun! SetCursorLine()
   highlight CursorLine cterm=NONE ctermbg=214 ctermfg=darkred
 endfun
-autocmd VimEnter * call SetCursorLine()
+" autocmd VimEnter * call SetCursorLine()
 
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
