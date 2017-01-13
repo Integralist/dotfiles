@@ -10,6 +10,7 @@ set nocompatible
 " Disable Mouse (this is something that only recently affected me within NeoVim)
 " Seemed using the mouse to select some text would make NeoVim jump into VISUAL mode?
 set mouse=
+
 " No backup files
 set nobackup
 
@@ -39,6 +40,9 @@ set smartcase
 
 " Make sure any searches /searchPhrase doesn't need the \c escape character
 set ignorecase
+
+" Try to intelligently indent when creating a newline
+set smartindent
 
 " A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
 " If you try and quit Vim while there are hidden buffers, you will raise an error:
@@ -89,12 +93,13 @@ set splitright
 " Highlight the current line
 set cursorline
 
-" We have to use a last minute event (VimEnter)
-" Otherwise the colourscheme overrides our CursorLine
+" DISABLED: decided it was less noisy justlooking at line number highlighted
 fun! SetCursorLine()
+  " http://misc.flogisoft.com/_media/bash/colors_format/256_colors_bg.png
   highlight CursorLine cterm=NONE ctermbg=214 ctermfg=darkred
 endfun
-" autocmd VimEnter * call SetCursorLine()
+" autocmd VimEnter * call SetCursorLine() " We have to use a last minute event (VimEnter)
+                                          " Otherwise the colourscheme overrides our CursorLine
 
 " Ensure Vim doesn't beep at you every time you make a mistype
 set visualbell
@@ -116,6 +121,7 @@ set grepprg=ag\ --nogroup\ --nocolor
 
 " NetRW settings (see :NetrwSettings)
 map <Leader>z :Lexplore<CR> " Left menu draw like NERDTree
+let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage (related to above mapping)
 let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
 let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
 let g:netrw_hide=0 " Show ALL files
@@ -151,13 +157,7 @@ let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + [
 let g:neomake_bash_enabled_makers = ['shellcheck']
 
 let g:neomake_c_enabled_makers = ['clang']
-
 let g:neomake_rust_enabled_makers = ['cargo']
-augroup my_neomake_cmds
-  autocmd!
-  " Have neomake run cargo when Rust files are saved.
-  autocmd BufWritePost *.rs Neomake! cargo
-augroup END
 
 let g:neomake_js_enabled_makers = ['eslint']
 let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
@@ -168,7 +168,16 @@ let g:neomake_list_height=5
 let g:neomake_verbose=3
 
 " Run Neomake whenever we enter or write a buffer
-autocmd BufWritePost,BufWinEnter * silent Neomake
+" Use Neomake! if you want to open within single/global quickfix list
+" silent means no messages added to :messages log
+fun! RunNeomake()
+  if &ft =~ 'rust'
+    Neomake! cargo " rust must be run in quickfix or errors happen
+  else
+    silent Neomake
+  endif
+endfun
+autocmd BufWritePost,BufWinEnter * call RunNeomake()
 
 " The following configuration is useful if you don't like
 " the icons (which are provided by default) for highlighting errors/warnings
@@ -286,3 +295,6 @@ autocmd FilterWritePre * call SetDiffColours()
 
 " Map § key to :nohlsearch (or :noh for short)
 map § :nohlsearch<CR>
+
+" Tell Vim how many colours are available
+let &t_Co=256
