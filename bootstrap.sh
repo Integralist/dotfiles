@@ -365,6 +365,10 @@ rustc --version
 rustup --version
 cargo --version
 
+# Make sure new shell instances link to Cargo environment
+echo "# Dynamically added via bootstrap script" >> ~/.bashrc
+echo 'source "$HOME/.cargo/env"' >> ~/.bashrc
+
 # Rust auto-completion for Homebrew install of Bash
 if [ -f $(brew --prefix)/etc/bash_completion.d ]; then
   rustup completions bash > $(brew --prefix)/etc/bash_completion.d/rustup.bash-completion
