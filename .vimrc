@@ -149,6 +149,9 @@ let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + [
 " http://pylint-messages.wikidot.com/all-messages
 let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ['-d', 'missing-docstring,invalid-name']
 
+" For experimental mypy async/await syntax
+let g:neomake_python_mypy_args = neomake#makers#ft#python#mypy()['args'] + ['--fast-parser']
+
 " Enable both default Python linters
 let g:neomake_python_enabled_makers = ['flake8', 'pylint', 'mypy']
 
