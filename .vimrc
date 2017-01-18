@@ -269,16 +269,20 @@ autocmd FileType php,python setlocal shiftwidth=4 tabstop=4 expandtab
 " See `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
+" Disabled as it was causing status plugin styles to be destroyed
+" If you were to manually source the vimrc then the status styles would return
+" Tried to automate via execute command but didn't work
+"
 " Set different colorscheme for Bash and VimL scripts
-autocmd BufEnter *.sh,*.vimrc,*.txt colorscheme github
-autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
+" autocmd BufEnter *.sh,*.vimrc,*.txt execute 'colorscheme github' | execute ':source $MYVIMRC'
+" autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
-autocmd Bufread,BufNewFile *.spv set filetype=php
-autocmd Bufread,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
+autocmd BufRead,BufNewFile *.spv set filetype=php
+autocmd BufRead,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
 " Run Goyo plugin on Markdown files for when I'm writing blog posts
-autocmd Bufread,BufEnter *.md execute 'normal zR' | execute 'Goyo'
+autocmd BufRead,BufEnter *.md execute 'normal zR' | execute 'Goyo'
 autocmd BufLeave *.md execute 'Goyo!'
 
 " Automatically reload vimrc when it's saved
