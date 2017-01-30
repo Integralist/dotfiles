@@ -119,6 +119,9 @@ set dictionary=/usr/share/dict/words
 " Use Ag for :grep command (would use Sift but it doesn't work well)
 set grepprg=ag\ --nogroup\ --nocolor
 
+" Use git alias inside ~/.gitconfig to open current file line in GitHub
+nnoremap <leader>f :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
+
 " NetRW settings (see :NetrwSettings)
 map <Leader>z :Lexplore<CR> " Left menu draw like NERDTree
 let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage (related to above mapping)
