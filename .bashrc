@@ -244,7 +244,7 @@ function headers {
   if [ -z "$pattern" ]; then
     sort < /tmp/headers.txt
   else
-    sort < /tmp/headers.txt | grep "$pattern"
+    sort < /tmp/headers.txt | egrep "$pattern"
   fi
 
   rm /tmp/headers.txt
