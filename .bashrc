@@ -232,7 +232,7 @@ function merge-diff {
 
 function headers {
   if [ -z "$1" ]; then
-    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us 'x-cache'\n"
+    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us '^(x-cache|x-timer)'\n"
     return
   fi
 
