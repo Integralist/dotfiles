@@ -185,11 +185,11 @@ function pt {
   if [ -z "$1" ]; then
     printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
     printf "\n\n\tpt site_router web-public test=mark rig-web-public"
-    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
-    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"2 hours ago\" --max-time=\"now\" program:docker/web-public/site_router \"'HTTP/1.1 5' AND 'upstream (bpager'\""
+    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
+    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"2 hours ago\" --max-time=\"now\" program:web-public/site_router \"'HTTP/1.1 5' AND 'upstream (bpager'\""
     printf "\n\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" program:<program> \"<query> AND <query>\"\n"
   else
-    eval "papertrail -f -g \"$group\" \"program:docker/$env/$service $query\""
+    eval "papertrail -f -g \"$group\" \"program:$env/$service $query\""
   fi
 }
 
@@ -230,6 +230,26 @@ function merge-diff {
   git log "$1^-"
 }
 
+function headers {
+  if [ -z "$1" ]; then
+    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us 'x-cache'\n"
+    return
+  fi
+
+  local url=$1
+  local pattern=$2
+
+  curl -D /tmp/headers.txt -o /dev/null -s "$url"
+
+  if [ -z "$pattern" ]; then
+    sort < /tmp/headers.txt
+  else
+    sort < /tmp/headers.txt | grep "$pattern"
+  fi
+
+  rm /tmp/headers.txt
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
@@ -246,8 +266,7 @@ EOF
 # use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
 alias c="clear"
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
-alias getcommit="git rev-parse HEAD | tr -d '\n' | pbcopy" # used to be... git log -1 | cut -d ' ' -f 2 | head -n 1 | tr -d '\n' | pbcopy
-alias sshkey="ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
+alias getcommit="git rev-parse HEAD | tr -d '\n' | pbcopy"
 alias sshkey="cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
 alias irc="irssi"
 alias ls="ls -GpF"
