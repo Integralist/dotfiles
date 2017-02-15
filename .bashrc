@@ -239,7 +239,7 @@ function headers {
   local url=$1
   local pattern=$2
 
-  curl -D /tmp/headers.txt -o /dev/null -s "$url"
+  curl -H Fastly-Debug:1 -D /tmp/headers.txt -o /dev/null -s "$url"
 
   if [ -z "$pattern" ]; then
     sort < /tmp/headers.txt
