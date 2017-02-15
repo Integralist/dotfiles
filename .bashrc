@@ -232,22 +232,15 @@ function merge-diff {
 
 function headers {
   if [ -z "$1" ]; then
-    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us '^(x-cache|x-timer)'\n"
+    printf "\n\tExample: headers https://www.buzzfeed.com/?country=us 'x-cache|x-timer'\n"
     return
   fi
 
   local url=$1
-  local pattern=$2
+  local pattern=${2:-''}
+  local response=$(curl -H Fastly-Debug:1 -D - -o /dev/null -s "$url" | sort) # -D - will dump to stdout
 
-  curl -H Fastly-Debug:1 -D /tmp/headers.txt -o /dev/null -s "$url"
-
-  if [ -z "$pattern" ]; then
-    sort < /tmp/headers.txt
-  else
-    sort < /tmp/headers.txt | egrep -i "$pattern"
-  fi
-
-  rm /tmp/headers.txt
+  echo "$response" | egrep -i "$pattern"
 }
 
 # We use _ to indicate an unused variable
