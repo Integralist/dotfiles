@@ -48,6 +48,7 @@ Instead, run the command from the root of each git repo.
 - Install Google Chrome (login and sync)
 - AppStore: Slack, Twitter, Dash and Caffeine
 - GitHub: [Lepton (a GitHub Gist Client)](https://github.com/hackjutsu/Lepton)
+- [Monitor Brightness App](http://www.splasm.com/brightnesscontrol/index.html)
 
 ### GitHub
 
