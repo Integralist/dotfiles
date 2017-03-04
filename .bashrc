@@ -292,7 +292,6 @@ alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias sshvm="ssh rig.dev"
 alias drm='docker rm $(docker ps -a -q)'
 alias drmi='docker rmi $(docker images -q)'
-alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
 alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
@@ -300,6 +299,14 @@ alias uid='echo $(uuidgen)'
 alias datesec='date +%s'
 alias ascii='man 7 ascii'
 alias tmuxy='bash ~/tmux.sh'
+alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+
+# connectivity debugging steps
+# dns (alias above, to check dns servers set)
+# ping google.com
+# nslookup google.com 8.8.8.8
+# nslookup google.com 192.168.1.1
+# curl -Lsvo /dev/null http://google.com/
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
