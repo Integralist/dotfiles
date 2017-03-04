@@ -238,11 +238,11 @@ function headers {
 
   local url=$1
   local pattern=${2:-''}
-  local response=$(curl -H Fastly-Debug:1 -D - -o /dev/null -s "$url" | sort) # -D - will dump to stdout
-  local status=$(echo "$response" | head -n 2)
+  local response=$(curl -H Fastly-Debug:1 -D - -o /dev/null -s "$url") # -D - will dump to stdout
+  local status=$(echo "$response" | head -n 1)
 
-  printf "%s\n\n" "$status"
-  echo "$response" | tail -n +3 | egrep -i "$pattern"
+  printf "\n%s\n\n" "$status"
+  echo "$response" | sort | tail -n +3 | egrep -i "$pattern"
 }
 
 # We use _ to indicate an unused variable
