@@ -302,11 +302,11 @@ alias tmuxy='bash ~/tmux.sh'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 
 # connectivity debugging steps
-# dns (alias above, to check dns servers set)
-# ping google.com
-# nslookup google.com 8.8.8.8
-# nslookup google.com 192.168.1.1
-# curl -Lsvo /dev/null http://google.com/
+#   dns (alias above, to check dns servers set)
+#   ping google.com
+#   nslookup google.com 8.8.8.8
+#   nslookup google.com 192.168.1.1
+#   curl -Lsvo /dev/null http://google.com/
 
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
