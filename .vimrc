@@ -38,8 +38,10 @@ set hlsearch
 " Ignore case in search
 set smartcase
 
+" DISABLED: realised that case insensitive searches can return TOO MANY results
+"           easier to be a case sensitive search and just use \c on the end if I didn't care
 " Make sure any searches /searchPhrase doesn't need the \c escape character
-set ignorecase
+" set ignorecase
 
 " Try to intelligently indent when creating a newline
 set smartindent
@@ -128,7 +130,7 @@ let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage (re
 let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
 let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
 let g:netrw_hide=0 " Show ALL files
-let g:netrw_list_hide= '*/\.git,*/\.DS_Store$' " Ignore certain files and directories
+let g:netrw_list_hide= '^\.git,^\.DS_Store$' " Ignore certain files and directories
 let g:netrw_sizestyle="h" " Human readable file sizes
 let g:netrw_liststyle=3 " Set built-in file system explorer to use layout similar to the NERDTree plugin
                         " P opens file in previously focused window
@@ -153,7 +155,8 @@ let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + [
 let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ['-d', 'missing-docstring,invalid-name']
 
 " For experimental mypy async/await syntax
-let g:neomake_python_mypy_args = neomake#makers#ft#python#mypy()['args'] + ['--fast-parser']
+" This should now be on by default...
+" let g:neomake_python_mypy_args = neomake#makers#ft#python#mypy()['args'] + ['--fast-parser']
 
 " Enable both default Python linters
 let g:neomake_python_enabled_makers = ['flake8', 'pylint', 'mypy']
@@ -272,7 +275,7 @@ autocmd FileType php,python setlocal shiftwidth=4 tabstop=4 expandtab
 " See `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
-" Disabled as it was causing status plugin styles to be destroyed
+" DISABLED: it was causing status plugin styles to be destroyed
 " If you were to manually source the vimrc then the status styles would return
 " Tried to automate via execute command but didn't work
 "
