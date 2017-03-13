@@ -86,6 +86,8 @@ e.g. Google Drive, Dropbox, Box etc
 
 ### Docker
 
+Install [`ctop`](https://github.com/bcicen/ctop) which provides a `top` like interface for container metrics
+
 If you're unable to utilise the new Docker for Mac (hardware requirements might prevent you), then you'll need to manually install Vagrant and Virtual Box, along with Docker Machine and Docker Compose:
 
 - `brew cask install virtualbox`
