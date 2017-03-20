@@ -21,14 +21,19 @@ else
   tmux new-window -n 'ipython' -t work:4
   tmux send-keys -t work:4 'cd ~/code/python && ipython' 'C-m'
 
-  # IRC
-  tmux new-window -n 'irc' -t work:5
-  tmux send-keys -t work:5 'irc' 'C-m'
+  # CDN
+  tmux new-window -n 'cdn' -t work:5
+  tmux send-keys -t work:5 'cd ~/code/buzzfeed/cdn' 'C-m'
 
-  # Rust Code Project
-  tmux new-window -n 'rust' -t work:6
-  tmux send-keys -t work:6 'cd ~/code/rust' 'C-m'
+  # Go Code Project
+  tmux new-window -n 'go' -t work:6
+  tmux send-keys -t work:6 'cd ~/code/go' 'C-m'
+  
+  # IRC
+  tmux new-window -n 'irc' -t work:7
+  tmux send-keys -t work:7 'irc' 'C-m'
 
   # Attach to the session, now we have everything setup
+  # We connect to the Rig window as we have to manually run vagrant (due to GPG passphrase requirement)
   tmux attach -t work:3
 fi
