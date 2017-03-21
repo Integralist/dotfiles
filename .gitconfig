@@ -10,6 +10,7 @@
   unstage = reset HEAD --
   url =! bash -c 'git config --get remote.origin.url | sed -E "s/.+:\\(.+\\)\\.git$/https:\\\\/\\\\/github\\\\.com\\\\/\\\\1/g"'
   conflicts = diff --name-only --diff-filter=U
+  pushit = push -f origin head
 
 [apply]
   whitespace = nowarn
