@@ -358,6 +358,11 @@ pyenv local 3.5.1
 pip install --upgrade neovim
 pip install pylint flake8 flake8-quotes pep8-naming
 
+# Sometimes it can be good to install from latest version in Git
+#
+# pip install git+git://github.com/PyCQA/pylint.git
+# pip install git+git://github.com/PyCQA/astroid.git
+
 # Install Rust, Cargo and Rustup
 # https://www.rust-lang.org/en-US/install.html
 curl https://sh.rustup.rs -sSf | sh 
