@@ -94,6 +94,14 @@ git clone https://github.com/pindexis/qfc $HOME/.qfc
 # Install NeoVim
 brew tap neovim/neovim && brew install --HEAD neovim
 
+# Manually install NeoVim...
+#
+# curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
+# tar xzf nvim-macos.tar.gz
+# ./nvim-osx64/bin/nvim --version
+#
+# From here symlink /usr/local/bin/nvim to <path>/nvim-osx64/bin/nvim
+
 # Configure NeoVim/Vim
 mkdir -p ~/.vim/{autoload,bundle,colors}
 curl -LSso ~/.vim/colors/integralist.vim https://raw.githubusercontent.com/Integralist/dotfiles/master/.vim/colors/integralist.vim
