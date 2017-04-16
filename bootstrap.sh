@@ -146,6 +146,7 @@ packages=(\
   git\
   gnupg2\
   go\
+  go-delve/delve/delve\
   googler\
   gpg-agent\
   httpstat\
@@ -307,6 +308,22 @@ curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/mas
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/code/go
 go get golang.org/x/tools/cmd/goimports
+
+# How to use Go Delve (brew install go-delve/delve/delve) with vim-godebug
+#
+# :call GoToggleBreakpoint() to add or remove a breakpoint at the current line 
+# :call GoDebug() to start a debug session for the main package
+#
+# For available commands see:
+# https://github.com/derekparker/delve/blob/master/Documentation/cli/README.md#stepout
+#
+# locals:	Print local variables.
+# next: Step over to next source line.
+# print: Evaluate an expression (e.g. `print <variable>`).
+# step: Single step through program.
+# stepout: Step out of the current function.
+# types: Print list of types.
+# vars: Print package variables.
 
 # Miscellaneous
 curl -LSso ~/eslint.config.js https://raw.githubusercontent.com/Integralist/dotfiles/master/eslint.config.js
