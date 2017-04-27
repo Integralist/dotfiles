@@ -2,6 +2,12 @@
 if [[ $(tmux ls | grep -c work) -eq 1 ]]; then
   tmux attach -t work
 else
+  # Every time I restart my computer I forget about doing this
+  # I then wonder why I can't push to GitHub/GitLab
+  eval "$(ssh-agent -s)"
+  sh-add -K ~/.ssh/github_rsa
+  sh-add -K ~/.ssh/gitlab_rsa
+
   # Create a new session and detach from it
   tmux new -s work -d
 
@@ -28,7 +34,7 @@ else
   # Go Code Project
   tmux new-window -n 'go' -t work:6
   tmux send-keys -t work:6 'cd ~/code/go' 'C-m'
-  
+
   # IRC
   tmux new-window -n 'irc' -t work:7
   tmux send-keys -t work:7 'irc' 'C-m'
