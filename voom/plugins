@@ -16,6 +16,7 @@ kana/vim-textobj-user
 kien/ctrlp.vim
 kien/rainbow_parentheses.vim
 m-kat/aws-vim
+matze/vim-move
 maxboisvert/vim-simple-complete
 mileszs/ack.vim
 nelstrom/vim-textobj-rubyblock
@@ -31,6 +32,7 @@ smerrill/vcl-vim-plugin
 tpope/vim-commentary
 tpope/vim-endwise
 tpope/vim-fireplace
+tpope/vim-fugitive
 tpope/vim-leiningen
 tpope/vim-repeat
 tpope/vim-sexp-mappings-for-regular-people
