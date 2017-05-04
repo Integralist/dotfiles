@@ -1,3 +1,8 @@
+" Included because loading inside of Linux caused error:
+" E474: Invalid argument: listchars=tab:»·,trail:·
+scriptencoding utf-8
+set encoding=utf-8
+
 " Use the system clipboard
 set clipboard+=unnamed
 
@@ -148,7 +153,7 @@ execute 'colorscheme ' . g:default_theme
 
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " https://github.com/PyCQA/pep8-naming
-let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802']
+let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802', '--inline-quotes', '"']
 
 " http://pylint-messages.wikidot.com/all-codes
 " http://pylint-messages.wikidot.com/all-messages
@@ -247,6 +252,9 @@ map <silent> e <Plug>CamelCaseMotion_e
 sunmap w
 sunmap b
 sunmap e
+
+" vim-move (<C-j>, <C-k> to move lines around more easily than :move)
+let g:move_key_modifier = 'C'
 
 " nofrils
 let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
