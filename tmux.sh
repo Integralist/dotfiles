@@ -5,8 +5,8 @@ else
   # Every time I restart my computer I forget about doing this
   # I then wonder why I can't push to GitHub/GitLab
   eval "$(ssh-agent -s)"
-  sh-add -K ~/.ssh/github_rsa
-  sh-add -K ~/.ssh/gitlab_rsa
+  ssh-add -K ~/.ssh/github_rsa
+  ssh-add -K ~/.ssh/gitlab_rsa
 
   # Create a new session and detach from it
   tmux new -s work -d
