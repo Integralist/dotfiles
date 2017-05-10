@@ -388,7 +388,6 @@ pip install flake8 \
             flake8-mock \
             flake8-polyfill \
             flake8-quotes \
-            flake8-respect-noqa \
             pep8-naming \
             pycodestyle \
             pyflakes \
