@@ -153,8 +153,8 @@ execute 'colorscheme ' . g:default_theme
 
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " https://github.com/PyCQA/pep8-naming
-" let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802', '--inline-quotes', '"']
-let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--inline-quotes', '"']
+" P101 == unindexed parameters in format string
+let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'P101', '--inline-quotes', '"', '--import-order-style', 'pep8']
 
 " Enable both default Python linters
 let g:neomake_python_enabled_makers = ['flake8', 'mypy']
