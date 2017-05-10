@@ -153,18 +153,11 @@ execute 'colorscheme ' . g:default_theme
 
 " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
 " https://github.com/PyCQA/pep8-naming
-let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802', '--inline-quotes', '"']
-
-" http://pylint-messages.wikidot.com/all-codes
-" http://pylint-messages.wikidot.com/all-messages
-let g:neomake_python_pylint_args = neomake#makers#ft#python#pylint()['args'] + ['-d', 'missing-docstring,invalid-name']
-
-" For experimental mypy async/await syntax
-" This should now be on by default...
-" let g:neomake_python_mypy_args = neomake#makers#ft#python#mypy()['args'] + ['--fast-parser']
+" let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'N802', '--inline-quotes', '"']
+let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--inline-quotes', '"']
 
 " Enable both default Python linters
-let g:neomake_python_enabled_makers = ['flake8', 'pylint', 'mypy']
+let g:neomake_python_enabled_makers = ['flake8', 'mypy']
 
 " https://github.com/koalaman/shellcheck/wiki/SC1091
 let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
