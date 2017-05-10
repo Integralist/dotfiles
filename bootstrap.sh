@@ -385,6 +385,7 @@ pip install flake8 \
             flake8-bugbear \
             flake8-deprecated \
             flake8-docstrings \
+            flake8-import-order \
             flake8-mock \
             flake8-polyfill \
             flake8-quotes \
