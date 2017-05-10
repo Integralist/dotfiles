@@ -381,7 +381,18 @@ cd ~/code/python
 pyenv install 3.6.1
 pyenv local 3.6.1
 pip install --upgrade neovim
-pip install pylint flake8 flake8-deprecated flake8-docstrings flake8-mock flake8-polyfill flake8-quotes pep8-naming mypy
+pip install flake8 \
+            flake8-bugbear \
+            flake8-deprecated \
+            flake8-docstrings \
+            flake8-mock \
+            flake8-polyfill \
+            flake8-quotes \
+            flake8-respect-noqa \
+            pep8-naming \
+            pycodestyle \
+            pyflakes \
+            mypy
 
 # Sometimes it can be good to install from latest version in Git
 #
