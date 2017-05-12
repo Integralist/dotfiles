@@ -184,7 +184,8 @@ fun! RunNeomake()
     silent Neomake
   endif
 endfun
-autocmd BufWritePost,BufWinEnter * call RunNeomake()
+" autocmd BufWritePost,BufWinEnter * call RunNeomake()
+autocmd BufWritePost * call RunNeomake()
 
 " The following configuration is useful if you don't like
 " the icons (which are provided by default) for highlighting errors/warnings
