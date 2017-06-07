@@ -75,6 +75,7 @@ export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
 # export PROMPT_DIRTRIM=4 # truncate start of long path
+# export GPG_USER=mark.mcdonnell@buzzfeed.com
 
 # git specific configurations
 export GIT_PS1_SHOWCOLORHINTS=true
