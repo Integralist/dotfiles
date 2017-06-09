@@ -1,5 +1,7 @@
+#!/usr/bin/env bash
+
 # Check if we've not already got a session created
-if [[ $(tmux ls | grep -c work) -eq 1 ]]; then
+if [[ $(tmux ls 2> /dev/null | grep -c work) -eq 1 ]]; then
   tmux attach -t work
 else
   # Every time I restart my computer I forget about doing this
