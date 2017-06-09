@@ -23,7 +23,7 @@ else
 
   # Prepare Rig VM
   tmux new-window -n 'rig' -t work:3
-  tmux send-keys -t work:3 'export GPG_USER=mark.mcdonnell@buzzfeed.com'
+  tmux send-keys -t work:3 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
   tmux send-keys -t work:3 '# "execute v up followed by sshvm command (requires gpg passphrase)"' 'C-m'
 
   # Python REPL
