@@ -43,6 +43,10 @@ If `gpg --list-keys` shows `4096R/12345678`, then your `<key-id>` would be `1234
 If you have two separate git users, then don't use the `--global` flag.  
 Instead, run the command from the root of each git repo.
 
+> Note: if you have multiple keys (users), when decrypting, GPG will attempt all users.  
+> `export GPG_USER=<your@email.com>` in the current shell will resolve that  
+> See [`tmux.sh`](https://github.com/Integralist/dotfiles/blob/master/tmux.sh) for example
+
 ### Software
 
 - Install Google Chrome (login and sync)
