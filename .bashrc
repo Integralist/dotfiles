@@ -75,7 +75,6 @@ export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
 # export PROMPT_DIRTRIM=4 # truncate start of long path
-# export GPG_USER=mark.mcdonnell@buzzfeed.com
 
 # git specific configurations
 export GIT_PS1_SHOWCOLORHINTS=true
@@ -255,6 +254,16 @@ function headers {
   echo "$response" | sort | tail -n +3 | egrep -i "$pattern"
 }
 
+function replace {
+  # given an extension ($1), find all files with that extension,
+  # then search each file for the specified text ($2) and
+  # replace it with the specified text ($3)
+  local extension=$1
+  local f=$2
+  local r=$3
+  find . -type f -name "*.$extension" -exec gsed -i "s/$f/$r/g" {} +
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
@@ -302,7 +311,8 @@ alias ascii='man 7 ascii'
 alias tmuxy='bash ~/tmux.sh'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
 
-# connectivity debugging steps
+# connectivity debugging steps...
+#
 #   dns (alias above, to check dns servers set)
 #   ping google.com
 #   nslookup google.com 8.8.8.8
