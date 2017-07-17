@@ -299,7 +299,7 @@ alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/c
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias be="bundle exec"
 alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
-alias sshvm="ssh rig.dev"
+alias sshvm="ssh dev.buzzfeed.io"
 alias drm='docker rm $(docker ps -a -q)'
 alias drmi='docker rmi $(docker images -q)'
 alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
