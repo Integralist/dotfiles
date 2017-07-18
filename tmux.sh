@@ -28,7 +28,7 @@ else
 
   # Python REPL
   tmux new-window -n 'ipython' -t work:4
-  tmux send-keys -t work:4 'cd ~/code/python && ipython' 'C-m'
+  tmux send-keys -t work:4 'cd ~/code/python3.6.1 && ipython' 'C-m'
 
   # CDN
   tmux new-window -n 'cdn' -t work:5
