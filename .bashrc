@@ -310,6 +310,7 @@ alias datesec='date +%s'
 alias ascii='man 7 ascii'
 alias tmuxy='bash ~/tmux.sh'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 
 # connectivity debugging steps...
 #
