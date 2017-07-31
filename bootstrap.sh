@@ -160,6 +160,7 @@ packages=(\
   node\
   pass\
   pstree\
+  pwgen\ 
   pyenv\
   rbenv\
   reattach-to-user-namespace\
