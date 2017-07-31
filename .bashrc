@@ -302,7 +302,7 @@ alias ls="ls -GpF"
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
 alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
 alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
-alias psw="pwgen -sy 20 1"
+alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bashrc"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
