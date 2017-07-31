@@ -279,39 +279,40 @@ $ stashed changes
 EOF
 
 # use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
-alias c="clear"
-alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
-alias getcommit="git rev-parse HEAD | tr -d '\n' | pbcopy"
-alias sshkey="cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
-alias irc="irssi"
-alias ls="ls -GpF"
-alias ll="ls -laGpFHh"
-alias r="source ~/.bashrc"
-alias cm="git checkout master"
+alias ascii='man 7 ascii'
+alias be="bundle exec"
 alias c-="git checkout -"
+alias c="clear"
+alias cm="git checkout master"
+alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
+alias datesec='date +%s'
+alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
+alias drm='docker rm $(docker ps -a -q)'
+alias drmi='docker rmi $(docker images -q)'
 alias gb="git branch"
 alias gbd="git branch -D"
 alias gcp="git cherry-pick -"
+alias getcommit="git rev-parse HEAD | tr -d '\n' | pbcopy"
+alias gitupstream="echo git branch -u origin/\<branch\>"
 alias gpr="git pull --rebase origin master"
+alias irc="irssi"
+alias ll="ls -laGpFHh"
+alias ls="ls -GpF"
+alias muttb="mutt -F ~/.muttrc-buzzfeed"
+alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
+alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+alias psw="pwgen -sy 20 1"
+alias r="source ~/.bashrc"
+alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
+alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
+alias sshkey="cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
+alias sshvm="ssh dev.buzzfeed.io"
+alias tmuxy='bash ~/tmux.sh'
+alias uid='echo $(uuidgen)'
+alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
-alias gitupstream="echo git branch -u origin/\<branch\>"
-alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
-alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
-alias be="bundle exec"
-alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
-alias sshvm="ssh dev.buzzfeed.io"
-alias drm='docker rm $(docker ps -a -q)'
-alias drmi='docker rmi $(docker images -q)'
-alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
-alias muttb="mutt -F ~/.muttrc-buzzfeed"
-alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
-alias uid='echo $(uuidgen)'
-alias datesec='date +%s'
-alias ascii='man 7 ascii'
-alias tmuxy='bash ~/tmux.sh'
-alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
-alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 
 # connectivity debugging steps...
 #
