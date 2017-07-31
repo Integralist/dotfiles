@@ -7,6 +7,7 @@ source ~/.git-prompt.sh
 source ~/googler-completion.bash
 
 # https://git.zx2c4.com/password-store/plain/src/completion/pass.bash-completion
+# https://www.passwordstore.org/
 source /usr/local/etc/bash_completion.d/password-store
 
 # tells Readline to perform filename completion in a case-insensitive fashion
