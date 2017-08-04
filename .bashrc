@@ -178,19 +178,18 @@ function gms() {
 }
 
 function pt {
-  local service=$1
-  local env=${2:-stage}
-  local query="AND $3"
-  local group=${4:-rig-stage}
+  # Token found in ~/.papertrail.yml
+
+  local env=$1
+  local service=$2
+  local query=${3:-}
 
   if [ -z "$1" ]; then
-    printf "\n\tUse: pt <service> [env=stage] [query=''] [group=rig-stage]"
-    printf "\n\n\tpt site_router web-public test=mark rig-web-public"
-    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"1 hour ago\" --max-time=\"now\" program:web-public/site_router \"'HTTP/1.1 4' OR 'HTTP/1.1 5'\" | grep -oE 'GET \/[^?]+ HTTP\/\d.\d \d{3}' | sort | uniq -c | sort -nr | head -n 20"
-    printf "\n\n\tpapertrail -g rig-web-public --min-time=\"2 hours ago\" --max-time=\"now\" program:web-public/site_router \"'HTTP/1.1 5' AND 'upstream (bpager'\""
-    printf "\n\n\tpapertrail -f -g \"<group>\" --min=\"10 minutes ago\" --max=\"now\" program:<program> \"<query> AND <query>\"\n"
+    printf "\n\tUsage: pt <env> <service> [query]"
+    printf "\n\tExample: pt prod bpager '404 GET'"
+    printf "\n\tCommand executed: papertrail -f \"program:<env>/<service> '<query>'\"\n"
   else
-    eval "papertrail -f -g \"$group\" \"program:$env/$service $query\""
+    papertrail -f "program:$env/$service $query"
   fi
 }
 
