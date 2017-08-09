@@ -264,6 +264,15 @@ function replace {
   find . -type f -name "*.$extension" -exec gsed -i "s/$f/$r/g" {} +
 }
 
+function age {
+  local filename=$1;
+  local changed=$(perl -MFile::stat -e "print stat(\"${filename}\")->mtime");
+  local now=`date +%s`;
+  local elapsed;
+  let elapsed=now-changed;
+  echo $elapsed
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
