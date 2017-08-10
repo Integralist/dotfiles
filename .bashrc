@@ -273,6 +273,12 @@ function age {
   echo $elapsed
 }
 
+function search {
+  local pattern=$1
+  local directory=${2:-.}
+  time grep --exclude-dir .git -irl $pattern $directory
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
