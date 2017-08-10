@@ -276,7 +276,9 @@ function age {
 function search {
   local pattern=$1
   local directory=${2:-.}
-  time grep --exclude-dir .git -irl $pattern $directory
+
+  time sift -n -X json --exclude-ipath '(\.git/|build\.js|node_modules|tests/|swagger|fb.js)' $pattern $directory
+  # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
 # We use _ to indicate an unused variable
