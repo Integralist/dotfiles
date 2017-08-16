@@ -180,16 +180,12 @@ function gms() {
 function pt {
   # Token found in ~/.papertrail.yml
 
-  local env=$1
-  local service=$2
-  local query=${3:-}
-
   if [ -z "$1" ]; then
-    printf "\n\tUsage: pt <env> <service> [query]"
-    printf "\n\tExample: pt prod bpager '404 GET'"
-    printf "\n\tCommand executed: papertrail -f \"program:<env>/<service> '<query>'\"\n"
+    printf "\n\tTemplate: papertrail -f \$* | lnav\n"
+    printf "\tExample: pt --min-time \"2 hours ago\" \"program:<env>/<service> '<query>'\"\n"
+    printf "\tNote: \"program:\" can help with performance\n"
   else
-    papertrail -f "program:$env/$service $query"
+    papertrail -f $* | lnav
   fi
 }
 
