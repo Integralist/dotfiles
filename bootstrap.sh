@@ -129,6 +129,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 #      exif is used by .gitattributes
 #      task is https://taskwarrior.org/
 #      googler is for searching Google from terminal
+#      lnav is a coloured log viewer
 packages=(\
   ag\
   argon/mas/mas\
@@ -154,6 +155,7 @@ packages=(\
   irssi\
   keybase \
   leiningen\
+  lnav\
   mutt\
   netcat\
   ngrok\
