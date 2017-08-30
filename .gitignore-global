@@ -8,7 +8,6 @@ failed_cukes.sh
 *.DS_Store
 .sass-cache
 .grunt
-tags
 *.swp
 logs
 *.log
