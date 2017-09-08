@@ -317,6 +317,7 @@ alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 p
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bashrc"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
+alias spotify='echo $((1 + RANDOM % 10))' # pick random track to start playing playlist from
 alias sshconfig='nvim -c "norm 12ggVjjjgc" -c "wq" ~/.ssh/config && cat ~/.ssh/config | awk "/switch/ {for(i=0; i<=3; i++) {getline; print}}"'
 alias sshkey="cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
 alias sshvm="ssh dev.buzzfeed.io"
