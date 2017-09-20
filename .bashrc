@@ -277,7 +277,7 @@ function search {
   local pattern=$1
   local directory=${2:-.}
 
-  time sift -n -X json --err-show-line-length --exclude-ipath '(\.git/|build\.js|node_modules|tests/|swagger|fb.js)' $pattern $directory
+  time sift -n -X json --err-show-line-length --exclude-ipath '(build/|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)' $pattern $directory
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
