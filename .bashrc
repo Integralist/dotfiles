@@ -231,7 +231,7 @@ function headers {
   #       which allows piping of output
   #       curl -v -o /dev/null https://www.buzzfeed.com/?site-router-debug=true 2>&1 | grep -i siterouter
 
-  if [[ "$1" =~ -(h|help) ]]; then
+  if [[ "$1" =~ -(h|help)$ ]]; then
     printf "\n\t1st param: URL\n\t2nd param: regex\n\t3rd param: http request header"
     printf "\n\n\tif you have no need for a regex\n\tbut need a http header\n\tthen just use an empty string ''\n"
     return
