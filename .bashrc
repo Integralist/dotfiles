@@ -238,7 +238,7 @@ function headers {
   fi
 
   if [ -z "$1" ]; then
-    printf "\n\tExamples:\n\t\theaders https://www.buzzfeed.com/?country=us 'x-cache|x-timer|device' '-H User-Agent:iphone'\n"
+    printf "\n\tExamples:\n\t\theaders https://www.buzzfeed.com/?country=us 'x-(vcl|buzz|cache|site)' '-H User-Agent:iphone'\n"
     printf "\t\theaders https://www.buzzfeed.com/?country=us '' '-H User-Agent:iphone -H X-Foo:bar'\n"
     printf "\n\tHelp:\theaders -h\n\t\theaders -help\n"
     return
