@@ -381,19 +381,19 @@ oauth_db_filename: ~/.goobook_auth.json
 EOF
 
 cd ~/code/python
-pyenv install 3.6.1
-pyenv local 3.6.1
+pyenv install 3.6.3
+pyenv local 3.6.3
 pip install --upgrade neovim
 pip install flake8 \
             flake8-bugbear \
             flake8-deprecated \
-            flake8-docstrings \
             flake8-import-order \
             flake8-mock \
             flake8-polyfill \
             flake8-quotes \
             pep8-naming \
             pycodestyle \
+            pydocstyle \
             pyflakes \
             mypy
 
