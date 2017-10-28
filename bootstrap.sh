@@ -91,32 +91,15 @@ curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/mas
 git clone https://github.com/pindexis/qfc $HOME/.qfc
 #printf '\n# Setup File Search AutoComplete\n[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"' >> ~/.bashrc
 
-# Install NeoVim
-brew tap neovim/neovim && brew install --HEAD neovim
+# Install Vim
+brew install vim --without-python --with-python3
 
-# Manually install NeoVim...
-#
-# curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim-macos.tar.gz
-# tar xzf nvim-macos.tar.gz
-# ./nvim-osx64/bin/nvim --version
-#
-# From here symlink /usr/local/bin/nvim to <path>/nvim-osx64/bin/nvim
-
-# Configure NeoVim/Vim
-mkdir -p ~/.vim/{autoload,bundle,colors}
-curl -LSso ~/.vim/colors/integralist.vim https://raw.githubusercontent.com/Integralist/dotfiles/master/.vim/colors/integralist.vim
-curl -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim
-curl -LSso ~/.vim/plugins https://raw.githubusercontent.com/Integralist/dotfiles/master/voom/plugins
-curl -LSso /usr/local/bin/voom https://raw.githubusercontent.com/airblade/voom/master/voom
-chmod 744 /usr/local/bin/voom
-alias voom='VIM_DIR=~/.vim voom'
+# Configure Vim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl -LSso ~/.vimrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.vimrc
-ln -s ~/.vim ~/.config/nvim
-ln -s ~/.vimrc ~/.config/nvim/init.vim
-voom
 
-# Ensure NeoVim is configured with spell checking options
-nvim -E -s <<EOF
+# Ensure Vim is configured with spell checking options
+vim -E -s <<EOF
 :set spell
 :quit
 EOF
@@ -166,6 +149,7 @@ packages=(\
   pyenv\
   rbenv\
   reattach-to-user-namespace\
+  ripgrep\
   ruby-build\
   shellcheck\
   siege\
@@ -178,7 +162,6 @@ packages=(\
   tmux\
   tree\
   urlview\
-  vim\
   watch\
   wget\
   wireshark\
@@ -191,6 +174,10 @@ do
     brew install $package
   fi
 done
+
+# Configure FZF
+# Don't ignore hidden files (uses ripgrep instead of find command)
+export FZF_DEFAULT_COMMAND='rg --files --hidden --glob \!.git'
 
 # Configure Git
 curl -LSso ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh
@@ -223,7 +210,7 @@ chmod +x ~/diff-highlight
 # git config --global --add color.status.changed blue
 # git config --global --add color.status.untracked magenta
 # git config --global --add color.ui true
-# git config --global --add core.editor nvim
+# git config --global --add core.editor vim
 # git config --global --add core.excludesfile ~/.gitignore-global
 # git config --global --add core.ignorecase false
 # git config --global --add merge.conflictstyle diff3
@@ -273,7 +260,7 @@ image/gif; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
 image/jpeg; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
 application/pdf; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
 text/html; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-text/plain; nvim %s
+text/plain; vim %s
 EOF
 
 cat > ~/.mutt/passwords <<EOF
@@ -370,7 +357,7 @@ mkdir -p ~/code/{python,python2}
 cd ~/code/python2
 pyenv install 2.7.6
 pyenv local 2.7.6
-pip install --upgrade neovim
+pip install --upgrade vim
 pip install goobook
 goobook authenticate
 
@@ -383,7 +370,7 @@ EOF
 cd ~/code/python
 pyenv install 3.6.3
 pyenv local 3.6.3
-pip install --upgrade neovim
+pip install --upgrade vim
 pip install flake8 \
             flake8-bugbear \
             flake8-deprecated \
