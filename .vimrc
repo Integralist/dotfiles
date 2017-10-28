@@ -126,11 +126,19 @@ set dictionary=/usr/share/dict/words
 " Use Ag for :grep command (would use Sift but it doesn't work well)
 set grepprg=ag\ --nogroup\ --nocolor
 
+" Allow substitutions to dynamically be represented in the buffer
+" https://asciinema.org/a/92207
+:silent! set inccommand=nosplit
+
+" Allow per-project configuration files
+" See also `set secure` at the bottom of this file
+" https://andrew.stwrt.ca/posts/project-specific-vimrc/
+set exrc
+
 " Use git alias inside ~/.gitconfig to open current file line in GitHub
 nnoremap <leader>f :!echo `git url`/blob/`git rev-parse --abbrev-ref HEAD`/%\#L<C-R>=line('.')<CR> \| xargs open<CR><CR>
 
 " NetRW settings (see :NetrwSettings)
-map <Leader>z :Lexplore<CR> " Left menu draw like NERDTree
 let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage (related to above mapping)
 let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
 let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
@@ -143,63 +151,116 @@ let g:netrw_liststyle=3 " Set built-in file system explorer to use layout simila
                         " v opens file in new vertical split window
                         " t opens file in new tab split window
 
-execute pathogen#infect()
-filetype plugin indent on
+" Plugin Managment
+" https://github.com/junegunn/vim-plug#example
+"
+" Reload .vimrc and :PlugInstall to install plugins.
+" Use single quotes as requested by vim-plug.
+"
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
 
+" Plug 'neomake/neomake'
+Plug 'chr4/nginx.vim'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'endel/vim-github-colorscheme'
+Plug 'fatih/vim-go'
+Plug 'fcpg/vim-fahrenheit'
+Plug 'godlygeek/tabular'
+Plug 'guns/vim-clojure-highlight'
+Plug 'guns/vim-clojure-static'
+Plug 'guns/vim-sexp'
+Plug 'integralist/gruvbox'
+Plug 'itchyny/lightline.vim'
+Plug 'jamessan/vim-gnupg'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'kien/ctrlp.vim'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'm-kat/aws-vim'
+Plug 'matze/vim-move'
+Plug 'maxboisvert/vim-simple-complete'
+Plug 'mileszs/ack.vim'
+Plug 'nelstrom/vim-textobj-rubyblock'
+Plug 'nvie/vim-flake8'
+Plug 'othree/html5.vim'
+Plug 'plasticboy/vim-markdown'
+Plug 'robertmeta/nofrils'
+Plug 'sheerun/vim-polyglot'
+Plug 'shougo/unite.vim'
+Plug 'shougo/vimfiler.vim'
+Plug 'smerrill/vcl-vim-plugin'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-leiningen'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-surround'
+Plug 'vim-scripts/Gist.vim'
+Plug 'vim-scripts/camelcasemotion'
+
+" Initialize plugin system
+call plug#end()
+
+" Colour Scheme
 let g:default_theme="gruvbox"
-
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
-" http://pep8.readthedocs.io/en/latest/intro.html#error-codes
-" https://github.com/PyCQA/pep8-naming
-"
-" https://pypi.python.org/pypi/flake8-string-format
-" P101 == unindexed parameters in format string
-let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'P101', '--inline-quotes', '"', '--import-order-style', 'pep8']
+" " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
+" " https://github.com/PyCQA/pep8-naming
+" "
+" " https://pypi.python.org/pypi/flake8-string-format
+" " P101 == unindexed parameters in format string
+" let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'P101', '--inline-quotes', '"', '--import-order-style', 'pep8']
 
-" Enable both default Python linters
-let g:neomake_python_enabled_makers = ['flake8', 'mypy']
+" " Enable both default Python linters
+" let g:neomake_python_enabled_makers = ['flake8', 'mypy']
 
-" https://github.com/koalaman/shellcheck/wiki/SC1091
-let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
-let g:neomake_bash_enabled_makers = ['shellcheck']
+" " https://github.com/koalaman/shellcheck/wiki/SC1091
+" let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
+" let g:neomake_bash_enabled_makers = ['shellcheck']
 
-let g:neomake_c_enabled_makers = ['clang']
-let g:neomake_rust_enabled_makers = ['cargo']
+" let g:neomake_c_enabled_makers = ['clang']
+" let g:neomake_rust_enabled_makers = ['cargo']
 
-let g:neomake_js_enabled_makers = ['eslint']
-let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
+" let g:neomake_js_enabled_makers = ['eslint']
+" let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
 
-" General Neomake configuration
-let g:neomake_open_list=2
-let g:neomake_list_height=5
-let g:neomake_verbose=3
+" " General Neomake configuration
+" let g:neomake_open_list=2
+" let g:neomake_list_height=5
+" let g:neomake_verbose=3
 
-" Run Neomake whenever we enter or write a buffer
-" Use Neomake! if you want to open within single/global quickfix list
-" silent means no messages added to :messages log
-fun! RunNeomake()
-  if &ft =~ 'rust'
-    Neomake! cargo " rust must be run in quickfix or errors happen
-  else
-    silent Neomake
-  endif
-endfun
-" autocmd BufWritePost,BufWinEnter * call RunNeomake()
-autocmd BufWritePost * call RunNeomake()
+" " Run Neomake whenever we enter or write a buffer
+" " Use Neomake! if you want to open within single/global quickfix list
+" " silent means no messages added to :messages log
+" fun! RunNeomake()
+"   if &ft =~ 'rust'
+"     Neomake! cargo " rust must be run in quickfix or errors happen
+"   else
+"     silent Neomake
+"   endif
+" endfun
+" " autocmd BufWritePost,BufWinEnter * call RunNeomake()
+" autocmd BufWritePost * call RunNeomake()
 
-" The following configuration is useful if you don't like
-" the icons (which are provided by default) for highlighting errors/warnings
-"
-" let g:neomake_warning_sign = {
-"   \ 'text': 'W',
-"   \ 'texthl': 'WarningMsg',
-"   \ }
-" let g:neomake_error_sign = {
-"   \ 'text': 'E',
-"   \ 'texthl': 'ErrorMsg',
-"   \ }
+" " The following configuration is useful if you don't like
+" " the icons (which are provided by default) for highlighting errors/warnings
+" "
+" " let g:neomake_warning_sign = {
+" "   \ 'text': 'W',
+" "   \ 'texthl': 'WarningMsg',
+" "   \ }
+" " let g:neomake_error_sign = {
+" "   \ 'text': 'E',
+" "   \ 'texthl': 'ErrorMsg',
+" "   \ }
 
 " vim-go
 let g:go_fmt_command = "goimports"
@@ -213,19 +274,19 @@ map <Leader>c :Tabularize /:<CR>
 map <Leader>es :Tabularize /=\zs<CR>
 map <Leader>cs :Tabularize /:\zs<CR>
 
-" ctrlp
-map <leader>t <C-p>
-map <leader>y :CtrlPBuffer<CR>
-let g:ctrlp_show_hidden=1
-let g:ctrlp_working_path_mode=0
-let g:ctrlp_max_height=30
-let g:ctrlp_arg_map = 1 " Override <C-o> to provide options for how to open files
+" FZF (search files)
+"
+" Shift-Tab to select multiple files
+"
+" Ctrl-t = tab
+" Ctrl-x = split
+" Ctrl-y = vertical
+map <leader>t :FZF<CR>
+map <leader>y :Buffers<CR>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""' " Use Ag for searching instead of VimScript (might not work with ctrlp_show_hidden and ctrlp_custom_ignore)
-let g:ctrlp_custom_ignore = '\v[\/]((node_modules)|\.(git|svn|grunt|sass-cache))$' " Directories to ignore when fuzzy finding
 
 " ack
-let g:ackprg = 'ag --column --smart-case'
+let g:ackprg = 'ag --vimgrep --smart-case'
 
 " vim-textobj-rubyblock
 runtime macros/matchit.vim
@@ -252,15 +313,11 @@ sunmap e
 " vim-move (<C-j>, <C-k> to move lines around more easily than :move)
 let g:move_key_modifier = 'C'
 
-" nofrils
+" nofrils colorscheme
 let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
 
-" NeoVim shortcut for quick terminal exit
+" shortcut for quick terminal exit
 :silent! tnoremap <Esc> <C-\><C-n>
-
-" Allow substitutions to dynamically be represented in the buffer
-" https://asciinema.org/a/92207
-:silent! set inccommand=nosplit
 
 fun! StripTrailingWhitespace()
   " Don't strip on these filetypes
@@ -279,24 +336,24 @@ autocmd FileType php,python setlocal shiftwidth=4 tabstop=4 expandtab
 " See `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t
 
-" DISABLED: it was causing status plugin styles to be destroyed
-" If you were to manually source the vimrc then the status styles would return
-" Tried to automate via execute command but didn't work
-"
-" Set different colorscheme for Bash and VimL scripts
-" autocmd BufEnter *.sh,*.vimrc,*.txt execute 'colorscheme github' | execute ':source $MYVIMRC'
-" autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
+" " DISABLED: it was causing status plugin styles to be destroyed
+" " If you were to manually source the vimrc then the status styles would return
+" " Tried to automate via execute command but didn't work
+" "
+" " Set different colorscheme for Bash and VimL scripts
+" " autocmd BufEnter *.sh,*.vimrc,*.txt execute 'colorscheme github' | execute ':source $MYVIMRC'
+" " autocmd BufLeave *.sh,*.vimrc,*.txt execute 'set background=dark' | execute 'colorscheme ' . g:default_theme
 
 " Specify syntax highlighting for specific files
 autocmd BufRead,BufNewFile *.spv set filetype=php
 autocmd BufRead,BufNewFile *.md set filetype=markdown " Vim interprets .md as 'modula2' otherwise, see :set filetype?
 
-" Run Goyo plugin on Markdown files for when I'm writing blog posts
-autocmd BufRead,BufEnter *.md execute 'normal zR' | execute 'Goyo'
-autocmd BufLeave *.md execute 'Goyo!'
+" " DISABLED: Run Goyo plugin on Markdown files for when I'm writing blog posts
+" autocmd BufRead,BufEnter *.md execute 'normal zR' | execute 'Goyo'
+" autocmd BufLeave *.md execute 'Goyo!'
 
-" Automatically reload vimrc when it's saved
-" autocmd BufWritePost .vimrc so ~/.vimrc
+" " DISABLED: Automatically reload vimrc when it's saved
+" " autocmd BufWritePost .vimrc so ~/.vimrc
 
 " Rainbow parentheses always on for Clojure scripts
 autocmd VimEnter *.clj if exists(':RainbowParenthesesToggle') | exe ":RainbowParenthesesToggleAll" | endif
@@ -315,3 +372,7 @@ map § :nohlsearch<CR>
 
 " Tell Vim how many colours are available
 let &t_Co=256
+
+" This will prevent :autocmd, shell and write commands from
+" being run inside project-specific .vimrc files (unless they’re owned by you).
+set secure
