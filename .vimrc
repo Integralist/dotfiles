@@ -203,6 +203,7 @@ Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/Gist.vim'
 Plug 'vim-scripts/camelcasemotion'
+Plug 'w0rp/ale'
 
 " Initialize plugin system
 call plug#end()
@@ -212,55 +213,11 @@ let g:default_theme="gruvbox"
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
-" " http://pep8.readthedocs.io/en/latest/intro.html#error-codes
-" " https://github.com/PyCQA/pep8-naming
-" "
-" " https://pypi.python.org/pypi/flake8-string-format
-" " P101 == unindexed parameters in format string
-" let g:neomake_python_flake8_args = neomake#makers#ft#python#flake8()['args'] + ['--ignore', 'P101', '--inline-quotes', '"', '--import-order-style', 'pep8']
-
-" " Enable both default Python linters
-" let g:neomake_python_enabled_makers = ['flake8', 'mypy']
-
-" " https://github.com/koalaman/shellcheck/wiki/SC1091
-" let g:neomake_sh_shellcheck_args = neomake#makers#ft#sh#shellcheck()['args'] + ['-e', 'SC1090,SC1091']
-" let g:neomake_bash_enabled_makers = ['shellcheck']
-
-" let g:neomake_c_enabled_makers = ['clang']
-" let g:neomake_rust_enabled_makers = ['cargo']
-
-" let g:neomake_js_enabled_makers = ['eslint']
-" let g:neomake_js_eslint_args = ['--config', '~/eslint.config.js']
-
-" " General Neomake configuration
-" let g:neomake_open_list=2
-" let g:neomake_list_height=5
-" let g:neomake_verbose=3
-
-" " Run Neomake whenever we enter or write a buffer
-" " Use Neomake! if you want to open within single/global quickfix list
-" " silent means no messages added to :messages log
-" fun! RunNeomake()
-"   if &ft =~ 'rust'
-"     Neomake! cargo " rust must be run in quickfix or errors happen
-"   else
-"     silent Neomake
-"   endif
-" endfun
-" " autocmd BufWritePost,BufWinEnter * call RunNeomake()
-" autocmd BufWritePost * call RunNeomake()
-
-" " The following configuration is useful if you don't like
-" " the icons (which are provided by default) for highlighting errors/warnings
-" "
-" " let g:neomake_warning_sign = {
-" "   \ 'text': 'W',
-" "   \ 'texthl': 'WarningMsg',
-" "   \ }
-" " let g:neomake_error_sign = {
-" "   \ 'text': 'E',
-" "   \ 'texthl': 'ErrorMsg',
-" "   \ }
+" ALE linting
+let g:ale_sign_warning = '▲'
+let g:ale_sign_error = '✗'
+highlight link ALEWarningSign String
+highlight link ALEErrorSign Title
 
 " vim-go
 let g:go_fmt_command = "goimports"
