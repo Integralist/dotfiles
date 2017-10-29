@@ -168,9 +168,9 @@ Plug 'endel/vim-github-colorscheme'
 Plug 'fatih/vim-go'
 Plug 'fcpg/vim-fahrenheit'
 Plug 'godlygeek/tabular'
-Plug 'guns/vim-clojure-highlight'
-Plug 'guns/vim-clojure-static'
-Plug 'guns/vim-sexp'
+Plug 'guns/vim-clojure-highlight', { 'for': 'clojure' }
+Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
+Plug 'guns/vim-sexp', { 'for': 'clojure' }
 Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
@@ -178,14 +178,14 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'kana/vim-textobj-user'
-Plug 'kien/ctrlp.vim'
-Plug 'kien/rainbow_parentheses.vim'
+Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
 Plug 'm-kat/aws-vim'
 Plug 'matze/vim-move'
-Plug 'maxboisvert/vim-simple-complete'
+Plug 'maxboisvert/vim-simple-complete', { 'on': [] }
 Plug 'mileszs/ack.vim'
-Plug 'nelstrom/vim-textobj-rubyblock'
-Plug 'nvie/vim-flake8'
+Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'othree/html5.vim'
 Plug 'plasticboy/vim-markdown'
 Plug 'robertmeta/nofrils'
@@ -194,12 +194,12 @@ Plug 'shougo/unite.vim'
 Plug 'shougo/vimfiler.vim'
 Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-leiningen'
+Plug 'tpope/vim-leiningen', { 'for': 'clojure' }
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-sexp-mappings-for-regular-people'
+Plug 'tpope/vim-sexp-mappings-for-regular-people', { 'for': 'clojure' }
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/Gist.vim'
 Plug 'vim-scripts/camelcasemotion'
@@ -224,6 +224,11 @@ let g:go_fmt_command = "goimports"
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+
+" we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
+" we setup insert mode to allow us to use tab for autocomplete
+" opens a "preview" (i.e. scratch) window which can be closed using `pc`, `pclose`
+imap <Tab> <C-x><C-o>
 
 " tabular
 map <Leader>e :Tabularize /=<CR>
@@ -276,6 +281,9 @@ let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
 " shortcut for quick terminal exit
 :silent! tnoremap <Esc> <C-\><C-n>
 
+" Auto Commands
+" :h autocommand-events
+
 fun! StripTrailingWhitespace()
   " Don't strip on these filetypes
   if &ft =~ 'markdown'
@@ -284,6 +292,20 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
+
+fun! LoadSimpleAutoCompletePlugin()
+  " Load vim-simple-complete for everything except .go files
+  if &ft == "go"
+    return
+  endif
+  call plug#load('vim-simple-complete')
+endfun
+
+augroup LoadSACP
+  " remove any previously loaded autocmd! for the InsertEnter event
+  autocmd!
+  autocmd InsertEnter * call LoadSimpleAutoCompletePlugin() | autocmd! LoadSACP
+augroup END
 
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
