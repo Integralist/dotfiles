@@ -160,11 +160,11 @@ let g:netrw_liststyle=3 " Set built-in file system explorer to use layout simila
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 
-" Plug 'neomake/neomake'
 Plug 'chr4/nginx.vim'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'endel/vim-github-colorscheme'
+Plug 'ervandew/supertab'
 Plug 'fatih/vim-go'
 Plug 'fcpg/vim-fahrenheit'
 Plug 'godlygeek/tabular'
@@ -181,7 +181,6 @@ Plug 'kana/vim-textobj-user'
 Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
 Plug 'm-kat/aws-vim'
 Plug 'matze/vim-move'
-Plug 'maxboisvert/vim-simple-complete', { 'on': [] }
 Plug 'mileszs/ack.vim'
 Plug 'nelstrom/vim-textobj-rubyblock', { 'for': 'ruby' }
 Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
@@ -226,9 +225,9 @@ let g:go_metalinter_autosave_enabled = ['vet', 'golint']
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 
 " we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
-" we setup insert mode to allow us to use tab for autocomplete
+" we setup insert mode to allow us to use a double forward slash for autocomplete
 " opens a "preview" (i.e. scratch) window which can be closed using `pc`, `pclose`
-imap <Tab> <C-x><C-o>
+autocmd FileType go imap // <C-x><C-o>
 
 " tabular
 map <Leader>e :Tabularize /=<CR>
@@ -292,20 +291,6 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
-
-fun! LoadSimpleAutoCompletePlugin()
-  " Load vim-simple-complete for everything except .go files
-  if &ft == "go"
-    return
-  endif
-  call plug#load('vim-simple-complete')
-endfun
-
-augroup LoadSACP
-  " remove any previously loaded autocmd! for the InsertEnter event
-  autocmd!
-  autocmd InsertEnter * call LoadSimpleAutoCompletePlugin() | autocmd! LoadSACP
-augroup END
 
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
