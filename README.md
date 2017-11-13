@@ -103,28 +103,10 @@ If you're unable to utilise the new Docker for Mac (hardware requirements might 
 
 ### Programming
 
+- `npm install -g t-get`
 - [Python](https://www.python.org/)
 - [Golang](https://golang.org/)
   - `go get golang.org/x/tools/cmd/goimports`
-- `npm install -g t-get`
+  - open vim and execute `:GoInstallBinaries`, then from shell `gometalinter --install` †
 
-If you want a very simple and small auto-complete library for Vim, then use:  
-`maxboisvert/vim-simple-complete`, otherwise consider:
-
-```
-roxma/nvim-completion-manager
-roxma/nvim-cm-tern  # for JS support 
-                    # requires npm install to be executed from ~/.vim/pack/voom/start/nvim-cm-tern/
-```
-
-For the Python completion make sure to install:
-
-```
-pip install -U jedi psutil setproctitle
-```
-
-For Golang completion make sure to install:
-
-```
-go get -u github.com/nsf/gocode
-```
+> † test with `gometalinter --deadline 20s`
