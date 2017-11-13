@@ -299,6 +299,15 @@ curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/mas
 mkdir -p ~/code/go
 go get golang.org/x/tools/cmd/goimports
 
+# From within Vim (when vim-go installed) run...
+# :GoInstallBinaries
+#
+# Then from the shell run...
+# gometalinter --install
+#
+# You can then test with...
+# gometalinter --deadline 20s
+
 # How to use Go Delve (brew install go-delve/delve/delve) with vim-godebug
 #
 # :call GoToggleBreakpoint() to add or remove a breakpoint at the current line 
