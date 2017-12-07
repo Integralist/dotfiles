@@ -13,36 +13,28 @@ else
   # Create a new session and detach from it
   tmux new -s work -d
 
-  # Run the tasks cli tool in our first window
-  tmux rename-window -t 1 'todo'
-  tmux send-keys 'task' 'C-m'
-
   # Jump into our BuzzFeed directory
-  tmux new-window -n 'mono' -t work:2
-  tmux send-keys -t work:2 'cd ~/code/buzzfeed/mono' 'C-m'
+  tmux rename-window -t 1 'mono'
+  tmux send-keys -t work:1 'cd ~/code/buzzfeed/mono' 'C-m'
 
   # Prepare Rig VM
-  tmux new-window -n 'rig' -t work:3
-  tmux send-keys -t work:3 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
-  tmux send-keys -t work:3 '# "execute v up followed by sshvm command (requires gpg passphrase)"' 'C-m'
+  tmux new-window -n 'rig' -t work:2
+  tmux send-keys -t work:2 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
+  tmux send-keys -t work:2 '# "execute v up followed by sshvm command (requires gpg passphrase)"' 'C-m'
 
   # Python REPL
-  tmux new-window -n 'ipython' -t work:4
-  tmux send-keys -t work:4 'cd ~/code/python3.6.1 && ipython' 'C-m'
+  tmux new-window -n 'ipython' -t work:3
+  tmux send-keys -t work:3 'cd ~/code/python3.6.3 && ipython' 'C-m'
 
   # CDN
-  tmux new-window -n 'cdn' -t work:5
-  tmux send-keys -t work:5 'cd ~/code/buzzfeed/cdn' 'C-m'
+  tmux new-window -n 'cdn' -t work:4
+  tmux send-keys -t work:4 'cd ~/code/buzzfeed/cdn' 'C-m'
 
   # Go Code Project
-  tmux new-window -n 'go' -t work:6
-  tmux send-keys -t work:6 'cd ~/code/go' 'C-m'
-
-  # IRC
-  tmux new-window -n 'irc' -t work:7
-  tmux send-keys -t work:7 'irc' 'C-m'
+  tmux new-window -n 'go' -t work:5
+  tmux send-keys -t work:5 'cd ~/code/go' 'C-m'
 
   # Attach to the session, now we have everything setup
   # We connect to the Rig window as we have to manually run vagrant (due to GPG passphrase requirement)
-  tmux attach -t work:3
+  tmux attach -t work:2
 fi
