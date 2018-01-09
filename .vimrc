@@ -175,7 +175,7 @@ Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf.vim' " Shift-Tab to select multiple results
 Plug 'junegunn/goyo.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
