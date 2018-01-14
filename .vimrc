@@ -150,6 +150,7 @@ let g:netrw_liststyle=3 " Set built-in file system explorer to use layout simila
                         " o opens file in new horizontal split window
                         " v opens file in new vertical split window
                         " t opens file in new tab split window
+" let g:netrw_browse_split = 1 " open files in horizontal split (2: vertical, 3: tab, 4: previous window, remove to open in same buffer as netrw)
 
 " Plugin Managment
 " https://github.com/junegunn/vim-plug#example
@@ -174,8 +175,9 @@ Plug 'guns/vim-sexp', { 'for': 'clojure' }
 Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
+Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim' " Shift-Tab to select multiple results
+Plug 'junegunn/fzf.vim' " Tab to select multiple results
 Plug 'junegunn/goyo.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'kien/rainbow_parentheses.vim', { 'for': 'clojure' }
@@ -187,6 +189,7 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'othree/html5.vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'robertmeta/nofrils'
 Plug 'sheerun/vim-polyglot'
 Plug 'shougo/unite.vim'
@@ -208,13 +211,11 @@ Plug 'w0rp/ale'
 call plug#end()
 
 " Colour Scheme
-let g:default_theme="gruvbox"
+let g:default_theme='gruvbox'
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
 " ALE linting
-" :help ale-integrations
-" :help ale
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
@@ -222,10 +223,13 @@ highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
 " vim-go
-let g:go_fmt_command = "goimports"
+let g:go_fmt_command = 'goimports'
 let g:go_metalinter_autosave = 1
-let g:go_metalinter_autosave_enabled = ['vet', 'golint']
-let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structcheck', 'maligned', 'megacheck', 'dupl', 'interfacer', 'goconst']
+" let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structcheck', 'maligned', 'megacheck', 'dupl', 'interfacer', 'goconst']
+let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structcheck', 'dupl', 'interfacer', 'goconst']
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structcheck', 'dupl', 'interfacer', 'goconst']
+let g:go_metalinter_deadline = '20s'
 
 " we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
 " we setup insert mode to allow us to use a double forward slash for autocomplete
