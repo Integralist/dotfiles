@@ -1,3 +1,11 @@
+"
+" Structure
+"
+" - Configure Vim's Options (via `set` directive)
+" - Plugin Managment
+" - Auto Commands
+"
+
 " Included because loading inside of Linux caused error:
 " E474: Invalid argument: listchars=tab:»·,trail:·
 scriptencoding utf-8
