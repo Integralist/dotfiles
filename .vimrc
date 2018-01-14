@@ -59,7 +59,7 @@ set smartcase
 " Try to intelligently indent when creating a newline
 set smartindent
 
-" A buffer is marked as ‘hidden’ if it has unsaved changes, and it is not currently loaded in a window
+" A buffer is marked as 'hidden' if it has unsaved changes, and it is not currently loaded in a window
 " If you try and quit Vim while there are hidden buffers, you will raise an error:
 " E162: No write since last change for buffer “a.txt”
 set hidden
@@ -294,6 +294,11 @@ let g:nofrils_strbackgrounds=1 " enable highlighting of strings and mispellings
 
 " shortcut for quick terminal exit
 :silent! tnoremap <Esc> <C-\><C-n>
+
+" tabs
+nnoremap <Tab> gt
+nnoremap <S-Tab> gT
+nnoremap <silent> <S-t> :tabnew<CR>
 
 " Auto Commands
 " :h autocommand-events
