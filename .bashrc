@@ -368,8 +368,11 @@ npm() {
   npm "$@"
 }
 
+# DISABLED: never used it (and preferred Ctrl-f to be used by fzf)
+#
 # Setup File Search AutoComplete (Ctrl-f, type to filter, arrow to look inside folders)
-[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
+# https://github.com/pindexis/qfc#usage
+# [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
 source ~/.bash-preexec.sh
@@ -379,3 +382,11 @@ source ~/.bash-preexec.sh
 
 # precmd executes just AFTER a command is executed, but before the prompt is shown
 precmd() { prompt; }
+
+# provides a fzf command for searching for single files
+# but fzf requires piping to pbcopy to be useful
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# we want Ctrl+f to trigger fzf and then copy selection to clipboard
+# we use `copy`, which is an alias for trimming newline before using pbcopy
+bind -x '"\C-f": fzf | copy'
