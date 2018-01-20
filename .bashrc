@@ -281,6 +281,21 @@ function search {
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
+function hash_hmac {
+  # share a secret "key" between client and server
+  # then if you both generate the same hmac you're ok
+  #
+  # example:
+  # hash_hmac "sha256" "some data to encrypt" "key" -binary | base64
+  # hash_hmac "mds5" "some data to encrypt" "key"
+  digest="$1"
+  data="$2"
+  key="$3"
+  shift 3 # this moves the positional arguments (`help shift`)
+          # meaning we can use $@ to print out remaining args
+  echo -n "$data" | openssl dgst "-$digest" -hmac "$key" "$@"
+}
+
 # We use _ to indicate an unused variable
 # Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
