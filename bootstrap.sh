@@ -341,17 +341,19 @@ npm install -g babel-eslint
 eval $(gpg-agent --daemon)
 
 # Install some apps via Brew Cask
+# Note: not sure --appdir is necessary to set anymore?
 brew cask
 brew cask install --appdir="/Applications" caffeine
+brew cask install --appdir="/Applications" dripcap # packet analyser (like Wireshark)
 brew cask install --appdir="/Applications" dropbox
+brew cask install --appdir="/Applications" flux
 brew cask install --appdir="/Applications" google-chrome
 brew cask install --appdir="/Applications" google-drive
 brew cask install --appdir="/Applications" java
+brew cask install --appdir="/Applications" licecap
 brew cask install --appdir="/Applications" macdown
 brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" vlc
-brew cask install --appdir="/Applications" licecap
-brew cask install --appdir="/Applications" dripcap # packet analyser (like Wireshark)
 
 # Install applications from Mac App Store
 #mas install 411246225 # Caffeine
