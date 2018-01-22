@@ -240,9 +240,9 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structc
 let g:go_metalinter_deadline = '20s'
 
 " we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
-" we setup insert mode to allow us to use a double forward slash for autocomplete
+" we setup insert mode to allow us to use a forward slash followed by a period for autocomplete
 " opens a "preview" (i.e. scratch) window which can be closed using `pc`, `pclose`
-autocmd FileType go imap // <C-x><C-o>
+autocmd FileType go imap /. <C-x><C-o>
 
 " tabular
 map <Leader>e :Tabularize /=<CR>
