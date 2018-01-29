@@ -312,9 +312,22 @@ EOF
 # use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
 alias ascii='man 7 ascii'
 alias be="bundle exec"
+alias builtins="enable -a" # list all shell builtins
 alias c-="git checkout -"
 alias c="clear"
 alias cm="git checkout master"
+
+alias commands_dir='echo $PATH | tr ":" "\n" | sort | egrep "^/(usr|bin)"'
+alias commands='for i in $(commands_dir):; do eval "ls -l $i"; done'
+
+# Note:
+# Slash ('/') immediately after each pathname is a directory
+# Asterisk ('*') after each pathname is an executable
+# At sign ('@') after each pathname is a symbolic link
+# Equals sign ('=') after each pathname is a socket
+# Percent sign ('%') after each pathname is a whiteout
+# Vertical bar ('|') after each pathname is a FIFO
+
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias datesec='date +%s'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
