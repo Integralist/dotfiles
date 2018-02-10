@@ -6,9 +6,12 @@ source ~/.git-prompt.sh
 # https://github.com/jarun/googler/blob/master/auto-completion/bash/googler-completion.bash
 source ~/googler-completion.bash
 
+# DISABLED: looks to not be needed anymore?
+# i.e. file went missing, but I noticed autocomplete worked fine still
+#
 # https://git.zx2c4.com/password-store/plain/src/completion/pass.bash-completion
 # https://www.passwordstore.org/
-source /usr/local/etc/bash_completion.d/password-store
+# source /usr/local/etc/bash_completion.d/password-store
 
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
