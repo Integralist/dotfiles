@@ -343,6 +343,7 @@ eval $(gpg-agent --daemon)
 # Install some apps via Brew Cask
 # Note: not sure --appdir is necessary to set anymore?
 brew cask
+brew cask install --appdir="/Applications" alfred
 brew cask install --appdir="/Applications" caffeine
 brew cask install --appdir="/Applications" dripcap # packet analyser (like Wireshark)
 brew cask install --appdir="/Applications" dropbox
