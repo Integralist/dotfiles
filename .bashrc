@@ -359,6 +359,7 @@ alias sshkey="cd ~/.ssh && ssh-keygen -t rsa -b 4096 -C 'mark.mcdx@gmail.com'"
 alias sshvm="ssh dev.buzzfeed.io"
 alias tmuxy='bash ~/tmux.sh'
 alias uid='echo $(uuidgen)'
+alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
