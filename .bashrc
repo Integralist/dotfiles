@@ -284,13 +284,15 @@ function search {
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
-function hash_hmac {
+function hmac {
   # share a secret "key" between client and server
   # then if you both generate the same hmac you're ok
   #
-  # example:
-  # hash_hmac "sha256" "some data to encrypt" "key" -binary | base64
-  # hash_hmac "mds5" "some data to encrypt" "key"
+  # example (generates hexidecimal output):
+  # hmac mds5 "some data to encrypt" "key"
+  #
+  # example (convert hexidecimal to binary then encode as Base64)
+  # hmac sha256 "some data to encrypt" "key" -binary | base64
   digest="$1"
   data="$2"
   key="$3"
