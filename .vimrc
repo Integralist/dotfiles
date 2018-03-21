@@ -203,6 +203,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'shougo/unite.vim'
 Plug 'shougo/vimfiler.vim'
 Plug 'smerrill/vcl-vim-plugin'
+Plug 'sodapopcan/vim-twiggy'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise', { 'for': 'ruby' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
@@ -240,7 +241,7 @@ let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck', 'deadcode', 'structc
 let g:go_metalinter_deadline = '20s'
 
 " we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
-" we setup insert mode to allow us to use a forward slash followed by a period for autocomplete
+" we setup insert mode to allow us to use a double forward slash for autocomplete
 " opens a "preview" (i.e. scratch) window which can be closed using `pc`, `pclose`
 autocmd FileType go imap /. <C-x><C-o>
 
@@ -260,6 +261,7 @@ map <Leader>cs :Tabularize /:\zs<CR>
 map <leader>t :FZF<CR>
 map <leader>y :Buffers<CR>
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
+set wildmode=list:longest,list:full
 
 " ack
 let g:ackprg = 'ag --vimgrep --smart-case'
