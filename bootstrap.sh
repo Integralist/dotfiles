@@ -108,11 +108,13 @@ EOF
 brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 
 # Install other brew packages
-# e.g. coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
-#      exif is used by .gitattributes
-#      task is https://taskwarrior.org/
-#      googler is for searching Google from terminal
-#      lnav is a coloured log viewer
+# 
+# - coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
+# - exif is used by .gitattributes
+# - task is https://taskwarrior.org/
+# - googler is for searching Google from terminal
+# - lnav is a coloured log viewer
+# - grv is a git repo viewer for the cli https://github.com/rgburke/grv 
 packages=(\
   ag\
   argon/mas/mas\
@@ -133,6 +135,7 @@ packages=(\
   go-delve/delve/delve\
   googler\
   gpg-agent\
+  grv\
   httpstat\
   imagemagick\
   irssi\
