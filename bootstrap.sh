@@ -356,6 +356,7 @@ brew cask install --appdir="/Applications" google-drive
 brew cask install --appdir="/Applications" java
 brew cask install --appdir="/Applications" licecap
 brew cask install --appdir="/Applications" macdown
+brew cask install --appdir="/Applications" owasp-zap
 brew cask install --appdir="/Applications" spotify
 brew cask install --appdir="/Applications" vlc
 
