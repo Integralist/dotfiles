@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Prevent shellcheck from worrying about code sourced at runtime.
+# https://github.com/koalaman/shellcheck/wiki/SC1090
+# shellcheck source=/dev/null
+
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
