@@ -92,35 +92,6 @@ export force_color_prompt=yes
 # use colour prompt
 export color_prompt=yes
 
-# \e indicates escape sequence (sometimes you'll see \033)
-# the m indicates you've provided a colour sequence
-#
-# 30: Black
-# 31: Red
-# 32: Green
-# 33: Yellow
-# 34: Blue
-# 35: Purple
-# 36: Cyan
-# 37: White
-#
-# a semicolon allows additional attributes:
-#
-# 0: Normal text
-# 1: Bold or light, depending on terminal
-# 4: Underline text
-#
-# there are also background colours (put before additional attributes with ; separator):
-#
-# 40: Black background
-# 41: Red background
-# 42: Green background
-# 43: Yellow background
-# 44: Blue background
-# 45: Purple background
-# 46: Cyan background
-# 47: White background
-
 function prompt_right() {
   echo -e ""
 }
@@ -135,6 +106,35 @@ function prompt_left() {
   fi
 
   echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;37m(\A)\e[0m"
+
+  # \e indicates escape sequence (sometimes you'll see \033)
+  # the m indicates you've provided a colour sequence
+  #
+  # 30: Black
+  # 31: Red
+  # 32: Green
+  # 33: Yellow
+  # 34: Blue
+  # 35: Purple
+  # 36: Cyan
+  # 37: White
+  #
+  # a semicolon allows additional attributes:
+  #
+  # 0: Normal text
+  # 1: Bold or light, depending on terminal
+  # 4: Underline text
+  #
+  # there are also background colours (put before additional attributes with ; separator):
+  #
+  # 40: Black background
+  # 41: Red background
+  # 42: Green background
+  # 43: Yellow background
+  # 44: Blue background
+  # 45: Purple background
+  # 46: Cyan background
+  # 47: White background
 }
 
 function prompt() {
