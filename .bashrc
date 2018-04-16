@@ -106,10 +106,10 @@ function prompt_left() {
   if [ "$num_jobs" -eq 0 ]; then
     num_jobs=""
   else
-    num_jobs=" (\j)"
+    num_jobs=' (\j)'
   fi
 
-  echo -e "\e[33m\]\u. \[\e[37m\]\w\[\e[00m\]$num_jobs\e[31m\]$(__git_ps1)\e[00m\] \e[0;37m(\A)\e[0m"
+  echo -e "\\e[33m\\]\\u. \\[\\e[37m\\]\\w\\[\\e[00m\\]$num_jobs\\e[31m\\]$(__git_ps1)\\e[00m\\] \\e[0;37m(\\A)\\e[0m"
 
   # \e indicates escape sequence (sometimes you'll see \033)
   # the m indicates you've provided a colour sequence
@@ -144,15 +144,8 @@ function prompt_left() {
 function prompt() {
   compensate=11
   unset PS1
-  PS1=$(printf "%*s\r%s\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
-}
 
-function rubo() {
-  docker run \
-    --cpu-shares 1024 \
-    --rm=true \
-    --volume "$(pwd):/app" \
-    bbcnews/rubocop-config --format simple --fail-level F | grep '^F:\|=='
+  PS1=$(printf "%*s\\r%s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
 
 function toggle_hidden() {
@@ -169,31 +162,9 @@ function toggle_hidden() {
   killall Finder
 }
 
-function gms() {
-  git merge --squash "$1"
-}
-
-function pt {
-  # Token found in ~/.papertrail.yml
-
-  if [ -z "$1" ]; then
-    printf "\n\tTemplate: papertrail -f \$* | lnav\n"
-    printf "\tExample: pt --min-time \"2 hours ago\" \"program:<env>/<service> '<query>'\"\n"
-    printf "\tNote: \"program:\" can help with performance\n"
-  else
-    papertrail -f $* | lnav
-  fi
-}
-
-function dash {
-  local docs=$1
-  local query=$2
-  open "dash://$docs:$query"
-}
-
 function gc {
   if [ -z "$1" ]; then
-    printf "\n\tUse: gc some-existing-branch-name\n"
+    printf "\\n\\tUse: gc <checkout-branch-name>\\n"
   else
     git checkout "$1"
   fi
@@ -201,13 +172,15 @@ function gc {
 
 function gcb {
   if [ -z "$1" ]; then
-    printf "\n\tUse: gcb some-new-branch-name (branch will be created)\n"
+    printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
     git checkout -b "$1"
   fi
 }
 
 function dotf {
+  # shellcheck disable=SC2164
+
   if [ -z "$1" ]; then
     pushd "$PWD" && dotfiles && popd
   else
@@ -228,26 +201,35 @@ function headers {
   #       curl -v -o /dev/null https://www.buzzfeed.com/?site-router-debug=true 2>&1 | grep -i siterouter
 
   if [[ "$1" =~ -(h|help)$ ]]; then
-    printf "\n\t1st param: URL\n\t2nd param: regex\n\t3rd param: http request header"
-    printf "\n\n\tif you have no need for a regex\n\tbut need a http header\n\tthen just use an empty string ''\n"
+    printf "\\n\\t1st param: URL\\n\\t2nd param: regex\\n\\t3rd param: http request header"
+    printf "\\n\\n\\tif you have no need for a regex\\n\\tbut need a http header\\n\\tthen just use an empty string ''\\n"
     return
   fi
 
   if [ -z "$1" ]; then
-    printf "\n\tExamples:\n\t\theaders https://www.buzzfeed.com/?country=us 'x-(vcl|buzz|cache|site)' '-H User-Agent:iphone'\n"
-    printf "\t\theaders https://www.buzzfeed.com/?country=us '' '-H User-Agent:iphone -H X-Foo:bar'\n"
-    printf "\n\tHelp:\theaders -h\n\t\theaders -help\n"
+    printf "\\n\\tExamples:\\n\\t\\theaders https://www.buzzfeed.com/?country=us 'x-(vcl|buzz|cache|site)' '-H User-Agent:iphone'\\n"
+    printf "\\t\\theaders https://www.buzzfeed.com/?country=us 'mobile' '-H User-Agent:iphone -H X-Foo:bar'\\n"
+    printf "\\t\\theaders https://www.buzzfeed.com/?country=us '' '-H User-Agent:iphone -H X-Foo:bar'\\n"
+    printf "\\n\\tHelp:\\theaders -h\\n\\t\\theaders -help\\n"
     return
   fi
 
   local url=$1
   local pattern=${2:-''}
   local header=${3:-}
-  local response=$(curl -H Fastly-Debug:1 $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
-  local status=$(echo "$response" | head -n 1)
 
-  printf "\n%s\n\n" "$status"
-  echo "$response" | sort | tail -n +3 | egrep -i "$pattern"
+  # why define local variables separate from their sub processes?
+  # summary: return values are ignored otherwise, and so `set -e` might miss them
+  # https://github.com/koalaman/shellcheck/wiki/SC2155
+  local response status
+
+  # don't quote $header as it breaks everything
+  # shellcheck disable=SC2086
+  response=$(curl -H Fastly-Debug:1 $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
+  status=$(echo "$response" | head -n 1)
+
+  printf "\\n%s\\n\\n" "$status"
+  echo "$response" | sort | tail -n +3 | grep -Ei "$pattern"
 }
 
 function replace {
@@ -261,11 +243,11 @@ function replace {
 }
 
 function age {
-  local filename=$1;
-  local changed=$(perl -MFile::stat -e "print stat(\"${filename}\")->mtime");
-  local now=`date +%s`;
-  local elapsed;
-  let elapsed=now-changed;
+  local filename changed now elapsed
+  filename=$1
+  changed=$(perl -MFile::stat -e "print stat(\"${filename}\")->mtime")
+  now=$(date +%s)
+  elapsed=$(("$now"-"$changed"))
   echo $elapsed
 }
 
@@ -275,7 +257,10 @@ function search {
   local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)'
 
   if [ -z "$1" ]; then
-    printf "\n\tUsage:\n\t\tsearch <phrase> <directory>\n\t\tsearch '<regex>' <directory>\n"
+    printf "\\n\\tUsage:\\n\\t\\tsearch <phrase> <directory>\\n\\t\\tsearch '<regex>' <directory>\\n"
+
+    # shellcheck disable=SC1117
+    # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch "def\\b" ~/code/buzzfeed/mono/site_router\n'
     return
   fi
@@ -349,25 +334,25 @@ alias commands='for i in $(commands_dir):; do eval "ls -l $i"; done'
 # Percent sign ('%') after each pathname is a whiteout
 # Vertical bar ('|') after each pathname is a FIFO
 
-alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
+alias copy="tr -d '\\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias datesec='date +%s'
-alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
-alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
+alias dotfiles="ls -a | grep '^\\.' | grep --invert-match '\\.DS_Store\\|\\.$'"
 alias drm='docker rm $(docker ps -a -q)'
 alias drmi='docker rmi $(docker images -q)'
 alias gb="git branch"
 alias gbd="git branch -D"
 alias gcp="git cherry-pick -"
-alias getcommit="git rev-parse HEAD | tr -d '\n' | pbcopy"
-alias gitupstream="echo git branch -u origin/\<branch\>"
+alias getcommit="git rev-parse HEAD | tr -d '\\n' | pbcopy"
+alias gitupstream="echo git branch -u origin/\\<branch\\>"
 alias gpr="git pull --rebase origin master"
 alias irc="irssi"
 alias ll="ls -laGpFHh"
 alias ls="ls -GpF"
 alias muttb="mutt -F ~/.muttrc-buzzfeed"
 alias nvimupdate="brew reinstall --HEAD neovim" # brew reinstall --env=std neovim
-alias pipall="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
+alias pipall="pip freeze --local | grep -v '^\\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bashrc"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
@@ -419,6 +404,9 @@ source ~/.bash-preexec.sh
 
 # precmd executes just AFTER a command is executed, but before the prompt is shown
 precmd() { prompt; }
+
+# Dynamically added via bootstrap script
+source "$HOME/.cargo/env"
 
 # provides a fzf command for searching for single files
 # but fzf requires piping to pbcopy to be useful
