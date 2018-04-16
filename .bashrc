@@ -6,13 +6,6 @@ source ~/.git-prompt.sh
 # https://github.com/jarun/googler/blob/master/auto-completion/bash/googler-completion.bash
 source ~/googler-completion.bash
 
-# DISABLED: looks to not be needed anymore?
-# i.e. file went missing, but I noticed autocomplete worked fine still
-#
-# https://git.zx2c4.com/password-store/plain/src/completion/pass.bash-completion
-# https://www.passwordstore.org/
-# source /usr/local/etc/bash_completion.d/password-store
-
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
 
@@ -58,10 +51,6 @@ shopt -s gnu_errfmt 2>/dev/null
 
 # ensure SIGHUP is sent to all jobs when an interactive login shell exits
 shopt -s huponexit 2>/dev/null
-
-# specify other paths to look inside of when autocompleting
-# disabled as I don't use it and it ends up confusing me later
-# CDPATH=".:~/code"
 
 # custom environment variables
 export DROPBOX="$HOME/Dropbox"
@@ -279,8 +268,15 @@ function age {
 function search {
   local pattern=$1
   local directory=${2:-.}
+  local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)'
 
-  time sift -n -X json --err-show-line-length --exclude-ipath '(build/|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)' $pattern $directory
+  if [ -z "$1" ]; then
+    printf "\n\tUsage:\n\t\tsearch <phrase> <directory>\n\t\tsearch '<regex>' <directory>\n"
+    printf '\n\tExample:\n\t\tsearch "def\\b" ~/code/buzzfeed/mono/site_router\n'
+    return
+  fi
+
+  time sift -n -X json --err-show-line-length --exclude-ipath $exclude "$pattern" "$directory"
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
@@ -301,8 +297,6 @@ function hmac {
   echo -n "$data" | openssl dgst "-$digest" -hmac "$key" "$@"
 }
 
-# We use _ to indicate an unused variable
-# Otherwise shellcheck will kick up a stink
 # shellcheck disable=SC2034
 read -r -d '' git_icons <<- EOF
 * unstaged changes
@@ -312,6 +306,24 @@ $ stashed changes
 > local commits on HEAD not pushed to upstream
 < commits on upstream not merged with HEAD
 = HEAD points to same commit as upstream
+EOF
+
+# shellcheck disable=SC2034
+read -r -d '' dns_help <<- EOF
+connectivity debugging steps...
+
+  * check what dns servers are being used:
+    dns
+
+  * check we can reach google domain:
+    ping google.com
+
+  * execute a dns lookup using different dns servers (one remote, one local):
+    nslookup google.com 8.8.8.8
+    nslookup google.com 192.168.1.1
+
+  * can we curl an endpoint:
+    curl -Lsvo /dev/null http://google.com/
 EOF
 
 # use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
@@ -336,6 +348,7 @@ alias commands='for i in $(commands_dir):; do eval "ls -l $i"; done'
 alias copy="tr -d '\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias datesec='date +%s'
 alias dns="scutil --dns | grep 'nameserver\[[0-9]*\]'"
+alias dnshelp='echo "$dns_help"'
 alias dotfiles="ls -a | grep '^\.' | grep --invert-match '\.DS_Store\|\.$'"
 alias drm='docker rm $(docker ps -a -q)'
 alias drmi='docker rmi $(docker images -q)'
@@ -366,14 +379,6 @@ alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
-# connectivity debugging steps...
-#
-#   dns (alias above, to check dns servers set)
-#   ping google.com
-#   nslookup google.com 8.8.8.8
-#   nslookup google.com 192.168.1.1
-#   curl -Lsvo /dev/null http://google.com/
-
 eval "$(rbenv init -)"
 eval "$(pyenv init -)"
 
@@ -401,12 +406,6 @@ npm() {
   lazynvm
   npm "$@"
 }
-
-# DISABLED: never used it (and preferred Ctrl-f to be used by fzf)
-#
-# Setup File Search AutoComplete (Ctrl-f, type to filter, arrow to look inside folders)
-# https://github.com/pindexis/qfc#usage
-# [[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"
 
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
 source ~/.bash-preexec.sh
