@@ -374,6 +374,11 @@ eval "$(pyenv init -)"
 # lazyload nvm
 # all props goes to http://broken-by.me/lazy-load-nvm/
 # grabbed from reddit @ https://www.reddit.com/r/node/comments/4tg5jg/lazy_load_nvm_for_faster_shell_start/
+#
+# NOTE: this will cause some confusing behaviour when opening fresh terminal prompt
+#       in that a previously installed command (e.g. npm install -g dockly) won't exist
+#       e.g. executing the `dockly` command will fail unless you execute `nvm` first
+#       this is because we're lazy loading nvm and so it won't auto-load its default node version
 
 lazynvm() {
   unset -f nvm node npm
