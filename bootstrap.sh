@@ -338,6 +338,7 @@ curl -LSso ~/tmux.sh https://raw.githubusercontent.com/Integralist/dotfiles/mast
 npm install -g tldr # https://github.com/tldr-pages/tldr
 npm install -g eslint
 npm install -g babel-eslint
+npm install -g dockly https://github.com/lirantal/dockly
 
 # Needed to add your GPG keys to the agent
 # http://linux.die.net/man/1/gpg-agent 
