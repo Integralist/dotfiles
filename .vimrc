@@ -264,7 +264,7 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignor
 set wildmode=list:longest,list:full
 
 " ack
-let g:ackprg = 'ag --vimgrep --smart-case'
+let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules'
 
 " vim-textobj-rubyblock
 runtime macros/matchit.vim
