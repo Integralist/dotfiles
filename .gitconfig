@@ -2,16 +2,17 @@
 # https://git-scm.com/docs/pretty-formats
 
 [alias]
+  collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
+  conflicts = diff --name-only --diff-filter=U
+  diff = diff -w
   lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
   logme = log --graph --author='Integralist'
+  pushit = push -f origin head
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  show = show -w
   st = status
   unstage = reset HEAD --
-  url =! bash -c 'git config --get remote.origin.url | sed -E "s/.+:\\(.+\\)\\.git$/https:\\\\/\\\\/github\\\\.com\\\\/\\\\1/g"'
-  conflicts = diff --name-only --diff-filter=U
-  pushit = push -f origin head
-  collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
 
 [apply]
   whitespace = nowarn
