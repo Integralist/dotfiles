@@ -252,20 +252,22 @@ function age {
 }
 
 function search {
-  local pattern=$1
-  local directory=${2:-.}
+  local flags=${1:-}
+  local pattern=$2
+  local directory=${3:-.}
   local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)'
 
   if [ -z "$1" ]; then
-    printf "\\n\\tUsage:\\n\\t\\tsearch <phrase> <directory>\\n\\t\\tsearch '<regex>' <directory>\\n"
+    printf "\\n\\tUsage:\\n\\t\\tsearch <flags> <phrase> <directory>\\n\\t\\tsearch '<regex>' <directory>\\n"
 
     # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
-    printf '\n\tExample:\n\t\tsearch "def\\b" ~/code/buzzfeed/mono/site_router\n'
+    printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
+    printf '\n\t\tsearch "--files Dockerfile" "FROM node" ./\n'
     return
   fi
 
-  time sift -n -X json --err-show-line-length --exclude-ipath $exclude "$pattern" "$directory"
+  time sift -n -X json --err-show-line-length --exclude-ipath $exclude $flags "$pattern" "$directory"
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
