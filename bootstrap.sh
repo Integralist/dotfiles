@@ -382,3 +382,4 @@ keybase login
 
 printf "\nDon't forget to:\n\n\t%s\n" "ln -s ~/Google\ Drive/Keys/Pass/.password-store/ ~/.password-store"
 printf "\nAlso, you'll want to install Lepton (a GitHub Gist Client)\n\n\thttps://github.com/hackjutsu/Lepton\n"
+printf "\nAlso, you'll want to install Windscribe (a VPN client with 15gb monthly data)\n\n\thttps://windscribe.com/\n"
