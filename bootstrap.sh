@@ -369,58 +369,12 @@ brew cask install --appdir="/Applications" vlc
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
 
 # Configure Python
-mkdir -p ~/code/{python,python2}
+mkdir -p ~/code/python
+pip install pipenv
+printf "\n\nSee this gist for usage example:\n\thttps://gist.github.com/Integralist/fd603239cacbb3d3d317950905b76096"
 
-cd ~/code/python2
-pyenv install 2.7.6
-pyenv local 2.7.6
-pip install --upgrade vim
-pip install goobook
-goobook authenticate
-
-cat > ~/.goobookrc <<EOF
-[DEFAULT]
-email: mark.mcdonnell@buzzfeed.com
-oauth_db_filename: ~/.goobook_auth.json
-EOF
-
-cd ~/code/python
-pyenv install 3.6.3
-pyenv local 3.6.3
-pip install --upgrade vim
-pip install flake8 \
-            flake8-bugbear \
-            flake8-deprecated \
-            flake8-import-order \
-            flake8-mock \
-            flake8-polyfill \
-            flake8-quotes \
-            pep8-naming \
-            pycodestyle \
-            pydocstyle \
-            pyflakes \
-            mypy
-
-# Sometimes it can be good to install from latest version in Git
-#
-# pip install git+git://github.com/PyCQA/pylint.git
-# pip install git+git://github.com/PyCQA/astroid.git
-
-# Install Rust, Cargo and Rustup
-# https://www.rust-lang.org/en-US/install.html
-curl https://sh.rustup.rs -sSf | sh 
-rustc --version
-rustup --version
-cargo --version
-
-# Make sure new shell instances link to Cargo environment
-echo "# Dynamically added via bootstrap script" >> ~/.bashrc
-echo 'source "$HOME/.cargo/env"' >> ~/.bashrc
-
-# Rust auto-completion for Homebrew install of Bash
-if [ -f $(brew --prefix)/etc/bash_completion.d ]; then
-  rustup completions bash > $(brew --prefix)/etc/bash_completion.d/rustup.bash-completion
-fi
+# Flake8 packages:
+# flake8-import-order
 
 keybase login
 # keybase prove twitter integralist
