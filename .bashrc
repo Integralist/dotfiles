@@ -315,6 +315,9 @@ connectivity debugging steps...
 
   * can we curl an endpoint:
     curl -Lsvo /dev/null http://google.com/
+    
+  * also check performance:
+    speedtest-cli
 EOF
 
 # use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
