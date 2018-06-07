@@ -87,10 +87,6 @@ curl -LSso ~/.bashrc https://raw.githubusercontent.com/Integralist/dotfiles/mast
 curl -LSso ~/.bash_profile https://raw.githubusercontent.com/Integralist/dotfiles/master/.bash_profile
 curl -LSso ~/.inputrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.inputrc
 
-# Setup File Search AutoComplete
-git clone https://github.com/pindexis/qfc $HOME/.qfc
-#printf '\n# Setup File Search AutoComplete\n[[ -s "$HOME/.qfc/bin/qfc.sh" ]] && source "$HOME/.qfc/bin/qfc.sh"' >> ~/.bashrc
-
 # Install Vim
 brew install vim --without-python --with-python3
 
@@ -111,60 +107,38 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 # 
 # - coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
 # - exif is used by .gitattributes
-# - task is https://taskwarrior.org/
-# - googler is for searching Google from terminal
-# - lnav is a coloured log viewer
-# - grv is a git repo viewer for the cli https://github.com/rgburke/grv 
+# - go to switch version you can use `brew switch go x.x.x`
+# - ripgrep is used by FZF configuration (see below)
 packages=(\
   ag\
-  argon/mas/mas\
   asciinema\
   bash-completion\
   bundler-completion\
   coreutils\
-  docker-compose-completion\
-  docker-machine\
   docker\
   exif\
   fzf \
-  gem-completion\
-  gist\
   git\
   gnupg2\
   go\
-  go-delve/delve/delve\
-  googler\
   gpg-agent\
-  grv\
-  httpstat\
-  imagemagick\
   irssi\
   keybase \
-  leiningen\
-  lnav\
-  mutt\
-  netcat\
+  mas\
   ngrok\
-  node\
   pass\
   pstree\
   pwgen\ 
-  pyenv\
-  rbenv\
   reattach-to-user-namespace\
   ripgrep\
-  ruby-build\
   shellcheck\
   siege\
   sift\
   speedtest-cli\
-  task\
-  terminal-notifier\
   the_silver_searcher\
   tmate\
   tmux\
   tree\
-  urlview\
   watch\
   wget\
   wireshark\
@@ -191,48 +165,19 @@ curl -LSso ~/.gitconfig https://raw.githubusercontent.com/Integralist/dotfiles/m
 curl -LSso ~/diff-highlight https://raw.githubusercontent.com/git/git/master/contrib/diff-highlight/diff-highlight
 chmod +x ~/diff-highlight
 
-# If you need to configure Git manually...
+# If you need to configure Git manually:
+# git config --global --add <group>.<key> <value>
 #
-# git config --global --add alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
-# git config --global --add alias.st status
-# git config --global --add alias.unstage "reset HEAD --"
-# git config --global --add apply.whitespace nowarn
-# git config --global --add color.branch.current "yellow reverse"
-# git config --global --add color.branch.local yellow
-# git config --global --add color.branch.remote green
-# git config --global --add color.commit red
-# git config --global --add color.diff-highlight.newhighlight "green bold 22"
-# git config --global --add color.diff-highlight.newnormal "green bold"
-# git config --global --add color.diff-highlight.oldhighlight "red bold 52"
-# git config --global --add color.diff-highlight.oldnormal "red bold"
-# git config --global --add color.diff.frag magenta
-# git config --global --add color.diff.meta yellow
-# git config --global --add color.diff.new green
-# git config --global --add color.diff.old red
-# git config --global --add color.status.added red
-# git config --global --add color.status.changed blue
-# git config --global --add color.status.untracked magenta
-# git config --global --add color.ui true
-# git config --global --add core.editor vim
-# git config --global --add core.excludesfile ~/.gitignore-global
-# git config --global --add core.ignorecase false
-# git config --global --add merge.conflictstyle diff3
-# git config --global --add merge.tool vimdiff
-# git config --global --add mergetool.prompt true
-# git config --global --add push.default upstream
-# git config --global --add url.git@github.com:.insteadof https://github.com/
-# git config --global --add user.email mark.mcdx@gmail.com
+# e.g.
 # git config --global --add user.name Integralist
-# git config --global --add pager.log '~/diff-highlight | less'
-# git config --global --add pager.show '~/diff-highlight | less'
-# git config --global --add pager.diff '~/diff-highlight | less'
-# git config --global --add interactive.diffFilter ~/diff-highlight
-# git config --global --add diff.compactionHeuristic true
 
 # GitHub setup
 mkdir ~/.ssh
 curl -LSso ~/.ssh/config https://raw.githubusercontent.com/Integralist/dotfiles/master/.ssh/config
-cd ~/.ssh && sshkey # sshkey is a .bashrc alias
+cd ~/.ssh && sshkey # sshkey is a .bashrc alias that generates an ssh key
+                    # it'll require interaction via the terminal prompt
+                    # so make sure you name the key `github_rsa`
+                    # otherwise the following ssh-add will fail
 eval "$(ssh-agent -s)"
 ssh-add -K ~/.ssh/github_rsa
 printf "\n\nDon't forget to \`pbcopy < ~/.ssh/github_rsa.pub\` and paste your public key into GitHub"
@@ -246,99 +191,17 @@ else
 fi
 ssh -T git@github.com
 
-# Configure Googler
-curl -LSso ~/googler-completion.bash https://raw.githubusercontent.com/jarun/googler/master/auto-completion/bash/googler-completion.bash
-
-# Configure Mutt
-# You need a Google app password:
-# https://security.google.com/settings/security/apppasswords
-mkdir -p ~/.mutt/cache/{headers,bodies}
-touch ~/.mutt/certificates
-
-# Use ~/.mailcap file with Mutt and view_attachment.sh
-curl -LSso ~/.mutt/view_attachment.sh https://raw.githubusercontent.com/luciano-fiandesio/dotfiles/master/.mutt/view_attachment.sh
-
-cat > ~/.mailcap <<EOF
-image/gif; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-image/jpeg; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-application/pdf; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-text/html; ~/.mutt/view_attachment.sh %s "-" '/Applications/Google\ Chrome.app'
-text/plain; vim %s
-EOF
-
-cat > ~/.mutt/passwords <<EOF
-set imap_pass="<google-app-password>"
-set smtp_pass="<google-app-password>"
-EOF
-
-printf "\n\nYou need to change the password in ~/.mutt/passwords:\n\n\tgpg -r mark.mcdx@gmail.com -e ~/.mutt/passwords &&\n\tgshred ~/.mutt/passwords &&\n\trm ~/.mutt/passwords\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
-read cont
-if [ $cont == "y" ] || [ $cont == "Y" ] ; then
-  echo "Cool, let's keep going..."
-else
-  echo "OK let's stop here and you can continue on manually"
-  exit
-fi
-
-cat > ~/.mutt/passwords-buzzfeed <<EOF
-set imap_pass="<google-app-password>"
-set smtp_pass="<google-app-password>"
-EOF
-
-printf "\n\nYou need to change the password in ~/.mutt/passwords-buzzfeed:\n\n\tgpg -r mark.mcdonnell@buzzfeed.com -e ~/.mutt/passwords-buzzfeed &&\n\tgshred ~/.mutt/passwords-buzzfeed &&\n\trm ~/.mutt/passwords-buzzfeed\n\nOnce done the confirm you're ready to continue: (y)es or (n)o\n\n"
-read cont
-if [ $cont == "y" ] || [ $cont == "Y" ] ; then
-  echo "Cool, let's keep going..."
-else
-  echo "OK let's stop here and you can continue on manually"
-  exit
-fi
-
-curl -LSso ~/.muttrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc
-curl -LSso ~/.muttrc-buzzfeed https://raw.githubusercontent.com/Integralist/dotfiles/master/.muttrc-buzzfeed
-curl -LSso ~/.urlview https://raw.githubusercontent.com/Integralist/dotfiles/master/.urlview # use <Ctrl-b> within mutt to activate
-
 # Configure Golang (~/.bashrc already sets GOPATH)
 mkdir -p ~/code/go
-go get golang.org/x/tools/cmd/goimports
-
-# From within Vim (when vim-go installed) run...
-# :GoInstallBinaries
-#
-# Then from the shell run...
-# gometalinter --install
-#
-# You can then test with...
-# gometalinter --deadline 20s
-
-# How to use Go Delve (brew install go-delve/delve/delve) with vim-godebug
-#
-# :call GoToggleBreakpoint() to add or remove a breakpoint at the current line 
-# :call GoDebug() to start a debug session for the main package
-#
-# For available commands see:
-# https://github.com/derekparker/delve/blob/master/Documentation/cli/README.md#stepout
-#
-# locals:	Print local variables.
-# next: Step over to next source line.
-# print: Evaluate an expression (e.g. `print <variable>`).
-# step: Single step through program.
-# stepout: Step out of the current function.
-# types: Print list of types.
-# vars: Print package variables.
+printf "\n\nDon't forget to run :GoInstallBinaries from within vim (once you have vim-go installed)"
 
 # Miscellaneous
-curl -LSso ~/eslint.config.js https://raw.githubusercontent.com/Integralist/dotfiles/master/eslint.config.js
-curl -LSso ~/.pylintrc https://raw.githubusercontent.com/Integralist/dotfiles/master/.pylintrc
-curl -LSso ~/.rspec https://raw.githubusercontent.com/Integralist/dotfiles/master/.rspec
-curl -LSso ~/.rubocop.yml https://raw.githubusercontent.com/Integralist/dotfiles/master/.rubocop.yml
-curl -LSso ~/.signature https://raw.githubusercontent.com/Integralist/dotfiles/master/.signature
 curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/master/.tmux.conf
 curl -LSso ~/tmux.sh https://raw.githubusercontent.com/Integralist/dotfiles/master/tmux.sh
-npm install -g tldr # https://github.com/tldr-pages/tldr
-npm install -g eslint
-npm install -g babel-eslint
-npm install -g dockly https://github.com/lirantal/dockly
+
+printf "\n\nIf you want things like tldr and dockly, then install Node using something like https://github.com/creationix/nvm"
+# npm install -g tldr # https://github.com/tldr-pages/tldr
+# npm install -g dockly https://github.com/lirantal/dockly
 
 # Needed to add your GPG keys to the agent
 # http://linux.die.net/man/1/gpg-agent 
@@ -366,7 +229,7 @@ brew cask install --appdir="/Applications" vlc
 #mas install 458034879 # Dash
 #mas install 803453959 # Slack
 #mas install 409789998 # Twitter
-printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store\n\n"
+printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store (try `mas` command?)\n\n"
 
 # Configure Python
 mkdir -p ~/code/python
