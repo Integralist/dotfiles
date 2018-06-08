@@ -294,6 +294,11 @@ function spotify {
   echo $((1 + RANDOM % max))
 }
 
+function search_git {
+  # search_git 'def f'
+  git rev-list --all | xargs git grep "$1"
+}
+
 # shellcheck disable=SC2034
 read -r -d '' git_icons <<- EOF
 * unstaged changes
