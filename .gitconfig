@@ -4,7 +4,8 @@
 [alias]
   collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
   conflicts = diff --name-only --diff-filter=U
-  diff = diff -w
+  diff = diff -w ; ignore whitespace
+  diff-word = diff --word-diff=color
   lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
   logme = log --graph --author='Integralist'
