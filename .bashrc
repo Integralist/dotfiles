@@ -384,6 +384,7 @@ alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
 eval "$(pyenv init -)"
+eval "$(pipenv --completion)"
 
 # lazyload nvm
 # all props goes to http://broken-by.me/lazy-load-nvm/
