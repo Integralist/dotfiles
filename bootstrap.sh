@@ -108,6 +108,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 # - coreutils gives us 'shred' command (well, it's actually gnu'ed so it's really: gshred)
 # - exif is used by .gitattributes
 # - go to switch version you can use `brew switch go x.x.x`
+# - pyenv used by pipenv
 # - ripgrep is used by FZF configuration (see below)
 packages=(\
   ag\
@@ -129,6 +130,7 @@ packages=(\
   pass\
   pstree\
   pwgen\ 
+  pyenv\ 
   reattach-to-user-namespace\
   ripgrep\
   shellcheck\
