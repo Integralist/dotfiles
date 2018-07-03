@@ -231,8 +231,8 @@ let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
-nmap <silent> <leader>al :ALENext<cr>
-nmap <silent> <leader>ak :ALEPrevious<cr>
+nmap <silent> <leader>x :ALENext<cr>
+nmap <silent> <leader>z :ALEPrevious<cr>
 
 " vim-go
 let g:go_fmt_command = 'goimports'
