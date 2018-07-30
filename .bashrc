@@ -352,6 +352,7 @@ alias commands='for i in $(commands_dir):; do eval "ls -l $i"; done'
 
 alias copy="tr -d '\\n' | pbcopy" # e.g. echo $DEV_CERT_PATH | copy
 alias datesec='date +%s'
+alias did="vim +'normal Go' +'r!date' ~/did.txt"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias dotfiles="ls -a | grep '^\\.' | grep --invert-match '\\.DS_Store\\|\\.$'"
