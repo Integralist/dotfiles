@@ -202,8 +202,9 @@ curl -LSso ~/.tmux.conf https://raw.githubusercontent.com/Integralist/dotfiles/m
 curl -LSso ~/tmux.sh https://raw.githubusercontent.com/Integralist/dotfiles/master/tmux.sh
 
 printf "\n\nIf you want things like tldr and dockly, then install Node using something like https://github.com/creationix/nvm"
-# npm install -g tldr # https://github.com/tldr-pages/tldr
-# npm install -g dockly https://github.com/lirantal/dockly
+# npm install -g tldr (https://github.com/tldr-pages/tldr)
+# npm install -g dockly (https://github.com/lirantal/dockly)
+# npm install -g carbon-now-cli (https://github.com/mixn/carbon-now-cli)
 
 # Needed to add your GPG keys to the agent
 # http://linux.die.net/man/1/gpg-agent 
