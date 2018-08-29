@@ -174,7 +174,7 @@ function gcb {
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
-    git checkout -b "$1"
+    git checkout -b "$(date +%F)_$1"
   fi
 }
 
@@ -326,7 +326,7 @@ connectivity debugging steps...
 
   * can we curl an endpoint:
     curl -Lsvo /dev/null http://google.com/
-    
+
   * also check performance:
     speedtest-cli
 EOF
