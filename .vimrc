@@ -48,13 +48,13 @@ set incsearch
 " Highlight search matches
 set hlsearch
 
-" Ignore case in search
-set smartcase
+" Makes searching case insensitive
+" Note: if turned off, you can use \c at the end of your search phrase instead
+set ignorecase
 
-" DISABLED: realised that case insensitive searches can return TOO MANY results
-"           easier to be a case sensitive search and just use \c on the end if I didn't care
-" Make sure any searches /searchPhrase doesn't need the \c escape character
-" set ignorecase
+" When used in conjunction with ignorecase it causes Vim to search both case
+" sensitive and case insensitive.
+set smartcase
 
 " Try to intelligently indent when creating a newline
 set smartindent
