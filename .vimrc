@@ -53,7 +53,9 @@ set hlsearch
 set ignorecase
 
 " When used in conjunction with ignorecase it causes Vim to search both case
-" sensitive and case insensitive.
+" sensitive and case insensitive depending on whether your search uses all
+" lowercase or any uppercase letters (e.g. foo will match foo and FOO, while
+" Foo will match only Foo).
 set smartcase
 
 " Try to intelligently indent when creating a newline
