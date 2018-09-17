@@ -174,7 +174,7 @@ function gcb {
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
-    git checkout -b "$(date +%F)_$1"
+    git checkout -b "$(date +%Y_%m_%d)_$1"
   fi
 }
 
