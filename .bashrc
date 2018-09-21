@@ -263,7 +263,10 @@ function search {
     # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
-    printf '\n\t\tsearch "--files Dockerfile" "FROM node" ./\n'
+    printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
+    printf '\n\t\tsearch "-A 5" "show 5 lines after this match" ./'
+    printf '\n\t\tsearch "-B 5" "show 5 lines before this match" ./\n'
+
     return
   fi
 
