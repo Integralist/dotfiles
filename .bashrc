@@ -71,6 +71,7 @@ export PATH=$HOME/code/go/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
 export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
+export FZF_DEFAULT_COMMAND="ag --ignore-dir node_modules --filename-pattern ''" # can use --ignore-dir multiple times
 # export PROMPT_DIRTRIM=4 # truncate start of long path
 
 # git specific configurations
@@ -266,7 +267,6 @@ function search {
     printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
     printf '\n\t\tsearch "-A 5" "show 5 lines after this match" ./'
     printf '\n\t\tsearch "-B 5" "show 5 lines before this match" ./\n'
-
     return
   fi
 
