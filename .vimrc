@@ -265,7 +265,7 @@ map <Leader>cs :Tabularize /:\zs<CR>
 " Ctrl-y = vertical
 map <leader>t :FZF<CR>
 map <leader>y :Buffers<CR>
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
+set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
 " ack
