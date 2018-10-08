@@ -1,4 +1,6 @@
 #!/usr/bin/env bash
+#
+# Note: .bashrc is loaded FIRST, then this .bash_profile is loaded
 
 if [ -f "$HOME/.bashrc" ]; then
   source ~/.bashrc
