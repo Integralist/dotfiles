@@ -10,3 +10,8 @@ fi
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   source "$(brew --prefix)/etc/bash_completion"
 fi
+
+# prevent tmux from triggering the path to be updated with duplicate items
+if [[ -z $TMUX ]]; then
+  export PATH="/set/something/here:$PATH"
+fi
