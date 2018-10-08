@@ -67,12 +67,16 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export GOPATH=$HOME/code/go
-export PATH=$GOPATH/bin:$PATH
 export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
 export FZF_DEFAULT_COMMAND="ag --ignore-dir node_modules --filename-pattern ''" # can use --ignore-dir multiple times
 # export PROMPT_DIRTRIM=4 # truncate start of long path
+
+# prevent tmux from triggering the path to be updated with duplicate items
+if [[ -z $TMUX ]]; then
+  export PATH=$GOPATH/bin:$PATH
+fi
 
 # git specific configurations
 export GIT_PS1_SHOWCOLORHINTS=true
