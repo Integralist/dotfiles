@@ -67,7 +67,7 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export GOPATH=$HOME/code/go
-export PATH=$HOME/code/go/bin:$HOME/dotvim/voom:/usr/local/sbin:$PATH
+export PATH=$GOPATH/bin:$PATH
 export EDITOR="vim"
 export HOMEBREW_NO_ANALYTICS=1
 export SSH_PUBLIC_KEY="$HOME/.ssh/github_rsa.pub"
@@ -428,9 +428,6 @@ source ~/.bash-preexec.sh
 
 # precmd executes just AFTER a command is executed, but before the prompt is shown
 precmd() { prompt; }
-
-# Dynamically added via bootstrap script
-source "$HOME/.cargo/env"
 
 # provides a fzf command for searching for single files
 # but fzf requires piping to pbcopy to be useful
