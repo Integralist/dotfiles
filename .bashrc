@@ -437,6 +437,12 @@ precmd() { prompt; }
 # but fzf requires piping to pbcopy to be useful
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# we want Ctrl+f to trigger fzf and then copy selection to clipboard
+# we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 # we use `copy`, which is an alias for trimming newline before using pbcopy
 bind -x '"\C-f": fzf | copy'
+
+# we can use Ctrl+p to 'preview' files using fzf
+bind -x '"\C-p": fzf --preview="cat {}" --preview-window=right:70%:wrap'
+
+# we can use Ctrl+e to 'edit' files via fzf's preview functionality
+bind -x '"\C-e": vim $(fzf --preview="cat {}" --preview-window=right:70%:wrap)'
