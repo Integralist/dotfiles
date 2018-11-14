@@ -235,9 +235,14 @@ brew cask install --appdir="/Applications" vlc
 printf "\n\nDon't forget to install Caffeine, Dash, Slack, Twitter from App Store (try `mas` command?)\n\n"
 
 # Configure Python
-mkdir -p ~/code/python
+mkdir -p ~/code/python/3.7
 pip install pipenv
 printf "\n\nSee this gist for usage example:\n\thttps://gist.github.com/Integralist/fd603239cacbb3d3d317950905b76096"
+cd ~/code/python/3.7
+pipenv --python 3.7
+pipenv shell
+pipenv install boto3 pytest structlog tornado
+pipenv install --dev flake8 mypy tox
 
 # Flake8 packages:
 # flake8-import-order
