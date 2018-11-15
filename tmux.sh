@@ -22,12 +22,8 @@ else
   tmux send-keys -t work:2 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
   tmux send-keys -t work:2 '# "execute v up followed by sshvm command (requires gpg passphrase)"' 'C-m'
 
-  # Python REPL
-  tmux new-window -n 'ipython' -t work:3
-  tmux send-keys -t work:3 'cd ~/code/python3.6.3 && ipython' 'C-m'
-  
   # Pipenv Python REPL
-  tmux new-window -n 'pipenv 3.7' -t work:4
+  tmux new-window -n 'pipenv 3.7' -t work:3
   tmux send-keys -t work:3 'cd ~/code/python3.7 && pipenv run ipython' 'C-m'
 
   # Attach to the session, now we have everything setup
