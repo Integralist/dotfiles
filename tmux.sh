@@ -25,6 +25,10 @@ else
   # Python REPL
   tmux new-window -n 'ipython' -t work:3
   tmux send-keys -t work:3 'cd ~/code/python3.6.3 && ipython' 'C-m'
+  
+  # Pipenv Python REPL
+  tmux new-window -n 'pipenv 3.7' -t work:4
+  tmux send-keys -t work:3 'cd ~/code/python3.7 && pipenv run ipython' 'C-m'
 
   # Attach to the session, now we have everything setup
   # We connect to the Rig window as we have to manually run vagrant (due to GPG passphrase requirement)
