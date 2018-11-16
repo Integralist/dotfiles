@@ -11,7 +11,7 @@
   lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
   logme = log --graph --author='Integralist'
-  pushit = push -f origin head
+  pushit = push --force-with-lease origin head
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   show = show -w
   st = status
