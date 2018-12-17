@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo .bashrc loaded
+
 # Prevent shellcheck from worrying about code sourced at runtime.
 # https://github.com/koalaman/shellcheck/wiki/SC1090
 # shellcheck source=/dev/null
@@ -7,6 +9,7 @@
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
+# shellcheck source=/dev/null
 # https://github.com/jarun/googler/blob/master/auto-completion/bash/googler-completion.bash
 source ~/googler-completion.bash
 
@@ -88,12 +91,13 @@ export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed 
                                        # = HEAD points to same commit as upstream
 
 # history configuration
-history -a # record each line as it gets issued
 export HISTSIZE=500000
 export HISTFILESIZE=100000
 export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
+history -a # record each line as it gets issued
+PROMPT_COMMAND="history -a" # don't lose commands when session accidentally terminates
 
 # force colours
 export force_color_prompt=yes
@@ -406,6 +410,7 @@ eval "$(pipenv --completion)"
 lazynvm() {
   unset -f nvm node npm
   export NVM_DIR=~/.nvm
+  # shellcheck source=/dev/null
   [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 }
 
@@ -424,6 +429,7 @@ npm() {
   npm "$@"
 }
 
+# shellcheck source=/dev/null
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
 source ~/.bash-preexec.sh
 
@@ -433,6 +439,7 @@ source ~/.bash-preexec.sh
 # precmd executes just AFTER a command is executed, but before the prompt is shown
 precmd() { prompt; }
 
+# shellcheck source=/dev/null
 # provides a fzf command for searching for single files
 # but fzf requires piping to pbcopy to be useful
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
@@ -441,6 +448,7 @@ precmd() { prompt; }
 # we use `copy`, which is an alias for trimming newline before using pbcopy
 bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | copy'
 
+# shellcheck disable=SC2016
 # we want Ctrl+g to pass files into vim for editing (-m allows multiple file
 # selection using Tab)
 bind -x '"\C-g": vim $(fzf -m)'
