@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 #
-# Note: .bashrc is loaded FIRST, then this .bash_profile is loaded
+# Note: .bash_profile is loaded BEFORE .bashrc
+
+echo .bash_profile loaded
 
 if [ -f "$HOME/.bashrc" ]; then
-  source ~/.bashrc
+  # shellcheck source=/dev/null
+  source "$HOME/.bashrc"
   cd . || exit
 fi
 
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
+  # shellcheck source=/dev/null
   source "$(brew --prefix)/etc/bash_completion"
 fi
 
