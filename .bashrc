@@ -310,6 +310,22 @@ function search_git {
   git rev-list --all | xargs git grep "$1"
 }
 
+function vimin {
+  # usage: echo foo | vimin 'norm VgU' 
+  #
+  # explanation of how vim handles stdin
+  # https://gist.github.com/Integralist/2b01cfdaf9c85efb0de6e2b2085896c3
+
+  # store off standard input piped to this function
+  read -d '' -r stdin
+
+  # capture the first parameter passed to this function
+  local cmd="$1"
+
+  # re-pipe the standard input to vim with correct flags
+  echo "$stdin" | vim - -es --not-a-term +"$cmd" +'%p' +'qa!'
+}
+
 # shellcheck disable=SC2034
 read -r -d '' git_icons <<- EOF
 * unstaged changes
