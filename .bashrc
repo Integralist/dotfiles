@@ -311,7 +311,7 @@ function search_git {
 }
 
 function vimin {
-  # usage: echo foo | vimin 'norm VgU' 
+  # usage: echo foo | vimin 'norm VgU'
   #
   # explanation of how vim handles stdin
   # https://gist.github.com/Integralist/2b01cfdaf9c85efb0de6e2b2085896c3
@@ -358,9 +358,21 @@ connectivity debugging steps...
     speedtest-cli
 EOF
 
-# use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
+# the following variables are necessary to determine the appropriate formatted
+# output (used by the `a` alias defined below)...
+
+# shellcheck disable=SC2034
+bold=$(tput bold)
+# shellcheck disable=SC2034
+normal=$(tput sgr0)
+
+# custom alias'
+#
+# note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
+#       alternatively use the `a` alias to show all defined alias' from this file
+
+alias a='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\1\n  ${normal}\2\n/p"'
 alias ascii='man 7 ascii'
-alias be="bundle exec"
 alias builtins="enable -a" # list all shell builtins
 alias c-="git checkout -"
 alias c="clear"
