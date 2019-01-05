@@ -226,6 +226,34 @@ let g:default_theme='gruvbox'
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
+" Lightline Status Line Tweaks
+" See documentation for details: https://github.com/itchyny/lightline.vim#advanced-configuration
+"
+" We use vim-fugitive to get git branch
+
+function! UpdateWordCount()
+  let lnum = 1
+  let n = 0
+  while lnum <= line('$')
+    let n = n + len(split(getline(lnum)))
+    let lnum = lnum + 1
+  endwhile
+  let g:word_count = n . " words"
+  return &filetype ==# 'markdown' ? g:word_count : ''
+endfunction
+
+let g:lightline = {
+      \ 'colorscheme': 'default',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'wordcount', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'wordcount': 'UpdateWordCount',
+      \ },
+      \ }
+
 " ALE linting
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 let g:ale_sign_warning = '▲'
