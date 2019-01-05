@@ -254,6 +254,10 @@ let g:lightline = {
       \ },
       \ }
 
+" SuperTab
+" have selection start at top of the list instead of the bottom
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
 " ALE linting
 let g:ale_python_mypy_options = '--ignore-missing-imports'
 let g:ale_sign_warning = '▲'
