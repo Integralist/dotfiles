@@ -267,14 +267,14 @@ function search {
   local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)'
 
   if [ -z "$1" ]; then
-    printf "\\n\\tUsage:\\n\\t\\tsearch <flags> <phrase> <directory>\\n\\t\\tsearch '<regex>' <directory>\\n"
+    printf "\\n\\tUsage:\\n\\t\\tsearch <flags:[--]> <pattern:['']> <directory:[./]>\\n"
 
     # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
     printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
-    printf '\n\t\tsearch "-A 5" "show 5 lines after this match" ./'
-    printf '\n\t\tsearch "-B 5" "show 5 lines before this match" ./\n'
+    printf '\n\t\tsearch "-A 5" "..." ./  # shows 5 lines before search results'
+    printf '\n\t\tsearch "-B 5" "..." ./  # shows 5 lines after search results\n'
     return
   fi
 
