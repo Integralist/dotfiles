@@ -242,10 +242,7 @@ cd ~/code/python/3.7
 pipenv --python 3.7
 pipenv shell
 pipenv install boto3 pytest structlog tornado
-pipenv install --dev flake8 mypy tox ipython
-
-# Flake8 packages:
-# flake8-import-order
+pipenv install --dev flake8 flake8-import-order mypy tox ipython
 
 keybase login
 # keybase prove twitter integralist
