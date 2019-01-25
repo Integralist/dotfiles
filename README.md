@@ -111,3 +111,16 @@ If you're unable to utilise the new Docker for Mac (hardware requirements might 
   - open vim and execute `:GoInstallBinaries`, then from shell `gometalinter --install` †
 
 > † test with `gometalinter --deadline 20s`
+
+#### Python Jedi Autocomplete
+
+```bash
+pip install jedi
+python -c 'import sys; print(sys.executable)'  # <py_bin>
+```
+
+Then inside of vim I open a Python script and then execute the following command:
+
+```vim
+:python3 import os; sys.executable='<py_bin>'; print(sys.executable)
+```
