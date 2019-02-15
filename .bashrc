@@ -183,7 +183,8 @@ function gcb {
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
-    git checkout -b "$(date +%Y_%m_%d)_$1"
+    transformed=$(echo "$1" | tr '-' '_')
+    git checkout -b "$(date +%Y_%m_%d)_$transformed"
   fi
 }
 
