@@ -374,6 +374,7 @@ normal=$(tput sgr0)
 
 alias a='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\1\n  ${normal}\2\n/p"'
 alias ascii='man 7 ascii'
+alias brew_openssl='/usr/local/opt/openssl/bin/openssl'
 alias builtins="enable -a" # list all shell builtins
 alias c-="git checkout -"
 alias c="clear"
