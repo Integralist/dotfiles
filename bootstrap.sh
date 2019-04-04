@@ -128,6 +128,7 @@ packages=(\
   mas\
   ngrok\
   pass\
+  pass-otp\
   pstree\
   pwgen\ 
   pyenv\ 
