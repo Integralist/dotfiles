@@ -110,6 +110,7 @@ brew install curl --with-openssl --with-nghttp2 && brew link curl --force
 # - go to switch version you can use `brew switch go x.x.x`
 # - pyenv used by pipenv
 # - ripgrep is used by FZF configuration (see below)
+# - zbar (command is `zbarimg`) can be used alongside pass-otp to extra code from QR code
 packages=(\
   ag\
   asciinema\
@@ -145,6 +146,7 @@ packages=(\
   watch\
   wget\
   wireshark\
+  zbar\
 )
 for package in "${packages[@]}"
 do
