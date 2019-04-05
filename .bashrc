@@ -25,8 +25,12 @@ bind "set show-all-if-ambiguous on"
 # no bell sound on error
 bind "set bell-style none"
 
+# DISABLED...
 # enable emacs like bindings (<C-a> and <C-e> for start and end of line shortcuts)
-set -o emacs
+# set -o emacs
+
+# enable vim like bindings instead of emails (e.g. no longer use <C-a> or <C-e>)
+set -o vi
 
 # append to the history file, don't overwrite it
 shopt -s histappend
