@@ -9,9 +9,10 @@ echo .bashrc loaded
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
+# DISABLED...
 # shellcheck source=/dev/null
 # https://github.com/jarun/googler/blob/master/auto-completion/bash/googler-completion.bash
-source ~/googler-completion.bash
+# source ~/googler-completion.bash
 
 # tells Readline to perform filename completion in a case-insensitive fashion
 bind "set completion-ignore-case on"
