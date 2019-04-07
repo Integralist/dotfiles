@@ -295,6 +295,13 @@ map <Leader>cs :Tabularize /:\zs<CR>
 " Ctrl-t = tab
 " Ctrl-x = split
 " Ctrl-y = vertical
+"
+" Best way to control ignore list:
+"
+" let $FZF_DEFAULT_COMMAND = "ag --ignore-dir node_modules --filename-pattern ''"
+"
+" We can also set FZF_DEFAULT_COMMAND in ~/.bashrc
+" Also we can use --ignore-dir multiple times
 map <leader>t :FZF<CR>
 map <leader>y :Buffers<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
