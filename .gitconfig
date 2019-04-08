@@ -13,6 +13,7 @@
   logme = log --graph --author='Integralist'
   pushit = push --force-with-lease origin head
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  search =! bash -c 'git rev-list --all | xargs git grep "$1"'
   show = show -w
   st = status
   unstage = reset HEAD --
