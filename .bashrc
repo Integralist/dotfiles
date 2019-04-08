@@ -375,9 +375,9 @@ normal=$(tput sgr0)
 # custom alias'
 #
 # note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
-#       alternatively use the `a` alias to show all defined alias' from this file
+#       alternatively use the `list` alias to show all defined alias' from this file
 
-alias a='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\1\n  ${normal}\2\n/p"'
+alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\1\n  ${normal}\2\n/p"'
 alias ascii='man 7 ascii'
 alias brew_openssl='/usr/local/opt/openssl/bin/openssl'
 alias builtins="enable -a" # list all shell builtins
