@@ -279,6 +279,8 @@ function search {
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
     printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
+    printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
+    printf '\n\t\tsearch --exclude-ipath "(.venv|.rig)" "arn:aws:s3"'
     printf '\n\t\tsearch "-A 5" "..." ./  # shows 5 lines before search results'
     printf '\n\t\tsearch "-B 5" "..." ./  # shows 5 lines after search results\n'
     return
