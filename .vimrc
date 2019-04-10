@@ -216,7 +216,7 @@ let g:lightline = {
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " ALE linting
-let g:ale_python_mypy_options = '--ignore-missing-imports'
+let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
 let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
 highlight link ALEWarningSign String
