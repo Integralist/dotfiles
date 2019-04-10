@@ -1,14 +1,8 @@
-# bundler
-.gem
-.bin
-.ruby-version
-failed_cukes.sh
-
-# miscellaneous
 *.DS_Store
-.sass-cache
-.grunt
-*.swp
-logs
 *.log
+*.swp
+.bin
+.grunt
+.python-version
 .vagrant*
+logs
