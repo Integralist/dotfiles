@@ -49,20 +49,16 @@
   editor = vim
   excludesfile = ~/.gitignore-global
   ignorecase = false
-	editor = vim
 
 [diff]
   indentHeuristic = true
   compactionHeuristic = true
 
 [diff "exif"]
-	textconv = exiftool
+  textconv = exiftool
 
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
-
-[interactive]
-  diffFilter = ~/diff-highlight
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
@@ -71,19 +67,14 @@
 [mergetool]
   prompt = true
 
-[pager]
-  log = ~/diff-highlight | less
-  show = ~/diff-highlight | less
-  diff = ~/diff-highlight | less
-
 [push]
   default = upstream
 
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
-	signingkey = 561C861B
+  ; signingkey = ...
 
 ; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
-	version = 2
+  version = 2
