@@ -110,6 +110,9 @@ export force_color_prompt=yes
 # use colour prompt
 export color_prompt=yes
 
+# setup golang bin directory so various tools can be found
+export PATH="$HOME/go/bin:$PATH"
+
 function prompt_right() {
   echo -e ""
 }
