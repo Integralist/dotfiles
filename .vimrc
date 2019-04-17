@@ -314,7 +314,10 @@ endfun
 autocmd FilterWritePre * call SetDiffColours()
 
 " Map § key to :nohlsearch (or :noh for short)
-map § :nohlsearch<CR>
+" map § :nohlsearch<CR>
+
+" touch bar on new MacBook Pros suck, so avoid non-tactile Esc
+imap § <Esc>
 
 " Tell Vim how many colours are available
 let &t_Co=256
