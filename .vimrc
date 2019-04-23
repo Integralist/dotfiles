@@ -139,6 +139,9 @@ set grepprg=ag\ --nogroup\ --nocolor
 " e.g. ./project/.vimrc
 set exrc
 
+" set foldlevel so when opening Markdown files we don't have to zR to open all
+set foldlevel=100
+
 " NetRW settings (see :NetrwSettings)
 let g:netrw_winsize=-35 " Negative value is absolute; Positive is percentage (related to above mapping)
 let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directories
