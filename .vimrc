@@ -316,8 +316,8 @@ fun! SetDiffColours()
 endfun
 autocmd FilterWritePre * call SetDiffColours()
 
-" Map § key to :nohlsearch (or :noh for short)
-" map § :nohlsearch<CR>
+" Map ± key to :nohlsearch (or :noh for short)
+map ± :nohlsearch<CR>
 
 " touch bar on new MacBook Pros suck, so avoid non-tactile Esc
 imap § <Esc>
