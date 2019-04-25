@@ -192,7 +192,7 @@ function gcb {
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
     transformed=$(echo "$1" | tr '-' '_')
-    git checkout -b "$(date +%Y_%m_%d)_$transformed"
+    git checkout -b "integralist/$(date +%Y_%m_%d)_$transformed"
   fi
 }
 
