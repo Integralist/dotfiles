@@ -327,6 +327,6 @@ let &t_Co=256
 
 " This will prevent :autocmd, shell and write commands from
 " being run inside project-specific .vimrc files (unless they’re owned by you).
-" 
+"
 " See above `set exrc`
 set secure
