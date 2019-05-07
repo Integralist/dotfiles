@@ -6,6 +6,7 @@
   conflicts = diff --name-only --diff-filter=U
   diff = diff -w ; ignore whitespace
   diff-word = diff --word-diff=color
+  diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
   lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   logg = log --graph
   logme = log --graph --author='Integralist'
