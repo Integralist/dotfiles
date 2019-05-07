@@ -171,7 +171,7 @@ Plug 'endel/vim-github-colorscheme'
 Plug 'ervandew/supertab'
 
 " <C-x><C-o> for autocomplete via gocode
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
