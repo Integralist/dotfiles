@@ -173,6 +173,7 @@ Plug 'ervandew/supertab'
 " <C-x><C-o> for autocomplete via gocode
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
+Plug 'python/black'
 Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
@@ -294,6 +295,9 @@ fun! StripTrailingWhitespace()
   %s/\s\+$//e
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
+
+" Execute Python Black formatter on all open Python files
+autocmd BufWritePre *.py Black
 
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
