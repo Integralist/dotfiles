@@ -204,6 +204,11 @@ let g:default_theme='gruvbox'
 set background=dark
 execute 'colorscheme ' . g:default_theme
 
+" Function used by Lightline to show the current working directory
+function! GetWorkingDirectory()
+  return getcwd()
+endfunction
+
 " Lightline Status Line Tweaks
 "
 " See documentation for details: https://github.com/itchyny/lightline.vim#advanced-configuration
@@ -211,7 +216,10 @@ let g:lightline = {
       \ 'colorscheme': 'default',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'filename', 'modified' ] ]
+      \             [ 'readonly', 'working_dir', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'working_dir': 'GetWorkingDirectory',
       \ },
       \ }
 
