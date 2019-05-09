@@ -308,7 +308,7 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd BufWritePre *.py Black
 
 " Execute Terraform formatter on on current terraform file
-autocmd BufWritePost *.tf :!terraform fmt
+autocmd BufWritePost *.tf :!terraform fmt %
 
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
