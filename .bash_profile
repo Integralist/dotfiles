@@ -17,6 +17,12 @@ if [ -f "$HOME/.bashrc" ]; then
   cd . || exit
 fi
 
+# bash extensions that you don't want as part of your main .bashrc
+if [ -f "$HOME/.localrc" ]; then
+  # shellcheck source=/dev/null
+  source "$HOME/.localrc"
+fi
+
 if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   # shellcheck source=/dev/null
   source "$(brew --prefix)/etc/bash_completion"
