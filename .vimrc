@@ -318,7 +318,7 @@ endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 
 " Execute Python Black formatter on all open Python files
-autocmd BufWritePre *.py Black
+autocmd BufWritePost *.py :!Black --line-length 79 ./
 
 " Execute Terraform formatter on on current terraform file
 autocmd BufWritePost *.tf :!terraform fmt %
