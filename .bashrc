@@ -241,6 +241,9 @@ connectivity debugging steps...
   * check what dns servers are being used:
     dns
 
+    > you can also check via nslookup
+    > default should be: 192.168.86.1
+
   * check we can reach google domain:
     ping google.com
 
@@ -251,6 +254,11 @@ connectivity debugging steps...
     > you can also use Cloudfare's 1.1.1.1 resolvers
     > you can change via Network UI tab in macOS (dns sub tab)
     > or via terminal: https://superuser.com/a/86188
+    >
+    > e.g.
+    > networksetup -getdnsservers Wi-Fi
+    > networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4
+    > sudo discoveryutil mdnsflushcache
 
   * can we curl an endpoint:
     curl -Lsvo /dev/null http://google.com/
