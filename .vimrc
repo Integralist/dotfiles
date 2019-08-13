@@ -274,6 +274,7 @@ autocmd FileType go imap /. <C-x><C-o>
 " Also we can use --ignore-dir multiple times
 map <leader>t :FZF<CR>
 map <leader>y :Buffers<CR>
+map <leader>g :GFiles?<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
