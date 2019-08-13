@@ -272,9 +272,14 @@ autocmd FileType go imap /. <C-x><C-o>
 "
 " We can also set FZF_DEFAULT_COMMAND in ~/.bashrc
 " Also we can use --ignore-dir multiple times
-map <leader>t :FZF<CR>
-map <leader>y :Buffers<CR>
+"
+" Note use :map command to see current mappings (also :vmap, :nmap, :omap).
+" Can also restrict to specific mapping `:map <Leader>w`
+" https://vi.stackexchange.com/questions/7722/how-to-debug-a-mapping
+map <leader>f :FZF<CR>
+map <leader>b :Buffers<CR>
 map <leader>g :GFiles?<CR>
+map <leader>w :Windows<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
