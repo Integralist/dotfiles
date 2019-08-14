@@ -327,7 +327,7 @@ precmd() { prompt; }
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 # we use `copy`, which is an alias for trimming newline before using pbcopy
-bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | copy'
+bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 
 # shellcheck disable=SC2016
 # we want Ctrl+g to pass files into vim for editing (-m allows multiple file
