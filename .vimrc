@@ -268,7 +268,7 @@ autocmd FileType go imap /. <C-x><C-o>
 "
 " Ctrl-t = tab
 " Ctrl-x = split
-" Ctrl-y = vertical
+" Ctrl-v = vertical
 "
 " We can also set FZF_DEFAULT_COMMAND in ~/.bashrc
 " Also we can use --ignore-dir multiple times
