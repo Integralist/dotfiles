@@ -148,12 +148,16 @@ let g:netrw_localrmdir='rm -r' " Allow netrw to remove non-empty local directori
 let g:netrw_fastbrowse=0 " Always re-evaluate directory listing
 let g:netrw_hide=0 " Show ALL files
 let g:netrw_list_hide= '^\.git,^\.DS_Store$' " Ignore certain files and directories
-let g:netrw_sizestyle="h" " Human readable file sizes
+let g:netrw_sizestyle='h' " Human readable file sizes
 let g:netrw_liststyle=3 " Set built-in file system explorer to use layout similar to the NERDTree plugin
                         " P opens file in previously focused window
                         " o opens file in new horizontal split window
                         " v opens file in new vertical split window
                         " t opens file in new tab split window
+
+" recent update to Vim 8 has broken gx command that opens URL in web browser
+" it should use the `open` command (provided by macOS, not shell builtin).
+nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 
 " Plugin Managment
 " https://github.com/junegunn/vim-plug#example
@@ -173,7 +177,6 @@ Plug 'ervandew/supertab'
 " <C-x><C-o> for autocomplete via gocode
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-Plug 'python/black'
 Plug 'integralist/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'jamessan/vim-gnupg'
@@ -187,6 +190,7 @@ Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' 
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'othree/html5.vim'
 Plug 'plasticboy/vim-markdown'
+Plug 'python/black'
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sheerun/vim-polyglot'
 Plug 'smerrill/vcl-vim-plugin'
@@ -307,7 +311,9 @@ let g:move_key_modifier = 'C'
 :silent! tnoremap <Esc> <C-\><C-n>
 
 " tabs
-nnoremap <Tab> gt
+"
+" note: I used to map <Tab> to gt but that caused <C-i> to break.
+nnoremap <S-f> gt
 nnoremap <S-Tab> gT
 nnoremap <silent> <S-t> :tabnew<CR>
 
