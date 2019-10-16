@@ -1,0 +1,2 @@
+disable=SC2034 # https://github.com/koalaman/shellcheck/wiki/SC2034
+disable=SC2155 # https://github.com/koalaman/shellcheck/wiki/SC2155
