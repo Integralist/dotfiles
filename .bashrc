@@ -310,6 +310,7 @@ alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # shellcheck source=/dev/null
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
