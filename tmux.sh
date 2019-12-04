@@ -21,9 +21,9 @@ else
   tmux send-keys -t work:2 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
   tmux send-keys -t work:2 'cd ~/Code/buzzfeed/mono && python3 -m pip install -e ./rig && rig local bootstrap' 'C-m'
 
-  # Pipenv Python REPL
-  tmux new-window -n 'pipenv 3.7' -t work:3
-  tmux send-keys -t work:3 'cd ~/Code/Python/3.7.3 && pipenv run ipython' 'C-m'
+  # ipython REPL
+  tmux new-window -n 'ipython' -t work:3
+  tmux send-keys -t work:3 'cd ~/Code/Python/3.8-dev && pyenv activate ipython_env && ipython' 'C-m'
 
   # Now everything is setup we'll attach to a specific window we're interested in
   tmux attach -t work:3
