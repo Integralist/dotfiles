@@ -25,6 +25,10 @@ else
   tmux new-window -n 'ipython' -t work:3
   tmux send-keys -t work:3 'cd ~/Code/Python/3.8-dev && pyenv activate ipython_env && ipython' 'C-m'
 
+  # htop
+  tmux new-window -n 'htop' -t work:4
+  tmux send-keys -t work:4 'htop' 'C-m'
+
   # Now everything is setup we'll attach to a specific window we're interested in
-  tmux attach -t work:3
+  tmux attach -t work:4
 fi
