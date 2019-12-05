@@ -27,3 +27,9 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   # shellcheck source=/dev/null
   source "$(brew --prefix)/etc/bash_completion"
 fi
+
+# BuzzFeed uses macOS DNS "Search Domain" feature for creating short domain
+# alias' such as http://go/foo/bar, which requires the following config:
+#
+# networksetup -setsearchdomains Wi-Fi bzfd.it buzzfeed.io
+# networksetup -getsearchdomains Wi-Fi
