@@ -337,6 +337,11 @@ autocmd BufWritePre * call StripTrailingWhitespace()
 "
 " for the current file buffer open...
 autocmd BufWritePost *.py :!Black --line-length 79 %
+"
+" Note: I use `set exrc` in this .vimrc file, and that allows me to define
+" local/project specific .vimrc files that add Black to them. that's because
+" not all projects I work on want Black used (e.g. my work environment).
+
 
 " Execute Terraform formatter on on current terraform file
 autocmd BufWritePost *.tf :!terraform fmt %
