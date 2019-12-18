@@ -309,6 +309,7 @@ alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
+eval "$(pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
