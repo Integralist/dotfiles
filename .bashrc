@@ -312,6 +312,7 @@ alias wut='echo "$git_icons"'
 eval "$(pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+eval "$(register-python-argcomplete pipx)"
 
 # shellcheck source=/dev/null
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
