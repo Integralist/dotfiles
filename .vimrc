@@ -329,6 +329,9 @@ fun! StripTrailingWhitespace()
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 
+" Execute isort
+autocmd BufWritePost *.py :!isort %
+
 " Execute Python Black formatter
 "
 " for all files accessible by the defined path...
