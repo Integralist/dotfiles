@@ -329,22 +329,18 @@ fun! StripTrailingWhitespace()
 endfun
 autocmd BufWritePre * call StripTrailingWhitespace()
 
-" Execute isort
-autocmd BufWritePost *.py :!isort %
+" Execute Python isort
+autocmd BufWritePost *.py :execute '!isort %' | edit
+
+" Execute Python autopep8
+autocmd BufWritePost *.py :execute '!autopep8 --experimental --verbose --aggressive --aggressive --recursive --in-place %' | edit
 
 " Execute Python Black formatter
+" autocmd BufWritePost *.py :!Black --line-length 79 %
 "
-" for all files accessible by the defined path...
-"
-" autocmd BufWritePost *.py :!Black --line-length 79 ./
-"
-" for the current file buffer open...
-autocmd BufWritePost *.py :!Black --line-length 79 %
-"
-" Note: I use `set exrc` in this .vimrc file, and that allows me to define
-" local/project specific .vimrc files that add Black to them. that's because
-" not all projects I work on want Black used (e.g. my work environment).
-
+" Note: Black is disabled because it's a LOT more opinionated than Python's
+" PEP-8 style guides. If I'm working on a side-project, then I'll run autopep8
+" followed by Black using a project local .vimrc as per `set exrc`.
 
 " Execute Terraform formatter on on current terraform file
 autocmd BufWritePost *.tf :!terraform fmt %
