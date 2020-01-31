@@ -335,6 +335,9 @@ autocmd BufWritePost *.py :execute '!isort %' | edit
 " Execute Python autopep8
 autocmd BufWritePost *.py :execute '!autopep8 --experimental --verbose --aggressive --aggressive --recursive --in-place %' | edit
 
+" Execute Python unimport
+autocmd BufWritePost *.py :execute '!unimport --remove %' | edit
+
 " Execute Python Black formatter
 " autocmd BufWritePost *.py :!Black --line-length 79 %
 "
