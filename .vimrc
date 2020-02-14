@@ -245,10 +245,19 @@ let g:lightline = {
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " ALE linting
+"
+" go vet options depends on installing extra command:
+"
+"   $ go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
+"
+" ...just be sure to run that install outside of your projects directory,
+" otherwise it'll add dependencies to your project go.mod accidentally.
+"
+let g:ale_go_govet_options = '-vettool=$(which shadow)'
 let g:ale_linters = {'go': ['gopls']}
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
-let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '▲'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
 
@@ -263,7 +272,7 @@ let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
 
 " vim-go: check if any expressions return an error type that aren't being handled
-autocmd BufWritePost *.go :GoErrCheck %
+autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
 " DISABLED... because it caused 10s blocking delay
 "
