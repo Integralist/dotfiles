@@ -170,6 +170,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'chr4/nginx.vim'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'dense-analysis/ale'
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'endel/vim-github-colorscheme'
 Plug 'ervandew/supertab'
@@ -198,7 +199,6 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'vim-scripts/camelcasemotion'
-Plug 'w0rp/ale'
 
 " Initialize plugin system
 call plug#end()
@@ -261,6 +261,9 @@ let g:go_gopls_complete_unimported = 1
 let g:go_gopls_staticcheck = 1
 let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
+
+" vim-go: check if any expressions return an error type that aren't being handled
+autocmd BufWritePost *.go :GoErrCheck %
 
 " DISABLED... because it caused 10s blocking delay
 "
