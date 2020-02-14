@@ -245,6 +245,7 @@ let g:lightline = {
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " ALE linting
+let g:ale_linters = {'go': ['gopls']}
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
 let g:ale_sign_warning = '▲'
 let g:ale_sign_error = '✗'
@@ -256,8 +257,14 @@ nmap <silent> <leader>z :ALEPrevious<cr>
 
 " vim-go
 let g:go_fmt_command = 'goimports'
-let g:go_metalinter_autosave = 1
+let g:go_gopls_complete_unimported = 1
+let g:go_gopls_staticcheck = 1
+let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
+
+" DISABLED... because it caused 10s blocking delay
+"
+" let g:go_metalinter_autosave = 1
 
 " we use nsf/gocode & vim-go (which uses gocode) to handle autocomplete
 " we setup insert mode to allow us to use a double forward slash for autocomplete
