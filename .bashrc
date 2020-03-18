@@ -85,6 +85,10 @@ export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
 PROMPT_COMMAND="history -a" # don't lose commands when session accidentally terminates
 
+# shellcheck source=/dev/null
+# https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
+source ~/.bash-preexec.sh
+
 # force colours
 export force_color_prompt=yes
 
@@ -382,10 +386,6 @@ eval "$(pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(register-python-argcomplete pipx)"  # "register-python-argcomplete" provided by pipx via https://github.com/kislyuk/argcomplete
-
-# shellcheck source=/dev/null
-# https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
-source ~/.bash-preexec.sh
 
 # preexec executes just BEFORE a command is executed
 # preexec() { echo "just typed $1"; }
