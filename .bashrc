@@ -202,6 +202,13 @@ function gbd {
     selection=$1
     index=0
 
+    # short circuit logic if actual branch name given (i.e. not a number)
+    re='^[0-9]+$'
+    if ! [[ $selection =~ $re ]]; then
+      git branch -D "$selection"
+      return 0
+    fi
+
     while IFS= read -r line; do
       _=$(( index++ ))
 
