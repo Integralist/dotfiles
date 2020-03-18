@@ -146,20 +146,76 @@ function prompt() {
   PS1=$(printf "%*s\\r%s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
 }
 
-function gc {
-  if [ -z "$1" ]; then
-    printf "\\n\\tUse: gc <checkout-branch-name>\\n"
-  else
-    git checkout "$1"
-  fi
-}
-
 function gcb {
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
     transformed=$(echo "$1" | tr '-' '_')
     git checkout -b "integralist/$(date +%Y_%m_%d)_$transformed"
+  fi
+}
+
+function gc {
+  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
+
+  if [ -z "$1" ]; then
+    echo -e "\nselect a branch to checkout by its number (e.g. gc <N>)\n"
+    echo "$branches"
+  else
+    selection=$1
+    index=0
+
+    while IFS= read -r line; do
+      _=$(( index++ ))
+
+      if [ "$index" -eq "$selection" ]; then
+        branch=$(echo "$line" | cut -d " " -f 4)
+
+        # catch scenario where `master` is the current branch
+        # so the spacing is off when trying to cut with 'space' as a delimeter
+        if [ "$branch" = "" ]; then
+          branch=$(echo "$line" | cut -d " " -f 3)
+        fi
+
+        git checkout "$branch"
+
+        break;
+      fi
+    done <<< "$branches"
+  fi
+}
+
+function gbd {
+  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
+
+  if [ -z "$1" ]; then
+    echo -e "\nselect a branch to delete by its number (e.g. gbd <N>)\n"
+    echo "$branches"
+  else
+    selection=$1
+    index=0
+
+    while IFS= read -r line; do
+      _=$(( index++ ))
+
+      if [ "$index" -eq "$selection" ]; then
+        branch=$(echo "$line" | cut -d " " -f 4)
+
+        # catch scenario where `master` is the current branch
+        # so the spacing is off when trying to cut with 'space' as a delimeter
+        if [ "$branch" = "" ]; then
+          branch=$(echo "$line" | cut -d " " -f 3)
+        fi
+
+        if [ "$branch" == "master" ]; then
+          echo "sorry, not going to let you delete 'master'"
+        else
+          git branch -D "$branch"
+        fi
+
+        break;
+      fi
+    done <<< "$branches"
   fi
 }
 
@@ -193,7 +249,7 @@ function headers {
 
   # don't quote $header as it breaks everything
   # shellcheck disable=SC2086
-  response=$(curl -H Fastly-Debug:1 $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
+  response=$(curl -H X-BF-Debug:1 $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
   status=$(echo "$response" | head -n 1)
 
   printf "\\n%s\\n\\n" "$status"
@@ -212,7 +268,7 @@ function search {
     # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
-    printf '\n\t\tsearch "--files Dockerfile -C 5" "FROM node" ./'
+    printf '\n\t\tsearch "--files=Dockerfile" "--context=5" "FROM node" ./'
     printf '\n\t\tsearch --exclude-ipath "(.venv|.rig)" "arn:aws:s3"'
     printf '\n\t\tsearch "-A 5" "..." ./  # shows 5 lines before search results'
     printf '\n\t\tsearch "-B 5" "..." ./  # shows 5 lines after search results\n'
@@ -278,7 +334,6 @@ alias cm="git checkout master"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias gb="git branch"
-alias gbd="git branch -D"
 alias gpr="git pull --rebase origin master"
 
 # shellcheck disable=SC2034
@@ -336,3 +391,5 @@ bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 # we want Ctrl+g to pass files into vim for editing (-m allows multiple file
 # selection using Tab)
 bind -x '"\C-g": vim $(fzf -m)'
+
+source <(kitty + complete setup bash)
