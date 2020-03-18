@@ -83,7 +83,10 @@ export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
-PROMPT_COMMAND="history -a" # don't lose commands when session accidentally terminates
+
+# disabled following change as bash-preexec states it'll break things
+#
+# PROMPT_COMMAND="history -a" # don't lose commands when session accidentally terminates
 
 # shellcheck source=/dev/null
 # https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
