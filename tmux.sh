@@ -19,7 +19,7 @@ else
   # Prepare Rig VM
   tmux new-window -n 'rig' -t work:2
   tmux send-keys -t work:2 'export GPG_USER=mark.mcdonnell@buzzfeed.com' 'C-m'
-  tmux send-keys -t work:2 'cd ~/Code/buzzfeed/mono && python3 -m pip install -e ./rig && rig local bootstrap' 'C-m'
+  tmux send-keys -t work:2 'cd ~/Code/buzzfeed/mono && pyenv activate bfmono && python3 -m pip install -e ./rig && rig local bootstrap' 'C-m'
 
   # ipython REPL
   tmux new-window -n 'ipython' -t work:3
