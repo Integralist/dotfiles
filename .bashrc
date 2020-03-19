@@ -163,26 +163,29 @@ function gcb {
 }
 
 function gc {
-  if ! git rev-parse --show-toplevel --quiet 2>/dev/null; then
+  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
+    return 0
+  fi
+
+  # short circuit logic if actual branch name given
+  if [ -n "$1" ]; then
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]]; then
+      echo ""
+      git checkout "$1"
+    fi
+
     return 0
   fi
 
   branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
 
-  echo -e "\nselect a branch to checkout by its number (e.g. gc <N>)\n"
+  echo -e "\nselect a branch to checkout (e.g. gbd <number|name>)\n"
   echo "$branches"
   echo ""
 
   read selection
-
-  # short circuit logic if actual branch name given (i.e. not a number)
-  re='^[0-9]+$'
-  if ! [[ $selection =~ $re ]]; then
-    echo ""
-    git checkout "$selection"
-    return 0
-  fi
 
   index=0
 
@@ -206,44 +209,53 @@ function gc {
 }
 
 function gbd {
-  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
+  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
+    echo "you're not within a git repository."
+    return 0
+  fi
 
-  if [ -z "$1" ]; then
-    echo -e "\nselect a branch to delete by its number (e.g. gbd <N>)\n"
-    echo "$branches"
-  else
-    selection=$1
-    index=0
-
-    # short circuit logic if actual branch name given (i.e. not a number)
-    re='^[0-9]+$'
-    if ! [[ $selection =~ $re ]]; then
-      git branch -D "$selection"
-      return 0
+  # short circuit logic if actual branch name given
+  if [ -n "$1" ]; then
+    if [ "$1" == "master" ]; then
+      echo "sorry, not going to let you delete 'master'"
+    else
+      git branch -D "$1"
     fi
 
-    while IFS= read -r line; do
-      _=$(( index++ ))
-
-      if [ "$index" -eq "$selection" ]; then
-        branch=$(echo "$line" | cut -d " " -f 4)
-
-        # catch scenario where `master` is the current branch
-        # so the spacing is off when trying to cut with 'space' as a delimeter
-        if [ "$branch" = "" ]; then
-          branch=$(echo "$line" | cut -d " " -f 3)
-        fi
-
-        if [ "$branch" == "master" ]; then
-          echo "sorry, not going to let you delete 'master'"
-        else
-          git branch -D "$branch"
-        fi
-
-        break;
-      fi
-    done <<< "$branches"
+    return 0
   fi
+
+  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
+
+  echo -e "\nselect a branch to delete (e.g. gbd <number|name>)\n"
+  echo "$branches"
+  echo ""
+
+  read selection
+
+  index=0
+
+  while IFS= read -r line; do
+    _=$(( index++ ))
+
+    if [ "$index" -eq "$selection" ]; then
+      branch=$(echo "$line" | cut -d " " -f 4)
+
+      # catch scenario where `master` is the current branch
+      # so the spacing is off when trying to cut with 'space' as a delimeter
+      if [ "$branch" = "" ]; then
+        branch=$(echo "$line" | cut -d " " -f 3)
+      fi
+
+      if [ "$branch" == "master" ]; then
+        echo "sorry, not going to let you delete 'master'"
+      else
+        git branch -D "$branch"
+      fi
+
+      break;
+    fi
+  done <<< "$branches"
 }
 
 function headers {
