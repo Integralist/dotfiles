@@ -163,40 +163,46 @@ function gcb {
 }
 
 function gc {
+  if ! git rev-parse --show-toplevel --quiet 2>/dev/null; then
+    echo "you're not within a git repository."
+    return 0
+  fi
+
   branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
 
-  if [ -z "$1" ]; then
-    echo -e "\nselect a branch to checkout by its number (e.g. gc <N>)\n"
-    echo "$branches"
-  else
-    selection=$1
-    index=0
+  echo -e "\nselect a branch to checkout by its number (e.g. gc <N>)\n"
+  echo "$branches"
+  echo ""
 
-    # short circuit logic if actual branch name given (i.e. not a number)
-    re='^[0-9]+$'
-    if ! [[ $selection =~ $re ]]; then
-      git checkout "$selection"
-      return 0
-    fi
+  read selection
 
-    while IFS= read -r line; do
-      _=$(( index++ ))
-
-      if [ "$index" -eq "$selection" ]; then
-        branch=$(echo "$line" | cut -d " " -f 4)
-
-        # catch scenario where `master` is the current branch
-        # so the spacing is off when trying to cut with 'space' as a delimeter
-        if [ "$branch" = "" ]; then
-          branch=$(echo "$line" | cut -d " " -f 3)
-        fi
-
-        git checkout "$branch"
-
-        break;
-      fi
-    done <<< "$branches"
+  # short circuit logic if actual branch name given (i.e. not a number)
+  re='^[0-9]+$'
+  if ! [[ $selection =~ $re ]]; then
+    echo ""
+    git checkout "$selection"
+    return 0
   fi
+
+  index=0
+
+  while IFS= read -r line; do
+    _=$(( index++ ))
+
+    if [ "$index" -eq "$selection" ]; then
+      branch=$(echo "$line" | cut -d " " -f 4)
+
+      # catch scenario where `master` is the current branch
+      # so the spacing is off when trying to cut with 'space' as a delimeter
+      if [ "$branch" = "" ]; then
+        branch=$(echo "$line" | cut -d " " -f 3)
+      fi
+
+      git checkout "$branch"
+
+      break;
+    fi
+  done <<< "$branches"
 }
 
 function gbd {
