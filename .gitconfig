@@ -7,7 +7,7 @@
   diff = diff -w ; ignore whitespace
   diff-word = diff --word-diff=color
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
-  log-short = log --pretty=format:'- %s %C(yellow)%D%n'
+  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
   log-detailed = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   log-graph = log --graph
   log-me = log --graph --author='Integralist'
