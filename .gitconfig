@@ -7,9 +7,10 @@
   diff = diff -w ; ignore whitespace
   diff-word = diff --word-diff=color
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
-  lg = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
-  logg = log --graph
-  logme = log --graph --author='Integralist'
+  log-short = log --format=short
+  log-detailed = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  log-graph = log --graph
+  log-me = log --graph --author='Integralist'
   pushit = push --force-with-lease origin head
   recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
   search =! bash -c 'git rev-list --all | xargs git grep "$1"'
