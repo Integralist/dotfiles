@@ -299,7 +299,7 @@ function search {
   local flags=${1:-}
   local pattern=$2
   local directory=${3:-.}
-  local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js)'
+  local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|build\.js|node_modules|tests/|swagger|fb\.js|\.eps|\.so|\.sql|\.jpg|\.gif)'
 
   if [ -z "$1" ]; then
     printf "\\n\\tUsage:\\n\\t\\tsearch <flags:[--]> <pattern:['']> <directory:[./]>\\n"
