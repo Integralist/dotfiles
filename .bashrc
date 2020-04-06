@@ -162,6 +162,58 @@ function gcb {
   fi
 }
 
+function gbs {
+  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
+    echo "you're not within a git repository."
+    return 0
+  fi
+
+  # short circuit logic if actual branch names given
+  if [ -n "$1" ] && [ -n "$2" ]; then
+    re='^[0-9]+$'
+    if ! [[ $1 =~ $re ]]; then
+      echo ""
+      git branch -m "$1" "$2"
+    fi
+
+    return 0
+  fi
+
+  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
+
+  echo -e "\nselect a branch to rename (e.g. gbs <number>)\n"
+  echo "$branches"
+  echo ""
+
+  read selection
+
+  index=0
+
+  while IFS= read -r line; do
+    _=$(( index++ ))
+
+    if [ "$index" -eq "$selection" ]; then
+      branch=$(echo "$line" | cut -d " " -f 4)
+
+      # catch scenario where `master` is the current branch
+      # so the spacing is off when trying to cut with 'space' as a delimeter
+      if [ "$branch" = "" ]; then
+        branch=$(echo "$line" | cut -d " " -f 3)
+      fi
+
+      break;
+    fi
+  done <<< "$branches"
+
+  read new_branch_name
+
+  if [[ "$1" == "-p" ]]; then
+    git branch -m "$branch" "$new_branch_name/$branch"
+  else
+    git branch -m "$branch" "$new_branch_name"
+  fi
+}
+
 function gc {
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
