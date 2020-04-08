@@ -2,17 +2,18 @@
 # https://git-scm.com/docs/pretty-formats
 
 [alias]
+  branch-verbose = branch -vv
   collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
   conflicts = diff --name-only --diff-filter=U
   diff = diff -w ; ignore whitespace
-  diff-word = diff --word-diff=color
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
-  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+  diff-word = diff --word-diff=color
   log-detailed = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   log-graph = log --graph
   log-me = log --graph --author='Integralist'
+  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
   pushit = push --force-with-lease origin head
-  recentbranches = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+  recent = branch --sort=-committerdate
   search =! bash -c 'git rev-list --all | xargs git grep "$1"'
   show = show -w
   st = status
