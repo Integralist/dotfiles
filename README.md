@@ -8,3 +8,4 @@ This section will reference any tools I've recently discovered, that aren't ment
 
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
+- [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
