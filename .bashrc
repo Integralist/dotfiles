@@ -425,6 +425,7 @@ alias cm="git checkout master"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias gb="git branch"
+alias gls="git log-short"
 alias gpr="git pull --rebase origin master"
 
 # shellcheck disable=SC2034
