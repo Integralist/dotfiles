@@ -1,32 +1,25 @@
 #!/usr/bin/env bash
-echo .bashrc loaded
-
-# Throughout this configuration file you'll see:
 #
+# NOTES:
+# additional configuration of the shell is handled by ~/.inputrc which
+# instructs the Readline utility as to what behaviours it should respect.
+#
+# Throughout this configuration file you'll see:
 # shellcheck source=/dev/null
 #
 # This prevents the shellcheck tool from worrying about code sourced at runtime.
 # e.g. source ~/.foo doesn't make shellcheck happy
 # https://github.com/koalaman/shellcheck/wiki/SC1090
+#
+# DOCUMENTATION:
+#   - https://twobithistory.org/2019/08/22/readline.html
+#   - man bash (+ /Readline Variables)
+#
+echo .bashrc loaded
 
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 # shellcheck source=/dev/null
 source ~/.git-prompt.sh
-
-# tells Readline to perform filename completion in a case-insensitive fashion
-bind "set completion-ignore-case on"
-
-# filename matching during completion will treat hyphens and underscores as equivalent
-bind "set completion-map-case on"
-
-# will get Readline to display all possible matches for an ambiguous pattern at the first <Tab> press instead of at the second
-bind "set show-all-if-ambiguous on"
-
-# no bell sound on error
-bind "set bell-style none"
-
-# enable vim like bindings instead of emails (e.g. no longer use <C-a> or <C-e>)
-set -o vi
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -59,8 +52,38 @@ shopt -s gnu_errfmt 2>/dev/null
 # ensure SIGHUP is sent to all jobs when an interactive login shell exits
 shopt -s huponexit 2>/dev/null
 
+# NOTES:
+# LSCOLOR is for BSD (i.e. macOS).
+# LS_COLOR is for Linux.
+#
+# There are 11 attributes:
+#
+# directory
+# symlink
+# socket
+# pipe
+# executable
+# special block
+# special character
+# executable setuid
+# executable setgid
+# dir_writeothers_sticky
+# dir_writeothers_NOsticky
+#
+# Each attribute has a foreground/background colour.
+#
+# DOCUMENTATION:
+#   - http://geoff.greer.fm/lscolors/
+#   - https://www.cyberciti.biz/faq/apple-mac-osx-terminal-color-ls-output-option/
+#
+# COLOURS:
+#   - directory: blue/white (eh)
+#   - symlink: black/yellow (aD)
+#   - executable: white/red (Hb)
+export LSCOLORS="ehaDxxxxHbxxxxxxxxxxxx"
+
 # application configuration
-export LSCOLORS="dxfxcxdxbxegedabagacad" # http://geoff.greer.fm/lscolors/
+#
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
@@ -77,6 +100,12 @@ export GIT_PS1_SHOWUPSTREAM="auto"     # > for local commits on HEAD not pushed 
                                        # = HEAD points to same commit as upstream
 
 # history configuration
+#
+# NOTES:
+# can be partially controlled by Readline directly using ~/.inputrc
+#
+# set history-size 10000000000000000000
+#
 export HISTSIZE=500000
 export HISTFILESIZE=100000
 export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
@@ -105,6 +134,9 @@ function prompt_right() {
   echo -e ""
 }
 
+# DOCUMENTATION:
+#   - man bash (+ /PROMPTING)
+#
 function prompt_left() {
   num_jobs=$(jobs | wc -l)
 
