@@ -214,6 +214,7 @@ function gbs {
   branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
 
   echo -e "\nselect a branch to rename (e.g. gbs <number>)\n"
+  echo -e "\nnote: if you called 'gbs -p' then the new name you give will be prefixed\n"
   echo "$branches"
   echo ""
 
@@ -237,6 +238,7 @@ function gbs {
     fi
   done <<< "$branches"
 
+  echo "give us the new branch name..."
   read new_branch_name
 
   if [[ "$1" == "-p" ]]; then
