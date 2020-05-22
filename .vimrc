@@ -11,6 +11,9 @@
 scriptencoding utf-8
 set encoding=utf-8
 
+" Tell Vim how many colours are available
+set t_Co=256
+
 " Use the system clipboard
 set clipboard+=unnamed
 
@@ -391,9 +394,6 @@ map ± :nohlsearch<CR>
 
 " touch bar on new MacBook Pros suck, so avoid non-tactile Esc
 imap § <Esc>
-
-" Tell Vim how many colours are available
-let &t_Co=256
 
 " This will prevent :autocmd, shell and write commands from
 " being run inside project-specific .vimrc files (unless they’re owned by you).
