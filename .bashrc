@@ -194,7 +194,7 @@ function gcb {
   fi
 }
 
-function gbs {
+function gbr {
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
