@@ -52,6 +52,7 @@
   editor = vim
   excludesfile = ~/.gitignore-global
   ignorecase = false
+  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended' # brew install git-delta
 
 [diff]
   indentHeuristic = true
@@ -62,6 +63,9 @@
 
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
+
+[interactive]
+    diffFilter = delta --color-only
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
