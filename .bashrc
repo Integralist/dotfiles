@@ -186,6 +186,8 @@ function prompt() {
 }
 
 function gcb {
+  # create git branch
+
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
@@ -195,6 +197,8 @@ function gcb {
 }
 
 function gbr {
+  # rename git branch
+
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -249,6 +253,8 @@ function gbr {
 }
 
 function gc {
+  # checkout git branch
+
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -295,6 +301,8 @@ function gc {
 }
 
 function gbd {
+  # delete git branch
+
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -345,6 +353,9 @@ function gbd {
 }
 
 function headers {
+  # make network request and print response headers
+  # allow for filtering of headers based on regex pattern
+  #
   # Note: also possible by using 2>&1 after curl
   #       which allows piping of output
   #       curl -v -o /dev/null https://www.buzzfeed.com/?site-router-debug=true 2>&1 | grep -i siterouter
@@ -382,6 +393,9 @@ function headers {
 }
 
 function search {
+  # search for files based on content pattern
+  # uses sift search tool
+
   local flags=${1:-}
   local pattern=$2
   local directory=${3:-.}
