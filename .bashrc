@@ -385,7 +385,7 @@ function headers {
 
   # don't quote $header as it breaks everything
   # shellcheck disable=SC2086
-  response=$(curl -H X-BF-Debug:1 $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
+  response=$(curl -H X-BF-Debug:1 -H "X-BF-DebugKey: $BUZZFEED_DEBUG_KEY" $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
   status=$(echo "$response" | head -n 1)
 
   printf "\\n%s\\n\\n" "$status"

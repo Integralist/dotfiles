@@ -4,6 +4,8 @@
 
 echo .bash_profile loaded
 
+export BUZZFEED_DEBUG_KEY="123"
+
 export FASTLY_API_TOKEN="123"
 export FASTLY_SERVICE_ID="456"
 
