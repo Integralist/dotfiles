@@ -499,6 +499,7 @@ alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sshagent='eval "$(ssh-agent -s)" && ssh-add -K ~/.ssh/github_rsa'
 alias sshvm="ssh dev.buzzfeed.io"
 alias tmuxy='bash ~/tmux.sh'
+alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
