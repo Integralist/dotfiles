@@ -507,7 +507,7 @@ alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
-eval "$(pip completion --bash)"
+eval "$(python3 -m pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 eval "$(register-python-argcomplete pipx)"  # "register-python-argcomplete" provided by pipx via https://github.com/kislyuk/argcomplete
