@@ -510,7 +510,6 @@ alias wut='echo "$git_icons"'
 eval "$(python3 -m pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-eval "$(register-python-argcomplete pipx)"  # "register-python-argcomplete" provided by pipx via https://github.com/kislyuk/argcomplete
 
 # preexec executes just BEFORE a command is executed
 # preexec() { echo "just typed $1"; }
