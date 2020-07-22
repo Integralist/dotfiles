@@ -333,9 +333,7 @@ let g:move_key_modifier = 'C'
 " tabs
 "
 " note: I used to map <Tab> to gt but that caused <C-i> to break.
-nnoremap <S-f> gt
 nnoremap <S-Tab> gT
-nnoremap <silent> <S-t> :tabnew<CR>
 
 " Auto Commands
 " :h autocommand-events
