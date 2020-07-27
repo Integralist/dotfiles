@@ -1,0 +1,4 @@
+# the `ag` shell command is used for grepping and it supports local .ignore
+# https://github.com/ggreer/the_silver_searcher
+#
+node_modules
