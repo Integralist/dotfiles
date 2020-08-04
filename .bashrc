@@ -217,8 +217,8 @@ function gbr {
 
   branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
 
-  echo -e "\nselect a branch to rename (e.g. gbs <number>)\n"
-  echo -e "\nnote: if you called 'gbs -p' then the new name you give will be prefixed\n"
+  echo -e "\nselect a branch to rename (e.g. gbr <number>)\n"
+  echo -e "\nnote: if you called 'gbr -p' then the new name you give will be prefixed\n"
   echo "$branches"
   echo ""
 
