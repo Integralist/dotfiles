@@ -474,7 +474,8 @@ alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
-alias gb="git branch"
+alias gb="git branch --list 'integralist*'"
+alias gba="git branch"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin master"
 
