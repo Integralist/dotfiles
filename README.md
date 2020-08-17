@@ -11,3 +11,4 @@ This section will reference any tools or information I've recently discovered, t
 - [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [improve retina macOS wake-up from sleep performance](http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/): `sudo pmset -a standbydelay <time in seconds:7200>`
+- [meeting bar](https://github.com/leits/MeetingBar): `brew cask install meetingbar` shows calendar meetings in macOS menu bar (make sure to [connect Google calendar to macOS calendar](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
