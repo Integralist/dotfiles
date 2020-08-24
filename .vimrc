@@ -340,7 +340,7 @@ nnoremap <S-Tab> gT
 
 fun! StripTrailingWhitespace()
   " Don't strip on these filetypes
-  if &ft =~ 'markdown'
+  if &ft =~ 'markdown' || &ft =~ 'terraform'
     return
   endif
   %s/\s\+$//e
