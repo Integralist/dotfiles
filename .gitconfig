@@ -1,5 +1,11 @@
 # https://git-scm.com/docs/git-config
 # https://git-scm.com/docs/pretty-formats
+#
+# brew install git-delta
+#
+# NOTE: to apply changes to this configuration file execute:
+#       git init which will cause ~/.gitconfig to be reloaded
+#
 
 [alias]
   branch-verbose = branch -vv
@@ -52,7 +58,7 @@
   editor = vim
   excludesfile = ~/.gitignore-global
   ignorecase = false
-  pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended' # brew install git-delta
+  pager = delta --highlight-removed --keep-plus-minus-markers --plus-color="#005913" --plus-emph-color="#2bff00" --minus-color="#db1714" --minus-emph-color="#bab400" --dark
 
 [diff]
   indentHeuristic = true
@@ -65,7 +71,10 @@
   recurseSubmodules = true # still requires: git clone --recursive ...
 
 [interactive]
-    diffFilter = delta --color-only
+  ; I don't use delta for interactive because it messes with `git add -p`
+  ; Unless you use --color-only option, but even then you have to tweak the plus/minus colors
+  ;
+  ; diffFilter = delta --color-only --plus-color="#069e16" --minus-color="#db1714" --dark
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
