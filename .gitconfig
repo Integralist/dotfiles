@@ -58,7 +58,7 @@
   editor = vim
   excludesfile = ~/.gitignore-global
   ignorecase = false
-  pager = delta --highlight-removed --keep-plus-minus-markers --plus-color="#005913" --plus-emph-color="#2bff00" --minus-color="#db1714" --minus-emph-color="#bab400" --dark
+  pager = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#468c38" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
 
 [diff]
   indentHeuristic = true
@@ -71,10 +71,7 @@
   recurseSubmodules = true # still requires: git clone --recursive ...
 
 [interactive]
-  ; I don't use delta for interactive because it messes with `git add -p`
-  ; Unless you use --color-only option, but even then you have to tweak the plus/minus colors
-  ;
-  ; diffFilter = delta --color-only --plus-color="#069e16" --minus-color="#db1714" --dark
+  diffFilter = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#468c38" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
