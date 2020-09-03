@@ -414,7 +414,7 @@ function search {
     return
   fi
 
-  time sift -n -X json --err-show-line-length --exclude-ipath "$exclude" "$flags" "$pattern" "$directory"
+  time sift -n -X json --err-skip-line-length --group --exclude-ipath "$exclude" "$flags" "$pattern" "$directory" 2>/dev/null
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
