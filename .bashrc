@@ -502,7 +502,7 @@ alias ls="ls -GpF"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # this also sources .bashrc and also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
-alias sshagent='eval "$(ssh-agent -s)" && ssh-add -K ~/.ssh/github_rsa'
+alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github_rsa > /dev/null 2>&1'
 alias sshvm="ssh dev.buzzfeed.io"
 alias tmuxy='bash ~/tmux.sh'
 alias uid="uuidgen"
@@ -537,3 +537,8 @@ bind -x '"\C-g": vim $(fzf -m)'
 if [ -n "$KITTY_WINDOW_ID" ]; then
   source <(kitty + complete setup bash)
 fi
+
+# ensure every new shell instance has our ssh keys added
+# as it's so tedious when I forget to execute this manually
+#
+sshagent
