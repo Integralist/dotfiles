@@ -58,7 +58,7 @@
   editor = vim
   excludesfile = ~/.gitignore-global
   ignorecase = false
-  pager = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#468c38" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
+  pager = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#288c14" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
 
 [diff]
   indentHeuristic = true
@@ -71,7 +71,7 @@
   recurseSubmodules = true # still requires: git clone --recursive ...
 
 [interactive]
-  diffFilter = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#468c38" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
+  diffFilter = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#288c14" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
