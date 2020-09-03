@@ -128,7 +128,7 @@ export force_color_prompt=yes
 export color_prompt=yes
 
 # setup golang bin directory so various tools can be found
-export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/go/bin:/usr/local/sbin:$PATH"
 
 function prompt_right() {
   echo -e ""
@@ -474,6 +474,9 @@ alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+# to work around the fact that another fastly cli tool I use (go-fastly-cli) uses `FASTLY_API_TOKEN` env var
+# and that env var is set to stage.buzzfeed.com api key
+alias fastly='fastly -t $(head -n 1 $HOME/Library/Application\ Support/fastly/config.toml | cut -d '\''"'\'' -f 2)'
 alias gb="git branch --list 'integralist*'"
 alias gba="git branch"
 alias gls="git log-short"
@@ -531,4 +534,6 @@ bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 # selection using Tab)
 bind -x '"\C-g": vim $(fzf -m)'
 
-source <(kitty + complete setup bash)
+if [ -n "$KITTY_WINDOW_ID" ]; then
+  source <(kitty + complete setup bash)
+fi
