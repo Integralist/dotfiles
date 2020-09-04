@@ -558,9 +558,9 @@ bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 # selection using Tab)
 bind -x '"\C-g": vim $(fzf -m)'
 
-if [ -n "$KITTY_WINDOW_ID" ]; then
-  source <(kitty + complete setup bash)
-fi
+# if [ -n "$KITTY_WINDOW_ID" ]; then
+#   source <(kitty + complete setup bash)
+# fi
 
 # ensure every new shell instance has our ssh keys added
 # as it's so tedious when I forget to execute this manually
