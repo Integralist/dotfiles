@@ -17,6 +17,19 @@
 #
 echo .bashrc loaded
 
+pathmunge() {
+  # pathmunge /foo/
+  # pathmunge /foo/ after
+  #
+  if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)" ; then
+    if [ "$2" = "after" ] ; then
+      export PATH="$PATH:$1"
+    else
+      export PATH="$1:$PATH"
+    fi
+  fi
+}
+
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 # shellcheck source=/dev/null
 source ~/.git-prompt.sh
@@ -127,8 +140,10 @@ export force_color_prompt=yes
 # use colour prompt
 export color_prompt=yes
 
-# setup golang bin directory so various tools can be found
-export PATH="$HOME/go/bin:/usr/local/sbin:$PATH"
+# modify our PATH safely
+# e.g. don't keep mutating it with duplicates on every shell reload
+pathmunge "/usr/local/sbin"
+pathmunge "$HOME/go/bin"
 
 function prompt_right() {
   echo -e ""
@@ -512,8 +527,17 @@ alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
 eval "$(python3 -m pip completion --bash)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+
+# pyenv doesn't do a safety check to see if it already has mutated the path!
+# so we wrap the expected eval call to prevent causing endless duplicates.
+# which happens everytime I reload my shell and .bashrc gets reloaded.
+#
+if ! echo "$PATH" | grep -Eq "(^|:)/Users/markmcdonnell/.pyenv/shims($|:)" ; then
+  eval "$(pyenv init -)"
+fi
+if ! echo "$PATH" | grep -Eq "(^|:)/usr/local/Cellar/pyenv-virtualenv/1.1.5/shims($|:)" ; then
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # preexec executes just BEFORE a command is executed
 # preexec() { echo "just typed $1"; }
