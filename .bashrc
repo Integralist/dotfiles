@@ -407,29 +407,63 @@ function headers {
   echo "$response" | sort | tail -n +3 | grep -Ei "$pattern"
 }
 
+function join_by {
+  local IFS="$1"
+  shift
+  echo "$*"
+}
+
 function search {
   # search for files based on content pattern
-  # uses sift search tool
+  # uses 'silver searcher' `ag`
 
   local flags=${1:-}
   local pattern=$2
   local directory=${3:-.}
-  local exclude='(build/|\.mypy_cache|\.sav|vendors-bundle\.js|dist/|\.map|\.git/|(js/d3/|jquery|prototype).*\.js|build\.js|node_modules|tests/|swagger|fb\.js|\.eps|\.so|\.sql|\.jpg|\.gif|\.psd|\.html)'
+  local exclude=(
+    '(js/d3/|jquery|prototype).*\.js'
+    '\.eps'
+    '\.gif'
+    '\.git/'
+    '\.html'
+    '\.jpg'
+    '\.json'
+    '\.map'
+    '\.mypy_cache'
+    '\.psd'
+    '\.sav'
+    '\.so'
+    '\.sql'
+    'build/'
+    'build\.js'
+    'dist/'
+    'fb\.js'
+    'node_modules'
+    'swagger'
+    'tests/'
+    'vendors-bundle\.js'
+  )
 
   if [ -z "$1" ]; then
     printf "\\n\\tUsage:\\n\\t\\tsearch <flags:[--]> <pattern:['']> <directory:[./]>\\n"
 
     # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
-    printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/code/buzzfeed/mono/site_router'
-    printf '\n\t\tsearch "--files=Dockerfile" "--context=5" "FROM node" ./'
-    printf '\n\t\tsearch --exclude-ipath "(.venv|.rig)" "arn:aws:s3"'
-    printf '\n\t\tsearch "-A 5" "..." ./  # shows 5 lines before search results'
-    printf '\n\t\tsearch "-B 5" "..." ./  # shows 5 lines after search results\n'
+    printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/python/app'
+    printf '\n\t\tsearch "-G Dockerfile --context=5" "FROM" ./'
     return
   fi
 
-  time sift -n -X json --err-skip-line-length --group --exclude-ipath "$exclude" "$flags" "$pattern" "$directory" 2>/dev/null
+  exclude_joined=$(join_by '|' ${exclude[@]})
+
+  # for some reason I can't just execute the command, I needed to evaluate it?
+  #
+  cmd=$(echo time ag --ignore "'($exclude_joined)'" "$flags" "'$pattern'" "$directory" 2>/dev/null)
+  eval $cmd
+
+  # OLD IMPLEMENTATIONS...
+  #
+  # time sift -n -X json --err-skip-line-length --group --exclude-ipath "$exclude" "$flags" "$pattern" "$directory" 2>/dev/null
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
