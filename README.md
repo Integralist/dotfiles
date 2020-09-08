@@ -1,6 +1,8 @@
 # dotfiles
 
-Read [this gist](https://gist.github.com/Integralist/20e6e0206f39d88302d73282688111a4) for details of set-up.
+Read [this post](https://www.integralist.co.uk/posts/new-laptop-configuration/) for a detailed setup of a new laptop.
+
+> Note: there is also an older/outdated [gist](https://gist.github.com/Integralist/20e6e0206f39d88302d73282688111a4), so choose the post over the gist.
 
 ## UPDATES
 
@@ -13,3 +15,4 @@ This section will reference any tools or information I've recently discovered, t
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [improve retina macOS wake-up from sleep performance](http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/): `sudo pmset -a standbydelay <time in seconds:7200>`
 - [meeting bar](https://github.com/leits/MeetingBar): `brew cask install meetingbar` shows calendar meetings in macOS menu bar (make sure to [connect Google calendar to macOS calendar](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
+- [monosnap](https://monosnap.com/): annotate images.
