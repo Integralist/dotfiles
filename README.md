@@ -18,3 +18,12 @@ This section will reference any tools or information I've recently discovered, t
 - [monosnap](https://monosnap.com/): annotate images.
 
 > Note: create a symlink to the internal `airport` binary so you can control wifi from your terminal: `ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport /usr/local/bin/wifi`, like: `wifi -s` to list available WiFi networks, and `wifi -I` to get info on the current WiFi connection ([this post](https://hashtagwifi.com/blog/using-airportd-in-terminal-on-macos-to-get-wifi-info) has more tricks and tips).
+
+### Firefox Extensions
+
+- [Dark Reader](https://addons.mozilla.org/en-GB/firefox/addon/darkreader/)
+- [ExpressVPN](https://addons.mozilla.org/en-GB/firefox/addon/expressvpn/)
+- [ModHeader](https://addons.mozilla.org/en-GB/firefox/addon/modheader-firefox/)
+- [Privacy Badger](https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/)
+- [Redirector](https://addons.mozilla.org/en-GB/firefox/addon/redirector/) (useful for fixing internal company url proxies, like http://go/foo, when using a VPN)
+- [uBlock Origin](https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/)
