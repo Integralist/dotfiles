@@ -530,6 +530,7 @@ alias gb="git branch --list 'integralist*'"
 alias gba="git branch"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin master"
+alias json="python -m json.tool"
 
 # shellcheck disable=SC2034
 bold=$(tput bold)
