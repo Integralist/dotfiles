@@ -564,53 +564,10 @@ alias wut='echo "$git_icons"'
 eval "$(python3 -m pip completion --bash)"
 
 # pyenv doesn't do a safety check to see if it already has mutated the path!
-# so we manually include the output of:
+# but it doesn't matter, as we dedupe the path at the end of the .bashrc file
 #
-# pyenv init -
-# pyenv virtualenv-init -
-#
-# but we only modify the path when necessary.
-# this prevents causing endless $PATH entry duplicates.
-# which happens everytime I reload my shell, as that causes .bashrc to be reloaded.
-#
-
-# pyenv init -
-#
-pathmunge /Users/markmcdonnell/.pyenv/shims
-export PYENV_SHELL=bash
-source '/usr/local/Cellar/pyenv/1.2.18/libexec/../completions/pyenv.bash'
-command pyenv rehash 2>/dev/null
-pyenv() {
-  local command
-  command="${1:-}"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
-
-  case "$command" in
-  activate|deactivate|rehash|shell)
-    eval "$(pyenv "sh-$command" "$@")";;
-  *)
-    command pyenv "$command" "$@";;
-  esac
-}
-
-# pyenv virtualenv-init -
-#
-pathmunge /usr/local/Cellar/pyenv-virtualenv/1.1.5/shims
-export PYENV_VIRTUALENV_INIT=1;
-_pyenv_virtualenv_hook() {
-  local ret=$?
-  if [ -n "$VIRTUAL_ENV" ]; then
-    eval "$(pyenv sh-activate --quiet || pyenv sh-deactivate --quiet || true)" || true
-  else
-    eval "$(pyenv sh-activate --quiet || true)" || true
-  fi
-  return $ret
-};
-if ! [[ "$PROMPT_COMMAND" =~ _pyenv_virtualenv_hook ]]; then
-  PROMPT_COMMAND="_pyenv_virtualenv_hook;$PROMPT_COMMAND";
-fi
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 # preexec executes just BEFORE a command is executed
 # preexec() { echo "just typed $1"; }
@@ -639,3 +596,7 @@ bind -x '"\C-g": vim $(fzf -m)'
 # as it's so tedious when I forget to execute this manually
 #
 sshagent
+
+# ensure every new shell instance will deduplicate paths in $PATH
+#
+export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
