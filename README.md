@@ -8,6 +8,7 @@ Read [this post](https://www.integralist.co.uk/posts/new-laptop-configuration/) 
 
 This section will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to necessarily install or fix by default (hence not updating the relevant gist/post to include them).
 
+- [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
 - [tor browser](https://www.torproject.org/download/): tor/onion relay browser.
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
