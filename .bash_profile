@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # NOTES:
-# new terminal windows in macOS will start an 'interactive login' shell
+# new terminal windows in macOS will start a 'login' shell
 # which means .bash_profile is sourced, but not .bashrc
 # so in .bash_profile we check if .bashrc exists and source it
 # after sourcing .bashrc we use its exported pathmunge()
