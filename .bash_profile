@@ -1,8 +1,14 @@
 #!/usr/bin/env bash
 #
 # NOTES:
-# .bash_profile is loaded BEFORE .bashrc
+# new terminal windows in macOS will start an 'interactive login' shell
+# which means .bash_profile is sourced, but not .bashrc
+# so in .bash_profile we check if .bashrc exists and source it
 # after sourcing .bashrc we use its exported pathmunge()
+#
+# if you were to execute the `bash` command from within your shell
+# this would cause bash to open as an 'interactive' shell (not login)
+# this would also result in it sourcing only the .bashrc file
 
 echo .bash_profile loaded
 
