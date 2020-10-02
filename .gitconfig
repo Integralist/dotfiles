@@ -9,6 +9,8 @@
 
 [alias]
   branch-verbose = branch -vv
+  code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
+  cc = "!git code-changes"
   collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
   conflicts = diff --name-only --diff-filter=U
   diff = diff -w ; ignore whitespace
