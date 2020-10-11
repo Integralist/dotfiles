@@ -552,7 +552,7 @@ alias ls="ls -GpF"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # this also sources .bashrc and also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
-alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github_rsa > /dev/null 2>&1'
+alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github > /dev/null 2>&1'
 alias sshvm="ssh dev.buzzfeed.io"
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tmuxy='bash ~/tmux.sh'
