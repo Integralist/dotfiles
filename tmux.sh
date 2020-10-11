@@ -21,6 +21,7 @@ else
   #
   tmux new-window -n 'ipython' -t work:2
   tmux send-keys -t work:2 'cd ~/Code/python && pyenv activate repl && ipython' 'C-m'
+  tmux send-keys -t work:2 'clear' 'C-m'
 
   # now everything is setup we'll attach to a specific window we're interested in
   #
