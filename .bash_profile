@@ -29,10 +29,16 @@ if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
   source "$(brew --prefix)/etc/bash_completion"
 fi
 
+# DISABLED UNTIL NEEDED AGAIN:
+#
 # Required to fix issue where openssl was upgraded by homebrew and it broke an
 # existing cli tool. So I had to backport to earlier openssl in a way that
 # wouldn't affect system libs that needed the system installed version of openssl
-pathmunge "/usr/local/opt/openssl@1.1/bin"
+#
+# pathmunge "/usr/local/opt/openssl@1.1/bin"
 
+# DISABLED UNTIL NEEDED AGAIN:
+#
 # Created when installing rust
-pathmunge "$HOME/.cargo/bin"
+#
+#pathmunge "$HOME/.cargo/bin"
