@@ -2,7 +2,5 @@
 *.log
 *.swp
 .bin
-.grunt
 .python-version
-.vagrant*
 logs
