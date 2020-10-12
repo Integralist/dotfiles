@@ -32,3 +32,4 @@ This section will reference any tools or information I've recently discovered, t
 - [Privacy Badger](https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/)
 - [Redirector](https://addons.mozilla.org/en-GB/firefox/addon/redirector/) (useful for fixing internal company url proxies, like http://go/foo, when using a VPN)
 - [uBlock Origin](https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/)
+- [Enhancer for YouTube](https://addons.mozilla.org/en-GB/firefox/addon/enhancer-for-youtube/): block ads on YouTube.
