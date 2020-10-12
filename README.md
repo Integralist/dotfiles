@@ -2,6 +2,8 @@
 
 Read [this post](https://www.integralist.co.uk/posts/new-laptop-configuration/) for a detailed setup of a new laptop.
 
+Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) for a simple summary of what to do (for my benefit primarily).
+
 > Note: there is also an older/outdated [gist](https://gist.github.com/Integralist/20e6e0206f39d88302d73282688111a4), so choose the post over the gist.
 
 ## UPDATES
