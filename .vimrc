@@ -1,6 +1,15 @@
 scriptencoding utf-8
 syntax on
-colorscheme industry " for light scheme: morning
+
+" Dark Theme
+"
+autocmd vimenter * colorscheme gruvbox
+set background=dark
+
+" Light Theme
+"
+" colorscheme github
+" set background=light
 
 " character encoding
 set encoding=utf-8
@@ -71,7 +80,7 @@ set grepprg=ag\ --nogroup\ --nocolor
 " activate spell checking
 set spell
 
-" dynamica substitutions (replace while typing) only works for neovim currently so use silent! until vim supports
+" dynamic substitutions (replace while typing) only works for neovim currently so use silent! until vim supports
 :silent! set inccommand=nosplit
 
 " recent update to Vim 8 broke gx command (that opens URL in web browser)
@@ -118,6 +127,7 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
+Plug 'endel/vim-github-colorscheme'
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jelera/vim-javascript-syntax'
@@ -125,6 +135,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sheerun/vim-polyglot'
