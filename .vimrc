@@ -217,6 +217,9 @@ let g:move_key_modifier = 'C'
 " make closing a :terminal split easier (<Esc>+:q)
 silent! tnoremap <Esc> <C-\><C-n>
 
+" netrw
+let g:netrw_list_hide= '.*\.swp$'
+
 " NOTES:
 "
 " when browsing with built-in file explorer (netrw) the following keys are useful to remember:
