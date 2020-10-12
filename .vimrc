@@ -131,7 +131,7 @@ Plug 'endel/vim-github-colorscheme'
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jelera/vim-javascript-syntax'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
@@ -195,10 +195,10 @@ autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 " Note use :map command to see current mappings (also :vmap, :nmap, :omap).
 " Can also restrict to specific mapping `:map <Leader>w`
 " https://vi.stackexchange.com/questions/7722/how-to-debug-a-mapping
-map <leader>f :FZF<CR>
-map <leader>b :Buffers<CR>
-map <leader>g :GFiles?<CR>
-map <leader>w :Windows<CR>
+map <leader>f :FZF!<CR>
+map <leader>b :Buffers!<CR>
+map <leader>g :GFiles!?<CR>
+map <leader>w :Windows!<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
