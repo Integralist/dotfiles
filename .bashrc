@@ -126,79 +126,10 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
 
-# disabled following change as bash-preexec states it'll break things
-#
-# PROMPT_COMMAND="history -a" # don't lose commands when session accidentally terminates
-
-# shellcheck source=/dev/null
-# https://raw.githubusercontent.com/rcaloras/bash-preexec/master/bash-preexec.sh
-source ~/.bash-preexec.sh
-
-# force colours
-export force_color_prompt=yes
-
-# use colour prompt
-export color_prompt=yes
-
 # modify our PATH safely
 # e.g. don't keep mutating it with duplicates on every shell reload
 pathmunge "/usr/local/sbin"
 pathmunge "$HOME/go/bin"
-
-function prompt_right() {
-  echo -e ""
-}
-
-# DOCUMENTATION:
-#   - man bash (+ /PROMPTING)
-#
-function prompt_left() {
-  num_jobs=$(jobs | wc -l)
-
-  if [ "$num_jobs" -eq 0 ]; then
-    num_jobs=""
-  else
-    num_jobs=' (\j)'
-  fi
-
-  echo -e "\\e[33m\\]\\u. \\[\\e[37m\\]\\w\\[\\e[00m\\]$num_jobs\\e[31m\\]$(__git_ps1)\\e[00m\\] \\e[0;37m(\\A)\\e[0m"
-
-  # \e indicates escape sequence (sometimes you'll see \033)
-  # the m indicates you've provided a colour sequence
-  #
-  # 30: Black
-  # 31: Red
-  # 32: Green
-  # 33: Yellow
-  # 34: Blue
-  # 35: Purple
-  # 36: Cyan
-  # 37: White
-  #
-  # a semicolon allows additional attributes:
-  #
-  # 0: Normal text
-  # 1: Bold or light, depending on terminal
-  # 4: Underline text
-  #
-  # there are also background colours (put before additional attributes with ; separator):
-  #
-  # 40: Black background
-  # 41: Red background
-  # 42: Green background
-  # 43: Yellow background
-  # 44: Blue background
-  # 45: Purple background
-  # 46: Cyan background
-  # 47: White background
-}
-
-function prompt() {
-  compensate=11
-  unset PS1
-
-  PS1=$(printf "%*s\\r%s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
-}
 
 function gcb {
   # create git branch
@@ -562,6 +493,63 @@ alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
+function prompt_right() {
+  echo -e ""
+}
+
+# DOCUMENTATION:
+#   - man bash (+ /PROMPTING)
+#
+function prompt_left() {
+  num_jobs=$(jobs | wc -l)
+
+  if [ "$num_jobs" -eq 0 ]; then
+    num_jobs=""
+  else
+    num_jobs=' (\j)'
+  fi
+
+  echo -e "\\e[33m\\]\\u. \\[\\e[37m\\]\\w\\[\\e[00m\\]$num_jobs\\e[31m\\]$(__git_ps1)\\e[00m\\] \\e[0;37m(\\A)\\e[0m"
+
+  # \e indicates escape sequence (sometimes you'll see \033)
+  # the m indicates you've provided a colour sequence
+  #
+  # 30: Black
+  # 31: Red
+  # 32: Green
+  # 33: Yellow
+  # 34: Blue
+  # 35: Purple
+  # 36: Cyan
+  # 37: White
+  #
+  # a semicolon allows additional attributes:
+  #
+  # 0: Normal text
+  # 1: Bold or light, depending on terminal
+  # 4: Underline text
+  #
+  # there are also background colours (put before additional attributes with ; separator):
+  #
+  # 40: Black background
+  # 41: Red background
+  # 42: Green background
+  # 43: Yellow background
+  # 44: Blue background
+  # 45: Purple background
+  # 46: Cyan background
+  # 47: White background
+}
+
+function prompt() {
+  compensate=11
+  unset PS1
+
+  PS1=$(printf "%*s\\r%s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
+}
+
+PROMPT_COMMAND=prompt
+
 eval "$(python3 -m pip completion --bash)"
 
 # pyenv doesn't do a safety check to see if it already has mutated the path!
@@ -569,11 +557,6 @@ eval "$(python3 -m pip completion --bash)"
 #
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
-# preexec executes just BEFORE a command is executed
-# preexec() { echo "just typed $1"; }
-# precmd executes just AFTER a command is executed, but before the prompt is shown
-precmd() { prompt; }
 
 # shellcheck source=/dev/null
 # provides a fzf command for searching for single files
