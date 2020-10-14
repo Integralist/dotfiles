@@ -542,10 +542,20 @@ function prompt_left() {
 }
 
 function prompt() {
+  local EXIT="$?"
+  local red='\[\e[0;31m\]'
+  local green='\[\e[0;32m\]'
+  local normal=$(tput sgr0)
+
   compensate=11
   unset PS1
 
-  PS1=$(printf "%*s\\r%s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)")
+  err=""
+  if [ $EXIT != 0 ]; then
+    err="${red}❌${normal}"
+  fi
+
+  PS1=$(printf "%*s\\r%s %s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)" "${err}")
 }
 
 PROMPT_COMMAND=prompt
