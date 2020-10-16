@@ -398,6 +398,10 @@ function search {
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
+function mkcdir() {
+  mkdir -p -- "$1" && cd -P -- "$1"
+}
+
 # shellcheck disable=SC2034
 read -r -d '' git_icons <<- EOF
 * unstaged changes
@@ -544,7 +548,6 @@ function prompt_left() {
 function prompt() {
   local EXIT="$?"
   local red='\[\e[0;31m\]'
-  local green='\[\e[0;32m\]'
   local normal=$(tput sgr0)
 
   compensate=11
