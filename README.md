@@ -33,3 +33,7 @@ This section will reference any tools or information I've recently discovered, t
 - [Redirector](https://addons.mozilla.org/en-GB/firefox/addon/redirector/) (useful for fixing internal company url proxies, like http://go/foo, when using a VPN)
 - [uBlock Origin](https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/)
 - [Enhancer for YouTube](https://addons.mozilla.org/en-GB/firefox/addon/enhancer-for-youtube/): block ads on YouTube.
+- [DuckDuckGo Privacy Essentials](https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-for-firefox/): more tracking prevention.
+- [Multi-Account Containers](https://addons.mozilla.org/en-GB/firefox/addon/multi-account-containers/): define unique browser streams (one for personal browsing, one for work browsing etc).
+- [Facebook Container](https://addons.mozilla.org/en-GB/firefox/addon/facebook-container/): Facebook is clever, so this is extra insurance against them tracking you (instagram will also open in this container type).
+- [Temporary Containers](https://addons.mozilla.org/en-US/firefox/addon/temporary-containers/): similar to multi-account-container, except each tab is a unique container instance.
