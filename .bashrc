@@ -451,6 +451,7 @@ EOF
 # note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
 #       alternatively use the `list` alias to show all defined alias' from this file
 
+alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c-="git checkout -"
 alias c="clear"
 alias cm="git checkout master"
