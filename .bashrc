@@ -30,6 +30,14 @@ pathmunge() {
   fi
 }
 
+# although pathmunge avoids duplicate entries
+# there's no guarantees using other third-party tools.
+# so to ensure there are no duplicates in the $PATH
+# we call dedupe at the end of each sourced shell script.
+function dedupe {
+  export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
+}
+
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 # shellcheck source=/dev/null
 source ~/.git-prompt.sh
@@ -595,6 +603,4 @@ bind -x '"\C-g": vim $(fzf -m)'
 #
 sshagent
 
-# ensure every new shell instance will deduplicate paths in $PATH
-#
-export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
+dedupe
