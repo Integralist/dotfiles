@@ -306,46 +306,6 @@ function gbd {
   done <<< "$branches"
 }
 
-function headers {
-  # make network request and print response headers
-  # allow for filtering of headers based on regex pattern
-  #
-  # Note: also possible by using 2>&1 after curl
-  #       which allows piping of output
-  #       curl -v -o /dev/null https://www.buzzfeed.com/?site-router-debug=true 2>&1 | grep -i siterouter
-
-  if [[ "$1" =~ -(h|help)$ ]]; then
-    printf "\\n\\t1st param: URL\\n\\t2nd param: regex\\n\\t3rd param: http request header"
-    printf "\\n\\n\\tif you have no need for a regex\\n\\tbut need a http header\\n\\tthen just use an empty string ''\\n"
-    return
-  fi
-
-  if [ -z "$1" ]; then
-    printf "\\n\\tExamples:\\n\\t\\theaders https://www.buzzfeed.com/?country=us 'x-(vcl|buzz|cache|site)' '-H User-Agent:iphone'\\n"
-    printf "\\t\\theaders https://www.buzzfeed.com/?country=us 'mobile' '-H User-Agent:iphone -H X-Foo:bar'\\n"
-    printf "\\t\\theaders https://www.buzzfeed.com/?country=us '' '-H User-Agent:iphone -H X-Foo:bar'\\n"
-    printf "\\n\\tHelp:\\theaders -h\\n\\t\\theaders -help\\n"
-    return
-  fi
-
-  local url=$1
-  local pattern=${2:-''}
-  local header=${3:-}
-
-  # why define local variables separate from their sub processes?
-  # summary: return values are ignored otherwise, and so `set -e` might miss them
-  # https://github.com/koalaman/shellcheck/wiki/SC2155
-  local response status
-
-  # don't quote $header as it breaks everything
-  # shellcheck disable=SC2086
-  response=$(curl -H X-BF-Debug:1 -H "X-BF-DebugKey: $BUZZFEED_DEBUG_KEY" $header -D - -o /dev/null -s "$url") # -D - will dump to stdout
-  status=$(echo "$response" | head -n 1)
-
-  printf "\\n%s\\n\\n" "$status"
-  echo "$response" | sort | tail -n +3 | grep -Ei "$pattern"
-}
-
 function join_by {
   local IFS="$1"
   shift
@@ -434,6 +394,9 @@ connectivity debugging steps...
   * check we can reach google domain:
     ping google.com
 
+  * check route from home router to internet:
+    traceroute google.com
+
   * execute a dns lookup using different dns servers (one remote, one local):
     nslookup google.com 8.8.8.8
     nslookup google.com 192.168.1.1
@@ -467,13 +430,10 @@ alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
-# to work around the fact that another fastly cli tool I use (go-fastly-cli) uses `FASTLY_API_TOKEN` env var
-# and that env var is set to stage.buzzfeed.com api key
-alias fastly='fastly -t $(head -n 1 $HOME/Library/Application\ Support/fastly/config.toml | cut -d '\''"'\'' -f 2)'
 alias gb="git branch --list 'integralist*'"
 alias gba="git branch"
 alias gls="git log-short"
-alias gpr="git pull --rebase origin master"
+alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias json="python -m json.tool"
 
 # shellcheck disable=SC2034
@@ -497,12 +457,10 @@ alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # this also sources .bashrc and also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github > /dev/null 2>&1'
-alias sshvm="ssh dev.buzzfeed.io"
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tmuxy='bash ~/tmux.sh'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
-alias v='$HOME/code/buzzfeed/mono/scripts/rig_vm'
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
@@ -593,10 +551,6 @@ bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 # we want Ctrl+g to pass files into vim for editing (-m allows multiple file
 # selection using Tab)
 bind -x '"\C-g": vim $(fzf -m)'
-
-# if [ -n "$KITTY_WINDOW_ID" ]; then
-#   source <(kitty + complete setup bash)
-# fi
 
 # ensure every new shell instance has our ssh keys added
 # as it's so tedious when I forget to execute this manually
