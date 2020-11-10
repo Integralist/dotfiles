@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+echo .localrc loaded
+
+export PATH="$HOME/go/bin:$PATH"
+
+# the following was added dynamically to .bashrc but I move it here instead
+# note: manually added --no-use to prevent it loading nvm on each shell load
+#
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
+# configure python environment
+#
+eval "$(python3 -m pip completion --bash)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+# to ensure there are no duplicates in the $PATH we call dedupe
+# the dedupe function is defined in .bashrc
+dedupe

@@ -17,22 +17,7 @@
 #
 echo .bashrc loaded
 
-pathmunge() {
-  # pathmunge /foo/
-  # pathmunge /foo/ after
-  #
-  if ! echo "$PATH" | grep -Eq "(^|:)$1($|:)" ; then
-    if [ "$2" = "after" ] ; then
-      export PATH="$PATH:$1"
-    else
-      export PATH="$1:$PATH"
-    fi
-  fi
-}
-
-# although pathmunge avoids duplicate entries
-# there's no guarantees using other third-party tools.
-# so to ensure there are no duplicates in the $PATH
+# to ensure there are no duplicates in the $PATH
 # we call dedupe at the end of each sourced shell script.
 function dedupe {
   export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
@@ -133,11 +118,6 @@ export HISTCONTROL="erasedups:ignoreboth" # avoid duplicate entries
 export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
-
-# modify our PATH safely
-# e.g. don't keep mutating it with duplicates on every shell reload
-pathmunge "/usr/local/sbin"
-pathmunge "$HOME/go/bin"
 
 function gcb {
   # create git branch
@@ -529,14 +509,6 @@ function prompt() {
 }
 
 PROMPT_COMMAND=prompt
-
-eval "$(python3 -m pip completion --bash)"
-
-# pyenv doesn't do a safety check to see if it already has mutated the path!
-# but it doesn't matter, as we dedupe the path at the end of the .bashrc file
-#
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 
 # shellcheck source=/dev/null
 # provides a fzf command for searching for single files
