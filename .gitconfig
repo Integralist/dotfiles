@@ -89,6 +89,13 @@
   name = Integralist
   email = mark.mcdx@gmail.com
   ; signingkey = ...
+  ;
+  ; you can also use local config to sign commits by first setting...
+  ;
+  ; gpgsign = false
+  ;
+  ; ...in your global config, and then editing the project specific .git/config
+  ; so it sets gpgsign=true + the signingkey
 
 ; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
