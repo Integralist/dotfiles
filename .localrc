@@ -3,6 +3,7 @@
 echo .localrc loaded
 
 export PATH="$HOME/go/bin:$PATH"
+export GPG_TTY=$(tty)
 
 # the following was added dynamically to .bashrc but I move it here instead
 # note: manually added --no-use to prevent it loading nvm on each shell load
