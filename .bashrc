@@ -529,4 +529,10 @@ bind -x '"\C-g": vim $(fzf -m)'
 #
 sshagent
 
+# ensure every new shell instance has a gpg-agent running
+# as we want to be storing our git commit signing key passphrase into
+# the macOS keychain
+#
+pgrep gpg-agent &>/dev/null || eval $(gpg-agent --daemon)
+
 dedupe
