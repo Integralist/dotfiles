@@ -10,6 +10,7 @@ Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1
 
 This section will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to necessarily install or fix by default (hence not updating the relevant gist/post to include them).
 
+- [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
 - [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
 - [tor browser](https://www.torproject.org/download/): tor/onion relay browser.
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
