@@ -95,7 +95,7 @@ map ± :nohlsearch<CR>
 "
 fun! StripTrailingWhitespace()
   " don't strip on these filetypes
-  if &ft =~ 'markdown' || &ft =~ 'terraform'
+  if &ft =~ 'markdown' || &ft =~ 'terraform' || &ft =~ 'go'
     return
   endif
   %s/\s\+$//e
@@ -199,12 +199,15 @@ map <leader>f :FZF!<CR>
 map <leader>b :Buffers!<CR>
 map <leader>g :GFiles!?<CR>
 map <leader>w :Windows!<CR>
-map <leader>t :Ag!<CR>
+map <leader>t :AgC!<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
+" configure FZF text search command to have default flags included
+autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--ignore "node_modules" --ignore-dir="vendor"', <bang>0)
+
 " ack
-let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules'
+let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules --ignore-dir=vendor'
 
 " vim-commentary
 xmap <leader><leader><leader> <Plug>Commentary
