@@ -199,6 +199,7 @@ map <leader>f :FZF!<CR>
 map <leader>b :Buffers!<CR>
 map <leader>g :GFiles!?<CR>
 map <leader>w :Windows!<CR>
+map <leader>t :Ag!<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
