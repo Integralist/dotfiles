@@ -178,6 +178,16 @@ let g:go_gopls_staticcheck = 1
 let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
 
+" :h go-syntax
+let g:go_highlight_extra_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
+
 " vim-go: check if any expressions return an error type that aren't being handled
 autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
