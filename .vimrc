@@ -3,7 +3,8 @@ syntax on
 
 " Dark Theme
 "
-autocmd vimenter * colorscheme gruvbox
+"
+autocmd vimenter * colorscheme nord " NOTE: requires Nord terminal theme.
 set background=dark
 
 " Light Theme
@@ -127,7 +128,6 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
-Plug 'endel/vim-github-colorscheme'
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'jelera/vim-javascript-syntax'
@@ -135,7 +135,6 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
-Plug 'morhetz/gruvbox'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'sheerun/vim-polyglot'
@@ -143,6 +142,13 @@ Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+
+" Colorschemes
+Plug 'arcticicestudio/nord-vim'
+Plug 'endel/vim-github-colorscheme'
+Plug 'hzchirs/vim-material'
+Plug 'morhetz/gruvbox'
+Plug 'sainnhe/edge'
 call plug#end()
 
 " Plugin Configuration
