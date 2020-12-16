@@ -131,12 +131,10 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 
-" Colorschemes
+" Color Schemes
 Plug 'arcticicestudio/nord-vim'
 Plug 'endel/vim-github-colorscheme'
-Plug 'hzchirs/vim-material'
 Plug 'morhetz/gruvbox'
-Plug 'sainnhe/edge'
 call plug#end()
 
 syntax enable
