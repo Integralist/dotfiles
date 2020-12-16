@@ -1,16 +1,4 @@
 scriptencoding utf-8
-syntax on
-
-" Dark Theme
-"
-"
-autocmd vimenter * colorscheme nord " NOTE: requires Nord terminal theme.
-set background=dark
-
-" Light Theme
-"
-" colorscheme github
-" set background=light
 
 " character encoding
 set encoding=utf-8
@@ -150,6 +138,19 @@ Plug 'hzchirs/vim-material'
 Plug 'morhetz/gruvbox'
 Plug 'sainnhe/edge'
 call plug#end()
+
+syntax enable
+
+" Dark Theme
+"
+"
+autocmd vimenter * colorscheme nord " NOTE: requires Nord terminal theme.
+set background=dark
+
+" Light Theme
+"
+" colorscheme github
+" set background=light
 
 " Plugin Configuration
 "
