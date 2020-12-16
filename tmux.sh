@@ -22,7 +22,6 @@ else
   tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && clear' 'C-m'
   tmux split-window -p 20
   tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && export GPG_USER=integralist@fastly.com && clear' 'C-m'
-  tmux send-keys -t fastly:2 'clear' 'C-m'
 
   # Terraform
   #
@@ -30,7 +29,6 @@ else
   tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && clear' 'C-m'
   tmux split-window -p 20
   tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && export GPG_USER=integralist@fastly.com && clear' 'C-m'
-  tmux send-keys -t fastly:3 'clear' 'C-m'
 
   # now everything is setup we'll attach to a specific window we're interested in
   #
