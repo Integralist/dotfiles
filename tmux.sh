@@ -2,28 +2,37 @@
 
 # check if we've not already got a session created
 #
-if [[ $(tmux ls 2> /dev/null | grep -c work) -eq 1 ]]; then
-  tmux attach -t work
+if [[ $(tmux ls 2> /dev/null | grep -c fastly) -eq 1 ]]; then
+  tmux attach -t fastly
 else
   # create a new session and detach from it
   #
-  tmux new -s work -d
+  tmux new -s fastly -d
 
-  # work stuff
+  # Go-Fastly
   #
-  tmux rename-window -t 1 'fastly'
-  tmux send-keys -t work:1 'cd ~/Code/fastly' 'C-m'
-  tmux split-window -p 30
-  tmux send-keys -t work:1 'export GPG_USER=mark.mcdx@gmail.com' 'C-m'
+  tmux rename-window -t 1 'go-fastly'
+  tmux send-keys -t fastly:1 'cd ~/Code/fastly/go-fastly && clear' 'C-m'
+  tmux split-window -p 20
+  tmux send-keys -t fastly:1 'cd ~/Code/fastly/go-fastly && export GPG_USER=integralist@fastly.com && clear' 'C-m'
 
-  # ipython REPL
-  # expects a 'repl' virtual environment to have already been created
+  # CLI
   #
-  tmux new-window -n 'ipython' -t work:2
-  tmux send-keys -t work:2 'cd ~/Code/python && pyenv activate repl && ipython' 'C-m'
-  tmux send-keys -t work:2 'clear' 'C-m'
+  tmux new-window -n 'cli' -t fastly:2
+  tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && clear' 'C-m'
+  tmux split-window -p 20
+  tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && export GPG_USER=integralist@fastly.com && clear' 'C-m'
+  tmux send-keys -t fastly:2 'clear' 'C-m'
+
+  # Terraform
+  #
+  tmux new-window -n 'terraform' -t fastly:3
+  tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && clear' 'C-m'
+  tmux split-window -p 20
+  tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && export GPG_USER=integralist@fastly.com && clear' 'C-m'
+  tmux send-keys -t fastly:3 'clear' 'C-m'
 
   # now everything is setup we'll attach to a specific window we're interested in
   #
-  tmux attach -t work:2
+  tmux attach -t fastly:1
 fi
