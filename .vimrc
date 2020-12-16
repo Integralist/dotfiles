@@ -118,6 +118,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
 Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'itchyny/lightline.vim'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
@@ -155,6 +156,14 @@ set background=dark
 " SuperTab
 " have selection start at top of the list instead of the bottom
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Lightline
+" I stopped using a plugin for my status line, but have since changed my mind.
+" So I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
+" I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
+"
+set noshowmode
+let g:lightline = {'colorscheme': 'nord'}
 
 " ALE linting
 "
