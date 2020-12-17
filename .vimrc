@@ -73,7 +73,7 @@ set spell
 :silent! set inccommand=nosplit
 
 " recent update to Vim 8 broke gx command (that opens URL in web browser)
-" it should use the `open` command (provided by macOS, not the shell builtin).
+" it should use the `open` command provided by macOS (not the shell builtin).
 nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 
 " make disabling search highlights easier
@@ -204,6 +204,9 @@ let g:go_highlight_variable_assignments = 1
 
 " vim-go: check if any expressions return an error type that aren't being handled
 autocmd BufWritePost *.go :GoErrCheck! -ignoretests
+
+" vim-go snippet
+autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm j$a<CR>
 
 " FZF (search files)
 "
