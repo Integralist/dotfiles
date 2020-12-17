@@ -4,13 +4,6 @@
 # additional configuration of the shell is handled by ~/.inputrc which
 # instructs the Readline utility as to what behaviours it should respect.
 #
-# Throughout this configuration file you'll see:
-# shellcheck source=/dev/null
-#
-# This prevents the shellcheck tool from worrying about code sourced at runtime.
-# e.g. source ~/.foo doesn't make shellcheck happy
-# https://github.com/koalaman/shellcheck/wiki/SC1090
-#
 # DOCUMENTATION:
 #   - https://twobithistory.org/2019/08/22/readline.html
 #   - man bash (+ /Readline Variables)
@@ -24,7 +17,6 @@ function dedupe {
 }
 
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
-# shellcheck source=/dev/null
 source ~/.git-prompt.sh
 
 # append to the history file, don't overwrite it
@@ -97,6 +89,7 @@ export EDITOR="vim"
 export FZF_DEFAULT_COMMAND="ag --ignore-dir node_modules --filename-pattern ''" # can use --ignore-dir multiple times
 
 # git specific configurations
+#
 export GIT_PS1_SHOWCOLORHINTS=true
 export GIT_PS1_SHOWDIRTYSTATE=true     # * for unstaged changes (+ staged but uncommitted changes)
 export GIT_PS1_SHOWSTASHSTATE=true     # $ for stashed changes
@@ -119,9 +112,9 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
 
+# create git branch
+#
 function gcb {
-  # create git branch
-
   if [ -z "$1" ]; then
     printf "\\n\\tUse: gcb <create-branch-name>\\n"
   else
@@ -130,9 +123,9 @@ function gcb {
   fi
 }
 
+# rename git branch
+#
 function gbr {
-  # rename git branch
-
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -186,9 +179,9 @@ function gbr {
   fi
 }
 
+# checkout git branch
+#
 function gc {
-  # checkout git branch
-
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -234,9 +227,9 @@ function gc {
   done <<< "$branches"
 }
 
+# delete git branch
+#
 function gbd {
-  # delete git branch
-
   if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
     echo "you're not within a git repository."
     return 0
@@ -286,16 +279,19 @@ function gbd {
   done <<< "$branches"
 }
 
+# join an array using a specified separator
+# e.g. join_by '|' ${exclude[@]}
+#
 function join_by {
   local IFS="$1"
   shift
   echo "$*"
 }
 
+# search for files based on content pattern
+# uses 'silver searcher' `ag`
+#
 function search {
-  # search for files based on content pattern
-  # uses 'silver searcher' `ag`
-
   local flags=${1:-}
   local pattern=$2
   local directory=${3:-.}
@@ -326,7 +322,6 @@ function search {
   if [ -z "$1" ]; then
     printf "\\n\\tUsage:\\n\\t\\tsearch <flags:[--]> <pattern:['']> <directory:[./]>\\n"
 
-    # shellcheck disable=SC1117
     # disabled because \\\\b for literal \b (with double quotes) is ridiculous
     printf '\n\tExample:\n\t\tsearch -- "def\\b" ~/python/app'
     printf '\n\t\tsearch "-G Dockerfile --context=5" "FROM" ./'
@@ -346,22 +341,23 @@ function search {
   # time grep --exclude-dir .git -irlno $pattern $directory
 }
 
+# create directory structure and cd into it
+#
 function mkcdir() {
   mkdir -p -- "$1" && cd -P -- "$1"
 }
 
-# shellcheck disable=SC2034
-read -r -d '' git_icons <<- EOF
-* unstaged changes
-+ staged but uncommitted changes
-$ stashed changes
-% untracked files
-> local commits on HEAD not pushed to upstream
-< commits on upstream not merged with HEAD
-= HEAD points to same commit as upstream
-EOF
+# custom alias'
+#
+# note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
+#       alternatively use the `list` alias to show all defined alias' from this file
+#
+alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
+alias c-="git checkout -"
+alias c="clear"
+alias cm="git checkout master"
+alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
-# shellcheck disable=SC2034
 read -r -d '' dns_help <<- EOF
 connectivity debugging steps...
 
@@ -396,18 +392,8 @@ connectivity debugging steps...
   * also check performance:
     speedtest-cli
 EOF
-
-# custom alias'
-#
-# note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
-#       alternatively use the `list` alias to show all defined alias' from this file
-
-alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
-alias c-="git checkout -"
-alias c="clear"
-alias cm="git checkout master"
-alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias dnshelp='echo "$dns_help"'
+
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias gb="git branch --list 'integralist*'"
@@ -418,9 +404,7 @@ alias gls="git log-short"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias json="python -m json.tool"
 
-# shellcheck disable=SC2034
 bold=$(tput bold)
-# shellcheck disable=SC2034
 normal=$(tput sgr0)
 alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\1\n  ${normal}\2\n/p"'
 
@@ -436,13 +420,23 @@ alias ll="ls -laGpFHh"
 
 alias ls="ls -GpF"
 alias psw="pwgen -sy 20 1" # brew install pwgen
-alias r="source ~/.bash_profile" # this also sources .bashrc and also causes `pass` autocomplete to be reloaded
+alias r="source ~/.bash_profile" # .bash_profile sources .bashrc and so also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github > /dev/null 2>&1'
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tmuxy='bash ~/tmux.sh'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
+
+read -r -d '' git_icons <<- EOF
+* unstaged changes
++ staged but uncommitted changes
+$ stashed changes
+% untracked files
+> local commits on HEAD not pushed to upstream
+< commits on upstream not merged with HEAD
+= HEAD points to same commit as upstream
+EOF
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
@@ -510,20 +504,24 @@ function prompt() {
   PS1=$(printf "%*s\\r%s %s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)" "${err}")
 }
 
+# DOCUMENTATION:
+#   - man bash (+ /PROMPT_COMMAND)
+#
 PROMPT_COMMAND=prompt
 
-# shellcheck source=/dev/null
 # provides a fzf command for searching for single files
 # but fzf requires piping to pbcopy to be useful
+#
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 # we use `copy`, which is an alias for trimming newline before using pbcopy
+#
 bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 
-# shellcheck disable=SC2016
-# we want Ctrl+g to pass files into vim for editing (-m allows multiple file
-# selection using Tab)
+# we want Ctrl+g to pass files into vim for editing.
+# -m allows multiple file selection using <Tab>
+#
 bind -x '"\C-g": vim $(fzf -m)'
 
 # ensure every new shell instance has our ssh keys added
@@ -533,8 +531,10 @@ sshagent
 
 # ensure every new shell instance has a gpg-agent running
 # as we want to be storing our git commit signing key passphrase into
-# the macOS keychain
+# the macOS keychain using pinentry
 #
 pgrep gpg-agent &>/dev/null || eval $(gpg-agent --daemon)
 
+# to ensure there are no duplicates in the $PATH we call dedupe
+#
 dedupe

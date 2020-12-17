@@ -20,4 +20,5 @@ eval "$(pyenv virtualenv-init -)"
 
 # to ensure there are no duplicates in the $PATH we call dedupe
 # the dedupe function is defined in .bashrc
+#
 dedupe
