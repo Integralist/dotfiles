@@ -31,6 +31,9 @@
 [apply]
   whitespace = nowarn
 
+[branch "main"]
+  rebase = true
+
 [branch "master"]
   rebase = true
 
