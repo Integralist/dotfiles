@@ -59,7 +59,7 @@
 
 [core]
   editor = vim
-  excludesfile = ~/.gitignore-global
+  excludesfile = ~/.gitignore
   ignorecase = false
   pager = delta --color-only --highlight-removed --keep-plus-minus-markers --plus-color="#288c14" --plus-emph-color="#015c15" --minus-color="#b30e02" --minus-emph-color="#6b0b04" --dark
 
@@ -101,3 +101,9 @@
 ; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
   version = 2
+
+[gpg]
+	program = /usr/local/bin/gpg
+
+[init]
+	defaultBranch = main
