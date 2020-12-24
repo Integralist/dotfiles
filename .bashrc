@@ -239,6 +239,7 @@ alias gba="git branch"
 alias gbr="gitbranch rename -prefix -normalize"
 alias gc="gitbranch checkout"
 alias gcb="gitbranch create"
+alias gcm="gitbranch checkout -branch master" # TODO: change from 'master' to 'main' once the latter gets more traction
 alias gbd="gitbranch delete"
 
 alias gl="git log"
