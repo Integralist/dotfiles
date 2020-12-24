@@ -112,173 +112,6 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
 
-# create git branch
-#
-function gcb {
-  if [ -z "$1" ]; then
-    printf "\\n\\tUse: gcb <create-branch-name>\\n"
-  else
-    transformed=$(echo "$1" | tr '-' '_')
-    git checkout -b "integralist/$(date +%Y_%m_%d)_$transformed"
-  fi
-}
-
-# rename git branch
-#
-function gbr {
-  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
-    echo "you're not within a git repository."
-    return 0
-  fi
-
-  # short circuit logic if actual branch names given
-  if [ -n "$1" ] && [ -n "$2" ]; then
-    re='^[0-9]+$'
-    if ! [[ $1 =~ $re ]]; then
-      echo ""
-      git branch -m "$1" "$2"
-    fi
-
-    return 0
-  fi
-
-  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
-
-  echo -e "\nselect a branch to rename (e.g. gbr <number>)\n"
-  echo -e "\nnote: if you called 'gbr -p' then the new name you give will be prefixed\n"
-  echo "$branches"
-  echo ""
-
-  read selection
-
-  index=0
-
-  while IFS= read -r line; do
-    _=$(( index++ ))
-
-    if [ "$index" -eq "$selection" ]; then
-      branch=$(echo "$line" | cut -d " " -f 4)
-
-      # catch scenario where `master` is the current branch
-      # so the spacing is off when trying to cut with 'space' as a delimeter
-      if [ "$branch" = "" ]; then
-        branch=$(echo "$line" | cut -d " " -f 3)
-      fi
-
-      break;
-    fi
-  done <<< "$branches"
-
-  echo "give us the new branch name..."
-  read new_branch_name
-
-  if [[ "$1" == "-p" ]]; then
-    git branch -m "$branch" "$new_branch_name/$branch"
-  else
-    git branch -m "$branch" "$new_branch_name"
-  fi
-}
-
-# checkout git branch
-#
-function gc {
-  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
-    echo "you're not within a git repository."
-    return 0
-  fi
-
-  # short circuit logic if actual branch name given
-  if [ -n "$1" ]; then
-    re='^[0-9]+$'
-    if ! [[ $1 =~ $re ]]; then
-      echo ""
-      git checkout "$1"
-    fi
-
-    return 0
-  fi
-
-  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
-
-  echo -e "\nselect a branch to checkout (e.g. gbd <number|name>)\n"
-  echo "$branches"
-  echo ""
-
-  read selection
-
-  index=0
-
-  while IFS= read -r line; do
-    _=$(( index++ ))
-
-    if [ "$index" -eq "$selection" ]; then
-      branch=$(echo "$line" | cut -d " " -f 4)
-
-      # catch scenario where `master` is the current branch
-      # so the spacing is off when trying to cut with 'space' as a delimeter
-      if [ "$branch" = "" ]; then
-        branch=$(echo "$line" | cut -d " " -f 3)
-      fi
-
-      git checkout "$branch"
-
-      break;
-    fi
-  done <<< "$branches"
-}
-
-# delete git branch
-#
-function gbd {
-  if ! git rev-parse --show-toplevel --quiet 1> /dev/null 2>&1; then
-    echo "you're not within a git repository."
-    return 0
-  fi
-
-  # short circuit logic if actual branch name given
-  if [ -n "$1" ]; then
-    if [ "$1" == "master" ]; then
-      echo "sorry, not going to let you delete 'master'"
-    else
-      git branch -D "$1"
-    fi
-
-    return 0
-  fi
-
-  branches=$(git branch | perl -pe 'BEGIN{$N=1;$S=". "} s/^/$N++ . $S/ge')
-
-  echo -e "\nselect a branch to delete (e.g. gbd <number|name>)\n"
-  echo "$branches"
-  echo ""
-
-  read selection
-
-  index=0
-
-  while IFS= read -r line; do
-    _=$(( index++ ))
-
-    if [ "$index" -eq "$selection" ]; then
-      branch=$(echo "$line" | cut -d " " -f 4)
-
-      # catch scenario where `master` is the current branch
-      # so the spacing is off when trying to cut with 'space' as a delimeter
-      if [ "$branch" = "" ]; then
-        branch=$(echo "$line" | cut -d " " -f 3)
-      fi
-
-      if [ "$branch" == "master" ]; then
-        echo "sorry, not going to let you delete 'master'"
-      else
-        git branch -D "$branch"
-      fi
-
-      break;
-    fi
-  done <<< "$branches"
-}
-
 # join an array using a specified separator
 # e.g. join_by '|' ${exclude[@]}
 #
@@ -355,7 +188,6 @@ function mkcdir() {
 alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c-="git checkout -"
 alias c="clear"
-alias cm="git checkout master"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' dns_help <<- EOF
@@ -398,6 +230,17 @@ alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias gb="git branch --list 'integralist*'"
 alias gba="git branch"
+
+# gitbranch is my own custom abstraction over the various git branch operations
+#
+# Download:
+# https://github.com/Integralist/go-gitbranch/releases
+#
+alias gbr="gitbranch rename -prefix -normalize"
+alias gc="gitbranch checkout"
+alias gcb="gitbranch create"
+alias gbd="gitbranch delete"
+
 alias gl="git log"
 alias gld="git log-detailed"
 alias gls="git log-short"
