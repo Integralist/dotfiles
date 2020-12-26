@@ -242,23 +242,29 @@ alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 #
 alias g="git"
 __git_complete g _git
+alias ga="git add"
+__git_complete ga _git_add
 alias gb="git branch"
 __git_complete gb _git_branch
 alias gc="git checkout"
 __git_complete gc _git_checkout
 alias gu="git push"
-__git_complete gp _git_push
+__git_complete gu _git_push
 alias gd="git pull"
-__git_complete gp _git_pull
+__git_complete gd _git_pull
 
 # git abstraction alias'
 # some of these (e.g. pushit, wip etc) are custom alias defined in ~/.gitconfig
 #
 # NOTE: some of these abstractions (e.g. gbd, gpr) need autocomplete support still.
 #
+alias gap="git add --patch"
 alias gbi="git branch --list 'integralist*'"
 alias gbd="git branch --delete"
 __git_complete gbd _git_branch
+alias gcm="git commit"
+alias gca="git commit --amend"
+alias gcv="git commit -v"
 alias gf="git pushit"
 alias gl="git log"
 alias gld="git log-detailed"
