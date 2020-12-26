@@ -19,6 +19,9 @@ function dedupe {
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
+# https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+source ~/.git-completion.bash
+
 # append to the history file, don't overwrite it
 shopt -s histappend
 
@@ -186,7 +189,6 @@ function mkcdir() {
 #       alternatively use the `list` alias to show all defined alias' from this file
 #
 alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
-alias c-="git checkout -"
 alias c="clear"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
@@ -228,24 +230,43 @@ alias dnshelp='echo "$dns_help"'
 
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
-alias gb="git branch --list 'integralist*'"
-alias gba="git branch"
 
-# gitbranch is my own custom abstraction over the various git branch operations
+# git alias' with git autocomplete support
 #
-# Download:
-# https://github.com/Integralist/go-gitbranch/releases
+# __git_complete is lazy loaded by the bash shell, meaning calling it in bash
+# configuration files like .bash_profile and .bashrc won't work because it
+# won't be loaded yet.
 #
-alias gbr="gitbranch rename -prefix -normalize"
-alias gc="gitbranch checkout"
-alias gcb="gitbranch create"
-alias gcm="gitbranch checkout -branch master" # TODO: change from 'master' to 'main' once the latter gets more traction
-alias gbd="gitbranch delete"
+# to solve this problem I source the internal code at the top of this file
+# (look for: source ~/.git-completion.bash)
+#
+alias g="git"
+__git_complete g _git
+alias gb="git branch"
+__git_complete gb _git_branch
+alias gc="git checkout"
+__git_complete gc _git_checkout
+alias gu="git push"
+__git_complete gp _git_push
+alias gd="git pull"
+__git_complete gp _git_pull
 
+# git abstraction alias'
+# some of these (e.g. pushit, wip etc) are custom alias defined in ~/.gitconfig
+#
+# NOTE: some of these abstractions (e.g. gbd, gpr) need autocomplete support still.
+#
+alias gbi="git branch --list 'integralist*'"
+alias gbd="git branch --delete"
+__git_complete gbd _git_branch
+alias gf="git pushit"
 alias gl="git log"
 alias gld="git log-detailed"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
+__git_complete gpr _git_pull
+alias gwip="git wip"
+
 alias json="python -m json.tool"
 
 bold=$(tput bold)
