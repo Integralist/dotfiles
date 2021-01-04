@@ -1,6 +1,7 @@
 *.DS_Store
 *.log
 *.swp
+*.swo
 .bin
 .python-version
 logs
