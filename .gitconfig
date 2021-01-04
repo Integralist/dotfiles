@@ -92,7 +92,7 @@
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
-  ; if you want to sign your commits then add:
+  ; if you want to sign your commits (e.g. git tag -s vX.Y.Z -m "vX.Y.Z") then add:
   ; gpgsign = true
   ; signingkey = ...
   ;
