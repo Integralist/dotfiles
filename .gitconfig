@@ -92,16 +92,18 @@
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
+  ; if you want to sign your commits then add:
+  ; gpgsign = true
   ; signingkey = ...
   ;
-  ; you can also use local config to sign commits by first setting...
-  ;
+  ; if you require a different user/key per project, then here in this global config set:
   ; gpgsign = false
   ;
-  ; ...in your global config, and then editing the project specific .git/config
-  ; so it sets gpgsign=true + the signingkey
-
-; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
+  ; ...then in your project specific .git/config set:
+  ; gpgsign = true
+  ; signingkey = <some_other_key>
+  ;
+  ; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
   version = 2
 
