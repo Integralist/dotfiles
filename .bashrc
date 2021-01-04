@@ -260,7 +260,7 @@ __git_complete gd _git_pull
 #
 alias gap="git add --patch"
 alias gbi="git branch --list 'integralist*'"
-alias gbd="git branch --delete"
+alias gbd="git branch -D"
 __git_complete gbd _git_branch
 alias gcm="git commit"
 alias gca="git commit --amend"
