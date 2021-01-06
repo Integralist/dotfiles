@@ -92,24 +92,25 @@
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
-  ; if you want to sign your commits
-  ;
-  ; e.g.
-  ; git tag -s vX.Y.Z -m "vX.Y.Z"
-  ; git push origin vX.Y.Z
-  ;
-  ; then add:
-  ; gpgsign = true
-  ; signingkey = ...
-  ;
-  ; if you require a different user/key per project, then here in this global config set:
-  ; gpgsign = false
-  ;
-  ; ...then in your project specific .git/config set:
-  ; gpgsign = true
-  ; signingkey = <some_other_key>
-  ;
-  ; https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
+
+  # if you want to sign your commits
+  #
+  # e.g.
+  # git tag -s vX.Y.Z -m "vX.Y.Z"
+  # git push origin vX.Y.Z
+  #
+  # then add:
+  # gpgsign = true
+  # signingkey = ...
+  #
+  # if you require a different user/key per project, then here in this global config set:
+  # gpgsign = false
+  #
+  # ...then in your project specific .git/config set:
+  # gpgsign = true
+  # signingkey = <some_other_key>
+
+# https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
   version = 2
 
@@ -118,3 +119,11 @@
 
 [init]
 	defaultBranch = main
+
+# if you’re trying to authenticate with https but you have 2FA enabled.
+# this can be solved by forcing git to use ssh for all interactions.
+#
+# git config --global --add url."git@github.com:".insteadOf "https://github.com/"
+#
+# [url "git@github.com:"]
+# 	insteadOf = https://github.com/
