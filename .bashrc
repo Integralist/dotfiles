@@ -271,6 +271,7 @@ alias gld="git log-detailed"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 __git_complete gpr _git_pull
+alias gst="git st"
 alias gwip="git wip"
 
 alias json="python -m json.tool"
