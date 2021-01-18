@@ -264,6 +264,7 @@ alias gbd="git branch -D"
 __git_complete gbd _git_branch
 alias gcm="git commit"
 alias gca="git commit --amend"
+alias gco="git checkout origin/master --" # followed by path to file to checkout
 alias gcv="git commit -v"
 alias gf="git pushit"
 alias gl="git log"
