@@ -272,6 +272,8 @@ alias gld="git log-detailed"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 __git_complete gpr _git_pull
+alias gr="git rebase"
+__git_complete gr _git_rebase
 alias gst="git st"
 alias gwip="git wip"
 
