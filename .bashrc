@@ -248,10 +248,14 @@ alias gb="git branch"
 __git_complete gb _git_branch
 alias gc="git checkout"
 __git_complete gc _git_checkout
-alias gu="git push"
-__git_complete gu _git_push
-alias gd="git pull"
-__git_complete gd _git_pull
+alias gd="git diff"
+__git_complete gd _git_diff
+alias gup="git push"
+__git_complete gup _git_push
+alias gdown="git pull"
+__git_complete gdown _git_pull
+alias gr="git rebase"
+__git_complete gr _git_rebase
 
 # git abstraction alias'
 # some of these (e.g. pushit, wip etc) are custom alias defined in ~/.gitconfig
@@ -272,8 +276,6 @@ alias gld="git log-detailed"
 alias gls="git log-short"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 __git_complete gpr _git_pull
-alias gr="git rebase"
-__git_complete gr _git_rebase
 alias gst="git st"
 alias gwip="git wip"
 
