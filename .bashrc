@@ -256,6 +256,8 @@ alias gdown="git pull"
 __git_complete gdown _git_pull
 alias gr="git rebase"
 __git_complete gr _git_rebase
+alias gsh="git stash"
+__git_complete gsh _git_stash
 
 # git abstraction alias'
 # some of these (e.g. pushit, wip etc) are custom alias defined in ~/.gitconfig
