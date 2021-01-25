@@ -265,20 +265,31 @@ __git_complete gsh _git_stash
 # NOTE: some of these abstractions (e.g. gbd, gpr) need autocomplete support still.
 #
 alias gap="git add --patch"
+__git_complete gap _git_add
 alias gbi="git branch --list 'integralist*'"
+__git_complete gbi _git_branch
 alias gbd="git branch -D"
 __git_complete gbd _git_branch
 alias gcm="git commit"
+__git_complete gcm _git_commit
 alias gca="git commit --amend"
+__git_complete gca _git_commit
 alias gco="git checkout origin/master --" # followed by path to file to checkout
+__git_complete gco _git_checkout
 alias gcv="git commit -v"
+__git_complete gcv _git_commit
 alias gf="git pushit"
+__git_complete gf _git_push
 alias gl="git log"
+__git_complete gl _git_log
 alias gld="git log-detailed"
+__git_complete gld _git_log
 alias gls="git log-short"
+__git_complete gls _git_log
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 __git_complete gpr _git_pull
 alias gst="git st"
+__git_complete gst _git_status
 alias gwip="git wip"
 
 alias json="python -m json.tool"
