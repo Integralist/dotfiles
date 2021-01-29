@@ -65,7 +65,7 @@ set showmatch
 " comma-separated list of paths for determining where to lookup words for autocomplete
 set dictionary=/usr/share/dict/words
 " use silver searcher for vim grep
-set grepprg=ag\ --nogroup\ --nocolor
+set grepprg=ag\ --nogroup\ --nocolor\ --skip-vcs-ignores
 " activate spell checking
 set spell
 
@@ -142,7 +142,6 @@ call plug#end()
 syntax enable
 
 " Dark Theme
-"
 "
 autocmd vimenter * colorscheme nord " NOTE: requires Nord terminal theme.
 set background=dark
@@ -232,10 +231,10 @@ set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files 
 set wildmode=list:longest,list:full
 
 " configure FZF text search command to have default flags included
-autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--ignore "node_modules" --ignore-dir="vendor"', <bang>0)
+autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--ignore "node_modules" --ignore-dir="vendor" --skip-vcs-ignores', <bang>0)
 
 " ack
-let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules --ignore-dir=vendor'
+let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
 
 " vim-commentary
 xmap <leader><leader><leader> <Plug>Commentary

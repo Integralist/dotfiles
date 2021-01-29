@@ -89,7 +89,7 @@ export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export EDITOR="vim"
-export FZF_DEFAULT_COMMAND="ag --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
+export FZF_DEFAULT_COMMAND="ag --ignore-dir node_modules --ignore-dir vendor --skip-vcs-ignores --filename-pattern ''"
 
 # git specific configurations
 #
