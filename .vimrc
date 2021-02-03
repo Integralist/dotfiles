@@ -216,8 +216,11 @@ autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\
 " Ctrl-x = split
 " Ctrl-v = vertical
 "
-" We can also set FZF_DEFAULT_COMMAND in ~/.bashrc
-" Also we can use --ignore-dir multiple times
+" We also set FZF_DEFAULT_COMMAND in ~/.bashrc
+" Also we use --ignore-dir multiple times there
+" Using --hidden to allow searching hidden directories like .github
+" The --hidden still respects .ignore where we ignore things like .git
+" NOTE: you need --path-to-ignore ~/.ignore otherwise ag only uses local ignore ./.ignore
 "
 " Note use :map command to see current mappings (also :vmap, :nmap, :omap).
 " Can also restrict to specific mapping `:map <Leader>w`
@@ -231,10 +234,10 @@ set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files 
 set wildmode=list:longest,list:full
 
 " configure FZF text search command to have default flags included
-autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--ignore "node_modules" --ignore-dir="vendor" --skip-vcs-ignores', <bang>0)
+autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden --ignore "node_modules" --ignore-dir="vendor" --skip-vcs-ignores', <bang>0)
 
 " ack
-let g:ackprg = 'ag --vimgrep --smart-case --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
+let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
 
 " vim-commentary
 xmap <leader><leader><leader> <Plug>Commentary
