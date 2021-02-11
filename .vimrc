@@ -132,6 +132,7 @@ Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
 Plug 'arcticicestudio/nord-vim'
@@ -244,6 +245,9 @@ xmap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>Commentary
 omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
+
+" git-blame
+nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
 
 " vim-move (<C-j>, <C-k> to move lines around more easily than :move)
 let g:move_key_modifier = 'C'
