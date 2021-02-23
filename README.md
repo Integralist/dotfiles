@@ -19,6 +19,7 @@ This section will reference any tools or information I've recently discovered, t
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [improve retina macOS wake-up from sleep performance](http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/): `sudo pmset -a standbydelay <time in seconds:7200>`
 - [meeting bar](https://github.com/leits/MeetingBar): `brew cask install meetingbar` shows calendar meetings in macOS menu bar (make sure to [connect Google calendar to macOS calendar](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
+- [superpowered](http://superpowered.me/): a more powerful 'meeting bar' alternative.
 - [monosnap](https://monosnap.com/): annotate images.
 - [menu hidden](https://github.com/dwarvesf/hidden): macOS utility that helps hide menu bar icons.
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): Use YouTube without advertisements and prevent Google from tracking you
