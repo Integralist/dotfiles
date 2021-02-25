@@ -231,11 +231,6 @@ alias dnshelp='echo "$dns_help"'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
-# go installed manually via:
-# https://golang.org/doc/install
-#
-alias golatest="/usr/local/go/bin/go"
-
 # git alias' with git autocomplete support
 #
 # __git_complete is lazy loaded by the bash shell, meaning calling it in bash

@@ -2,6 +2,7 @@
 
 echo .localrc loaded
 
+export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export GPG_TTY=$(tty)
 
