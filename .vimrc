@@ -176,7 +176,7 @@ let g:lightline = {'colorscheme': 'nord'}
 " otherwise it'll add dependencies to your project go.mod accidentally.
 "
 let g:ale_go_govet_options = '-vettool=$(which shadow)'
-let g:ale_linters = {'go': ['gopls', 'staticcheck']}
+let g:ale_linters = {'go': ['gopls']} " disabled staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
