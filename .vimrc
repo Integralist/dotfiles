@@ -240,6 +240,11 @@ autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path
 " ack
 let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
 
+" help Ack mappings to respect my split settings
+let g:ack_mappings = {
+  \ "h": "<C-W><CR>:exe 'wincmd ' (&splitbelow ? 'J' : 'K')<CR><C-W>p<C-W>J<C-W>p",
+  \ "v": "<C-W><CR>:exe 'wincmd ' (&splitright ? 'L' : 'H')<CR><C-W>p<C-W>J<C-W>p"}
+
 " vim-commentary
 xmap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>Commentary
