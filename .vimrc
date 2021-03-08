@@ -127,6 +127,8 @@ Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+Plug 'rizzatti/dash.vim'
+Plug 'rust-lang/rust.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
@@ -251,11 +253,17 @@ nmap <leader><leader><leader> <Plug>Commentary
 omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
 
+" dash
+:nmap <silent> <leader>d <Plug>DashSearch
+
 " git-blame
 nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
 
 " vim-move (<C-j>, <C-k> to move lines around more easily than :move)
 let g:move_key_modifier = 'C'
+
+" rust
+let g:rustfmt_autosave = 1
 
 " make closing a :terminal split easier (<Esc>+:q)
 silent! tnoremap <Esc> <C-\><C-n>
