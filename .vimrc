@@ -209,7 +209,7 @@ let g:go_highlight_variable_assignments = 1
 autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
 " vim-go snippet
-autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR>
+autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 
 " FZF (search files)
 "
