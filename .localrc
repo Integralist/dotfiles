@@ -4,6 +4,7 @@ echo .localrc loaded
 
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 export GPG_TTY=$(tty)
 
 # the following was added dynamically to .bashrc but I move it here instead
@@ -18,6 +19,10 @@ export NVM_DIR="$HOME/.nvm"
 eval "$(python3 -m pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# configure terraform auto-complete
+#
+complete -C /usr/local/bin/terraform terraform
 
 # to ensure there are no duplicates in the $PATH we call dedupe
 # the dedupe function is defined in .bashrc
