@@ -255,6 +255,8 @@ omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
 
 " dash
+" https://kapeli.com/dash
+"
 :nmap <silent> <leader>d <Plug>DashSearch
 
 " git-blame
