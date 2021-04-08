@@ -139,6 +139,7 @@ Plug 'zivyangll/git-blame.vim'
 " Color Schemes
 Plug 'arcticicestudio/nord-vim'
 Plug 'endel/vim-github-colorscheme'
+Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
 call plug#end()
 
@@ -180,7 +181,6 @@ let g:lightline = {'colorscheme': 'nord'}
 let g:ale_go_govet_options = '-vettool=$(which shadow)'
 let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'rls']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
-let g:ale_sign_column_always = 1
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
 highlight link ALEWarningSign String
