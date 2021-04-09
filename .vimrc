@@ -147,7 +147,7 @@ syntax enable
 
 " Dark Theme
 "
-autocmd vimenter * colorscheme nord " NOTE: requires Nord terminal theme.
+autocmd vimenter * colorscheme seoul256 " NOTE: requires Nord terminal theme.
 set background=dark
 
 " Light Theme
