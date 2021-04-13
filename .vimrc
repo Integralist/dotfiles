@@ -1,5 +1,3 @@
-scriptencoding utf-8
-
 " character encoding
 set encoding=utf-8
 " stops odd issues like using arrow keys in insert mode will send key sequences that are misinterpreted by vi
@@ -128,7 +126,9 @@ Plug 'mileszs/ack.vim'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'rizzatti/dash.vim'
+Plug 'ruanyl/vim-gh-line'
 Plug 'rust-lang/rust.vim'
+Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
 Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
@@ -137,6 +137,9 @@ Plug 'tpope/vim-surround'
 Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
+"
+" NOTE: nord-vim requires Nord terminal theme.
+"
 Plug 'arcticicestudio/nord-vim'
 Plug 'endel/vim-github-colorscheme'
 Plug 'junegunn/seoul256.vim'
@@ -147,12 +150,12 @@ syntax enable
 
 " Dark Theme
 "
-autocmd vimenter * colorscheme seoul256 " NOTE: requires Nord terminal theme.
+autocmd vimenter * colorscheme gruvbox
 set background=dark
 
 " Light Theme
 "
-" colorscheme github
+" colorscheme seoul256-light
 " set background=light
 
 " Plugin Configuration
@@ -197,14 +200,17 @@ let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
 
 " :h go-syntax
+let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
-let g:go_highlight_variable_declarations = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_function_parameters = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
+let g:go_highlight_variable_declarations = 1
 
 " vim-go: check if any expressions return an error type that aren't being handled
 autocmd BufWritePost *.go :GoErrCheck! -ignoretests
