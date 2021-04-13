@@ -158,6 +158,19 @@ set background=dark
 " colorscheme seoul256-light
 " set background=light
 
+function DarkTheme()
+  colorscheme gruvbox
+  set background=dark
+endfunction
+
+function LightTheme()
+  colorscheme seoul256-light
+  set background=light
+endfunction
+
+nmap <leader>cd :call DarkTheme()<CR>
+nmap <leader>cl :call LightTheme()<CR>
+
 " Plugin Configuration
 "
 " SuperTab
