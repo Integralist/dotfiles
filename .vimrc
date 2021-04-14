@@ -148,15 +148,8 @@ call plug#end()
 
 syntax enable
 
-" Dark Theme
-"
 autocmd vimenter * colorscheme gruvbox
 set background=dark
-
-" Light Theme
-"
-" colorscheme seoul256-light
-" set background=light
 
 function DarkTheme()
   colorscheme gruvbox
