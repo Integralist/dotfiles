@@ -223,6 +223,7 @@ autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
 " vim-go snippet
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
+autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 
 " FZF (search files)
 "
