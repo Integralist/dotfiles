@@ -183,6 +183,12 @@ function mkcdir() {
   mkdir -p -- "$1" && cd -P -- "$1"
 }
 
+# strip vowels from a string
+function novowels() {
+  echo $1 | tr -d iouae | tee /tmp/novowels | tr -s $(cat /tmp/novowels)
+  rm /tmp/novowels
+}
+
 # custom alias'
 #
 # note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
@@ -274,7 +280,7 @@ alias gcm="git commit"
 __git_complete gcm _git_commit
 alias gca="git commit --amend"
 __git_complete gca _git_commit
-alias gco="git checkout origin/master --" # followed by path to file to checkout
+alias gco="git checkout origin/main --" # followed by path to file to checkout
 __git_complete gco _git_checkout
 alias gcv="git commit -v"
 __git_complete gcv _git_commit
@@ -309,11 +315,13 @@ alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}
 alias ll="ls -laGpFHh"
 
 alias ls="ls -GpF"
+alias nv="novowels"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # .bash_profile sources .bashrc and so also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github > /dev/null 2>&1'
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
+alias tf="terraform"
 alias tmuxy='bash ~/tmux.sh'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
