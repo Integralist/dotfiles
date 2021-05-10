@@ -189,6 +189,11 @@ function novowels() {
   rm /tmp/novowels
 }
 
+# pretty print $PATH
+function ppath() {
+  echo "${PATH//:/$'\n'}"
+}
+
 # custom alias'
 #
 # note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
