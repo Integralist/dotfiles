@@ -113,8 +113,9 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 "
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'dense-analysis/ale'
-Plug 'ervandew/supertab'
+" Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'google/vim-searchindex'
 Plug 'itchyny/lightline.vim'
@@ -219,11 +220,39 @@ let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
 
 " vim-go: check if any expressions return an error type that aren't being handled
-autocmd BufWritePost *.go :GoErrCheck! -ignoretests
+" autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
 " vim-go snippet
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
+
+" LanguageClient-neovim
+"
+" gopls is installed via vim-go
+" rls needs (rustup component add rls --toolchain stable-x86_64-apple-darwin)
+let g:LanguageClient_serverCommands = {
+      \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+      \ 'go': {
+      \   'name': 'gopls',
+      \   'command': ['gopls'],
+      \   'initializationOptions': {
+      \     'usePlaceholders': v:true,
+      \     'codelens': {
+      \       'generate': v:true,
+      \       'test': v:true,
+      \     },
+      \   },
+      \ },
+      \}
+
+" Allow <Tab> to work instead of vim default <C-x><C-o>
+set completefunc=LanguageClient#complete
+imap <Tab> <C-X><C-O>
+
+" Display information in a tooltip window.
+" Although <C-[> takes me to the code anyway so that's easier/quicker.
+" Plus vim-go shows the type info/signature in the footer very quickly too.
+nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 
 " FZF (search files)
 "
