@@ -247,7 +247,7 @@ let g:LanguageClient_serverCommands = {
 
 " Allow <Tab> to work instead of vim default <C-x><C-o>
 set completefunc=LanguageClient#complete
-imap <Tab> <C-X><C-O>
+imap § <C-X><C-O>
 
 " Display information in a tooltip window.
 " Although <C-[> takes me to the code anyway so that's easier/quicker.
