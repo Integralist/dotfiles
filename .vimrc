@@ -70,6 +70,10 @@ set spell
 " dynamic substitutions (replace while typing) only works for neovim currently so use silent! until vim supports
 :silent! set inccommand=nosplit
 
+" allow filtering of quickfix/location list window results
+" :help cfilter-plugin
+:packadd cfilter
+
 " recent update to Vim 8 broke gx command (that opens URL in web browser)
 " it should use the `open` command provided by macOS (not the shell builtin).
 nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
