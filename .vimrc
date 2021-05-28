@@ -249,7 +249,8 @@ let g:LanguageClient_serverCommands = {
       \ },
       \}
 
-" Allow <Tab> to work instead of vim default <C-x><C-o>
+" Allow § to work instead of vim default <C-x><C-o>
+" <C-n> works like a standard non-programming tab completion.
 set completefunc=LanguageClient#complete
 imap § <C-X><C-O>
 
