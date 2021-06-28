@@ -418,7 +418,6 @@ PROMPT_COMMAND=prompt
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
-# we use `copy`, which is an alias for trimming newline before using pbcopy
 #
 bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 

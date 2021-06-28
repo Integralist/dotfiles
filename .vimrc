@@ -267,11 +267,11 @@ nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 " Ctrl-x = split
 " Ctrl-v = vertical
 "
-" We also set FZF_DEFAULT_COMMAND in ~/.bashrc
-" Also we use --ignore-dir multiple times there
-" Using --hidden to allow searching hidden directories like .github
-" The --hidden still respects .ignore where we ignore things like .git
-" NOTE: you need --path-to-ignore ~/.ignore otherwise ag only uses local ignore ./.ignore
+" We also set FZF_DEFAULT_COMMAND in ~/.bashrc to use `ag` (aka The Silver Searcher).
+" As part of the configuartion we set --ignore-dir multiple times.
+" We also set --hidden which enables searching hidden directories (like .github).
+" The --hidden flag will still respect a .ignore file (which is where we typically ignore things like .git).
+" NOTE: you need `--path-to-ignore ~/.ignore` otherwise ag only uses a local ignore file `./.ignore`.
 "
 " Note use :map command to see current mappings (also :vmap, :nmap, :omap).
 " Can also restrict to specific mapping `:map <Leader>w`
