@@ -181,7 +181,7 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
 "
 set noshowmode
-let g:lightline = {'colorscheme': 'nord'}
+let g:lightline = {'colorscheme': 'powerlineish'}
 
 " ALE linting
 "
