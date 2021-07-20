@@ -135,11 +135,14 @@ Plug 'ruanyl/vim-gh-line'
 Plug 'rust-lang/rust.vim'
 Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
+Plug 'skywind3000/asyncrun.vim'
+Plug 'skywind3000/asyncrun.extra'
 Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'unblevable/quick-scope'
+Plug 'voldikss/vim-floaterm' " use with skywind3000/asyncrun
 Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
@@ -302,6 +305,15 @@ xmap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>Commentary
 omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
+
+" AsyncRun
+"
+" Example:
+" :AsyncRun -mode=term -pos=floaterm_reuse -position=bottomright -width=0.4 sleep 10 && ls -la
+let g:asyncrun_open = 8
+
+" FloaTerm
+let g:floaterm_keymap_toggle = '<Leader>ht'
 
 " dash
 " https://kapeli.com/dash
