@@ -139,6 +139,7 @@ Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'unblevable/quick-scope'
 Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
@@ -249,10 +250,10 @@ let g:LanguageClient_serverCommands = {
       \ },
       \}
 
-" Allow § to work instead of vim default <C-x><C-o>
+" Allow two taps of leader key \ to work instead of vim default <C-x><C-o>
 " <C-n> works like a standard non-programming tab completion.
 set completefunc=LanguageClient#complete
-imap § <C-X><C-O>
+imap <leader><leader> <C-X><C-O>
 
 " Display information in a tooltip window.
 " Although <C-[> takes me to the code anyway so that's easier/quicker.
@@ -280,6 +281,7 @@ map <leader>f :FZF!<CR>
 map <leader>b :Buffers!<CR>
 map <leader>g :GFiles!?<CR>
 map <leader>w :Windows!<CR>
+map <leader>l :Lines!<CR>
 map <leader>t :AgC!<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
