@@ -419,6 +419,8 @@ PROMPT_COMMAND=prompt
 # but fzf requires piping to pbcopy to be useful
 #
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+[ -f ~/.fzf/shell/completion.bash ] && source ~/.fzf/shell/completion.bash
+[ -f ~/.fzf/shell/key-bindings.bash ] && source ~/.fzf/shell/key-bindings.bash
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 #
