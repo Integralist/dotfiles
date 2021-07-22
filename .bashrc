@@ -90,6 +90,7 @@ export GREP_COLOR="1;32"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export EDITOR="vim"
 export FZF_COMPLETION_TRIGGER="''"
+export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --skip-vcs-ignores --filename-pattern ''"
 
 # git specific configurations
