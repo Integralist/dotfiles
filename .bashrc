@@ -415,12 +415,13 @@ function prompt() {
 #
 PROMPT_COMMAND=prompt
 
-# provides a fzf command for searching for single files
-# but fzf requires piping to pbcopy to be useful
+# the following FZF script should also source:
 #
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-[ -f ~/.fzf/shell/completion.bash ] && source ~/.fzf/shell/completion.bash
-[ -f ~/.fzf/shell/key-bindings.bash ] && source ~/.fzf/shell/key-bindings.bash
+# .fzf/shell/completion.bash
+# .fzf/shell/key-bindings.bash
+if test -f ~/.fzf.bash; then
+  source ~/.fzf.bash
+fi
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 #

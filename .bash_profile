@@ -11,21 +11,23 @@
 
 echo .bash_profile loaded
 
+# AVOID $(brew --prefix) as it can be quite slow compared to hard coded value
+#
+# We load bash completion script BEFORE .bashrc which loads FZF completion.
+# Otherwise the FZF completion gets overridden by the bash completion.
+#
+if [ -f "/usr/local/etc/bash_completion" ]; then
+  source "/usr/local/etc/bash_completion"
+fi
+
 if [ -f "$HOME/.bashrc" ]; then
-  # shellcheck source=/dev/null
   source "$HOME/.bashrc"
   cd . || exit
 fi
 
-# bash configuration that you don't want as part of your main .bashrc
+# bash extensions that you don't want as part of your main .bashrc
 # e.g. $PATH modifications
 #
 if [ -f "$HOME/.localrc" ]; then
-  # shellcheck source=/dev/null
   source "$HOME/.localrc"
-fi
-
-if [ -f "$(brew --prefix)/etc/bash_completion" ]; then
-  # shellcheck source=/dev/null
-  source "$(brew --prefix)/etc/bash_completion"
 fi
