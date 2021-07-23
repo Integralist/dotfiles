@@ -22,6 +22,8 @@ set hlsearch
 set incsearch
 " don't create backup files
 set nobackup
+" don't use swap files
+set noswapfile
 " have swap files be stored out of site
 set directory^=$HOME/.vim/tmp//
 " indicate the line,column numbers in status
@@ -166,7 +168,7 @@ function DarkTheme()
 endfunction
 
 function LightTheme()
-  colorscheme seoul256-light
+  colorscheme github
   set background=light
 endfunction
 
