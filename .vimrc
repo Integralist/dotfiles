@@ -159,7 +159,7 @@ call plug#end()
 
 syntax enable
 
-autocmd vimenter * colorscheme gruvbox
+autocmd VimEnter * colorscheme gruvbox
 set background=dark
 
 function DarkTheme()
@@ -186,8 +186,17 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 " So I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
 " I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
 "
+" Lastly, I have to turn off the tabline configuration that comes with the
+" plugin as I don't find it useful (it's almost impossible to see what tab is
+" highlighted!) and so I set that myself using Vim's TabLineSel.
+"
 set noshowmode
 let g:lightline = {'colorscheme': 'powerlineish'}
+let g:lightline.enable = {'tabline': 0}
+
+" Configure the highlighted Vim tab
+"
+autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 
 " ALE linting
 "
