@@ -344,7 +344,7 @@ let g:rustfmt_autosave = 1
 silent! tnoremap <Esc> <C-\><C-n>
 
 " netrw
-let g:netrw_list_hide= '.*\.swp$'
+let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'
 
 " NOTES:
 "
