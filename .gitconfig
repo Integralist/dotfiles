@@ -81,7 +81,7 @@
 
 [merge]
   conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
-  tool = vimdiff
+  tool = vimdiff # git mergetool --tool=vimdiff
 
 [mergetool]
   prompt = true
