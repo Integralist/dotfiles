@@ -46,6 +46,8 @@ set backspace=indent,eol,start
 set expandtab
 " set tab size in spaces (this is for manual indenting)
 set tabstop=2
+" allow for extra context when scrolling (e.g. pad above/below current line)
+set scrolloff=5
 " always display the statusline (default is 1 and only shows statusline when more than one window)
 set laststatus=2
 " tweak the statusline
@@ -121,13 +123,13 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 call plug#begin('~/.vim/plugged')
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'dense-analysis/ale'
-" Plug 'ervandew/supertab'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'google/vim-searchindex'
 Plug 'itchyny/lightline.vim'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
+Plug 'ledesmablt/vim-run'
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
@@ -137,14 +139,11 @@ Plug 'ruanyl/vim-gh-line'
 Plug 'rust-lang/rust.vim'
 Plug 'sebdah/vim-delve'
 Plug 'sheerun/vim-polyglot'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'skywind3000/asyncrun.extra'
 Plug 'smerrill/vcl-vim-plugin'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'unblevable/quick-scope'
-Plug 'voldikss/vim-floaterm' " use with skywind3000/asyncrun
 Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
@@ -316,15 +315,6 @@ xmap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>Commentary
 omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
-
-" AsyncRun
-"
-" Example:
-" :AsyncRun -mode=term -pos=floaterm_reuse -position=bottomright -width=0.4 sleep 10 && ls -la
-let g:asyncrun_open = 8
-
-" FloaTerm
-let g:floaterm_keymap_toggle = '<Leader>ht'
 
 " dash
 " https://kapeli.com/dash
