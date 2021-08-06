@@ -217,6 +217,9 @@ highlight link ALEErrorSign Title
 nmap <silent> <leader>x :ALENext<cr>
 nmap <silent> <leader>z :ALEPrevious<cr>
 
+" vim-run
+let g:run_use_loclist = 1
+
 " vim-go
 let g:go_fmt_command = 'goimports'
 let g:go_gopls_complete_unimported = 1
