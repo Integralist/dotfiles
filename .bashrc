@@ -256,6 +256,9 @@ alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 # to solve this problem I source the internal code at the top of this file
 # (look for: source ~/.git-completion.bash)
 #
+# NOTE: for information on the new `git switch` and `git restore` commands...
+# https://www.banterly.net/2021/07/31/new-in-git-switch-and-restore/
+#
 alias g="git"
 __git_complete g _git
 alias ga="git add"
@@ -272,8 +275,12 @@ alias gdown="git pull"
 __git_complete gdown _git_pull
 alias gr="git rebase"
 __git_complete gr _git_rebase
+alias grs="git restore"
+__git_complete grs _git_restore
 alias gsh="git stash"
 __git_complete gsh _git_stash
+alias gsw="git switch"
+__git_complete gsw _git_switch
 
 # git abstraction alias'
 # some of these (e.g. pushit, wip etc) are custom alias defined in ~/.gitconfig
