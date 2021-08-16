@@ -117,6 +117,17 @@ export HISTIGNORE="&:[ ]*:exit:ls:bg:fg:history" # don't record some commands
 export HISTTIMEFORMAT='%F %T ' # useful timestamp format
 history -a # record each line as it gets issued
 
+# man pages colour configuration
+# https://www.tuxarena.com/2012/04/tutorial-colored-man-pages-how-it-works/
+#
+export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
+export LESS_TERMCAP_md=$(printf '\e[01;33m') # enter double-bright mode – bold, yellow
+export LESS_TERMCAP_me=$(printf '\e[0m') # turn off all appearance modes (mb, md, so, us)
+export LESS_TERMCAP_se=$(printf '\e[0m') # leave standout mode
+export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
+export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
+export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
+
 # join an array using a specified separator
 # e.g. join_by '|' ${exclude[@]}
 #
@@ -387,9 +398,11 @@ function prompt_left() {
   #
   # a semicolon allows additional attributes:
   #
-  # 0: Normal text
+  # 0: Reset/Normal text
   # 1: Bold or light, depending on terminal
+  # 3: Italic/reversed
   # 4: Underline text
+  # 5: Blink
   #
   # there are also background colours (put before additional attributes with ; separator):
   #
