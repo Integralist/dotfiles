@@ -85,13 +85,14 @@ export LSCOLORS="ehaDxxxxHbxxxxxxxxxxxx"
 
 # application configuration
 #
-export GREP_OPTIONS="--color=auto"
-export GREP_COLOR="1;32"
-export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 export EDITOR="vim"
-export FZF_COMPLETION_TRIGGER="''"
 export FZF_COMPLETION_OPTS='--border --info=inline'
+export FZF_COMPLETION_TRIGGER="''"
 export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --skip-vcs-ignores --filename-pattern ''"
+export GREP_COLOR="1;32"
+export GREP_OPTIONS="--color=auto"
+export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
+export TIMEFORMAT="$(printf '\n\e[01;31m')real:$(printf '\e[00m') %R, $(printf '\e[01;33m')user:$(printf '\e[00m') %U, $(printf '\e[01;32m')system:$(printf '\e[00m') %S"
 
 # git specific configurations
 #
@@ -453,6 +454,15 @@ bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 # -m allows multiple file selection using <Tab>
 #
 bind -x '"\C-g": vim $(fzf -m)'
+
+# every time we want to `time` as shell command, instead of pressing <Enter>
+# we'll do <Ctrl+j> and that will prefix the time command.
+#
+# the '\e indicates an escape code and the I represents <Shift-I>, which in my
+# bash shell (due to me having vim bindings enabled) means move the cursor to
+# the start of the line. So I can then insert the `time` command.
+#
+bind '"\C-j": "\eI time \C-m"'
 
 # ensure every new shell instance has our ssh keys added
 # as it's so tedious when I forget to execute this manually
