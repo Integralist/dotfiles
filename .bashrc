@@ -244,6 +244,14 @@ function rand() {
   seq $limit | shuf -n 1
 }
 
+# tabs are indicated by ^I and line endings by $
+# useful for validating things like a Makefile
+#
+function hiddenchars() {
+  local filename=$1
+  cat -e -t -v $filename
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
