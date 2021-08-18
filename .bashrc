@@ -110,7 +110,7 @@ export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir 
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
-export TIMEFORMAT="$(printf '\n\e[01;31m')real:$(printf '\e[00m') %R, $(printf '\e[01;33m')user:$(printf '\e[00m') %U, $(printf '\e[01;32m')system:$(printf '\e[00m') %S"
+export TIMEFORMAT="$(printf '\n\e[01;31m')elapsed:$(printf '\e[00m') %Rs, $(printf '\e[01;33m')user mode (cpu time):$(printf '\e[00m') %U, $(printf '\e[01;32m')system mode (cpu time):$(printf '\e[00m') %S"
 
 # git specific configurations
 #
