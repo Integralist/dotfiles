@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# NOTES:
+# NOTE:
 # additional configuration of the shell is handled by ~/.inputrc which
 # instructs the Readline utility as to what behaviours it should respect.
 #
@@ -8,19 +8,35 @@
 #   - https://twobithistory.org/2019/08/22/readline.html
 #   - man bash (+ /Readline Variables)
 #
+# STRUCTURE:
+#   - SCRIPTS
+#   - CONFIGURATION
+#   - EXPORTS
+#   - CUSTOM FUNCTIONS
+#   - ALIAS
+#   - PROMPT
+#   - BINDINGS
+#   - SHELL
+#
 echo .bashrc loaded
 
-# to ensure there are no duplicates in the $PATH
-# we call dedupe at the end of each sourced shell script.
-function dedupe {
-  export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
-}
+# ⚠️  SCRIPTS ⚠️
 
 # https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
 source ~/.git-prompt.sh
 
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 source ~/.git-completion.bash
+
+# the following FZF script should also source:
+#
+# .fzf/shell/completion.bash
+# .fzf/shell/key-bindings.bash
+if test -f ~/.fzf.bash; then
+  source ~/.fzf.bash
+fi
+
+# ⚠️  CONFIGURATION ⚠️
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -52,6 +68,8 @@ shopt -s gnu_errfmt 2>/dev/null
 
 # ensure SIGHUP is sent to all jobs when an interactive login shell exits
 shopt -s huponexit 2>/dev/null
+
+# ⚠️  EXPORTS ⚠️
 
 # NOTES:
 # LSCOLOR is for BSD (i.e. macOS).
@@ -129,6 +147,14 @@ export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
 export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 
+# ⚠️  CUSTOM FUNCTIONS ⚠️
+
+# to ensure there are no duplicates in the $PATH
+# we call dedupe at the end of each sourced shell script.
+function dedupe {
+  export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
+}
+
 # join an array using a specified separator
 # e.g. join_by '|' ${exclude[@]}
 #
@@ -198,20 +224,31 @@ function mkcdir() {
 }
 
 # strip vowels from a string
+#
 function novowels() {
   echo $1 | tr -d iouae | tee /tmp/novowels | tr -s $(cat /tmp/novowels)
   rm /tmp/novowels
 }
 
 # pretty print $PATH
+#
 function ppath() {
   echo "${PATH//:/$'\n'}"
 }
 
-# custom alias'
+# random number generator
+# selects from the given number (default 100)
 #
-# note: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
+function rand() {
+  local limit=${1:-100}
+  seq $limit | shuf -n 1
+}
+
+# ⚠️  ALIAS ⚠️
+
+# NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
 #       alternatively use the `list` alias to show all defined alias' from this file
+#       the `alias` function itself with no arguments will actually print all too
 #
 alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c="clear"
@@ -367,6 +404,8 @@ EOF
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
 
+# ⚠️  PROMPT ⚠️
+
 function prompt_right() {
   echo -e ""
 }
@@ -438,13 +477,7 @@ function prompt() {
 #
 PROMPT_COMMAND=prompt
 
-# the following FZF script should also source:
-#
-# .fzf/shell/completion.bash
-# .fzf/shell/key-bindings.bash
-if test -f ~/.fzf.bash; then
-  source ~/.fzf.bash
-fi
+# ⚠️  BINDINGS ⚠️
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 #
@@ -463,6 +496,8 @@ bind -x '"\C-g": vim $(fzf -m)'
 # the start of the line. So I can then insert the `time` command.
 #
 bind '"\C-j": "\eI time \C-m"'
+
+# ⚠️  SHELL ⚠️
 
 # ensure every new shell instance has our ssh keys added
 # as it's so tedious when I forget to execute this manually
