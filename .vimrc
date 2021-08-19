@@ -268,13 +268,13 @@ let g:LanguageClient_serverCommands = {
 
 " Allow two taps of leader key \ to work instead of vim default <C-x><C-o>
 " <C-n> works like a standard non-programming tab completion.
-set completefunc=LanguageClient#complete
-imap <leader><leader> <C-X><C-O>
+autocmd FileType go set completefunc=LanguageClient#complete
+autocmd FileType go imap <leader><leader> <C-X><C-O>
 
 " Display information in a tooltip window.
 " Although <C-[> takes me to the code anyway so that's easier/quicker.
 " Plus vim-go shows the type info/signature in the footer very quickly too.
-nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType go nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 
 " FZF (search files)
 "
