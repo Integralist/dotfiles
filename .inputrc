@@ -13,7 +13,7 @@ set print-completions-horizontally Off
 set revert-all-at-newline On
 set show-all-if-ambiguous On
 set show-all-if-unmodified On
-set show-mode-in-prompt On
+# set show-mode-in-prompt On
 set visible-stats On
 
 TAB: menu-complete
