@@ -260,6 +260,7 @@ function hiddenchars() {
 #
 alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c="clear"
+alias cat="bat"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' dns_help <<- EOF
@@ -390,6 +391,7 @@ alias ll="ls -laGpFHh"
 
 alias ls="ls -GpF"
 alias nv="novowels"
+alias ps="procs" # e.g. procs <process_name> --sortd mem
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # .bash_profile sources .bashrc and so also causes `pass` autocomplete to be reloaded
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
@@ -401,6 +403,8 @@ alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 
 read -r -d '' git_icons <<- EOF
+# raw git prompt
+
 * unstaged changes
 + staged but uncommitted changes
 $ stashed changes
@@ -408,6 +412,19 @@ $ stashed changes
 > local commits on HEAD not pushed to upstream
 < commits on upstream not merged with HEAD
 = HEAD points to same commit as upstream
+
+# starship prompt...
+
+conflicted "="	merge conflicts.
+ahead      "⇡"	ahead
+behind     "⇣"	behind
+diverged   "⇕"	diverged
+untracked  "?"	untracked
+stashed    "$"	stashed
+modified   "!"	modified
+staged     "+"	staged
+renamed    "»"	renamed
+deleted    "✘"  deleted
 EOF
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
@@ -483,7 +500,10 @@ function prompt() {
 # DOCUMENTATION:
 #   - man bash (+ /PROMPT_COMMAND)
 #
-PROMPT_COMMAND=prompt
+# DISABLED:
+# As it's provided by starship.
+#
+# PROMPT_COMMAND=prompt
 
 # ⚠️  BINDINGS ⚠️
 
@@ -503,7 +523,10 @@ bind -x '"\C-g": vim $(fzf -m)'
 # bash shell (due to me having vim bindings enabled) means move the cursor to
 # the start of the line. So I can then insert the `time` command.
 #
-bind '"\C-j": "\eI time \C-m"'
+# DISABLED:
+# As it is built into starship.
+#
+# bind '"\C-j": "\eI time \C-m"'
 
 # ⚠️  SHELL ⚠️
 
@@ -521,3 +544,8 @@ pgrep gpg-agent &>/dev/null || eval $(gpg-agent --daemon)
 # to ensure there are no duplicates in the $PATH we call dedupe
 #
 dedupe
+
+# initialize the starship shell
+# https://starship.rs/
+#
+eval "$(starship init bash)"

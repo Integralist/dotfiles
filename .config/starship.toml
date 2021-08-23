@@ -1,0 +1,24 @@
+[[battery.display]]
+threshold = 50
+style = "bold red"
+
+[character]
+success_symbol = "[➜](bold green) "
+error_symbol = "[✗](bold red) "
+
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+
+[gcloud]
+disabled = true
+
+[git_metrics]
+disabled = false
+
+[status]
+style = "bg:blue"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
