@@ -11,6 +11,7 @@ Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1
 This section will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to necessarily install or fix by default (hence not updating the relevant gist/post to include them).
 
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font`).
+- [exa](https://github.com/ogham/exa): rust replacement for `ls`.
 - [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
 - [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
