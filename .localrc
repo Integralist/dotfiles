@@ -39,6 +39,13 @@ if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
     source "$HOME/.config/broot/launcher/bash/br"
 fi
 
+# zoxide is a directory switcher
+#
+# z <pattern>
+# zoxide query -ls
+#
+eval "$(zoxide init bash)"
+
 # to ensure there are no duplicates in the $PATH we call dedupe
 # the dedupe function is defined in .bashrc
 #
