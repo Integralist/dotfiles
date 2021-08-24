@@ -387,9 +387,14 @@ alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}
 # Equals sign ('=') after each pathname is a socket
 # Percent sign ('%') after each pathname is a whiteout
 # Vertical bar ('|') after each pathname is a FIFO
-alias ll="ls -laGpFHh"
+#
+# DISABLED:
+# The ls command is now an alias to exa which doesn't have the same flags.
+# I've made ls display (using exa) how I want it to, to not need ll.
+#
+# alias ll="ls -laGpFHh"
 
-alias ls="ls -GpF"
+alias ls="exa -lh --all --icons --octal-permissions --no-user --git"
 alias nv="novowels"
 alias ps="procs" # e.g. procs <process_name> --sortd mem
 alias psw="pwgen -sy 20 1" # brew install pwgen
