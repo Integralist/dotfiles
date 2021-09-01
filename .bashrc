@@ -517,7 +517,8 @@ function prompt() {
 bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
 
 # we want Ctrl+g to pass files into vim for editing.
-# -m allows multiple file selection using <Tab>
+# -m, --multi allows multiple file selection using <Tab>
+# This flag can also be set using FZF_DEFAULT_OPTS
 #
 bind -x '"\C-g": vim $(fzf -m)'
 
