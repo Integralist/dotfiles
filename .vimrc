@@ -268,13 +268,13 @@ let g:LanguageClient_serverCommands = {
 
 " Allow two taps of leader key \ to work instead of vim default <C-x><C-o>
 " <C-n> works like a standard non-programming tab completion.
-autocmd FileType go set completefunc=LanguageClient#complete
-autocmd FileType go imap <leader><leader> <C-X><C-O>
+autocmd FileType go,rust set completefunc=LanguageClient#complete
+autocmd FileType go,rust imap <leader><leader> <C-X><C-O>
 
 " Display information in a tooltip window.
 " Although <C-[> takes me to the code anyway so that's easier/quicker.
 " Plus vim-go shows the type info/signature in the footer very quickly too.
-autocmd FileType go nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType go,rust nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
 
 " FZF (search files)
 "
@@ -332,6 +332,7 @@ let g:move_key_modifier = 'C'
 
 " rust
 let g:rustfmt_autosave = 1
+autocmd FileType rust nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
 
 " make closing a :terminal split easier (<Esc>+:q)
 silent! tnoremap <Esc> <C-\><C-n>
