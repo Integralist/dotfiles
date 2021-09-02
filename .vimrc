@@ -258,7 +258,7 @@ let g:LanguageClient_serverCommands = {
       \   'command': ['gopls'],
       \   'initializationOptions': {
       \     'usePlaceholders': v:true,
-      \     'codelens': {
+      \     'codelenses': {
       \       'generate': v:true,
       \       'test': v:true,
       \     },
