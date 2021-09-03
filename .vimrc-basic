@@ -1,0 +1,4 @@
+set nocompatible nobackup noswapfile number cursorline expandtab hlsearch visualbell tabstop=2 shiftwidth=2
+syntax on
+packadd cfilter
+autocmd vimenter * hi TabLineSel ctermfg=Red ctermbg=Yellow
