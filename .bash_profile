@@ -22,7 +22,6 @@ fi
 
 if [ -f "$HOME/.bashrc" ]; then
   source "$HOME/.bashrc"
-  cd . || exit
 fi
 
 # bash extensions that you don't want as part of your main .bashrc
