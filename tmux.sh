@@ -12,22 +12,16 @@ else
   # Go-Fastly
   #
   tmux rename-window -t 1 'go-fastly'
-  tmux send-keys -t fastly:1 'cd ~/Code/fastly/go-fastly && clear' 'C-m'
-  tmux split-window -p 20
   tmux send-keys -t fastly:1 'cd ~/Code/fastly/go-fastly && export GPG_USER=integralist@fastly.com && clear && git wip' 'C-m'
 
   # CLI
   #
   tmux new-window -n 'cli' -t fastly:2
-  tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && clear' 'C-m'
-  tmux split-window -p 20
   tmux send-keys -t fastly:2 'cd ~/Code/fastly/cli && export GPG_USER=integralist@fastly.com && clear && git wip' 'C-m'
 
   # Terraform
   #
   tmux new-window -n 'terraform' -t fastly:3
-  tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && clear' 'C-m'
-  tmux split-window -p 20
   tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && export GPG_USER=integralist@fastly.com && clear && git wip' 'C-m'
 
   # now everything is setup we'll attach to a specific window we're interested in
