@@ -252,6 +252,13 @@ function hiddenchars() {
   cat -e -t -v $filename
 }
 
+# delete tag from both local and remote repositories
+#
+function git_tag_delete() {
+  git tag -d "v$1"
+  git push --delete origin "v$1"
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
