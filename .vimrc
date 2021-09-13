@@ -207,7 +207,7 @@ autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 " otherwise it'll add dependencies to your project go.mod accidentally.
 "
 let g:ale_go_govet_options = '-vettool=$(which shadow)'
-let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'rls']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
+let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'rls', 'analyzer']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
@@ -250,9 +250,14 @@ autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {ret
 " LanguageClient-neovim
 "
 " gopls is installed via vim-go
+" rust-analyzer is installed via Homebrew (NOTE: also configured in g:ale_linters)
+"
+" DISABLED:
+"
 " rls needs (rustup component add rls --toolchain stable-x86_64-apple-darwin)
+" 'rust': ['rustup', 'run', 'stable', 'rls'],
 let g:LanguageClient_serverCommands = {
-      \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+      \ 'rust': ['rust-analyzer'],
       \ 'go': {
       \   'name': 'gopls',
       \   'command': ['gopls'],
