@@ -124,6 +124,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'godlygeek/tabular'
 Plug 'google/vim-searchindex'
 Plug 'itchyny/lightline.vim'
 Plug 'jelera/vim-javascript-syntax'
