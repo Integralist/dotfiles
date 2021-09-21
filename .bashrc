@@ -259,6 +259,13 @@ function git_tag_delete() {
   git push --delete origin "v$1"
 }
 
+# cut a new release for a git project
+#
+function git_tag_release() {
+  tag="v$1"
+  git tag -s $tag -m "$tag" && git push origin $tag
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
