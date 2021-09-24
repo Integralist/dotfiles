@@ -420,6 +420,8 @@ alias tf="terraform"
 alias tmuxy='bash ~/tmux.sh'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
+alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
+alias vimlight="vim -u /Users/integralist/.vimrc-light"
 
 read -r -d '' git_icons <<- EOF
 # raw git prompt
