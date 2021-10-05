@@ -408,7 +408,7 @@ alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}
 #
 # alias ll="ls -laGpFHh"
 
-alias ls="exa -lh --all --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules'"
+alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
 alias nv="novowels"
 alias ps="procs" # e.g. procs <process_name> --sortd mem
 alias psw="pwgen -sy 20 1" # brew install pwgen
