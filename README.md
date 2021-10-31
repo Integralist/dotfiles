@@ -6,6 +6,10 @@ Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1
 
 > Note: there is also an older/outdated [gist](https://gist.github.com/Integralist/20e6e0206f39d88302d73282688111a4), so choose the post over the gist.
 
+## Terminal
+
+Be sure to run `spctl developer-mode enable-terminal` and follow manual UI step to enable developer mode. Turning this feature on has been shown to improve the speed of certain terminal operations like running Rust compilation.
+
 ## UPDATES
 
 This section will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to necessarily install or fix by default (hence not updating the relevant gist/post to include them).

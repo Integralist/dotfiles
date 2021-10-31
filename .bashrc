@@ -286,11 +286,11 @@ connectivity debugging steps...
     > you can also check via nslookup
     > default should be: 192.168.86.1
 
-  * check we can reach google domain:
+  * check we can reach a highly available public domain:
     ping google.com
 
   * check route from home router to internet:
-    traceroute google.com
+    traceroute -av google.com
 
   * check hostnames can be resolved:
     host www.integralist.co.uk
@@ -312,7 +312,10 @@ connectivity debugging steps...
     curl -Lsvo /dev/null http://google.com/
 
   * also check performance:
-    speedtest-cli
+    https://www.speedcheck.org/
+    https://www.speedtest.net/
+    https://speed.cloudflare.com/
+    https://fast.com/
 EOF
 alias dnshelp='echo "$dns_help"'
 
