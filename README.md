@@ -21,6 +21,7 @@ This section will reference any tools or information I've recently discovered, t
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
+- [asciinema](https://asciinema.org/): record your terminal screen.
 - [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
