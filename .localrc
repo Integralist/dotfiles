@@ -26,13 +26,31 @@ eval "$(pyenv virtualenv-init -)"
 #
 complete -C /usr/local/bin/terraform terraform
 
-# rustup autocomplete
+# configure rust environment
+#
+# - autocomplete
+# - rust-analyzer
+# - cargo audit
+# - cargo fmt
 #
 if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
     mkdir -p ~/.config/rustlang/autocomplete
     rustup completions bash rustup >> ~/.config/rustlang/autocomplete/rustup
 fi
 source "$HOME/.config/rustlang/autocomplete/rustup"
+if ! command -v rust-analyzer &> /dev/null
+then
+    brew install rust-analyzer
+fi
+if ! cargo audit --version &> /dev/null; then
+    cargo install cargo-audit --features=fix
+fi
+if ! cargo fmt --version &> /dev/null; then
+    rustup component add rustfmt
+fi
+if ! cargo clippy --version &> /dev/null; then
+    rustup component add clippy
+fi
 
 # broot (tree replacement) requires a companion shell function to allow
 # alt+enter to cd into a directory.
