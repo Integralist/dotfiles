@@ -6,13 +6,15 @@ Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1
 
 > Note: there is also an older/outdated [gist](https://gist.github.com/Integralist/20e6e0206f39d88302d73282688111a4), so choose the post over the gist.
 
+## UPDATES
+
+The following sections will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to update in those existing online references.
+
 ## Terminal
 
 Be sure to run `spctl developer-mode enable-terminal` and follow manual UI step to enable developer mode. Turning this feature on has been shown to improve the speed of certain terminal operations like running Rust compilation.
 
-## UPDATES
-
-This section will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to necessarily install or fix by default (hence not updating the relevant gist/post to include them).
+Also be sure to improve your retina macOS 'wake-up from sleep' performance using: `sudo pmset -a standbydelay <time in seconds:7200>`. The larger the number, the longer it will take macOS to switch into 'standby mode'. This mode takes a while to 'wake up' before you can log back in, and people tend to prefer delaying it for as long as possible ([reference](https://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/)).
 
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font`).
 - [exa](https://github.com/ogham/exa): rust replacement for `ls`.
@@ -21,24 +23,26 @@ This section will reference any tools or information I've recently discovered, t
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
+- [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - [asciinema](https://asciinema.org/): record your terminal screen.
-- [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
-- [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
-- [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
-- [tor browser](https://www.torproject.org/download/): tor/onion relay browser.
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
+
+## GUI
+
 - [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
-- [alltomp3](https://alltomp3.org/): for backing up Spotify music.
-- [improve retina macOS wake-up from sleep performance](http://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/): `sudo pmset -a standbydelay <time in seconds:7200>`
-- [meeting bar](https://github.com/leits/MeetingBar): `brew cask install meetingbar` shows calendar meetings in macOS menu bar (make sure to [connect Google calendar to macOS calendar](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
-- [superpowered](http://superpowered.me/): a more powerful 'meeting bar' alternative.
+- [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
 - [monosnap](https://monosnap.com/): annotate images.
+- [alltomp3](https://alltomp3.org/): for backing up Spotify music.
+- [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
+- [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [menu hidden](https://github.com/dwarvesf/hidden): macOS utility that helps hide menu bar icons.
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): Use YouTube without advertisements and prevent Google from tracking you
+- [tor browser](https://www.torproject.org/download/): tor/onion relay browser.
+- [meeting bar](https://github.com/leits/MeetingBar): `brew cask install meetingbar` shows calendar meetings in macOS menu bar (make sure to [connect Google calendar to macOS calendar](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
 
-> Note: create a symlink to the internal `airport` binary so you can control wifi from your terminal: `ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport /usr/local/bin/wifi`, like: `wifi -s` to list available WiFi networks, and `wifi -I` to get info on the current WiFi connection ([this post](https://hashtagwifi.com/blog/using-airportd-in-terminal-on-macos-to-get-wifi-info) has more tricks and tips).
+> **NOTE**: It can be useful to create a symlink to the internal `airport` binary so you can control wifi from your terminal: `ln -s /System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/airport /usr/local/bin/wifi`, like: `wifi -s` to list available WiFi networks, and `wifi -I` to get info on the current WiFi connection ([this post](https://hashtagwifi.com/blog/using-airportd-in-terminal-on-macos-to-get-wifi-info) has more tricks and tips).
 
 ### Firefox Extensions
 
