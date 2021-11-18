@@ -23,6 +23,8 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
+- [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
+- [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - [asciinema](https://asciinema.org/): record your terminal screen.
 - [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
