@@ -22,3 +22,10 @@ symbol = "🔴"
 format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = true
+
+[custom.datetime]
+style = "bold white"
+command = "date"
+# when = """ test "$HOME/Code" == "$PWD" """
+when = "" # always run it
+format = " [$output]($style) "
