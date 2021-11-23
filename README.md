@@ -17,6 +17,7 @@ Be sure to run `spctl developer-mode enable-terminal` and follow manual UI step 
 Also be sure to improve your retina macOS 'wake-up from sleep' performance using: `sudo pmset -a standbydelay <time in seconds:7200>`. The larger the number, the longer it will take macOS to switch into 'standby mode'. This mode takes a while to 'wake up' before you can log back in, and people tend to prefer delaying it for as long as possible ([reference](https://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/)).
 
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
+- [fig](https://fig.io/): command completion.
 - [exa](https://github.com/ogham/exa): rust replacement for `ls`.
 - [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
 - [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
