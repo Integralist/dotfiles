@@ -8,7 +8,7 @@ Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1
 
 ## UPDATES
 
-The following sections will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)) and I've considered not important enough to update in those existing online references.
+The following sections will reference any tools or information I've recently discovered, that aren't mentioned in the above gist (nor in my related [blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/)). These tools aren't unimportant, in fact I use most of them daily, but I didn't feel the need to update the other references as this repo is ultimately my 'source of truth'.
 
 ## Terminal
 
