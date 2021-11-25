@@ -18,6 +18,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
 - [fig](https://fig.io/): command completion.
+- [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
 - [exa](https://github.com/ogham/exa): rust replacement for `ls`.
 - [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
 - [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
