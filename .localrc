@@ -55,8 +55,20 @@ fi
 # broot (tree replacement) requires a companion shell function to allow
 # alt+enter to cd into a directory.
 #
-if [ -f "$HOME/.config/broot/launcher/bash/br" ]; then
-    source "$HOME/.config/broot/launcher/bash/br"
+# this setup is based on me installing broot from source repo:
+#
+# cargo install --path .
+# mv target/release/broot /usr/local/bin/broot
+#
+# you'll find broot needs a `br` shell function which it will prompt you to
+# allow it to create and it will manipulate your shell configuration files like
+# .bash_profile and .bashrc so move the source line from there to here.
+#
+# extra configuration found here:
+# /Users/integralist/Library/Application Support/org.dystroy.broot/conf.hjson
+#
+if [ -f "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]; then
+    source "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 fi
 
 # zoxide is a directory switcher
