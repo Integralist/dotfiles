@@ -24,7 +24,6 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
-- [tre](https://github.com/dduan/tre): A modern alternative to the `tree` command.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
 - [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
