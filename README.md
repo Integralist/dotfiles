@@ -29,6 +29,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - [asciinema](https://asciinema.org/): record your terminal screen.
+- [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
 - [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
