@@ -1,0 +1,3 @@
++noall +answer
+
+# pipe output to `| column -t` for clearer output
