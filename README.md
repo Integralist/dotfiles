@@ -27,6 +27,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - ✅ [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
+- ✅ [bottom](https://github.com/ClementTsang/bottom): replaces `top` and `htop` (executable is `btm` so alias `top` to that).
 - ✅ [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
 - ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - ✅ [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
@@ -34,6 +35,8 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [asciinema](https://asciinema.org/): record your terminal screen.
 - [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
 - ✅ [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
+- ✅ [tokei](https://github.com/XAMPPRocky/tokei): displays statistics about your code projects.
+- ✅ [bandwhich](https://github.com/imsnif/bandwhich): displays current network utilization by process, connection and remote IP/hostname (requires `sudo`).
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
 
