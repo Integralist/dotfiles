@@ -16,6 +16,8 @@ Be sure to run `spctl developer-mode enable-terminal` and follow manual UI step 
 
 Also be sure to improve your retina macOS 'wake-up from sleep' performance using: `sudo pmset -a standbydelay <time in seconds:7200>`. The larger the number, the longer it will take macOS to switch into 'standby mode'. This mode takes a while to 'wake up' before you can log back in, and people tend to prefer delaying it for as long as possible ([reference](https://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/)).
 
+> **NOTE**: There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew. Just run `brew bundle install`.
+
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
 - [fig](https://fig.io/): command completion.
 - [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
