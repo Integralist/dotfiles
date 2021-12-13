@@ -16,23 +16,24 @@ Be sure to run `spctl developer-mode enable-terminal` and follow manual UI step 
 
 Also be sure to improve your retina macOS 'wake-up from sleep' performance using: `sudo pmset -a standbydelay <time in seconds:7200>`. The larger the number, the longer it will take macOS to switch into 'standby mode'. This mode takes a while to 'wake up' before you can log back in, and people tend to prefer delaying it for as long as possible ([reference](https://www.cultofmac.com/221392/quick-hack-speeds-up-retina-macbooks-wake-from-sleep-os-x-tips/)).
 
-> **NOTE**: There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew. Just run `brew bundle install`.
+> **NOTE**: There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew. Just run `brew bundle install`. The ✅ indicates what's installed via the `Brewfile`.
 
-- [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
+- ✅ [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
 - [fig](https://fig.io/): command completion.
 - [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
-- [exa](https://github.com/ogham/exa): rust replacement for `ls`.
-- [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
-- [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
+- ✅ [exa](https://github.com/ogham/exa): rust replacement for `ls`.
+- ✅ [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
+- ✅ [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
-- [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
+- ✅ [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
-- [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
-- [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
+- ✅ [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
+- ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
+- ✅ [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
-- [asciinema](https://asciinema.org/): record your terminal screen.
+- ✅ [asciinema](https://asciinema.org/): record your terminal screen.
 - [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
-- [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
+- ✅ [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
 - [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
 
@@ -42,7 +43,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
 - [monosnap](https://monosnap.com/): annotate images.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
-- [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
+- ✅ [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [menu hidden](https://github.com/dwarvesf/hidden): macOS utility that helps hide menu bar icons.
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): Use YouTube without advertisements and prevent Google from tracking you
