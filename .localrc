@@ -8,12 +8,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.pyenv/shims:$PATH"
 export GPG_TTY=$(tty)
 
-# the following was added dynamically to .bashrc but I move it here instead
-# note: manually added --no-use to prevent it loading nvm on each shell load
+# configure fnm node version manager
 #
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+eval "$(fnm env)"
 
 # configure python environment
 # requires PATH modification above
