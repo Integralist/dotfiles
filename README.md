@@ -28,6 +28,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
 - ✅ [bottom](https://github.com/ClementTsang/bottom): replaces `top` and `htop` (executable is `btm` so alias `top` to that).
+- ✅ [fnm](https://github.com/Schniz/fnm): fast Node.js manager.
 - ✅ [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
 - ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - ✅ [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
