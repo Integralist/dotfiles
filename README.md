@@ -18,6 +18,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 
 > **NOTE**: There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew. Just run `brew bundle install`. The ✅ indicates what's installed via the `Brewfile`.
 
+- [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md#macos): A cross-platform, OpenGL terminal emulator written in Rust.
 - ✅ [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
 - [fig](https://fig.io/): command completion.
 - [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
