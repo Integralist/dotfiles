@@ -31,8 +31,9 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [bottom](https://github.com/ClementTsang/bottom): replaces `top` and `htop` (executable is `btm` so alias `top` to that).
 - ✅ [fnm](https://github.com/Schniz/fnm): fast Node.js manager.
 - ✅ [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
-- ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - ✅ [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
+- ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
+- ✅ [sad](https://github.com/ms-jpq/sad): interactive sed replacement (use `<Tab>` to select files to apply changes to).
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - ✅ [asciinema](https://asciinema.org/): record your terminal screen.
 - [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
