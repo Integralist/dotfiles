@@ -16,9 +16,15 @@ echo .bash_profile loaded
 # We load bash completion script BEFORE .bashrc which loads FZF completion.
 # Otherwise the FZF completion gets overridden by the bash completion.
 #
-if [ -f "/usr/local/etc/bash_completion" ]; then
-  source "/usr/local/etc/bash_completion"
-fi
+# DISABLED: Because switching to Alacritty meant that the .bash_completion
+# directory created as part of the installation process would cause the
+# following source line to error. It looks like some OS' expect the
+# .bash_completion to be a FILE and not a DIR, so something in the hierarchy is
+# trying to read it as a file.
+#
+# if [ -f "/usr/local/etc/bash_completion" ]; then
+#   source "/usr/local/etc/bash_completion"
+# fi
 
 if [ -f "$HOME/.bashrc" ]; then
   source "$HOME/.bashrc"

@@ -2,22 +2,32 @@
 
 echo .localrc loaded
 
+# Fig (Start)
+#
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+
+# environment
+#
+export GPG_TTY=$(tty)
 export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$HOME/.pyenv/shims:$PATH"
-export GPG_TTY=$(tty)
 
 # configure fnm node version manager
 #
 eval "$(fnm env)"
 
 # configure python environment
-# requires PATH modification above
 #
 eval "$(python3 -m pip completion --bash)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+# configure ruby environment
+#
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # configure terraform auto-complete
 #
@@ -74,6 +84,14 @@ fi
 # zoxide query -ls
 #
 eval "$(zoxide init bash)"
+
+# Alacritty
+#
+source ~/.bash_completion/alacritty
+
+# Fig (End)
+#
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 
 # to ensure there are no duplicates in the $PATH we call dedupe
 # the dedupe function is defined in .bashrc
