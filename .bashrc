@@ -538,7 +538,9 @@ function prompt() {
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 #
-bind -x '"\C-f": fzf --preview="cat {}" --preview-window=top:50%:wrap | pbcopy'
+# NOTE: we use bat instead of cat so we can get syntax highlighting
+#
+bind -x '"\C-f": fzf --ansi --preview="bat --color=always {}" --preview-window=top:50%:wrap | pbcopy'
 
 # we want Ctrl+g to pass files into vim for editing.
 # -m, --multi allows multiple file selection using <Tab>
