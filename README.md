@@ -34,6 +34,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
 - ✅ [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - ✅ [sad](https://github.com/ms-jpq/sad): interactive sed replacement (use `<Tab>` to select files to apply changes to).
+- ✅ [rip](https://github.com/nivekuil/rip): replaces `rm` and allows restoring deleted files.
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - ✅ [asciinema](https://asciinema.org/): record your terminal screen.
 - [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
