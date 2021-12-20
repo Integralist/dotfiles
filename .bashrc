@@ -531,6 +531,10 @@ function prompt() {
 # PROMPT_COMMAND=prompt
 
 # ⚠️  BINDINGS ⚠️
+#
+# NOTE: Ctrl+t is setup by FZF and any file(s) selected to be displayed after
+# the cursor on the command prompt (e.g. vim <Ctrl-t>). Which is better than
+# using my own Ctrl+f binding below if you don't need to preview the file.
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
 #
