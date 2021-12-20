@@ -1,0 +1,11 @@
+[sources]
+go_blog = "https://go.dev/blog/feed.atom"
+rust_blog = "https://blog.rust-lang.org/feed.xml"
+asciinema = "https://blog.asciinema.org/index.xml"
+bbc_news = "http://feeds.bbci.co.uk/news/rss.xml"
+hacker_news = "https://news.ycombinator.com/rss"
+the_register = "http://www.theregister.co.uk/headlines.atom"
+techcrunch = "https://techcrunch.com/feed"
+arstechnica = "http://feeds.arstechnica.com/arstechnica/technology-lab"
+wired = "https://www.wired.com/feed/rss"
+theverge = "http://www.theverge.com/rss/frontpage"

@@ -37,7 +37,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [rip](https://github.com/nivekuil/rip): replaces `rm` and allows restoring deleted files.
 - [panicparse](https://github.com/maruel/panicparse): Parses golang panic stack traces.
 - ✅ [asciinema](https://asciinema.org/): record your terminal screen.
-- [newsboat](https://newsboat.org/): terminal RSS reader (might also want `brew install lynx` for reading full articles).
+- ✅ [tuifeed](https://github.com/veeso/tuifeed): terminal RSS reader (config in `/Users/integralist/Library/Application Support/tuifeed/config.toml`, a copy is in this repo at `tuifeed.config.toml`).
 - ✅ [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
 - ✅ [tokei](https://github.com/XAMPPRocky/tokei): displays statistics about your code projects.
 - ✅ [bandwhich](https://github.com/imsnif/bandwhich): displays current network utilization by process, connection and remote IP/hostname (requires `sudo`).
