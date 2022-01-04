@@ -24,6 +24,16 @@ else
   tmux new-window -n 'terraform' -t fastly:3
   tmux send-keys -t fastly:3 'cd ~/Code/fastly/terraform-provider-fastly && export GPG_USER=integralist@fastly.com && clear && git wip' 'C-m'
 
+  # Top
+  #
+  tmux new-window -n 'top' -t fastly:4
+  tmux send-keys -t fastly:4 'cd ~/ && export GPG_USER=integralist@fastly.com && clear && top' 'C-m'
+
+  # RSS
+  #
+  tmux new-window -n 'rss' -t fastly:5
+  tmux send-keys -t fastly:5 'cd ~/ && export GPG_USER=integralist@fastly.com && clear && tuifeed' 'C-m'
+
   # now everything is setup we'll attach to a specific window we're interested in
   #
   tmux attach -t fastly:1
