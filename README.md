@@ -21,13 +21,13 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - [alacritty](https://github.com/alacritty/alacritty/blob/master/INSTALL.md#macos): A cross-platform, OpenGL terminal emulator written in Rust.
 - ✅ [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell (you'll need to `brew tap homebrew/cask-fonts` and `brew install --cask font-go-mono-nerd-font` and set font to `Hack Regular Nerd Font Complete Mono 14`).
 - [fig](https://fig.io/): command completion.
-- [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
+- ✅ [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
 - ✅ [exa](https://github.com/ogham/exa): rust replacement for `ls`.
 - ✅ [zoxide](https://github.com/ajeetdsouza/zoxide): is a rust directory switcher (you can use `zoxide query -ls` to check what you have in your database).
 - ✅ [procs](https://github.com/dalance/procs): rust replacement for `ps aux`.
-- [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
+- ✅ [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - ✅ [bat](https://github.com/sharkdp/bat): rust replacement for `cat`.
-- [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
+- ✅ [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
 - ✅ [bottom](https://github.com/ClementTsang/bottom): replaces `top` and `htop` (executable is `btm` so alias `top` to that).
 - ✅ [dog](https://github.com/ogham/dog): replaces `dig` with `dog`.
 - ✅ [gping](https://github.com/orf/gping): replaces `ping` with tui graph version (executable is `gping` so alias `ping` to that).
@@ -44,7 +44,7 @@ Also be sure to improve your retina macOS 'wake-up from sleep' performance using
 - ✅ [tokei](https://github.com/XAMPPRocky/tokei): displays statistics about your code projects.
 - ✅ [bandwhich](https://github.com/imsnif/bandwhich): displays current network utilization by process, connection and remote IP/hostname (requires `sudo`).
 - [`mdless`](https://brettterpstra.com/projects/mdless/): tool for viewing Markdown files in a terminal (provides way to list headers and to filter only specific content).
-- [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
+- ✅ [`imgcat`](https://github.com/eddieantonio/imgcat): tool for viewing images in your terminal.
 
 ## GUI
 
