@@ -1,3 +1,7 @@
 +noall +answer
 
+# NOTE:
+# The above settings appear to break reverse IP lookup (e.g. dig -x <IP>)
+#
 # pipe output to `| column -t` for clearer output
+
