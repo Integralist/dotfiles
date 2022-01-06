@@ -19,6 +19,11 @@ export PATH="$HOME/.pyenv/shims:$PATH"
 #
 eval "$(fnm env)"
 
+# ensure fnm supports yarn
+# https://github.com/Schniz/fnm/issues/87#issuecomment-751366346
+export YARN_GLOBAL_FOLDER="$FNM_MULTISHELL_PATH/yarn-global"
+export YARN_PREFIX="$FNM_MULTISHELL_PATH"
+
 # configure python environment
 #
 eval "$(python3 -m pip completion --bash)"
