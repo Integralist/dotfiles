@@ -545,13 +545,13 @@ function prompt() {
 #
 # NOTE: we use bat instead of cat so we can get syntax highlighting
 #
-bind -x '"\C-f": fzf --ansi --preview="bat --color=always {}" --preview-window=top:50%:wrap | pbcopy'
+bind -x '"\C-f": fzf -m --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap | pbcopy'
 
-# we want Ctrl+g to pass files into vim for editing.
+# we want Ctrl+g to pass files into vim for editing (e.g. 'go to').
 # -m, --multi allows multiple file selection using <Tab>
 # This flag can also be set using FZF_DEFAULT_OPTS
 #
-bind -x '"\C-g": vim $(fzf -m)'
+bind -x '"\C-g": vim $(fzf -m --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap)'
 
 # every time we want to `time` as shell command, instead of pressing <Enter>
 # we'll do <Ctrl+j> and that will prefix the time command.
