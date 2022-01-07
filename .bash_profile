@@ -11,6 +11,10 @@
 
 echo .bash_profile loaded
 
+# Fig (Start)
+#
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+
 # AVOID $(brew --prefix) as it can be quite slow compared to hard coded value
 #
 # We load bash completion script BEFORE .bashrc which loads FZF completion.
