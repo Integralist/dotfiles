@@ -52,7 +52,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [dog](https://github.com/ogham/dog): replaces `dig` with `dog`.
 - [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
 - [exa](https://github.com/ogham/exa): rust replacement for `ls`.
-- [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use sed for).
+- [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use find for).
 - [fig](https://fig.io/): shell command completion.
 - [fnm](https://github.com/Schniz/fnm): fast Node.js manager.
 - [gping](https://github.com/orf/gping): replaces `ping` with tui graph version (executable is `gping` so alias `ping` to that).
@@ -66,6 +66,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [sad](https://github.com/ms-jpq/sad): interactive sed replacement (use `<Tab>` to select files to apply changes to).
 - [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
 - [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell ([font settings](./.alacritty.yml)).
+- [t-rec](https://github.com/sassman/t-rec-rs): record your terminal screen (outputs gif and mp4 unlike asciinema).
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [tokei](https://github.com/XAMPPRocky/tokei): displays statistics about your code projects.
 - [tuifeed](https://github.com/veeso/tuifeed): terminal RSS reader.
@@ -75,7 +76,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 
 ## GUI
 
-- [FreeTube](https://github.com/FreeTubeApp/FreeTube): Use YouTube without advertisements and prevent Google from tracking you
+- [FreeTube](https://github.com/FreeTubeApp/FreeTube): YouTube without advertisements and no Google tracking.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
@@ -87,14 +88,12 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 
 ### Firefox Extensions
 
-- [Dark Reader](https://addons.mozilla.org/en-GB/firefox/addon/darkreader/)
-- [DuckDuckGo Privacy Essentials](https://addons.mozilla.org/en-US/firefox/addon/duckduckgo-for-firefox/): more tracking prevention.
+- [Dark Reader](https://addons.mozilla.org/en-GB/firefox/addon/darkreader/): switches websites to a dark theme to help your eyes.
 - [Enhancer for YouTube](https://addons.mozilla.org/en-GB/firefox/addon/enhancer-for-youtube/): block ads on YouTube.
-- [ExpressVPN](https://addons.mozilla.org/en-GB/firefox/addon/expressvpn/)
-- [Facebook Container](https://addons.mozilla.org/en-GB/firefox/addon/facebook-container/): Extra insurance against FB tracking (instagram will open in this container type).
-- [ModHeader](https://addons.mozilla.org/en-GB/firefox/addon/modheader-firefox/)
+- [Facebook Container](https://addons.mozilla.org/en-GB/firefox/addon/facebook-container/): extra protection against FB tracking (instagram will open in this container type).
+- [ModHeader](https://addons.mozilla.org/en-GB/firefox/addon/modheader-firefox/): modify HTTP request/response headers.
 - [Multi-Account Containers](https://addons.mozilla.org/en-GB/firefox/addon/multi-account-containers/): define unique browser streams.
-- [Privacy Badger](https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/)
-- [Redirector](https://addons.mozilla.org/en-GB/firefox/addon/redirector/) (useful for fixing internal company url proxies, like http://go/foo, when using a VPN)
+- [Privacy Badger](https://addons.mozilla.org/en-GB/firefox/addon/privacy-badger17/): block trackers.
+- [Redirector](https://addons.mozilla.org/en-GB/firefox/addon/redirector/) configure custom URL redirects
 - [Temporary Containers](https://addons.mozilla.org/en-US/firefox/addon/temporary-containers/): similar to multi-account-container, except each tab is a unique container instance.
-- [uBlock Origin](https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/)
+- [uBlock Origin](https://addons.mozilla.org/en-GB/firefox/addon/ublock-origin/): block ads.
