@@ -121,7 +121,6 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 "
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
-Plug 'natebosch/vim-lsc'
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
@@ -131,8 +130,10 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 Plug 'ledesmablt/vim-run'
+Plug 'machakann/vim-highlightedyank'
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
+Plug 'natebosch/vim-lsc'
 Plug 'nvie/vim-flake8', { 'for': 'python' }
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 Plug 'rizzatti/dash.vim'
