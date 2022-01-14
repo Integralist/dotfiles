@@ -121,7 +121,7 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 "
 " Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'natebosch/vim-lsc'
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'godlygeek/tabular'
@@ -176,14 +176,9 @@ nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
 
 " Plugin Configuration
-"
-" SuperTab
-" have selection start at top of the list instead of the bottom
-let g:SuperTabDefaultCompletionType = "<c-n>"
 
 " Lightline
-" I stopped using a plugin for my status line, but have since changed my mind.
-" So I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
+" I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
 " I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
 "
 " Lastly, I have to turn off the tabline configuration that comes with the
@@ -248,39 +243,11 @@ let g:go_highlight_variable_declarations = 1
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 
-" LanguageClient-neovim
+" vim-lsc
 "
-" gopls is installed via vim-go
-" rust-analyzer is installed via Homebrew (NOTE: also configured in g:ale_linters)
-"
-" DISABLED:
-"
-" rls needs (rustup component add rls --toolchain stable-x86_64-apple-darwin)
-" 'rust': ['rustup', 'run', 'stable', 'rls'],
-let g:LanguageClient_serverCommands = {
-      \ 'rust': ['rust-analyzer'],
-      \ 'go': {
-      \   'name': 'gopls',
-      \   'command': ['gopls'],
-      \   'initializationOptions': {
-      \     'usePlaceholders': v:true,
-      \     'codelenses': {
-      \       'generate': v:true,
-      \       'test': v:true,
-      \     },
-      \   },
-      \ },
-      \}
-
-" Allow two taps of leader key \ to work instead of vim default <C-x><C-o>
-" <C-n> works like a standard non-programming tab completion.
-autocmd FileType go,rust set completefunc=LanguageClient#complete
-autocmd FileType go,rust imap <leader><leader> <C-X><C-O>
-
-" Display information in a tooltip window.
-" Although <C-[> takes me to the code anyway so that's easier/quicker.
-" Plus vim-go shows the type info/signature in the footer very quickly too.
-autocmd FileType go,rust nnoremap <leader>k :call LanguageClient#textDocument_hover()<CR>
+let g:lsc_server_commands = {'rust': 'rust-analyzer', 'go': 'gopls'}
+let g:lsc_auto_map = v:true
+autocmd CompleteDone * silent! pclose
 
 " FZF (search files)
 "
@@ -338,7 +305,6 @@ let g:move_key_modifier = 'C'
 
 " rust
 let g:rustfmt_autosave = 1
-autocmd FileType rust nnoremap <silent> <C-]> :call LanguageClient#textDocument_definition()<CR>
 
 " make closing a :terminal split easier (<Esc>+:q)
 silent! tnoremap <Esc> <C-\><C-n>
