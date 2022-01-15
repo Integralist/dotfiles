@@ -50,7 +50,8 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [broot](https://github.com/Canop/broot): like `tree` but doesn't scroll endlessly, and has other navigational features.
 - [delta](https://github.com/dandavison/delta): a better `diff` tool that can be used standalone or configured for use with `git`.
 - [dog](https://github.com/ogham/dog): replaces `dig` with `dog`.
-- [dust](https://github.com/bootandy/dust): replaces `du` for displaying disk usage statistics.
+- [duf](https://github.com/muesli/duf): global disk usage overview.
+- [dust](https://github.com/bootandy/dust): replaces `du` for displaying directory specific disk space usage statistics.
 - [exa](https://github.com/ogham/exa): rust replacement for `ls`.
 - [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use find for).
 - [fig](https://fig.io/): shell command completion.
