@@ -70,6 +70,8 @@ set dictionary=/usr/share/dict/words
 set grepprg=ag\ --nogroup\ --nocolor\ --skip-vcs-ignores
 " activate spell checking
 set spell
+" display pipe character for any tabs
+set list lcs=tab:\|-
 
 " dynamic substitutions (replace while typing) only works for neovim currently so use silent! until vim supports
 :silent! set inccommand=nosplit
@@ -146,6 +148,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'unblevable/quick-scope'
+Plug 'Yggdroot/indentLine'
 Plug 'zivyangll/git-blame.vim'
 
 " Color Schemes
