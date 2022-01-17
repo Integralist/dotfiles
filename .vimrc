@@ -307,6 +307,9 @@ nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
 " vim-move (<C-j>, <C-k> to move lines around more easily than :move)
 let g:move_key_modifier = 'C'
 
+" vim-markdown
+let g:vim_markdown_conceal = 0
+
 " rust
 let g:rustfmt_autosave = 1
 
