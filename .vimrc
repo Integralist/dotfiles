@@ -133,6 +133,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 Plug 'ledesmablt/vim-run'
 Plug 'machakann/vim-highlightedyank'
+Plug 'markonm/traces.vim'
 Plug 'matze/vim-move'
 Plug 'mileszs/ack.vim'
 Plug 'natebosch/vim-lsc'
