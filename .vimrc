@@ -267,15 +267,18 @@ autocmd CompleteDone * silent! pclose
 " The --hidden flag will still respect a .ignore file (which is where we typically ignore things like .git).
 " NOTE: you need `--path-to-ignore ~/.ignore` otherwise ag only uses a local ignore file `./.ignore`.
 "
-" Note use :map command to see current mappings (also :vmap, :nmap, :omap).
+" Use :map command to see current mappings (also :vmap, :nmap, :omap).
 " Can also restrict to specific mapping `:map <Leader>w`
 " https://vi.stackexchange.com/questions/7722/how-to-debug-a-mapping
-map <leader>f :FZF!<CR>
-map <leader>b :Buffers!<CR>
-map <leader>g :GFiles!?<CR>
-map <leader>w :Windows!<CR>
-map <leader>l :Lines!<CR>
-map <leader>t :AgC!<CR>
+"
+" NOTE: append ! to command (e.g. :FZF vs :FZF! or place it just before the ?
+" in the case of :GFiles!?) to have preview open full screen.
+map <leader>f :FZF<CR>
+map <leader>b :Buffers<CR>
+map <leader>g :GFiles?<CR>
+map <leader>w :Windows<CR>
+map <leader>l :Lines<CR>
+map <leader>t :AgC<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
 
@@ -314,7 +317,13 @@ let g:vim_markdown_conceal = 0
 let g:rustfmt_autosave = 1
 
 " make closing a :terminal split easier (<Esc>+:q)
-silent! tnoremap <Esc> <C-\><C-n>
+"
+" NOTE: disabled as it was affecting :FZF and related preview windows, meaning
+" if I tried to use the arrow keys the "buffer cannot be modified" error would
+" appear. As I NEVER use :terminal over tmux it seems pointless to keep this
+" configuration when it breaks something (i.e. :FZF) that I use 99% of the time.
+"
+" silent! tnoremap <Esc> <C-\><C-n>
 
 " netrw
 let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'
