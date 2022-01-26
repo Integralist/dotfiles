@@ -551,6 +551,7 @@ bind -x '"\C-f": fzf -m --ansi --preview="bat --color=always {}" --preview-windo
 # -m, --multi allows multiple file selection using <Tab>
 # This flag can also be set using FZF_DEFAULT_OPTS
 #
+# bind -x '"\C-g": vim $(fzf -m)'
 bind -x '"\C-g": vim $(fzf -m --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap)'
 
 # every time we want to `time` as shell command, instead of pressing <Enter>
@@ -564,6 +565,19 @@ bind -x '"\C-g": vim $(fzf -m --ansi --preview="bat --color=always {}" --preview
 # As it is built into starship.
 #
 # bind '"\C-j": "\eI time \C-m"'
+
+# override the cd command to call ls and goenv
+#
+# NOTE: We use `command` and not `builtin` because the latter doesn't take into
+# account anything available on the user's $PATH but also because it didn't
+# work with the Starship prompt which seems to override cd also.
+function cd {
+  command cd "$@"
+  RET=$?
+  ls
+  goenv load
+  return $RET
+}
 
 # ⚠️  SHELL ⚠️
 
