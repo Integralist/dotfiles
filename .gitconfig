@@ -68,7 +68,8 @@
 
 [delta]
   keep-plus-minus-markers = true
-  minus-style = 'syntax auto'
+  minus-style = 'syntax darkred'
+  plus-style = 'syntax darkgreen'
 
 [diff]
   indentHeuristic = true
