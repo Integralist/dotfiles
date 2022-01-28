@@ -1,6 +1,7 @@
 [sources]
 go_blog = "https://go.dev/blog/feed.atom"
 rust_blog = "https://blog.rust-lang.org/feed.xml"
+rust_weekly = "https://rust.thisweekin.io/feed"
 zig_news = "https://zig.news/feed"
 go_dave_cheney = "https://dave.cheney.net/feed"
 asciinema = "https://blog.asciinema.org/index.xml"
