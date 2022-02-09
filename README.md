@@ -37,6 +37,7 @@ The larger the number (time in seconds), the longer it will take macOS to switch
 There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew:
 
 ```bash
+brew bundle dump --force
 brew bundle install
 ```
 
