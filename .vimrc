@@ -312,8 +312,13 @@ nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
 " vim-move (<C-j>, <C-k> to move lines around more easily than :move)
 let g:move_key_modifier = 'C'
 
-" vim-markdown
+" indentLine
+"
+" Prevent breaking markdown files.
+"
 let g:vim_markdown_conceal = 0
+let g:indentLine_fileTypeExclude = ['markdown']
+let g:indentLine_concealcursor = "nv"
 
 " rust
 let g:rustfmt_autosave = 1
