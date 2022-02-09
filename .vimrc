@@ -125,6 +125,7 @@ autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoption
 call plug#begin('~/.vim/plugged')
 Plug 'dense-analysis/ale'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'gabenespoli/vim-mutton'
 Plug 'godlygeek/tabular'
 Plug 'google/vim-searchindex'
 Plug 'itchyny/lightline.vim'
