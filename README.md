@@ -82,6 +82,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
 - [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
+- [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
 - [meeting bar](https://github.com/leits/MeetingBar): shows calendar meetings in macOS menu bar ([guide](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
 - [menu hidden](https://github.com/dwarvesf/hidden): macOS utility that helps hide menu bar icons.
 - [monosnap](https://monosnap.com/): annotate images.
