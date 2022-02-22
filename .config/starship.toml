@@ -23,6 +23,10 @@ format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = true
 
+[custom.gittag]
+command = "echo \"(tag: $(git describe --tags --abbrev=0))\""
+when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1"
+
 [custom.datetime]
 style = "bold white"
 command = "date"
