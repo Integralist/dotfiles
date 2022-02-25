@@ -57,6 +57,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [fd](https://github.com/sharkdp/fd): find replacement (not quite as powerful, but basically what I typically use find for).
 - [fig](https://fig.io/): shell command completion.
 - [fnm](https://github.com/Schniz/fnm): fast Node.js manager.
+- [fzf](https://github.com/junegunn/fzf): A command-line fuzzy finder.
 - [gping](https://github.com/orf/gping): replaces `ping` with tui graph version (executable is `gping` so alias `ping` to that).
 - [grc](https://github.com/garabik/grc): generic colouriser for your shell (e.g. `alias go='grc /usr/bin/go'`), you can `brew install grc`.
 - [hyperfine](https://github.com/sharkdp/hyperfine): benchmark your shell performance (e.g. `hyperfine 'bash -l'`).
