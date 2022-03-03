@@ -134,9 +134,6 @@ autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 "
 call plug#begin('~/.vim/plugged')
 
-" Toggle and Switch Between Multiple Floating Terminals
-Plug 'chengzeyi/multiterm.vim'
-
 " Code Linter
 Plug 'dense-analysis/ale'
 
