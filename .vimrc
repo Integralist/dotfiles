@@ -139,9 +139,6 @@ autocmd FileType sh,ruby,yaml,vim setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FilterWritePre * call SetDiffColours()
 autocmd! BufWritePost ~/.vimrc source ~/.vimrc " auto source vimrc changes
 
-" Configure the highlighted Vim tab
-autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
-
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Management
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -267,6 +264,13 @@ endfunction
 
 nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
+
+" Configure the highlighted Vim tab
+"
+" NOTE: This must come after the colorscheme change otherwise we'll end up
+" unsetting the tab highlighting.
+"
+autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
