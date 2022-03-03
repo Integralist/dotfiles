@@ -88,6 +88,9 @@ nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 " make disabling search highlights easier
 map ± :nohlsearch<CR>
 
+" quick jump to Ack command which I use all the time
+map <leader>a :Ack! ''
+
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Auto Commands
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -390,7 +393,12 @@ nmap <leader><leader><leader> <Plug>CommentaryLine
 " ------------------------------------
 " zivyangll/git-blame.vim
 " ------------------------------------
-nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
+"
+" <leader>gb will open in the browser,
+" while the following mapping opens it
+" in the status bar as a single line.
+"
+nnoremap <leader><leader>b :<C-u>call gitblame#echo()<CR>
 
 " ------------------------------------
 " matze/vim-move
