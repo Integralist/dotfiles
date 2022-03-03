@@ -1,3 +1,7 @@
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+" Configuration
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+"
 " character encoding
 set encoding=utf-8
 " stops odd issues like using arrow keys in insert mode will send key sequences that are misinterpreted by vi
@@ -73,9 +77,6 @@ set spell
 " display pipe character for any tabs
 set list lcs=tab:\|-
 
-" dynamic substitutions (replace while typing) only works for neovim currently so use silent! until vim supports
-:silent! set inccommand=nosplit
-
 " allow filtering of quickfix/location list window results
 " :help cfilter-plugin
 :packadd cfilter
@@ -87,7 +88,10 @@ nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 " make disabling search highlights easier
 map ± :nohlsearch<CR>
 
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Auto Commands
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+"
 " :h autocommand-events
 "
 fun! StripTrailingWhitespace()
@@ -105,55 +109,119 @@ fun! SetDiffColours()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 
-autocmd BufWritePre * call StripTrailingWhitespace()
-autocmd BufWritePost *.tf :!terraform fmt %
+autocmd BufRead,BufNewFile *.md :MuttonToggle
 autocmd BufRead,BufNewFile *.md set filetype=markdown " vim interprets .md as 'modula2' otherwise, see :set filetype?
-autocmd FilterWritePre * call SetDiffColours()
+autocmd BufWritePost *.tf :!terraform fmt %
+autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
-autocmd FileType sh,ruby,yaml,vim setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t " see `:h fo-table` for details of formatoptions `t` to force wrapping of text
+autocmd FileType sh,ruby,yaml,vim setlocal shiftwidth=2 tabstop=2 expandtab
+autocmd FilterWritePre * call SetDiffColours()
 
-" Plugin Managment
+" Configure the highlighted Vim tab
+autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
+
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+" Plugin Management
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+"
 " https://github.com/junegunn/vim-plug#example
 "
 " Reload .vimrc and :PlugInstall to install plugins.
 " Use single quotes as requested by vim-plug.
 "
-" Specify a directory for plugins
 call plug#begin('~/.vim/plugged')
+
+" Code Linter
 Plug 'dense-analysis/ale'
+
+" Go Programming Language
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Markdown sidebars
 Plug 'gabenespoli/vim-mutton'
+
+" Text alignment
 Plug 'godlygeek/tabular'
+
+" Display number of search matches
 Plug 'google/vim-searchindex'
+
+" Status bar enhancement
 Plug 'itchyny/lightline.vim'
+
+" JavaScript Programming Language Syntax Highlighter
 Plug 'jelera/vim-javascript-syntax'
+
+" Fuzzy Finder
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
+
+" Run, view, and manage UNIX shell commands
 Plug 'ledesmablt/vim-run'
+
+" Highlight the yanked region
 Plug 'machakann/vim-highlightedyank'
+
+" Substitution live preview (until Vim supports inccommand=nosplit)
 Plug 'markonm/traces.vim'
+
+" Move lines and selections up and down
 Plug 'matze/vim-move'
+
+" Text search
 Plug 'mileszs/ack.vim'
+
+" Communicate with Language Servers
 Plug 'natebosch/vim-lsc'
+
+" Python Linter
 Plug 'nvie/vim-flake8', { 'for': 'python' }
+
+" Python requirements.txt Syntax Highlighter
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
+
+" Search Dash.app
 Plug 'rizzatti/dash.vim'
+
+" Open GitHub links in web browser
 Plug 'ruanyl/vim-gh-line'
+
+" Rust Programming Language
 Plug 'rust-lang/rust.vim'
+
+" Go Debugging
 Plug 'sebdah/vim-delve'
+
+" Programming Languages Syntax Highlighter
 Plug 'sheerun/vim-polyglot'
+
+" VCL Syntax Highlighter
 Plug 'smerrill/vcl-vim-plugin'
+
+" Code Comments
 Plug 'tpope/vim-commentary'
+
+" Normalises repeat operator
 Plug 'tpope/vim-repeat'
+
+" Change surrounding characters
 Plug 'tpope/vim-surround'
+
+" Highlights matches for f/F and t/T operators
 Plug 'unblevable/quick-scope'
+
+" Display indentation levels
 Plug 'Yggdroot/indentLine'
+
+" Display git blame in status bar (<Leader>s)
 Plug 'zivyangll/git-blame.vim'
 
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 "
 " NOTE: nord-vim requires Nord terminal theme.
 "
@@ -181,9 +249,14 @@ endfunction
 nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
 
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-" Lightline
+" ------------------------------------
+" itchyny/lightline.vim
+" ------------------------------------
+"
 " I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
 " I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
 "
@@ -195,11 +268,9 @@ set noshowmode
 let g:lightline = {'colorscheme': 'powerlineish'}
 let g:lightline.enable = {'tabline': 0}
 
-" Configure the highlighted Vim tab
-"
-autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
-
-" ALE linting
+" ------------------------------------
+" dense-analysis/ale
+" ------------------------------------
 "
 " go vet options depends on installing extra command:
 "
@@ -215,21 +286,25 @@ let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
 highlight link ALEWarningSign String
 highlight link ALEErrorSign Title
-
 nmap <silent> <leader>x :ALENext<cr>
 nmap <silent> <leader>z :ALEPrevious<cr>
 
-" vim-run
+" ------------------------------------
+" ledesmablt/vim-run
+" ------------------------------------
 let g:run_use_loclist = 1
 
-" vim-go
+" ------------------------------------
+" fatih/vim-go
+" ------------------------------------
+"
+" :h go-syntax
+"
 let g:go_fmt_command = 'goimports'
 let g:go_gopls_complete_unimported = 1
 let g:go_gopls_staticcheck = 1
 let g:go_metalinter_command='gopls'
 let g:go_metalinter_deadline = '20s'
-
-" :h go-syntax
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -241,21 +316,26 @@ let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
-
-" vim-go: check if any expressions return an error type that aren't being handled
-" autocmd BufWritePost *.go :GoErrCheck! -ignoretests
-
-" vim-go snippet
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 
-" vim-lsc
+" Check if any expressions return an error type that aren't being handled
 "
+" DISABLED (too noisy)
+"
+" autocmd BufWritePost *.go :GoErrCheck! -ignoretests
+
+" ------------------------------------
+" natebosch/vim-lsc
+" ------------------------------------
 let g:lsc_server_commands = {'rust': 'rust-analyzer', 'go': 'gopls'}
 let g:lsc_auto_map = v:true
 autocmd CompleteDone * silent! pclose
 
-" FZF (search files)
+" ------------------------------------
+" junegunn/fzf
+" junegunn/fzf.vim
+" ------------------------------------
 "
 " Shift-Tab to select multiple files
 "
@@ -275,6 +355,7 @@ autocmd CompleteDone * silent! pclose
 "
 " NOTE: append ! to command (e.g. :FZF vs :FZF! or place it just before the ?
 " in the case of :GFiles!?) to have preview open full screen.
+"
 map <leader>f :FZF<CR>
 map <leader>b :Buffers<CR>
 map <leader>g :GFiles?<CR>
@@ -287,7 +368,9 @@ set wildmode=list:longest,list:full
 " configure FZF text search command to have default flags included
 autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden --ignore "node_modules" --ignore-dir="vendor" --skip-vcs-ignores', <bang>0)
 
-" ack
+" ------------------------------------
+" mileszs/ack.vim
+" ------------------------------------
 let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
 
 " help Ack mappings to respect my split settings
@@ -295,24 +378,30 @@ let g:ack_mappings = {
   \ "h": "<C-W><CR>:exe 'wincmd ' (&splitbelow ? 'J' : 'K')<CR><C-W>p<C-W>J<C-W>p",
   \ "v": "<C-W><CR>:exe 'wincmd ' (&splitright ? 'L' : 'H')<CR><C-W>p<C-W>J<C-W>p"}
 
-" vim-commentary
+" ------------------------------------
+" tpope/vim-commentary
+" ------------------------------------
 xmap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>Commentary
 omap <leader><leader><leader> <Plug>Commentary
 nmap <leader><leader><leader> <Plug>CommentaryLine
 
-" dash
-" https://kapeli.com/dash
-"
-:nmap <silent> <leader>d <Plug>DashSearch
-
-" git-blame
+" ------------------------------------
+" zivyangll/git-blame.vim
+" ------------------------------------
 nnoremap <leader>s :<C-u>call gitblame#echo()<CR>
 
-" vim-move (<C-j>, <C-k> to move lines around more easily than :move)
+" ------------------------------------
+" matze/vim-move
+" ------------------------------------
+"
+" <C-j>, <C-k> to move lines around more easily than :move
+"
 let g:move_key_modifier = 'C'
 
-" indentLine
+" ------------------------------------
+" Yggdroot/indentLine
+" ------------------------------------
 "
 " Prevent breaking markdown files.
 "
@@ -320,21 +409,23 @@ let g:vim_markdown_conceal = 0
 let g:indentLine_fileTypeExclude = ['markdown']
 let g:indentLine_concealcursor = "nv"
 
-" rust
+" ------------------------------------
+" rust-lang/rust.vim
+" ------------------------------------
 let g:rustfmt_autosave = 1
 
-" make closing a :terminal split easier (<Esc>+:q)
+" ------------------------------------
+" dash
+" ------------------------------------
 "
-" NOTE: disabled as it was affecting :FZF and related preview windows, meaning
-" if I tried to use the arrow keys the "buffer cannot be modified" error would
-" appear. As I NEVER use :terminal over tmux it seems pointless to keep this
-" configuration when it breaks something (i.e. :FZF) that I use 99% of the time.
+" https://kapeli.com/dash
 "
-" silent! tnoremap <Esc> <C-\><C-n>
+:nmap <silent> <leader>d <Plug>DashSearch
 
-" netrw
-let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'
-
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+" File Explorer Configuration
+" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+"
 " NOTES:
 "
 " when browsing with built-in file explorer (netrw) the following keys are useful to remember:
@@ -343,3 +434,4 @@ let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'
 " - v opens file in new vertical split window
 " - t opens file in new tab split window
 "
+let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'
