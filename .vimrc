@@ -232,7 +232,7 @@ Plug 'unblevable/quick-scope'
 " Display indentation levels
 Plug 'Yggdroot/indentLine'
 
-" Display git blame in status bar (<Leader>s)
+" Display git blame in status bar
 Plug 'zivyangll/git-blame.vim'
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
