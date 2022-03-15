@@ -26,8 +26,8 @@ else
 
   # Top
   #
-  tmux new-window -n 'top' -t fastly:4
-  tmux send-keys -t fastly:4 'cd ~/ && export GPG_USER=integralist@fastly.com && clear && top' 'C-m'
+  tmux new-window -n 'htop' -t fastly:4
+  tmux send-keys -t fastly:4 'cd ~/ && export GPG_USER=integralist@fastly.com && clear && sudo htop' 'C-m'
 
   # RSS
   #
