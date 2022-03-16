@@ -303,7 +303,7 @@ let g:lightline.enable = {'tabline': 0}
 " otherwise it'll add dependencies to your project go.mod accidentally.
 "
 let g:ale_go_govet_options = '-vettool=$(which shadow)'
-let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'rls', 'analyzer']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
+let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'analyzer']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
 let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
