@@ -23,8 +23,9 @@ format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
 map_symbol = true
 disabled = true
 
+# Because the starship provided modules don't work for me.
 [custom.gittag]
-command = "echo \"(tag: $(git describe --tags --abbrev=0))\""
+command = "echo \"(tag: $(git describe --tags --abbrev=0), commit: $(git rev-parse --short HEAD))\""
 when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
 
 [custom.datetime]
