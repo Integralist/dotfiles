@@ -441,6 +441,9 @@ let g:indentLine_concealcursor = "nv"
 " rust-lang/rust.vim
 " ------------------------------------
 let g:rustfmt_autosave = 1
+autocmd FileType rust map <buffer> <leader><leader>b :Cbuild<CR>
+autocmd FileType rust map <buffer> <leader><leader>c :Ccheck<CR>
+autocmd FileType rust map <buffer> <leader><leader>r :Crun<CR>
 
 " ------------------------------------
 " dash
