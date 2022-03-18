@@ -1,3 +1,5 @@
+# https://starship.rs/config/
+
 [[battery.display]]
 threshold = 50
 style = "bold red"
@@ -7,7 +9,6 @@ success_symbol = "[➜](bold green) "
 error_symbol = "[✗](bold red) "
 
 [directory]
-truncation_length = 4
 truncation_symbol = "…/"
 
 [gcloud]
