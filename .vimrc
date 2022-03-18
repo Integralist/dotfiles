@@ -242,6 +242,7 @@ Plug 'zivyangll/git-blame.vim'
 " NOTE: nord-vim requires Nord terminal theme.
 "
 Plug 'arcticicestudio/nord-vim'
+Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'endel/vim-github-colorscheme'
 Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
@@ -258,7 +259,7 @@ function DarkTheme()
 endfunction
 
 function LightTheme()
-  colorscheme github
+  colorscheme Tomorrow
   set background=light
 endfunction
 
