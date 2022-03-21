@@ -38,6 +38,37 @@ eval "$(pyenv virtualenv-init -)"
 #
 complete -C /usr/local/bin/terraform terraform
 
+# configure go environment
+#
+# Custom go binaries are installed in $HOME/go/bin.
+#
+# NOTE: Doesn't work when using Zoxide, and will leave the alias active when
+# changing to a non-project directory.
+#
+function go_version {
+    if [ -f "go.mod" ]; then
+        v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
+        eval alias go="go$v"
+    fi
+}
+
+# To support the above go environment configuration we will override the cd
+# command to call the go logic for checking the go version.
+#
+# We have a similar override in .bashrc and I've incorporated the ls call here
+# as we can't inherit the cd implementation.
+#
+# NOTE: We use `command` and not `builtin` because the latter doesn't take into
+# account anything available on the user's $PATH but also because it didn't
+# work with the Starship prompt which seems to override cd also.
+function cd {
+  command cd "$@"
+  RET=$?
+  ls
+  go_version
+  return $RET
+}
+
 # configure rust environment
 #
 # - autocomplete
