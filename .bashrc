@@ -1,3 +1,7 @@
+export PATH="${PATH}:${HOME}/.local/bin"
+# Fig pre block. Keep at the top of this file.
+eval "$(fig init bash pre)"
+
 #!/usr/bin/env bash
 #
 # NOTE:
@@ -109,7 +113,19 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 export EDITOR="vim"
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_COMPLETION_TRIGGER="''"
-export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --skip-vcs-ignores --filename-pattern ''"
+
+# NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
+# project's .gitignore being quite complex I was missing out of files that I
+# did actually want to find. But for most other projects respecting the ignore
+# file is what I want and so I'll try to resolve in other ways.
+export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
+# external shell extension scripts
+# https://github.com/junegunn/fzf/tree/master/shell and so setting them to use
+# ag will mean you'll see a bunch of errors related to not having permissions
+# to access certain folders. A work around might be to use `fd` instead.
+#
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
@@ -575,7 +591,6 @@ function cd {
   command cd "$@"
   RET=$?
   ls
-  goenv load
   return $RET
 }
 
@@ -600,3 +615,6 @@ dedupe
 # https://starship.rs/
 #
 eval "$(starship init bash)"
+
+# Fig post block. Keep at the bottom of this file.
+eval "$(fig init bash post)"

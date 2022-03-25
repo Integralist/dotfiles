@@ -86,6 +86,11 @@ set showmatch
 " comma-separated list of paths for determining where to lookup words for autocomplete
 set dictionary=/usr/share/dict/words
 " use silver searcher for vim grep
+"
+" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
+" project's .gitignore being quite complex I was missing out of files that I
+" did actually want to find. But for most other projects respecting the
+" ignore file is what I want and so I'll try to resolve in other ways.
 set grepprg=ag\ --nogroup\ --nocolor\ --skip-vcs-ignores
 " activate spell checking
 set spell
@@ -390,12 +395,24 @@ set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files 
 set wildmode=list:longest,list:full
 
 " configure FZF text search command to have default flags included
-autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden --ignore "node_modules" --ignore-dir="vendor" --skip-vcs-ignores', <bang>0)
+"
+" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
+" project's .gitignore being quite complex I was missing out of files that I
+" did actually want to find. But for most other projects respecting the
+" ignore file is what I want and so I'll try to resolve in other ways.
+"
+autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden --ignore "node_modules" --ignore-dir="vendor"', <bang>0)
 
 " ------------------------------------
 " mileszs/ack.vim
 " ------------------------------------
-let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor --skip-vcs-ignores'
+"
+" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
+" project's .gitignore being quite complex I was missing out of files that I
+" did actually want to find. But for most other projects respecting the
+" ignore file is what I want and so I'll try to resolve in other ways.
+"
+let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor'
 
 " help Ack mappings to respect my split settings
 let g:ack_mappings = {
