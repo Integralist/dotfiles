@@ -180,6 +180,66 @@ font:
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
+#
+
+# # Colors (Night Owlish Light)
+# colors:
+#   bright:
+#     black: '#7a8181'
+#     blue: '#5ca7e4'
+#     cyan: '#00c990'
+#     green: '#49d0c5'
+#     magenta: '#697098'
+#     red: '#f76e6e'
+#     white: '#989fb1'
+#     yellow: '#dac26b'
+#   cursor:
+#     cursor: '#403f53'
+#     text: '#fbfbfb'
+#   normal:
+#     black: '#011627'
+#     blue: '#4876d6'
+#     cyan: '#08916a'
+#     green: '#2aa298'
+#     magenta: '#403f53'
+#     red: '#d3423e'
+#     white: '#7a8181'
+#     yellow: '#daaa01'
+#   primary:
+#     background: '#ffffff'
+#     foreground: '#403f53'
+#   selection:
+#     background: '#f2f2f2'
+#     text: '#403f53'
+
+# Colors (Palenight)
+colors:
+  # Default colors
+  primary:
+    background: '0x292d3e'
+    foreground: '0xd0d0d0'
+
+  # Normal colors
+  normal:
+    black:   '0x292d3e'
+    red:     '0xf07178'
+    green:   '0xc3e88d'
+    yellow:  '0xffcb6b'
+    blue:    '0x82aaff'
+    magenta: '0xc792ea'
+    cyan:    '0x89ddff'
+    white:   '0xd0d0d0'
+
+  # Bright colors
+  bright:
+    black:   '0x434758'
+    red:     '0xff8b92'
+    green:   '0xddffa7'
+    yellow:  '0xffe585'
+    blue:    '0x9cc4ff'
+    magenta: '0xe1acff'
+    cyan:    '0xa3f7ff'
+    white:   '0xffffff'
 
 # Colors (Tomorrow Night)
 #colors:
