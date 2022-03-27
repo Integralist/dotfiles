@@ -104,6 +104,11 @@ set list lcs=tab:\|-
 set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
+" Substitution live preview
+set inccommand=nosplit
+" Disables the following message:
+" Streaming logs to an output buffer is not supported in Neovim. All commands will default to RunNoStream.
+let g:run_nostream_default = 1
 
 " allow filtering of quickfix/location list window results
 " :help cfilter-plugin
@@ -197,9 +202,6 @@ Plug 'ledesmablt/vim-run'
 " Highlight the yanked region
 Plug 'machakann/vim-highlightedyank'
 
-" Substitution live preview (until Vim supports inccommand=nosplit)
-Plug 'markonm/traces.vim'
-
 " Move lines and selections up and down
 Plug 'matze/vim-move'
 
@@ -248,6 +250,10 @@ Plug 'zivyangll/git-blame.vim'
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Neovim Specific Plugins
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+" Preconfigured snippets for multiple programming languages.
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
