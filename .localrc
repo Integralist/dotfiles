@@ -51,6 +51,9 @@ function go_version {
         eval alias go="go$v"
     fi
 }
+if [ ! -f "$HOME/go/bin/gofumpt" ]; then
+    go install mvdan.cc/gofumpt@latest
+fi
 
 # To support the above go environment configuration we will override the cd
 # command to call the go logic for checking the go version.
