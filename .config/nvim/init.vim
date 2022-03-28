@@ -554,10 +554,10 @@ nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> [x        <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]x        <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <silent> ]s        <cmd>lua vim.lsp.diagnostic.show()<CR>
-nnoremap <silent> <space>q  <cmd>lua vim.lsp.diagnostic.setloclist()<CR>
+nnoremap <silent> [x        <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> ]s        <cmd>lua vim.diagnostic.show()<CR>
+nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
 
 " Setup Completion
 " https://github.com/hrsh7th/nvim-cmp#recommended-configuration
