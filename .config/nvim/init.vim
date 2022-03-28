@@ -280,11 +280,10 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 "
 " NOTE: nord-vim requires Nord terminal theme.
 "
-Plug 'arcticicestudio/nord-vim'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'endel/vim-github-colorscheme'
-Plug 'junegunn/seoul256.vim'
 Plug 'morhetz/gruvbox'
+Plug 'NLKNguyen/papercolor-theme'
 call plug#end()
 
 syntax enable
@@ -298,7 +297,7 @@ function DarkTheme()
 endfunction
 
 function LightTheme()
-  colorscheme Tomorrow
+  colorscheme PaperColor
   set background=light
 endfunction
 
@@ -526,6 +525,7 @@ local opts = {
 
 require('rust-tools').setup(opts)
 
+-- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
 -- https://www.getman.io/posts/programming-go-in-neovim/
 nvim_lsp.gopls.setup{
 	cmd = {'gopls'},
