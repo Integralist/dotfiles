@@ -445,6 +445,7 @@ alias tmuxy='bash ~/tmux.sh'
 alias top='btm --current_usage'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
+alias vim=nvim
 alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
 alias vimlight="vim -u /Users/integralist/.vimrc-light"
 
