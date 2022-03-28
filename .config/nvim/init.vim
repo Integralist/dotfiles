@@ -389,13 +389,6 @@ autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {ret
 " autocmd BufWritePost *.go :GoErrCheck! -ignoretests
 
 " ------------------------------------
-" natebosch/vim-lsc
-" ------------------------------------
-let g:lsc_server_commands = {'rust': 'rust-analyzer', 'go': 'gopls'}
-let g:lsc_auto_map = v:true
-autocmd CompleteDone * silent! pclose
-
-" ------------------------------------
 " junegunn/fzf
 " junegunn/fzf.vim
 " ------------------------------------
@@ -472,14 +465,6 @@ nmap <leader><leader><leader> <Plug>CommentaryLine
 nnoremap <leader><leader>b :<C-u>call gitblame#echo()<CR>
 
 " ------------------------------------
-" matze/vim-move
-" ------------------------------------
-"
-" <C-j>, <C-k> to move lines around more easily than :move
-"
-let g:move_key_modifier = 'C'
-
-" ------------------------------------
 " Yggdroot/indentLine
 " ------------------------------------
 "
@@ -490,14 +475,6 @@ let g:indentLine_fileTypeExclude = ['markdown']
 let g:indentLine_concealcursor = "nv"
 
 " ------------------------------------
-" rust-lang/rust.vim
-" ------------------------------------
-let g:rustfmt_autosave = 1
-autocmd FileType rust map <buffer> <leader><leader>b :Cbuild<CR>
-autocmd FileType rust map <buffer> <leader><leader>c :Ccheck<CR>
-autocmd FileType rust map <buffer> <leader><leader>r :Crun<CR>
-
-" ------------------------------------
 " dash
 " ------------------------------------
 "
@@ -506,7 +483,7 @@ autocmd FileType rust map <buffer> <leader><leader>r :Crun<CR>
 :nmap <silent> <leader>d <Plug>DashSearch
 
 " ------------------------------------
-" LSP and Rust
+" Neovim LSP
 " ------------------------------------
 "
 " Configure LSP through rust-tools.nvim plugin.
@@ -549,18 +526,19 @@ EOF
 
 " Code navigation shortcuts
 " as found in :help lsp
-nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
-
-" Quick-fix
-nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gd        <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> [x        <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]x        <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> ]s        <cmd>lua vim.lsp.diagnostic.show()<CR>
+nnoremap <silent> <space>q  <cmd>lua vim.lsp.diagnostic.setloclist()<CR>
 
 " Setup Completion
 " https://github.com/hrsh7th/nvim-cmp#recommended-configuration
