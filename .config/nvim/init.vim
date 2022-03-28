@@ -202,9 +202,6 @@ Plug 'ledesmablt/vim-run'
 " Highlight the yanked region
 Plug 'machakann/vim-highlightedyank'
 
-" Move lines and selections up and down
-Plug 'matze/vim-move'
-
 " Text search
 Plug 'mileszs/ack.vim'
 
@@ -539,7 +536,6 @@ local opts = {
             -- to enable rust-analyzer settings visit:
             -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
             ["rust-analyzer"] = {
-                -- enable clippy on save
                 checkOnSave = {
                     command = "clippy"
                 },
@@ -551,12 +547,27 @@ local opts = {
 require('rust-tools').setup(opts)
 EOF
 
+" Code navigation shortcuts
+" as found in :help lsp
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.definition()<CR>
+
+" Quick-fix
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
+
 " Setup Completion
-" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+" https://github.com/hrsh7th/nvim-cmp#recommended-configuration
+"
 lua <<EOF
 local cmp = require'cmp'
 cmp.setup({
-  -- Enable LSP snippets
   snippet = {
     expand = function(args)
         vim.fn["vsnip#anonymous"](args.body)
@@ -565,20 +576,17 @@ cmp.setup({
   mapping = {
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-e>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     })
   },
-
-  -- Installed sources
   sources = {
     { name = 'nvim_lsp' },
     { name = 'vsnip' },
