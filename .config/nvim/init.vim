@@ -284,12 +284,22 @@ Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'endel/vim-github-colorscheme'
 Plug 'morhetz/gruvbox'
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'yeddaif/neovim-purple'
 call plug#end()
 
-syntax enable
+" enable 24bit true color
+if (has("termguicolors"))
+ set termguicolors
+endif
 
-autocmd VimEnter * colorscheme gruvbox
-set background=dark
+syntax enable
+colorscheme neovim_purple
+
+" allow background terminal color to come through
+hi Normal guibg=NONE ctermbg=NONE
+hi nonText ctermbg=NONE
+" hi CursorLine guibg=Purple guifg=white
+" hi CursorLine guibg=NONE
 
 function DarkTheme()
   colorscheme gruvbox

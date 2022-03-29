@@ -212,34 +212,68 @@ font:
 #     background: '#f2f2f2'
 #     text: '#403f53'
 
-# Colors (Palenight)
+# # Colors (Palenight)
+# colors:
+#   # Default colors
+#   primary:
+#     background: '0x292d3e'
+#     foreground: '0xd0d0d0'
+
+#   # Normal colors
+#   normal:
+#     black:   '0x292d3e'
+#     red:     '0xf07178'
+#     green:   '0xc3e88d'
+#     yellow:  '0xffcb6b'
+#     blue:    '0x82aaff'
+#     magenta: '0xc792ea'
+#     cyan:    '0x89ddff'
+#     white:   '0xd0d0d0'
+
+#   # Bright colors
+#   bright:
+#     black:   '0x434758'
+#     red:     '0xff8b92'
+#     green:   '0xddffa7'
+#     yellow:  '0xffe585'
+#     blue:    '0x9cc4ff'
+#     magenta: '0xe1acff'
+#     cyan:    '0xa3f7ff'
+#     white:   '0xffffff'
+# Colors
 colors:
   # Default colors
   primary:
-    background: '0x292d3e'
-    foreground: '0xd0d0d0'
+    background: "0x1E1E3F"
+    foreground: "0xE1EFFF"
+
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: "0x1E1E3F"
+    cursor: "0xFAD000"
 
   # Normal colors
   normal:
-    black:   '0x292d3e'
-    red:     '0xf07178'
-    green:   '0xc3e88d'
-    yellow:  '0xffcb6b'
-    blue:    '0x82aaff'
-    magenta: '0xc792ea'
-    cyan:    '0x89ddff'
-    white:   '0xd0d0d0'
+    black: "0x000000"
+    # red: "0xEC3A37"
+    green: "0x75e44c"
+    yellow: "0xFAD000"
+    blue: "0x6943FF"
+    magenta: "0xFF2C70"
+    cyan: "0x80FCFF"
+    white: "0xFFFFFF"
 
   # Bright colors
   bright:
-    black:   '0x434758'
-    red:     '0xff8b92'
-    green:   '0xddffa7'
-    yellow:  '0xffe585'
-    blue:    '0x9cc4ff'
-    magenta: '0xe1acff'
-    cyan:    '0xa3f7ff'
-    white:   '0xffffff'
+    black: "0x5C5C61"
+    # red: "0xEC3A37F5"
+    green: "0x3AD900"
+    yellow: "0xFAD000"
+    blue: "0x6943FF"
+    magenta: "0xFB94FF"
+    cyan: "0x80FCFF"
+    white: "0x2D2B55"
+
 
 # Colors (Tomorrow Night)
 #colors:
