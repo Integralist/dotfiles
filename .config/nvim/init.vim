@@ -264,15 +264,16 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 " Snippet completion source for nvim-cmp
 Plug 'hrsh7th/cmp-vsnip'
 
-" Other usefull completion sources
+" Other useful completion sources
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-buffer'
 
 " To enable more of the features of rust-analyzer, such as inlay hints and more!
 Plug 'simrat39/rust-tools.nvim'
 
-" Better syntax highlighting
+" Better syntax highlighting with Treesitter and friends
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'm-demare/hlargs.nvim'
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
@@ -495,16 +496,11 @@ let g:indentLine_concealcursor = "nv"
 " Neovim LSP
 " ------------------------------------
 "
-" Configure LSP through rust-tools.nvim plugin.
-" rust-tools will configure and enable certain LSP features for us.
-" See https://github.com/simrat39/rust-tools.nvim#configuration
+" Configure Rust LSP.
+"
+" https://github.com/simrat39/rust-tools.nvim#configuration
+"
 lua <<EOF
-local nvim_lsp = require('lspconfig')
-
-local on_attach = function(client, bufnr)
-  print("LSP attached to buffer")
-end
-
 local opts = {
     tools = { -- rust-tools options
         autoSetHints = true,
@@ -520,7 +516,6 @@ local opts = {
     -- these override the defaults set by rust-tools.nvim
     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
     server = {
-        on_attach = on_attach,
         settings = {
             -- to enable rust-analyzer settings visit:
             -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
@@ -532,12 +527,16 @@ local opts = {
         }
     },
 }
-
 require('rust-tools').setup(opts)
+EOF
 
--- https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
--- https://www.getman.io/posts/programming-go-in-neovim/
-nvim_lsp.gopls.setup{
+" Configure Golang LSP.
+"
+" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
+" https://www.getman.io/posts/programming-go-in-neovim/
+"
+lua <<EOF
+require('lspconfig').gopls.setup{
 	cmd = {'gopls'},
   settings = {
     gopls = {
@@ -573,7 +572,7 @@ nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
 " https://github.com/hrsh7th/nvim-cmp#recommended-configuration
 "
 lua <<EOF
-local cmp = require'cmp'
+local cmp = require('cmp')
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -601,6 +600,25 @@ cmp.setup({
     { name = 'buffer' },
   },
 })
+EOF
+
+" Setup Treesitter and friends
+"
+lua <<EOF
+require('nvim-treesitter.configs').setup {
+  ensure_installed = "all",
+  highlight = {
+    enable = true,
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = nil,
+  }
+}
+require('hlargs').setup()
+vim.o.foldmethod='expr'
+vim.o.foldexpr='nvim_treesitter#foldexpr()'
 EOF
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
