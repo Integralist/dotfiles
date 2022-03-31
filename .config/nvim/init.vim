@@ -294,6 +294,13 @@ if (has("termguicolors"))
 endif
 
 syntax enable
+
+augroup qs_colors
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
+augroup END
+
 colorscheme neovim_purple
 
 " allow background terminal color to come through
@@ -303,11 +310,21 @@ hi nonText ctermbg=NONE
 " hi CursorLine guibg=NONE
 
 function DarkTheme()
+  augroup qs_colors
+    autocmd!
+    autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
+    autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
+  augroup END
   colorscheme gruvbox
   set background=dark
 endfunction
 
 function LightTheme()
+  augroup qs_colors
+    autocmd!
+    autocmd ColorScheme * highlight QuickScopePrimary guifg='#ff6700' gui=underline ctermfg=155 cterm=underline
+    autocmd ColorScheme * highlight QuickScopeSecondary guifg='#5b00d1' gui=underline ctermfg=81 cterm=underline
+  augroup END
   colorscheme PaperColor
   set background=light
 endfunction
