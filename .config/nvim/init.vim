@@ -532,6 +532,7 @@ EOF
 
 " Configure Golang LSP.
 "
+" https://github.com/golang/tools/blob/258e47306680682e73d2b873b69fe7e616ae5490/gopls/doc/analyzers.md
 " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
 " https://www.getman.io/posts/programming-go-in-neovim/
 "
@@ -542,10 +543,13 @@ require('lspconfig').gopls.setup{
     gopls = {
       experimentalPostfixCompletions = true,
       analyses = {
+        nilness = true,
         unusedparams = true,
-        shadow = true,
-     },
-     staticcheck = true,
+        unusedwrite = true,
+        useany = true,
+      },
+      gofumpt = true,
+      staticcheck = true,
     },
   },
 	on_attach = on_attach,
