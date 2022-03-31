@@ -617,8 +617,6 @@ require('nvim-treesitter.configs').setup {
   }
 }
 require('hlargs').setup()
-vim.o.foldmethod='expr'
-vim.o.foldexpr='nvim_treesitter#foldexpr()'
 EOF
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
