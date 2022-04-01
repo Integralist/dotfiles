@@ -1,5 +1,5 @@
-export PATH="${PATH}:${HOME}/.local/bin"
 # Fig pre block. Keep at the top of this file.
+export PATH="${PATH}:${HOME}/.local/bin"
 eval "$(fig init bash pre)"
 
 #!/usr/bin/env bash
@@ -21,6 +21,7 @@ eval "$(fig init bash pre)"
 #   - PROMPT
 #   - BINDINGS
 #   - SHELL
+#   - SOFTWARE
 #
 echo .bashrc loaded
 
@@ -126,6 +127,7 @@ export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir 
 #
 # export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 # export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
+export GPG_TTY=$(tty)
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
@@ -165,6 +167,13 @@ export LESS_TERMCAP_se=$(printf '\e[0m') # leave standout mode
 export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
 export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
+
+# programming language modifications
+#
+export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="$HOME/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
@@ -583,7 +592,11 @@ bind -x '"\C-g": vim $(fzf -m --ansi --preview="bat --color=always {}" --preview
 #
 # bind '"\C-j": "\eI time \C-m"'
 
-# override the cd command to call ls and goenv
+# To support the configuring our go environment we will override the cd
+# command to call the go logic for checking the go version.
+#
+# We also make sure to call ls when changing directories as it's nice to see
+# what's in each directory.
 #
 # NOTE: We use `command` and not `builtin` because the latter doesn't take into
 # account anything available on the user's $PATH but also because it didn't
@@ -592,6 +605,7 @@ function cd {
   command cd "$@"
   RET=$?
   ls
+  go_version
   return $RET
 }
 
@@ -611,6 +625,90 @@ pgrep gpg-agent &>/dev/null || eval $(gpg-agent --daemon)
 # to ensure there are no duplicates in the $PATH we call dedupe
 #
 dedupe
+
+# ⚠️  SOFTWARE ⚠️
+
+# configure fnm node version manager
+#
+eval "$(fnm env)"
+
+# configure terraform auto-complete
+#
+complete -C /usr/local/bin/terraform terraform
+
+# configure go environment
+#
+# Custom go binaries are installed in $HOME/go/bin.
+#
+# NOTE: Doesn't work when using Zoxide, and will leave the alias active when
+# changing to a non-project directory.
+#
+function go_version {
+    if [ -f "go.mod" ]; then
+        v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
+        eval alias go="go$v"
+    fi
+}
+if [ ! -f "$HOME/go/bin/gofumpt" ]; then
+    go install mvdan.cc/gofumpt@latest
+fi
+
+# configure rust environment
+#
+# - autocomplete
+# - rust-analyzer
+# - cargo audit
+# - cargo fmt
+#
+if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
+    mkdir -p ~/.config/rustlang/autocomplete
+    rustup completions bash rustup >> ~/.config/rustlang/autocomplete/rustup
+fi
+source "$HOME/.config/rustlang/autocomplete/rustup"
+if ! command -v rust-analyzer &> /dev/null
+then
+    brew install rust-analyzer
+fi
+if ! cargo audit --version &> /dev/null; then
+    cargo install cargo-audit --features=fix
+fi
+if ! cargo fmt --version &> /dev/null; then
+    rustup component add rustfmt
+fi
+if ! cargo clippy --version &> /dev/null; then
+    rustup component add clippy
+fi
+
+# broot (tree replacement) requires a companion shell function (br) to allow
+# alt+enter to cd into a directory.
+#
+# If you install broot via Homebrew then `broot --install` will add a `source`
+# to the br function for you. I've moved that line from my
+# .bashrc/.bash_profile into here.
+#
+# Extra configuration can be found here:
+# /Users/integralist/Library/Application Support/org.dystroy.broot/conf.hjson
+#
+if [ -f "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]; then
+    source "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+fi
+
+# zoxide is a directory switcher
+#
+# z <pattern>
+# zoxide query -ls
+#
+eval "$(zoxide init bash)"
+
+# Alacritty
+#
+source ~/.bash_completion/alacritty
+
+# Fig
+#
+# DISABLED until I know it's needed anymore.
+#
+# [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
 
 # initialize the starship shell
 # https://starship.rs/
