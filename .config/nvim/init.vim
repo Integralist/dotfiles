@@ -390,13 +390,14 @@ let g:run_use_loclist = 1
 "
 " :h go-syntax
 "
-let g:go_fmt_command = 'goimports'
+let g:go_fmt_command = 'gofumpt'
 let g:go_gopls_complete_unimported = 1
 let g:go_gopls_staticcheck = 1
 let g:go_gopls_use_placeholders = 1
 let g:go_gopls_gofumpt = 1
-let g:go_metalinter_command='gopls'
+let g:go_metalinter_command='golangci-lint'
 let g:go_metalinter_deadline = '20s'
+let g:go_metalinter_enabled = ['vet', 'revive', 'errcheck']
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_fields = 1
@@ -408,6 +409,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
+autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | copen
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 
