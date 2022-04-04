@@ -646,7 +646,11 @@ complete -C /usr/local/bin/terraform terraform
 function go_version {
     if [ -f "go.mod" ]; then
         v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
-        eval alias go="go$v"
+        if [[ ! $(go version | grep "go$v") ]]; then
+          echo ""
+          echo "About to switch go version to: $v"
+          sudo cp $(which go$v) $(which go)
+        fi
     fi
 }
 if [ ! -f "$HOME/go/bin/gofumpt" ]; then
