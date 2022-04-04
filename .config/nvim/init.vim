@@ -409,7 +409,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
-autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | copen
+autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 
