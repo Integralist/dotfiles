@@ -77,6 +77,8 @@ set autoread
 set splitbelow
 " ensure vertical split windows appear on the right
 set splitright
+" use a new split window when opening items from quickfix window
+set switchbuf=split
 " visual autocomplete for command menu
 set wildmenu
 " only redraw when necessary
