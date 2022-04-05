@@ -704,6 +704,17 @@ fi
 #
 eval "$(zoxide init bash)"
 
+# Refer to overridden `cd` function ☝️ for implementation details.
+function __zoxide_cd {
+  # Original implementation...
+  # https://github.com/ajeetdsouza/zoxide/blob/df148c834fa0eb4a99cac18720e05059bf771430/templates/bash.txt#L17-L21
+  command cd "$@"
+  RET=$?
+  ls
+  go_version
+  return $RET
+}
+
 # Alacritty
 #
 source ~/.bash_completion/alacritty
