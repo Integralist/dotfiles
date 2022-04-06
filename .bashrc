@@ -665,22 +665,25 @@ fi
 # - cargo fmt
 #
 if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
-    mkdir -p ~/.config/rustlang/autocomplete
-    rustup completions bash rustup >> ~/.config/rustlang/autocomplete/rustup
+  mkdir -p ~/.config/rustlang/autocomplete
+  rustup completions bash rustup >> ~/.config/rustlang/autocomplete/rustup
 fi
 source "$HOME/.config/rustlang/autocomplete/rustup"
 if ! command -v rust-analyzer &> /dev/null
 then
-    brew install rust-analyzer
+  brew install rust-analyzer
 fi
 if ! cargo audit --version &> /dev/null; then
-    cargo install cargo-audit --features=fix
+  cargo install cargo-audit --features=fix
 fi
 if ! cargo fmt --version &> /dev/null; then
-    rustup component add rustfmt
+  rustup component add rustfmt
 fi
 if ! cargo clippy --version &> /dev/null; then
-    rustup component add clippy
+  rustup component add clippy
+fi
+if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
+  cargo install cargo-edit
 fi
 
 # broot (tree replacement) requires a companion shell function (br) to allow
@@ -694,7 +697,7 @@ fi
 # /Users/integralist/Library/Application Support/org.dystroy.broot/conf.hjson
 #
 if [ -f "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]; then
-    source "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+  source "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br"
 fi
 
 # zoxide is a directory switcher
