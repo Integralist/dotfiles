@@ -77,7 +77,7 @@ shopt -s huponexit 2>/dev/null
 # ⚠️  EXPORTS ⚠️
 
 # Homebrew
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"'
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # NOTES:
 # LSCOLOR is for BSD (i.e. macOS).
