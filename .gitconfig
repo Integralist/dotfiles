@@ -125,8 +125,9 @@
 [init]
 	defaultBranch = main
 
-# if you’re trying to authenticate with https but you have 2FA enabled.
-# this can be solved by forcing git to use ssh for all interactions.
+# force authentication to use SSH rather than HTTPS.
+# be aware this affects everything that tries to use git.
+# for example, vim (and other tools) will try to clone plugins using SSH.
 #
 # git config --global --add url."git@github.com:".insteadOf "https://github.com/"
 [url "git@github.com:"]
