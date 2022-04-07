@@ -637,7 +637,7 @@ eval "$(fnm env)"
 
 # configure terraform auto-complete
 #
-complete -C /usr/local/bin/terraform terraform
+complete -C /opt/homebrew/bin/terraform terraform
 
 # configure go environment
 #
