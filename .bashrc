@@ -18,7 +18,6 @@ eval "$(fig init bash pre)"
 #   - EXPORTS
 #   - CUSTOM FUNCTIONS
 #   - ALIAS
-#   - PROMPT
 #   - BINDINGS
 #   - SHELL
 #   - SOFTWARE
@@ -26,9 +25,6 @@ eval "$(fig init bash pre)"
 echo .bashrc loaded
 
 # ⚠️  SCRIPTS ⚠️
-
-# https://github.com/git/git/blob/master/contrib/completion/git-prompt.sh
-source ~/.git-prompt.sh
 
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 source ~/.git-completion.bash
@@ -115,6 +111,8 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 # application configuration
 #
 export EDITOR="vim"
+export TERM="screen" # avoid "terminals database is inaccessible" and not being able to run `clear` command.
+export TERMINFO=/usr/share/terminfo
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_COMPLETION_TRIGGER="''"
 
@@ -450,7 +448,7 @@ alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # .bash_profile sources .bashrc and so also causes `pass` autocomplete to be reloaded
 alias rm="rip"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
-alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add -K ~/.ssh/github > /dev/null 2>&1'
+alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add --apple-use-keychain ~/.ssh/github > /dev/null 2>&1'
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
 alias tmuxy='bash ~/tmux.sh'
@@ -462,16 +460,6 @@ alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
 alias vimlight="vim -u /Users/integralist/.vimrc-light"
 
 read -r -d '' git_icons <<- EOF
-# raw git prompt
-
-* unstaged changes
-+ staged but uncommitted changes
-$ stashed changes
-% untracked files
-> local commits on HEAD not pushed to upstream
-< commits on upstream not merged with HEAD
-= HEAD points to same commit as upstream
-
 # starship prompt...
 
 conflicted "="	merge conflicts.
@@ -487,82 +475,6 @@ deleted    "✘"  deleted
 EOF
 alias wat='echo "$git_icons"'
 alias wut='echo "$git_icons"'
-
-# ⚠️  PROMPT ⚠️
-
-function prompt_right() {
-  echo -e ""
-}
-
-# DOCUMENTATION:
-#   - man bash (+ /PROMPTING)
-#
-function prompt_left() {
-  num_jobs=$(jobs | wc -l)
-
-  if [ "$num_jobs" -eq 0 ]; then
-    num_jobs=""
-  else
-    num_jobs=' (\j)'
-  fi
-
-  echo -e "\\e[33m\\]\\u. \\[\\e[37m\\]\\w\\[\\e[00m\\]$num_jobs\\e[31m\\]$(__git_ps1)\\e[00m\\] \\e[0;37m(\\A)\\e[0m"
-
-  # \e indicates escape sequence (sometimes you'll see \033)
-  # the m indicates you've provided a colour sequence
-  #
-  # 30: Black
-  # 31: Red
-  # 32: Green
-  # 33: Yellow
-  # 34: Blue
-  # 35: Purple
-  # 36: Cyan
-  # 37: White
-  #
-  # a semicolon allows additional attributes:
-  #
-  # 0: Reset/Normal text
-  # 1: Bold or light, depending on terminal
-  # 3: Italic/reversed
-  # 4: Underline text
-  # 5: Blink
-  #
-  # there are also background colours (put before additional attributes with ; separator):
-  #
-  # 40: Black background
-  # 41: Red background
-  # 42: Green background
-  # 43: Yellow background
-  # 44: Blue background
-  # 45: Purple background
-  # 46: Cyan background
-  # 47: White background
-}
-
-function prompt() {
-  local EXIT="$?"
-  local red='\[\e[0;31m\]'
-  local normal=$(tput sgr0)
-
-  compensate=11
-  unset PS1
-
-  err=""
-  if [ $EXIT != 0 ]; then
-    err="${red}❌${normal}"
-  fi
-
-  PS1=$(printf "%*s\\r%s %s\\n\$ " "$(($(tput cols)+compensate))" "$(prompt_right)" "$(prompt_left)" "${err}")
-}
-
-# DOCUMENTATION:
-#   - man bash (+ /PROMPT_COMMAND)
-#
-# DISABLED:
-# As it's provided by starship.
-#
-# PROMPT_COMMAND=prompt
 
 # ⚠️  BINDINGS ⚠️
 #
@@ -727,14 +639,15 @@ function __zoxide_cd {
 
 # Alacritty
 #
-source ~/.bash_completion/alacritty
+if [ -f "~/.bash_completion/alacritty" ]; then
+  source ~/.bash_completion/alacritty
+fi
 
 # Fig
 #
 # DISABLED until I know it's needed anymore.
 #
-# [ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-
+#
 # initialize the starship shell
 # https://starship.rs/
 #
