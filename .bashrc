@@ -667,6 +667,7 @@ fi
 # - cargo audit
 # - cargo fmt
 #
+source $HOME/.cargo/env
 if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
   mkdir -p ~/.config/rustlang/autocomplete
   rustup completions bash rustup >> ~/.config/rustlang/autocomplete/rustup
