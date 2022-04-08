@@ -564,6 +564,11 @@ function go_version {
         if [[ ! $(go version | grep "go$v") ]]; then
           echo ""
           echo "About to switch go version to: $v"
+          if ! command -v "$HOME/go/bin/go$v" &> /dev/null
+          then
+            echo "run: go install golang.org/dl/go$v@latest && go$v download && sudo cp \$(which go$v) \$(which go)"
+            return
+          fi
           sudo cp $(which go$v) $(which go)
         fi
     fi
