@@ -29,10 +29,11 @@ echo .bashrc loaded
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
 source ~/.git-completion.bash
 
-# the following FZF script should also source:
+# fzf shell support
 #
-# .fzf/shell/completion.bash
-# .fzf/shell/key-bindings.bash
+# run:
+# $(brew --prefix)/opt/fzf/install
+#
 if test -f ~/.fzf.bash; then
   source ~/.fzf.bash
 fi
@@ -114,20 +115,7 @@ export EDITOR="vim"
 export TERM="screen" # avoid "terminals database is inaccessible" and not being able to run `clear` command.
 export TERMINFO=/usr/share/terminfo
 export FZF_COMPLETION_OPTS='--border --info=inline'
-export FZF_COMPLETION_TRIGGER="''"
-
-# NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
-# project's .gitignore being quite complex I was missing out of files that I
-# did actually want to find. But for most other projects respecting the ignore
-# file is what I want and so I'll try to resolve in other ways.
 export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
-# external shell extension scripts
-# https://github.com/junegunn/fzf/tree/master/shell and so setting them to use
-# ag will mean you'll see a bunch of errors related to not having permissions
-# to access certain folders. A work around might be to use `fd` instead.
-#
-# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-# export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND"
 export GPG_TTY=$(tty)
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
