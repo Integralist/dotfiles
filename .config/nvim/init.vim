@@ -188,9 +188,6 @@ Plug 'godlygeek/tabular'
 " Display number of search matches
 Plug 'google/vim-searchindex'
 
-" Status bar enhancement
-Plug 'itchyny/lightline.vim'
-
 " JavaScript Programming Language Syntax Highlighter
 Plug 'jelera/vim-javascript-syntax'
 
@@ -270,6 +267,9 @@ Plug 'hrsh7th/cmp-vsnip'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-buffer'
 
+" Complete for signature arguments
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+
 " To enable more of the features of rust-analyzer, such as inlay hints and more!
 Plug 'simrat39/rust-tools.nvim'
 
@@ -277,16 +277,35 @@ Plug 'simrat39/rust-tools.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'm-demare/hlargs.nvim'
 
+" Installer of languages that support LSP.
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+
+" File explorer
+Plug 'kyazdani42/nvim-web-devicons' " for file icons
+Plug 'kyazdani42/nvim-tree.lua'
+
+" Status bar
+Plug 'nvim-lualine/lualine.nvim'
+
+" Git integration for buffers
+Plug 'lewis6991/gitsigns.nvim'
+
+" Git Diff Viewer
+Plug 'nvim-lua/plenary.nvim'
+Plug 'sindrets/diffview.nvim'
+
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 "
 " NOTE: nord-vim requires Nord terminal theme.
 "
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'endel/vim-github-colorscheme'
+Plug 'lunarvim/onedarker.nvim'
 Plug 'morhetz/gruvbox'
-Plug 'NLKNguyen/papercolor-theme'
 Plug 'yeddaif/neovim-purple'
 call plug#end()
 
@@ -346,19 +365,30 @@ autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 " ------------------------------------
-" itchyny/lightline.vim
+" nvim-lualine/lualine.nvim
 " ------------------------------------
 "
-" I turn off the 'mode' indicator as otherwise it'll be duplicated by the plugin.
-" I also tweak the status colorscheme to fit my vim theme (see :h g:lightline.colorscheme).
+lua require('lualine').setup()
+
+" ------------------------------------
+" sindrets/diffview.nvim
+" ------------------------------------
 "
-" Lastly, I have to turn off the tabline configuration that comes with the
-" plugin as I don't find it useful (it's almost impossible to see what tab is
-" highlighted!) and so I set that myself using Vim's TabLineSel.
+lua require('diffview').setup()
+
+" ------------------------------------
+" kyazdani42/nvim-tree.lua
+" ------------------------------------
 "
-set noshowmode
-let g:lightline = {'colorscheme': 'powerlineish'}
-let g:lightline.enable = {'tabline': 0}
+lua require('nvim-web-devicons').setup()
+lua require('nvim-tree').setup()
+nnoremap <C-n> :NvimTreeToggle<CR>
+
+" ------------------------------------
+" lewis6991/gitsigns.nvim
+" ------------------------------------
+"
+lua require('gitsigns').setup()
 
 " ------------------------------------
 " dense-analysis/ale
@@ -411,6 +441,7 @@ let g:go_highlight_operators = 1
 let g:go_highlight_types = 1
 let g:go_highlight_variable_assignments = 1
 let g:go_highlight_variable_declarations = 1
+let g:go_doc_keywordprg_enabled = 0 " allows LSP server to use vim.lsp.buf.hover() instead.
 autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
@@ -625,6 +656,7 @@ cmp.setup({
     { name = 'vsnip' },
     { name = 'path' },
     { name = 'buffer' },
+    { name = 'nvim_lsp_signature_help' },
   },
 })
 EOF
@@ -645,17 +677,3 @@ require('nvim-treesitter.configs').setup {
 }
 require('hlargs').setup()
 EOF
-
-" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-" File Explorer Configuration
-" >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-"
-" NOTES:
-"
-" when browsing with built-in file explorer (netrw) the following keys are useful to remember:
-" - P opens file in previously focused window
-" - o opens file in new horizontal split window
-" - v opens file in new vertical split window
-" - t opens file in new tab split window
-"
-let g:netrw_list_hide= '.*\.swp$,.*\.DS_Store'

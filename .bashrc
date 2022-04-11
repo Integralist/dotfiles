@@ -176,6 +176,14 @@ export PATH="/usr/local/go/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# rustup
+#
+# avoid https://github.com/rust-analyzer/rust-analyzer/issues/4172
+#
+# NOTE: Has to be defined after PATH update to locate .cargo directory.
+#
+export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
 # to ensure there are no duplicates in the $PATH
@@ -660,3 +668,4 @@ eval "$(starship init bash)"
 
 # Fig post block. Keep at the bottom of this file.
 eval "$(fig init bash post)"
+
