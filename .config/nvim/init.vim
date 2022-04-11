@@ -253,6 +253,7 @@ Plug 'hrsh7th/vim-vsnip-integ'
 
 " Collection of common configurations for the Nvim LSP client
 Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
 
 " Completion framework
 Plug 'hrsh7th/nvim-cmp'
@@ -276,10 +277,6 @@ Plug 'simrat39/rust-tools.nvim'
 " Better syntax highlighting with Treesitter and friends
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'm-demare/hlargs.nvim'
-
-" Installer of languages that support LSP.
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
 
 " File explorer
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
