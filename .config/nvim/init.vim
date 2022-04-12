@@ -19,8 +19,6 @@
 "
 " character encoding
 set encoding=utf-8
-" stops odd issues like using arrow keys in insert mode will send key sequences that are misinterpreted by vi
-set nocompatible
 " stop Vim from beeping at you when you make a mistake
 set visualbell
 " use system clipboard (to enable copy/paste between vim and other applications)
@@ -44,7 +42,7 @@ set nobackup
 " don't use swap files
 set noswapfile
 " have swap files be stored out of site
-set directory^=$HOME/.vim/tmp//
+set directory^=$HOME/.config/nvim/swap//
 " indicate the line,column numbers in status
 set ruler
 " display incomplete commands
@@ -88,11 +86,6 @@ set showmatch
 " comma-separated list of paths for determining where to lookup words for autocomplete
 set dictionary=/usr/share/dict/words
 " use silver searcher for vim grep
-"
-" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
-" project's .gitignore being quite complex I was missing out of files that I
-" did actually want to find. But for most other projects respecting the
-" ignore file is what I want and so I'll try to resolve in other ways.
 set grepprg=ag\ --nogroup\ --nocolor\ --skip-vcs-ignores
 " activate spell checking
 set spell
@@ -115,10 +108,6 @@ let g:run_nostream_default = 1
 " allow filtering of quickfix/location list window results
 " :help cfilter-plugin
 :packadd cfilter
-
-" recent update to Vim 8 broke gx command (that opens URL in web browser)
-" it should use the `open` command provided by macOS (not the shell builtin).
-nmap gx yiW:!open <cWORD><CR> <C-r>" & <CR><CR>
 
 " make disabling search highlights easier
 map ± :nohlsearch<CR>
@@ -150,7 +139,6 @@ fun! SetDiffColours()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 
-autocmd BufRead,BufNewFile *.md :MuttonToggle
 autocmd BufRead,BufNewFile *.md set filetype=markdown " vim interprets .md as 'modula2' otherwise, see :set filetype?
 autocmd BufWritePost *.tf :!terraform fmt %
 autocmd BufWritePre * call StripTrailingWhitespace()
@@ -292,6 +280,39 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'sindrets/diffview.nvim'
 
+function! UpdateRemotePlugins(...)
+  " refresh runtime files
+  let &rtp=&rtp
+  UpdateRemotePlugins
+endfunction
+
+" A more adventurous wildmenu
+Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
+
+" Dim your inactive windows
+Plug 'sunjon/shade.nvim'
+
+" Preview register content
+Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
+
+" Standalone UI for nvim-lsp progress
+Plug 'j-hui/fidget.nvim'
+
+" Lightbulb indicator for LSP 'code actions'
+Plug 'kosayoda/nvim-lightbulb'
+
+" Pop-up menu for code actions
+Plug 'weilbith/nvim-code-action-menu'
+
+" Pretty diagnostics, references, quickfix and location list
+Plug 'folke/trouble.nvim'
+
+" Displays interactive vertical scrollbars
+Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+
+" Improve spell checking based on file context
+Plug 'lewis6991/spellsitter.nvim'
+
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -306,6 +327,10 @@ Plug 'morhetz/gruvbox'
 Plug 'yeddaif/neovim-purple'
 call plug#end()
 
+" remove default vim colorschemes
+"
+silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null
+
 " enable 24bit true color
 if (has("termguicolors"))
  set termguicolors
@@ -319,7 +344,8 @@ augroup qs_colors
   autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
 augroup END
 
-colorscheme neovim_purple
+" NOTE: colorscheme must be set AFTER the shade plugin is started.
+" Otherwise the colorscheme gets messed up.
 
 " allow background terminal color to come through
 hi Normal guibg=NONE ctermbg=NONE
@@ -379,7 +405,7 @@ lua require('diffview').setup()
 "
 lua require('nvim-web-devicons').setup()
 lua require('nvim-tree').setup()
-nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader><Tab> :NvimTreeToggle<CR>
 
 " ------------------------------------
 " lewis6991/gitsigns.nvim
@@ -536,6 +562,104 @@ let g:indentLine_fileTypeExclude = ['markdown']
 let g:indentLine_concealcursor = "nv"
 
 " ------------------------------------
+" gelguy/wilder.nvim
+" ------------------------------------
+"
+"  NOTE: fzf steals <Tab> and causes issues, so we have to use <leader><Tab>.
+"
+" Clear all default keys
+call wilder#setup({
+      \ 'modes': ['/', '?', ':'],
+      \ 'next_key': 0,
+      \ 'previous_key': 0,
+      \ 'reject_key': 0,
+      \ 'accept_key': 0,
+      \ 'enable_cmdline_enter': 0,
+      \ })
+
+cnoremap <expr> <leader><Tab> <SID>in_context(0) ? <SID>start_wilder() : '<Tab>'
+cnoremap <expr> <Down> <SID>in_context(1) ? wilder#next() : '<Down>'
+cnoremap <expr> <Up> <SID>in_context(1) ? wilder#previous() : '<Up>'
+
+let s:wilder_started = 0
+autocmd CmdlineLeave * let s:wilder_started = 0
+
+function! s:start_wilder() abort
+  let s:wilder_started = 1
+  return wilder#next()
+endfunction
+
+function! s:in_context(check_started) abort
+  if a:check_started && !s:wilder_started
+    return 0
+  endif
+
+  return wilder#in_context()
+endfunction
+
+" call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
+      \ 'apply_incsearch_fix': 0,
+      \ 'highlights': {
+      \   'border': 'Normal',
+      \ },
+      \ 'border': 'rounded',
+      \ })))
+
+" ------------------------------------
+" sunjon/shade.nvim
+" ------------------------------------
+"
+"  DISABLED: https://github.com/sunjon/Shade.nvim/issues/27
+"
+" lua << EOF
+"   require('shade').setup({
+"     overlay_opacity = 30,
+"     opacity_step = 1,
+"     keys = {
+"       brightness_up    = '<C-Up>',
+"       brightness_down  = '<C-Down>',
+"       toggle           = '<Leader>s',
+"     }
+"   })
+" EOF
+
+" NOTE: colorscheme must be set AFTER the shade plugin is started.
+" Otherwise the colorscheme gets messed up.
+"
+colorscheme onedarker
+
+" ------------------------------------
+" j-hui/fidget.nvim
+" ------------------------------------
+"
+lua require("fidget").setup()
+
+" ------------------------------------
+" kosayoda/nvim-lightbulb
+" ------------------------------------
+"
+autocmd CursorHold,CursorHoldI * lua require('nvim-lightbulb').update_lightbulb()
+
+" ------------------------------------
+" weilbith/nvim-code-action-menu
+" ------------------------------------
+"
+let g:code_action_menu_window_border = 'single'
+
+" ------------------------------------
+" folke/trouble.nvim
+" ------------------------------------
+"
+lua require("trouble").setup()
+
+" ------------------------------------
+" lewis6991/spellsitter.nvim
+" ------------------------------------
+"
+lua require('spellsitter').setup()
+
+" ------------------------------------
 " dash
 " ------------------------------------
 "
@@ -609,19 +733,24 @@ EOF
 
 " Code navigation shortcuts
 " as found in :help lsp
+"
 nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gc        <cmd>lua vim.lsp.buf.incoming_calls()<CR>
 nnoremap <silent> gd        <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gn        <cmd>lua vim.lsp.buf.rename()<CR>
 nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
+" nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> ga        <cmd>CodeActionMenu<CR>
 nnoremap <silent> [x        <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> ]s        <cmd>lua vim.diagnostic.show()<CR>
-nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
+" nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
+nnoremap <silent> <space>q  <cmd>Trouble<CR>
 
 " Setup Completion
 " https://github.com/hrsh7th/nvim-cmp#recommended-configuration
@@ -660,9 +789,12 @@ EOF
 
 " Setup Treesitter and friends
 "
+" NOTE: originall used `ensure_installed = "all"` but an experimental PHP
+" parser was causing NPM lockfile errors.
+"
 lua <<EOF
 require('nvim-treesitter.configs').setup {
-  ensure_installed = "all",
+  ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html", "http", "javascript", "json", "lua", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml", "zig" },
   highlight = {
     enable = true,
   },
