@@ -399,6 +399,9 @@ lua require('lualine').setup()
 "
 lua require('diffview').setup()
 
+nnoremap <leader><leader>d :DiffviewFileHistory<CR>
+nnoremap <leader><leader>dc :DiffviewClose<CR>
+
 " ------------------------------------
 " kyazdani42/nvim-tree.lua
 " ------------------------------------
