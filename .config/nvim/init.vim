@@ -408,7 +408,8 @@ lua require('lualine').setup()
 "
 lua require('diffview').setup()
 
-nnoremap <leader><leader>d :DiffviewFileHistory<CR>
+nnoremap <leader><leader>dh :DiffviewFileHistory<CR>
+nnoremap <leader><leader>do :DiffviewOpen<CR>
 nnoremap <leader><leader>dc :DiffviewClose<CR>
 
 " ------------------------------------
