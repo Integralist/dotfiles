@@ -116,7 +116,7 @@ map ± :nohlsearch<CR>
 map <leader>a :Ack! ''
 
 " Make closing terminal simple
-tnoremap t<Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Auto Commands
