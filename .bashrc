@@ -291,6 +291,22 @@ function git_tag_release() {
   git tag -s $tag -m "$tag" && git push origin $tag
 }
 
+# display contents of archive file
+#
+function list_contents() {
+  if echo $1 | grep -Ei '.tar.gz$' &> /dev/null; then
+    tar -ztvf $1
+    return
+  fi
+
+  if echo $1 | grep -Ei '.zip$' &> /dev/null; then
+    unzip -l $1
+    return
+  fi
+
+  echo unsupported file extension
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
