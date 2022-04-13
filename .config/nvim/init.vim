@@ -338,6 +338,7 @@ endif
 
 syntax enable
 
+" tweak quick-scope highlight colors
 augroup qs_colors
   autocmd!
   autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
@@ -354,16 +355,18 @@ hi nonText ctermbg=NONE
 " hi CursorLine guibg=NONE
 
 function DarkTheme()
+  " tweak quick-scope highlight colors
   augroup qs_colors
     autocmd!
     autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
     autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
   augroup END
-  colorscheme gruvbox
+  colorscheme neovim_purple
   set background=dark
 endfunction
 
 function LightTheme()
+  " tweak quick-scope highlight colors
   augroup qs_colors
     autocmd!
     autocmd ColorScheme * highlight QuickScopePrimary guifg='#ff6700' gui=underline ctermfg=155 cterm=underline
@@ -373,8 +376,14 @@ function LightTheme()
   set background=light
 endfunction
 
+function DefaultTheme()
+  call DarkTheme()
+  colorscheme gruvbox
+endfunction
+
 nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
+nmap <leader>cg :call DefaultTheme()<CR>
 
 " Configure the highlighted Vim tab
 "
@@ -630,7 +639,7 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 " NOTE: colorscheme must be set AFTER the shade plugin is started.
 " Otherwise the colorscheme gets messed up.
 "
-colorscheme onedarker
+colorscheme gruvbox
 
 " ------------------------------------
 " j-hui/fidget.nvim
