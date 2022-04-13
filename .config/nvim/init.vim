@@ -504,12 +504,10 @@ autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {ret
 " The --hidden flag will still respect a .ignore file (which is where we typically ignore things like .git).
 " NOTE: you need `--path-to-ignore ~/.ignore` otherwise ag only uses a local ignore file `./.ignore`.
 "
-" Use :map command to see current mappings (also :vmap, :nmap, :omap).
-" Can also restrict to specific mapping `:map <Leader>w`
-" https://vi.stackexchange.com/questions/7722/how-to-debug-a-mapping
-"
 " NOTE: append ! to command (e.g. :FZF vs :FZF! or place it just before the ?
 " in the case of :GFiles!?) to have preview open full screen.
+"
+" NOTE: <Shift + up> and <Shift + down> scrolls the preview window.
 "
 map <leader>f :FZF<CR>
 map <leader>b :Buffers<CR>
