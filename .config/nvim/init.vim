@@ -139,6 +139,7 @@ fun! SetDiffColours()
   highlight DiffText   cterm=bold ctermfg=white ctermbg=DarkRed
 endfun
 
+autocmd! BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim " auto source vimrc changes
 autocmd BufRead,BufNewFile *.md set filetype=markdown " vim interprets .md as 'modula2' otherwise, see :set filetype?
 autocmd BufWritePost *.tf :!terraform fmt %
 autocmd BufWritePre * call StripTrailingWhitespace()
@@ -148,7 +149,6 @@ autocmd FileType python setlocal shiftwidth=4 tabstop=4 expandtab
 autocmd FileType python,ruby,go,sh,javascript setlocal textwidth=79 formatoptions+=t " see `:h fo-table` for details of formatoptions `t` to force wrapping of text
 autocmd FileType sh,ruby,yaml,vim setlocal shiftwidth=2 tabstop=2 expandtab
 autocmd FilterWritePre * call SetDiffColours()
-autocmd! BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim " auto source vimrc changes
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Management
@@ -427,16 +427,7 @@ lua require('gitsigns').setup()
 " dense-analysis/ale
 " ------------------------------------
 "
-" go vet options depends on installing extra command:
-"
-"   $ go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow
-"
-" ...just be sure to run that install outside of your projects directory,
-" otherwise it'll add dependencies to your project go.mod accidentally.
-"
-let g:ale_go_govet_options = '-vettool=$(which shadow)'
-let g:ale_linters = {'go': ['gopls'], 'rust': ['cargo', 'analyzer']} " disabled golang staticcheck because of false positives (e.g. it would show errors about references not being defined, when they exist in the same package but in a different file)
-let g:ale_python_mypy_options = '--ignore-missing-imports --strict-equality'
+let g:ale_linters = {'go': ['gopls', 'staticcheck', 'revive', 'govet'], 'rust': ['cargo', 'analyzer']}
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '▲'
 highlight link ALEWarningSign String
@@ -709,9 +700,14 @@ EOF
 
 " Configure Golang Environment.
 "
-autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
+fun! GoFumpt()
+  :silent !gofumpt -w %
+  :edit
+endfun
 autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
+autocmd BufWritePost *.go call GoFumpt()
+autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
 
 " Order imports on save, like goimports does:
 "
