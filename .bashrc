@@ -565,9 +565,6 @@ complete -C /opt/homebrew/bin/terraform terraform
 #
 # Custom go binaries are installed in $HOME/go/bin.
 #
-# NOTE: Doesn't work when using Zoxide, and will leave the alias active when
-# changing to a non-project directory.
-#
 function go_version {
     if [ -f "go.mod" ]; then
         v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
@@ -595,7 +592,10 @@ fi
 # - autocomplete
 # - rust-analyzer
 # - cargo audit
+# - cargo-nextest
 # - cargo fmt
+# - cargo clippy
+# - cargo edit
 #
 source $HOME/.cargo/env
 if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
