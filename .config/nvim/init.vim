@@ -164,9 +164,6 @@ call plug#begin()
 " Code Linter
 Plug 'dense-analysis/ale'
 
-" Go Programming Language
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-
 " Markdown sidebars
 Plug 'gabenespoli/vim-mutton'
 
@@ -453,42 +450,6 @@ nmap <silent> <leader>z :ALEPrevious<cr>
 let g:run_use_loclist = 1
 
 " ------------------------------------
-" fatih/vim-go
-" ------------------------------------
-"
-" :h go-syntax
-"
-let g:go_fmt_command = 'gofumpt'
-let g:go_gopls_complete_unimported = 1
-let g:go_gopls_staticcheck = 1
-let g:go_gopls_use_placeholders = 1
-let g:go_gopls_gofumpt = 1
-let g:go_metalinter_command='golangci-lint'
-let g:go_metalinter_deadline = '20s'
-let g:go_metalinter_enabled = ['vet', 'revive', 'errcheck']
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_function_parameters = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_types = 1
-let g:go_highlight_variable_assignments = 1
-let g:go_highlight_variable_declarations = 1
-let g:go_doc_keywordprg_enabled = 0 " allows LSP server to use vim.lsp.buf.hover() instead.
-autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
-autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
-autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
-
-" Check if any expressions return an error type that aren't being handled
-"
-" DISABLED (too noisy)
-"
-" autocmd BufWritePost *.go :GoErrCheck! -ignoretests
-
-" ------------------------------------
 " junegunn/fzf
 " junegunn/fzf.vim
 " ------------------------------------
@@ -718,7 +679,10 @@ EOF
 
 " Configure Golang LSP.
 "
-" https://github.com/golang/tools/blob/258e47306680682e73d2b873b69fe7e616ae5490/gopls/doc/analyzers.md
+" https://github.com/golang/tools/blob/master/gopls/doc/settings.md
+" https://github.com/golang/tools/blob/master/gopls/doc/analyzers.md
+" https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
+" https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#gopls
 " https://github.com/golang/tools/blob/master/gopls/doc/vim.md#neovim
 " https://www.getman.io/posts/programming-go-in-neovim/
 "
@@ -727,22 +691,49 @@ require('lspconfig').gopls.setup{
 	cmd = {'gopls'},
   settings = {
     gopls = {
-      experimentalPostfixCompletions = true,
       analyses = {
         nilness = true,
         unusedparams = true,
         unusedwrite = true,
         useany = true,
       },
+      experimentalPostfixCompletions = true,
       gofumpt = true,
       staticcheck = true,
+      usePlaceholders = true,
     },
   },
 	on_attach = on_attach,
 }
 EOF
 
-" Code navigation shortcuts
+" Configure Golang Environment.
+"
+autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
+autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
+autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
+
+" Order imports on save, like goimports does:
+"
+lua <<EOF
+  function OrgImports(wait_ms)
+    local params = vim.lsp.util.make_range_params()
+    params.context = {only = {"source.organizeImports"}}
+    local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
+    for _, res in pairs(result or {}) do
+      for _, r in pairs(res.result or {}) do
+        if r.edit then
+          vim.lsp.util.apply_workspace_edit(r.edit, "UTF-8")
+        else
+          vim.lsp.buf.execute_command(r.command)
+        end
+      end
+    end
+  end
+EOF
+autocmd BufWritePre *.go lua OrgImports(1000)
+
+" Configure LSP code navigation shortcuts
 " as found in :help lsp
 "
 nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
