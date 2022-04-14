@@ -110,7 +110,7 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 # application configuration
 #
 export EDITOR="vim"
-export TERM="screen-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
+export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
 export TERMINFO=/usr/share/terminfo
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
