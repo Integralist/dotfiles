@@ -704,7 +704,7 @@ fun! GoFumpt()
   :silent !gofumpt -w %
   :edit
 endfun
-autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"\\n\\n%+v\\n\\n\", )")<CR> <bar> :norm $a<CR><esc>==
+autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"%+v\\n\", )")<CR> <bar> :norm $a<CR><esc>j==$i
 autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 autocmd BufWritePost *.go call GoFumpt()
 autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
