@@ -382,13 +382,6 @@ nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
 nmap <leader>cg :call DefaultTheme()<CR>
 
-" Configure the highlighted Vim tab
-"
-" NOTE: This must come after the colorscheme change otherwise we'll end up
-" unsetting the tab highlighting.
-"
-autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
-
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -591,6 +584,13 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
 " Otherwise the colorscheme gets messed up.
 "
 colorscheme gruvbox
+
+" Configure the highlighted Vim tab
+"
+" NOTE: This must come after the colorscheme change otherwise we'll end up
+" unsetting the tab highlighting.
+"
+autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 
 " ------------------------------------
 " j-hui/fidget.nvim
