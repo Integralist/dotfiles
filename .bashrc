@@ -1,7 +1,5 @@
 # Fig pre block. Keep at the top of this file.
-export PATH="${PATH}:${HOME}/.local/bin"
-eval "$(fig init bash pre)"
-
+. "$HOME/.fig/shell/bashrc.pre.bash"
 #!/usr/bin/env bash
 #
 # NOTE:
@@ -588,6 +586,9 @@ function go_version {
 if [ ! -f "$HOME/go/bin/gofumpt" ]; then
     go install mvdan.cc/gofumpt@latest
 fi
+if [ ! -f "$HOME/go/bin/revive" ]; then
+    go install github.com/mgechev/revive@latest
+fi
 
 # configure rust environment
 #
@@ -671,5 +672,4 @@ fi
 eval "$(starship init bash)"
 
 # Fig post block. Keep at the bottom of this file.
-eval "$(fig init bash post)"
-
+. "$HOME/.fig/shell/bashrc.post.bash"
