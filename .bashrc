@@ -453,7 +453,7 @@ alias list='cat ~/.bashrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
 alias nv="novowels"
 alias ping="gping"
-alias ps="procs" # e.g. procs <process_name> --sortd mem
+alias ps="procs --color disable" # disable colours as it's hard to see with dark terminal theme
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.bash_profile" # .bash_profile sources .bashrc and so also causes `pass` autocomplete to be reloaded
 alias rm="rip"
