@@ -746,7 +746,8 @@ autocmd BufWritePre *.go lua OrgImports(1000)
 " Configure LSP code navigation shortcuts
 " as found in :help lsp
 "
-nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
+" Exclude the 'help' FileType as <c-]> is used for navigating help docs.
+autocmd FileType *\(^help\)\@<! nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
