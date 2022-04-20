@@ -100,7 +100,7 @@ set completeopt=menuone,noinsert,noselect
 " Avoid showing extra messages when using completion
 set shortmess+=c
 " Substitution live preview
-set inccommand=nosplit
+set inccommand=split
 " Disables the following message:
 " Streaming logs to an output buffer is not supported in Neovim. All commands will default to RunNoStream.
 let g:run_nostream_default = 1
@@ -529,39 +529,12 @@ let g:indentLine_concealcursor = "nv"
 " gelguy/wilder.nvim
 " ------------------------------------
 "
-"  NOTE: fzf steals <Tab> and causes issues, so we have to use <leader><Tab>.
-"
-" Clear all default keys
 call wilder#setup({
       \ 'modes': ['/', '?', ':'],
-      \ 'next_key': 0,
-      \ 'previous_key': 0,
-      \ 'reject_key': 0,
-      \ 'accept_key': 0,
-      \ 'enable_cmdline_enter': 0,
+      \ 'next_key': '<Right>',
+      \ 'previous_key': '<Left>',
       \ })
 
-cnoremap <expr> <leader><Tab> <SID>in_context(0) ? <SID>start_wilder() : '<Tab>'
-cnoremap <expr> <Down> <SID>in_context(1) ? wilder#next() : '<Down>'
-cnoremap <expr> <Up> <SID>in_context(1) ? wilder#previous() : '<Up>'
-
-let s:wilder_started = 0
-autocmd CmdlineLeave * let s:wilder_started = 0
-
-function! s:start_wilder() abort
-  let s:wilder_started = 1
-  return wilder#next()
-endfunction
-
-function! s:in_context(check_started) abort
-  if a:check_started && !s:wilder_started
-    return 0
-  endif
-
-  return wilder#in_context()
-endfunction
-
-" call wilder#setup({'modes': [':', '/', '?']})
 call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
       \ 'apply_incsearch_fix': 0,
       \ 'highlights': {
