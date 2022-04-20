@@ -310,6 +310,9 @@ Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 " Improve spell checking based on file context
 Plug 'lewis6991/spellsitter.nvim'
 
+" Displays popup window for available key bindings
+Plug 'folke/which-key.nvim'
+
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -572,6 +575,12 @@ lua require("trouble").setup()
 " ------------------------------------
 "
 lua require('spellsitter').setup()
+
+" ------------------------------------
+" folke/which-key.nvim
+" ------------------------------------
+"
+lua require('which-key').setup()
 
 " ------------------------------------
 " dash
