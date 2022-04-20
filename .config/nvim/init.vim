@@ -161,6 +161,9 @@ autocmd FilterWritePre * call SetDiffColours()
 "
 call plug#begin()
 
+" Inactive Window Highlighter
+Plug 'blueyed/vim-diminactive'
+
 " Code Linter
 Plug 'dense-analysis/ale'
 
@@ -286,9 +289,6 @@ endfunction
 " A more adventurous wildmenu
 Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
-" Dim your inactive windows
-Plug 'sunjon/shade.nvim'
-
 " Preview register content
 Plug 'tversteeg/registers.nvim', { 'branch': 'main' }
 
@@ -346,10 +346,8 @@ augroup END
 " Otherwise the colorscheme gets messed up.
 
 " allow background terminal color to come through
-hi Normal guibg=NONE ctermbg=NONE
-hi nonText ctermbg=NONE
-" hi CursorLine guibg=Purple guifg=white
-" hi CursorLine guibg=NONE
+highlight Normal guibg=NONE ctermbg=NONE
+highlight nonText ctermbg=NONE
 
 function DarkTheme()
   " tweak quick-scope highlight colors
@@ -381,6 +379,15 @@ endfunction
 nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
 nmap <leader>cg :call DefaultTheme()<CR>
+
+colorscheme gruvbox
+
+" Configure the highlighted Vim tab
+"
+" NOTE: This must come after the colorscheme change otherwise we'll end up
+" unsetting the tab highlighting.
+"
+autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow guifg=Red guibg=Yellow
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
@@ -562,36 +569,6 @@ call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_bo
       \ },
       \ 'border': 'rounded',
       \ })))
-
-" ------------------------------------
-" sunjon/shade.nvim
-" ------------------------------------
-"
-"  DISABLED: https://github.com/sunjon/Shade.nvim/issues/27
-"
-" lua << EOF
-"   require('shade').setup({
-"     overlay_opacity = 30,
-"     opacity_step = 1,
-"     keys = {
-"       brightness_up    = '<C-Up>',
-"       brightness_down  = '<C-Down>',
-"       toggle           = '<Leader>s',
-"     }
-"   })
-" EOF
-
-" NOTE: colorscheme must be set AFTER the shade plugin is started.
-" Otherwise the colorscheme gets messed up.
-"
-colorscheme gruvbox
-
-" Configure the highlighted Vim tab
-"
-" NOTE: This must come after the colorscheme change otherwise we'll end up
-" unsetting the tab highlighting.
-"
-autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow
 
 " ------------------------------------
 " j-hui/fidget.nvim
