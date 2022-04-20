@@ -455,6 +455,7 @@ let g:run_use_loclist = 1
 "
 " NOTE: <Shift + up> and <Shift + down> scrolls the preview window.
 "
+let g:fzf_preview_window = ['right:50%']
 map <leader>f :FZF<CR>
 map <leader>b :Buffers<CR>
 map <leader>g :GFiles?<CR>
