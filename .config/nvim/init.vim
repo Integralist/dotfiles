@@ -343,19 +343,26 @@ endif
 
 syntax enable
 
-" tweak quick-scope highlight colors
-augroup qs_colors
-  autocmd!
-  autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
-  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
-augroup END
-
-" NOTE: colorscheme must be set AFTER the shade plugin is started.
-" Otherwise the colorscheme gets messed up.
-
 " allow background terminal color to come through
 highlight Normal guibg=NONE ctermbg=NONE
 highlight nonText ctermbg=NONE
+
+function TabAndSearchColors()
+  highlight TabLineSel ctermfg=Red ctermbg=Yellow guifg=Red guibg=Yellow
+  highlight Search guibg=red guifg=white
+endfunction
+
+call TabAndSearchColors()
+
+" tweak quick-scope, tab and search highlight colors
+" autocmd! removes any prior autocmd(s) for the ColorScheme change event.
+augroup colours
+  autocmd!
+  autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
+  autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
+  autocmd ColorScheme * call TabAndSearchColors()
+  autocmd ColorScheme * call TabAndSearchColors()
+augroup END
 
 function DarkTheme()
   " tweak quick-scope highlight colors
@@ -395,7 +402,6 @@ colorscheme gruvbox
 " NOTE: This must come after the colorscheme change otherwise we'll end up
 " unsetting the tab highlighting.
 "
-autocmd VimEnter * hi TabLineSel ctermfg=Red ctermbg=Yellow guifg=Red guibg=Yellow
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
