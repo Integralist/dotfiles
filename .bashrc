@@ -114,6 +114,7 @@ export TERM="xterm-256color" # avoid "terminals database is inaccessible" and no
 export TERMINFO=/usr/share/terminfo
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
+export FZF_DEFAULT_OPTS='--multi --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap'
 export GPG_TTY=$(tty)
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
@@ -493,17 +494,10 @@ alias wut='echo "$git_icons"'
 # using my own Ctrl+f binding below if you don't need to preview the file.
 
 # we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
-#
-# NOTE: we use bat instead of cat so we can get syntax highlighting
-#
-bind -x '"\C-f": fzf -m --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap | pbcopy'
+bind -x '"\C-f": fzf | pbcopy'
 
 # we want Ctrl+g to pass files into vim for editing (e.g. 'go to').
-# -m, --multi allows multiple file selection using <Tab>
-# This flag can also be set using FZF_DEFAULT_OPTS
-#
-# bind -x '"\C-g": vim $(fzf -m)'
-bind -x '"\C-g": vim $(fzf -m --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap)'
+bind -x '"\C-g": vim $(fzf)'
 
 # every time we want to `time` as shell command, instead of pressing <Enter>
 # we'll do <Ctrl+j> and that will prefix the time command.
