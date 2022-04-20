@@ -116,6 +116,8 @@ map ± :nohlsearch<CR>
 map <leader>a :Ack! ''
 
 " Make closing terminal simple
+"
+" NOTE: We have to use <leader> before <Esc> other FZF's <Esc> will be overridden.
 tnoremap <leader><Esc> <C-\><C-n>
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -312,6 +314,9 @@ Plug 'lewis6991/spellsitter.nvim'
 
 " Displays popup window for available key bindings
 Plug 'folke/which-key.nvim'
+
+" Improve default vim.ui interfaces
+Plug 'stevearc/dressing.nvim'
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
@@ -581,6 +586,12 @@ lua require('spellsitter').setup()
 " ------------------------------------
 "
 lua require('which-key').setup()
+
+" ------------------------------------
+" stevearc/dressing.nvim
+" ------------------------------------
+"
+lua require('dressing').setup()
 
 " ------------------------------------
 " dash
