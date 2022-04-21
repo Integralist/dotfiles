@@ -69,6 +69,9 @@ shopt -s gnu_errfmt 2>/dev/null
 # ensure SIGHUP is sent to all jobs when an interactive login shell exits
 shopt -s huponexit 2>/dev/null
 
+# increase number of file descriptors from default of 254
+ulimit -n 1000
+
 # ⚠️  EXPORTS ⚠️
 
 # Homebrew
@@ -159,8 +162,8 @@ export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 # programming language modifications
 #
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/go/bin:$PATH"
-export PATH="$HOME/go/bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH" # go command (e.g. go version) install location
+export PATH="$HOME/go/bin:$PATH"      # go executables (e.g. go install) install location
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # rustup
