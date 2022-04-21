@@ -574,6 +574,7 @@ function go_version {
             return
           fi
           sudo cp $(which go$v) $(which go)
+          echo -n go$v | sudo tee $(dirname $(dirname $(which go)))/VERSION > /dev/null
         fi
     fi
 }
