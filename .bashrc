@@ -562,6 +562,18 @@ complete -C /opt/homebrew/bin/terraform terraform
 #
 # Custom go binaries are installed in $HOME/go/bin.
 #
+# NOTE: Some tools, e.g. TinyGo, won't work with this approach because we're
+# just replacing the go binary and the VERSION file, where the originally
+# installed version of go will have things like CGO files that TinyGo will try
+# to use and if those don't align with the version of the binary we've switched
+# to, then it means TinyGo will fail to compile. In that scenario do:
+#
+# v=1.18.1
+# osname=$(uname -s | tr '[:upper:]' '[:lower:]')
+# hardware=$(uname -m)
+# curl -L -o ~/Downloads/go$v.$osname-$hardware.pkg https://go.dev/dl/go$v.$osname-$hardware.pkg
+# sudo rm -rf /usr/local/go; sudo installer -pkg ~/Downloads/go$v.$osname-$hardware.pkg -target /usr/local/
+#
 function go_version {
     if [ -f "go.mod" ]; then
         v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
