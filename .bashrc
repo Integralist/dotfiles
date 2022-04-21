@@ -566,13 +566,8 @@ complete -C /opt/homebrew/bin/terraform terraform
 # just replacing the go binary and the VERSION file, where the originally
 # installed version of go will have things like CGO files that TinyGo will try
 # to use and if those don't align with the version of the binary we've switched
-# to, then it means TinyGo will fail to compile. In that scenario do:
-#
-# v=1.18.1
-# osname=$(uname -s | tr '[:upper:]' '[:lower:]')
-# hardware=$(uname -m)
-# curl -L -o ~/Downloads/go$v.$osname-$hardware.pkg https://go.dev/dl/go$v.$osname-$hardware.pkg
-# sudo rm -rf /usr/local/go; sudo installer -pkg ~/Downloads/go$v.$osname-$hardware.pkg -target /usr/local/
+# to, then it means TinyGo will fail to compile. In that scenario use
+# `go_install` function defined below.
 #
 function go_version {
     if [ -f "go.mod" ]; then
@@ -589,6 +584,20 @@ function go_version {
           echo -n go$v | sudo tee $(dirname $(dirname $(which go)))/VERSION > /dev/null
         fi
     fi
+}
+# full go pkg install, not a simple binary switch like 'go_version'
+#
+function go_install {
+  if [ -z "$1" ]; then
+    echo USAGE: go_install 1.18.1
+    return
+  fi
+  v=$1
+  osname=$(uname -s | tr '[:upper:]' '[:lower:]')
+  hardware=$(uname -m)
+  curl -L -o ~/Downloads/go$v.$osname-$hardware.pkg https://go.dev/dl/go$v.$osname-$hardware.pkg
+  sudo rm -rf /usr/local/go; sudo installer -pkg ~/Downloads/go$v.$osname-$hardware.pkg -target /usr/local/
+  rm ~/Downloads/go$v.$osname-$hardware.pkg
 }
 if [ ! -f "$HOME/go/bin/gofumpt" ]; then
     go install mvdan.cc/gofumpt@latest
