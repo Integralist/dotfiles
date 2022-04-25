@@ -1,5 +1,7 @@
 # https://starship.rs/config/
 
+command_timeout = 1000
+
 [[battery.display]]
 threshold = 50
 style = "bold red"
@@ -28,6 +30,7 @@ disabled = true
 [custom.gittag]
 command = "echo \"(tag: $(git describe --tags --abbrev=0), commit: $(git rev-parse --short HEAD))\""
 when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
+ignore_timeout = true
 
 [custom.datetime]
 style = "bold white"
