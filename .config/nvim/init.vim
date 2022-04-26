@@ -163,6 +163,9 @@ autocmd FilterWritePre * call SetDiffColours()
 "
 call plug#begin()
 
+" Better word motions for programming.
+Plug 'bkad/CamelCaseMotion'
+
 " Inactive Window Highlighter
 Plug 'blueyed/vim-diminactive'
 
@@ -190,6 +193,9 @@ Plug 'ledesmablt/vim-run'
 
 " Highlight the yanked region
 Plug 'machakann/vim-highlightedyank'
+
+" Move lines and selections up and down
+Plug 'matze/vim-move'
 
 " Text search
 Plug 'mileszs/ack.vim'
@@ -408,6 +414,14 @@ colorscheme gruvbox
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 " ------------------------------------
+" bkad/CamelCaseMotion
+" ------------------------------------
+"
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+
+" ------------------------------------
 " nvim-lualine/lualine.nvim
 " ------------------------------------
 "
@@ -528,6 +542,14 @@ nmap <leader><leader><leader> <Plug>CommentaryLine
 " in the status bar as a single line.
 "
 nnoremap <leader><leader>b :<C-u>call gitblame#echo()<CR>
+
+" ------------------------------------
+" matze/vim-move
+" ------------------------------------
+"
+" <C-j>, <C-k> to move lines around more easily than :move
+"
+let g:move_key_modifier = 'C'
 
 " ------------------------------------
 " Yggdroot/indentLine
