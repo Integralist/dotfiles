@@ -70,7 +70,7 @@ shopt -s gnu_errfmt 2>/dev/null
 shopt -s huponexit 2>/dev/null
 
 # increase number of file descriptors from default of 254
-ulimit -n 1000
+ulimit -n 10240
 
 # ⚠️  EXPORTS ⚠️
 
@@ -290,7 +290,8 @@ function git_tag_delete() {
 #
 function git_tag_release() {
   tag="v$1"
-  git tag -s $tag -m "$tag" && git push origin $tag
+  # git tag -s $tag -m "$tag" && git push origin $tag
+  git tag $tag -m "$tag" && git push origin $tag
 }
 
 # display contents of archive file
@@ -577,8 +578,7 @@ function go_version {
           echo "About to switch go version to: $v"
           if ! command -v "$HOME/go/bin/go$v" &> /dev/null
           then
-            echo "run: go install golang.org/dl/go$v@latest && go$v download && sudo cp \$(which go$v) \$(which go)"
-            return
+            go install golang.org/dl/go$v@latest && go$v download && sudo cp $(which go$v) $(which go)
           fi
           sudo cp $(which go$v) $(which go)
           echo -n go$v | sudo tee $(dirname $(dirname $(which go)))/VERSION > /dev/null
