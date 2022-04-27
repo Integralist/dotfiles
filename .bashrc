@@ -467,7 +467,7 @@ alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add --apple-use-keycha
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
 alias tmuxy='bash ~/tmux.sh'
-alias top='btm --current_usage'
+alias top='htop'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias vim=nvim
