@@ -646,14 +646,11 @@ fi
 # alt+enter to cd into a directory.
 #
 # If you install broot via Homebrew then `broot --install` will add a `source`
-# to the br function for you. I've moved that line from my
-# .bashrc/.bash_profile into here.
+# to the br function for you. So I've manually moved it from being appended to
+# within the following conditional.
 #
-# Extra configuration can be found here:
-# /Users/integralist/Library/Application Support/org.dystroy.broot/conf.hjson
-#
-if [ -f "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br" ]; then
-  source "/Users/integralist/Library/Application Support/org.dystroy.broot/launcher/bash/br"
+if [ -f "/Users/integralist/.config/broot/launcher/bash/br" ]; then
+  source /Users/integralist/.config/broot/launcher/bash/br
 fi
 
 # zoxide is a directory switcher
@@ -692,3 +689,4 @@ eval "$(starship init bash)"
 
 # Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/bashrc.post.bash"
+
