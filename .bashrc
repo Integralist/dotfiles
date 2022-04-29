@@ -176,6 +176,12 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
+# update Homebrew and check for outdated packages
+function brew_update {
+  brew update
+  brew outdated
+}
+
 # to ensure there are no duplicates in the $PATH
 # we call dedupe at the end of each sourced shell script.
 function dedupe {
@@ -645,6 +651,15 @@ fi
 if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
   cargo install cargo-edit
 fi
+function rust_update_tools {
+  brew_update # called because of rust-analyzer
+  rustup component add rustfmt
+  rustup component add clippy
+  cargo install cargo-audit --features=fix
+  cargo install cargo-nextest
+  cargo install cargo-edit
+}
+
 
 # broot (tree replacement) requires a companion shell function (br) to allow
 # alt+enter to cd into a directory.
