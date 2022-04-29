@@ -567,8 +567,8 @@ let g:indentLine_concealcursor = "nv"
 "
 call wilder#setup({
       \ 'modes': ['/', '?', ':'],
-      \ 'next_key': '<Right>',
-      \ 'previous_key': '<Left>',
+      \ 'previous_key': '<S-Up>',
+      \ 'next_key': '<S-Down>',
       \ })
 
 call wilder#set_option('renderer', wilder#popupmenu_renderer(wilder#popupmenu_border_theme({
@@ -747,7 +747,7 @@ autocmd BufWritePre *.go lua OrgImports(1000)
 "
 " Exclude the 'help' FileType as <c-]> is used for navigating help docs.
 autocmd FileType *\(^help\)\@<! nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <c-k>     <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>k     <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> gc        <cmd>lua vim.lsp.buf.incoming_calls()<CR>
@@ -780,7 +780,7 @@ cmp.setup({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<C-e>'] = cmp.mapping.close(),
