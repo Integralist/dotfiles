@@ -564,7 +564,7 @@ dedupe
 
 # configure fnm node version manager
 #
-eval "$(fnm env)"
+eval "$(fnm env --use-on-cd)"
 
 # configure terraform auto-complete
 #
