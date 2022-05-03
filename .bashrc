@@ -24,8 +24,13 @@ echo .bashrc loaded
 
 # ⚠️  SCRIPTS ⚠️
 
+# git autocomplete
+#
 # https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
-source ~/.git-completion.bash
+#
+if test -f ~/.git-completion.bash; then
+  source ~/.git-completion.bash
+fi
 
 # fzf shell support
 #
