@@ -696,16 +696,10 @@ if [ -f "~/.bash_completion/alacritty" ]; then
   source ~/.bash_completion/alacritty
 fi
 
-# Fig
-#
-# DISABLED until I know it's needed anymore.
-#
-#
-# initialize the starship shell
+# Starship prompt
 # https://starship.rs/
 #
 eval "$(starship init bash)"
 
 # Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/bashrc.post.bash"
-
