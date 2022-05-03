@@ -255,7 +255,7 @@ colors:
   # Normal colors
   normal:
     black: "0x000000"
-    # red: "0xEC3A37"
+    red: "0xEC3A37"
     green: "0x75e44c"
     yellow: "0xFAD000"
     blue: "0x6943FF"
@@ -266,13 +266,13 @@ colors:
   # Bright colors
   bright:
     black: "0x5C5C61"
-    # red: "0xEC3A37F5"
+    red: "0xEC3A37"
     green: "0x3AD900"
     yellow: "0xFAD000"
     blue: "0x6943FF"
     magenta: "0xFB94FF"
     cyan: "0x80FCFF"
-    white: "0x2D2B55"
+    white: "0xCCCCCC"
 
 
 # Colors (Tomorrow Night)
