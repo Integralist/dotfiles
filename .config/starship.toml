@@ -38,3 +38,7 @@ command = "date"
 # when = """ test "$HOME/Code" == "$PWD" """
 when = "" # always run it
 format = " [$output]($style) "
+
+[jobs]
+symbol = "+ "
+style = "bold white"
