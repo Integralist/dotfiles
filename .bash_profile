@@ -1,3 +1,6 @@
+# Fig pre block. Keep at the top of this file.
+. "$HOME/.fig/shell/bash_profile.pre.bash"
+
 #!/usr/bin/env bash
 #
 # NOTES:
@@ -10,10 +13,6 @@
 # .bash_profile configuration.
 
 echo .bash_profile loaded
-
-# Fig (Start)
-#
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
 
 # AVOID $(brew --prefix) as it can be quite slow compared to hard coded value
 #
@@ -40,3 +39,8 @@ fi
 if [ -f "$HOME/.localrc" ]; then
   source "$HOME/.localrc"
 fi
+
+# Fig post block. Keep at the bottom of this file.
+. "$HOME/.fig/shell/bash_profile.post.bash"
+
+source /Users/integralist/.config/broot/launcher/bash/br
