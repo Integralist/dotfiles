@@ -75,8 +75,8 @@ set autoread
 set splitbelow
 " ensure vertical split windows appear on the right
 set splitright
-" use a new split window when opening items from quickfix window
-set switchbuf=split
+" determine how quickfix items are opened
+set switchbuf=uselast
 " visual autocomplete for command menu
 set wildmenu
 " only redraw when necessary
@@ -313,7 +313,10 @@ Plug 'weilbith/nvim-code-action-menu'
 Plug 'folke/trouble.nvim'
 
 " Displays interactive vertical scrollbars
-Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
+"
+" DISABLED: As it breaks mksession (https://github.com/dstein64/nvim-scrollview/issues/71)
+"
+" Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 
 " Improve spell checking based on file context
 Plug 'lewis6991/spellsitter.nvim'
@@ -760,7 +763,7 @@ nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 nnoremap <silent> ga        <cmd>CodeActionMenu<CR>
 nnoremap <silent> [x        <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> ]s        <cmd>lua vim.diagnostic.show()<CR>
+nnoremap <silent> ]]s        <cmd>lua vim.diagnostic.show()<CR>
 " nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
 nnoremap <silent> <space>q  <cmd>Trouble<CR>
 
