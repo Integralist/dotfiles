@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-#
 # NOTE:
 # additional configuration of the shell is handled by ~/.inputrc which
 # instructs the Readline utility as to what behaviours it should respect.
