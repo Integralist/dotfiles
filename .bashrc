@@ -1,5 +1,3 @@
-# Fig pre block. Keep at the top of this file.
-. "$HOME/.fig/shell/bashrc.pre.bash"
 #!/usr/bin/env bash
 #
 # NOTE:
@@ -21,6 +19,11 @@
 #   - SOFTWARE
 #
 echo .bashrc loaded
+
+# Fig pre block. Keep at the top of this file.
+if test -f "$HOME/.fig/shell/bashrc.pre.bash"; then
+  . "$HOME/.fig/shell/bashrc.pre.bash"
+fi
 
 # ⚠️  SCRIPTS ⚠️
 
@@ -717,4 +720,6 @@ fi
 eval "$(starship init bash)"
 
 # Fig post block. Keep at the bottom of this file.
-. "$HOME/.fig/shell/bashrc.post.bash"
+if test -f "$HOME/.fig/shell/bashrc.post.bash"; then
+  . "$HOME/.fig/shell/bashrc.post.bash"
+fi
