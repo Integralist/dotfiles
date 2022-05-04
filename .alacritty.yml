@@ -527,8 +527,8 @@ colors:
 # login shell and just running .bashrc is actually a simpler setup.
 shell:
   program: /bin/bash
-#  args:
-#    - --login
+  args:
+    - -i
 
 # Startup directory
 #
