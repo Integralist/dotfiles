@@ -526,7 +526,7 @@ colors:
 # there is already an open job (which is very annoying). I also don't NEED a
 # login shell and just running .bashrc is actually a simpler setup.
 shell:
-  program: /bin/bash
+  program: /opt/homebrew/bin/bash
   args:
     - -i
 
