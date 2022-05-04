@@ -520,8 +520,13 @@ colors:
 #   - (macOS) /bin/bash --login
 #   - (Linux/BSD) user login shell
 #   - (Windows) powershell
-#shell:
-#  program: /bin/bash
+
+# NOTE: I've configured this to NOT be a login shell because it causes the
+# Starship prompt to get confused when it loads its 'jobs' module and thinks
+# there is already an open job (which is very annoying). I also don't NEED a
+# login shell and just running .bashrc is actually a simpler setup.
+shell:
+  program: /bin/bash
 #  args:
 #    - --login
 
