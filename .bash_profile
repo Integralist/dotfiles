@@ -11,6 +11,15 @@
 # this would cause bash to open as an 'interactive' shell (not login)
 # this would also result in it sourcing only the .bashrc file and not this
 # .bash_profile configuration.
+#
+# The purpose of a login shell is to set up things that you will use during your
+# session, and which only need to be done once (these are typically things like
+# creating a temporary file containing the IP you connected from or running
+# ssh-agent and other SSH related things). Ultimately, unless you're actually
+# logging into an external machine, you don't really need a login shell.
+#
+# An interactive shell on the other hand will contain everything else: prompt,
+# alias', custom shell functions etc.
 
 echo .bash_profile loaded
 
@@ -42,5 +51,3 @@ fi
 
 # Fig post block. Keep at the bottom of this file.
 . "$HOME/.fig/shell/bash_profile.post.bash"
-
-source /Users/integralist/.config/broot/launcher/bash/br
