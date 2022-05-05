@@ -23,7 +23,7 @@ echo .zshrc loaded
 # fig.io autocomplete helpers
 #
 if test -f "$HOME/.fig/shell/zshrc.pre.zsh"; then
-  . "$HOME/.fig/shell/zshrc.pre.zsh"
+  # . "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
 
 # general autocomplete helpers
@@ -440,6 +440,9 @@ bindkey -s '^f' 'fzf | pbcopy'
 # we want Ctrl+g to pass files into vim for editing (e.g. 'go to').
 bindkey -s '^g' 'vim $(fzf)'
 
+# help fix VI mode, and not being able to delete characters
+bindkey "^?" backward-delete-char
+
 # To support the configuring our go environment we will override the cd
 # command to call the go logic for checking the go version.
 #
@@ -626,5 +629,5 @@ eval "$(starship init zsh)"
 # fig.io autocomplete helpers
 #
 if test -f "$HOME/.fig/shell/zshrc.post.zsh"; then
-  . "$HOME/.fig/shell/zshrc.post.zsh"
+  # . "$HOME/.fig/shell/zshrc.post.zsh"
 fi
