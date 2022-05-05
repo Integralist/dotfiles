@@ -341,7 +341,6 @@ alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 # https://www.banterly.net/2021/07/31/new-in-git-switch-and-restore/
 #
 alias g="git"
-compdef g='git'
 alias ga="git add"
 alias gb="git branch"
 alias gc="git checkout"
