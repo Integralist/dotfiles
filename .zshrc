@@ -18,13 +18,13 @@
 #
 echo .zshrc loaded
 
-# Fig pre block. Keep at the top of this file.
-if test -f "$HOME/.fig/shell/zshrc.pre.zsh"; then
-  # . "$HOME/.fig/shell/zshrc.pre.zsh"
-  echo skipping fig pre
-fi
-
 # ⚠️  SCRIPTS ⚠️
+
+# fig.io autocomplete helpers
+#
+if test -f "$HOME/.fig/shell/zshrc.pre.zsh"; then
+  . "$HOME/.fig/shell/zshrc.pre.zsh"
+fi
 
 # general autocomplete helpers
 #
@@ -623,8 +623,8 @@ fi
 #
 eval "$(starship init zsh)"
 
-# Fig post block. Keep at the bottom of this file.
+# fig.io autocomplete helpers
+#
 if test -f "$HOME/.fig/shell/zshrc.post.zsh"; then
-  # . "$HOME/.fig/shell/zshrc.post.zsh"
-  echo skipping fig post
+  . "$HOME/.fig/shell/zshrc.post.zsh"
 fi
