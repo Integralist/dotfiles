@@ -143,7 +143,6 @@ endfun
 
 autocmd! BufWritePost ~/.config/nvim/init.vim source ~/.config/nvim/init.vim " auto source vimrc changes
 autocmd BufRead,BufNewFile *.md set filetype=markdown " vim interprets .md as 'modula2' otherwise, see :set filetype?
-autocmd BufWritePost *.tf :!terraform fmt %
 autocmd BufWritePre * call StripTrailingWhitespace()
 autocmd FileType gitcommit setlocal spell textwidth=72
 autocmd FileType markdown setlocal wrap linebreak nolist textwidth=0 wrapmargin=0 " http://vim.wikia.com/wiki/Word_wrap_without_line_breaks
@@ -415,6 +414,12 @@ colorscheme gruvbox
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Plugin Configuration
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+" ------------------------------------
+" williamboman/nvim-lsp-installer
+" ------------------------------------
+"
+lua require('nvim-lsp-installer').setup()
 
 " ------------------------------------
 " bkad/CamelCaseMotion
@@ -744,6 +749,40 @@ lua <<EOF
   end
 EOF
 autocmd BufWritePre *.go lua OrgImports(1000)
+
+" Configure Terraform LSP.
+"
+lua <<EOF
+require('lspconfig').terraformls.setup{
+	on_attach = on_attach,
+}
+EOF
+" autocmd BufWritePost *.tf :!terraform fmt %
+autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
+
+" Configure Terraform Linter LSP.
+"
+lua <<EOF
+require('lspconfig').tflint.setup{
+	on_attach = on_attach,
+}
+EOF
+
+" Configure JavaScript Linter LSP.
+"
+lua <<EOF
+require('lspconfig').quick_lint_js.setup{
+	on_attach = on_attach,
+}
+EOF
+
+" Configure TypeScript LSP.
+"
+lua <<EOF
+require('lspconfig').tsserver.setup{
+	on_attach = on_attach,
+}
+EOF
 
 " Configure LSP code navigation shortcuts
 " as found in :help lsp
