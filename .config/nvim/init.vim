@@ -401,7 +401,8 @@ endfunction
 
 nmap <leader>cd :call DarkTheme()<CR>
 nmap <leader>cl :call LightTheme()<CR>
-nmap <leader>cg :call DefaultTheme()<CR>
+nmap <leader>cgd :call DefaultTheme()<CR>
+nmap <leader>cgl :call LightTheme() <bar> colorscheme gruvbox<CR>
 
 colorscheme gruvbox
 
@@ -688,6 +689,10 @@ local opts = {
 }
 require('rust-tools').setup(opts)
 EOF
+
+" Configure Rust Environment
+"
+autocmd BufWritePost *.rs :RustFmt
 
 " Configure Golang LSP.
 "
