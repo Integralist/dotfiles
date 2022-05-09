@@ -401,7 +401,12 @@ alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
 alias rm="rip"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
+
+# To figure out which local SSH key matches the SSH key in GitHub:
+# ssh-keygen -lf ~/.ssh/<private_ssh_filename> -E sha256
+#
 alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add --apple-use-keychain ~/.ssh/github > /dev/null 2>&1'
+
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
 alias top='htop'
