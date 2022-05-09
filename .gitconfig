@@ -106,7 +106,7 @@
   version = 2
 
 [gpg]
-  program = /opt/homebrew/bin/git
+  program = /opt/homebrew/bin/gpg
 
 [init]
 	defaultBranch = main
