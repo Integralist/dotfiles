@@ -207,6 +207,19 @@ function brew_update {
   brew outdated
 }
 
+# sshagent ensures each shell instance knows about our GitHub SSH connection key(s).
+#
+# NOTE: To figure out which local SSH key matches the SSH key in GitHub:
+# ssh-keygen -lf ~/.ssh/<private_ssh_filename> -E sha256
+#
+# Also try:
+# ssh -vT git@github.com
+function sshagent {
+  local private_key=$1
+  eval "$(ssh-agent -s)" > /dev/null
+  ssh-add --apple-use-keychain ~/.ssh/$1 > /dev/null 2>&1
+}
+
 # to ensure there are no duplicates in the $PATH
 # we call dedupe at the end of each sourced shell script.
 function dedupe {
@@ -401,15 +414,6 @@ alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
 alias rm="rip"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
-
-# To figure out which local SSH key matches the SSH key in GitHub:
-# ssh-keygen -lf ~/.ssh/<private_ssh_filename> -E sha256
-#
-# Also try:
-# ssh -vT git@github.com
-#
-alias sshagent='eval "$(ssh-agent -s)" > /dev/null && ssh-add --apple-use-keychain ~/.ssh/github > /dev/null 2>&1'
-
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
 alias top='htop'
@@ -470,7 +474,8 @@ function cd {
 # ensure every new shell instance has our ssh keys added
 # as it's so tedious when I forget to execute this manually
 #
-sshagent
+sshagent github
+sshagent fastly_integralist
 
 # ensure every new shell instance has a gpg-agent running
 # as we want to be storing our git commit signing key passphrase into
