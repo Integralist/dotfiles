@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-echo .localrc loaded
-
 # environment
 #
 export PATH="$PATH:$HOME/.rvm/bin"
@@ -10,6 +8,7 @@ export GOPRIVATE=github.com/fastly
 
 # ensure fnm supports yarn
 # https://github.com/Schniz/fnm/issues/87#issuecomment-751366346
+#
 export YARN_GLOBAL_FOLDER="$FNM_MULTISHELL_PATH/yarn-global"
 export YARN_PREFIX="$FNM_MULTISHELL_PATH"
 
@@ -27,3 +26,5 @@ eval "$(pyenv virtualenv-init -)"
 # the dedupe function is defined in .bashrc
 #
 dedupe
+
+echo .localrc loaded

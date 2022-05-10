@@ -16,7 +16,6 @@
 #   - SHELL
 #   - SOFTWARE
 #
-echo .zshrc loaded
 
 # ⚠️  SCRIPTS ⚠️
 
@@ -644,3 +643,5 @@ eval "$(starship init zsh)"
 if test -f "$HOME/.fig/shell/zshrc.post.zsh"; then
   # . "$HOME/.fig/shell/zshrc.post.zsh"
 fi
+
+echo .zshrc loaded
