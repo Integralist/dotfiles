@@ -756,6 +756,9 @@ lua <<EOF
 EOF
 autocmd BufWritePre *.go lua OrgImports(1000)
 
+" NOTE: When using :LspInstallInfo to install available LSPs, we need to still
+" add calls to their setup here in our Vim configuration.
+
 " Configure Terraform LSP.
 "
 lua <<EOF
