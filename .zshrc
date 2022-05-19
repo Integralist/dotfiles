@@ -22,7 +22,7 @@
 # fig.io autocomplete helpers
 #
 if test -f "$HOME/.fig/shell/zshrc.pre.zsh"; then
-  # . "$HOME/.fig/shell/zshrc.pre.zsh"
+  . "$HOME/.fig/shell/zshrc.pre.zsh"
 fi
 
 # general autocomplete helpers
@@ -641,7 +641,7 @@ eval "$(starship init zsh)"
 # fig.io autocomplete helpers
 #
 if test -f "$HOME/.fig/shell/zshrc.post.zsh"; then
-  # . "$HOME/.fig/shell/zshrc.post.zsh"
+  . "$HOME/.fig/shell/zshrc.post.zsh"
 fi
 
 echo .zshrc loaded
