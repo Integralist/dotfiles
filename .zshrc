@@ -242,7 +242,7 @@ function ppath() {
 #
 function rand() {
   local limit=${1:-100}
-  seq $limit | shuf -n 1
+  seq $limit | gshuf -n 1
 }
 
 # tabs are indicated by ^I and line endings by $
