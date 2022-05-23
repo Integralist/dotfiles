@@ -694,6 +694,7 @@ EOF
 " Configure Rust Environment
 "
 autocmd BufWritePost *.rs :RustFmt
+autocmd FileType rust map <buffer> <leader>rr :RustRunnables<CR>
 
 " Configure Golang LSP.
 "
