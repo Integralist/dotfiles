@@ -57,6 +57,21 @@ if test -f ~/.fzf.zsh; then
   source ~/.fzf.zsh
 fi
 
+# fzf git utility tool
+# https://github.com/wfxr/forgit
+#
+# `git forgit log`, `forgit::log` OR `glo` alias (if set).
+#
+# NOTE: I manually set the alias' because I prefer to source scripts at the top
+# of my file, while my existing git alias' would otherwise be partially replaced.
+#
+if ! test -f "$HOME/Code/shell/forgit/forgit.plugin.sh"; then
+  mkdir -p "$HOME/Code/shell"
+  git clone git@github.com:wfxr/forgit.git
+fi
+export FORGIT_NO_ALIASES=true
+source $HOME/Code/shell/forgit/forgit.plugin.sh
+
 # ⚠️  CONFIGURATION ⚠️
 #
 # https://zsh.sourceforge.io/Doc/Release/Options.html
@@ -354,14 +369,19 @@ alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 #
 alias g="git"
 alias ga="git add"
+alias gai="forgit::add"
 alias gb="git branch"
 alias gc="git checkout"
+alias gcp="forgit::cherry::pick"
 alias gd="git diff"
+alias gdi="forgit::diff"
 alias gup="git push"
 alias gdown="git pull"
 alias gr="git rebase"
+alias gri="forgit::rebase"
 alias grs="git restore"
 alias gsh="git stash"
+alias gshs="forgit::stash::show"
 alias gsw="git switch"
 
 # git abstraction alias'
@@ -375,9 +395,11 @@ alias gbd="git branch -D"
 alias gcm="git commit"
 alias gca="git commit --amend"
 alias gco="git checkout origin/main --" # followed by path to file to checkout
+alias gcoi="forgit::checkout::file"
 alias gcv="git commit -v"
 alias gf="git pushit"
 alias gl="git log"
+alias gli="forgit::log"
 alias gld="git log-detailed"
 alias gls="git log-short"
 alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | awk NR==1 | ag '\d.+' -o"
