@@ -567,6 +567,7 @@ let g:move_key_modifier = 'C'
 " Prevent breaking markdown files.
 "
 let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
 let g:indentLine_fileTypeExclude = ['markdown']
 let g:indentLine_concealcursor = "nv"
 
@@ -810,7 +811,7 @@ nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> ga        <cmd>CodeActionMenu<CR>
-nnoremap <silent> [x        <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]z        <cmd>lua vim.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> ]]s        <cmd>lua vim.diagnostic.show()<CR>
 " nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
