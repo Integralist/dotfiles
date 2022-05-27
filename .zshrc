@@ -310,10 +310,13 @@ alias c="clear"
 alias cat="bat"
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
-read -r -d '' dns_help <<- EOF
+read -r -d '' network_help <<- EOF
 connectivity debugging steps...
 
-  * check what dns servers are being used:
+  * Check your upload/download speed:
+    networkQuality -s
+
+  * check what dns servers are being used by executing the 'dns' alias:
     dns
 
     > you can also check via nslookup
@@ -350,7 +353,7 @@ connectivity debugging steps...
     https://speed.cloudflare.com/
     https://fast.com/
 EOF
-alias dnshelp='echo "$dns_help"'
+alias networkhelp='echo "$network_help"'
 
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
