@@ -326,6 +326,9 @@ Plug 'folke/which-key.nvim'
 " Improve default vim.ui interfaces
 Plug 'stevearc/dressing.nvim'
 
+" Creates missing LSP diagnostics highlight groups for color schemes that don't yet support the Neovim 0.5 builtin LSP client
+Plug 'folke/lsp-colors.nvim'
+
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -637,7 +640,7 @@ lua require('dressing').setup()
 "
 " https://kapeli.com/dash
 "
-:nmap <silent> <leader>d <Plug>DashSearch
+:nmap <silent> <leader>do <Plug>DashSearch
 
 " ------------------------------------
 " Neovim LSP
@@ -800,22 +803,27 @@ EOF
 "
 " Exclude the 'help' FileType as <c-]> is used for navigating help docs.
 autocmd FileType *\(^help\)\@<! nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>k     <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> K         <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gi        <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gc        <cmd>lua vim.lsp.buf.incoming_calls()<CR>
-nnoremap <silent> gd        <cmd>lua vim.lsp.buf.type_definition()<CR>
-nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gn        <cmd>lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> gs        <cmd>lua vim.lsp.buf.document_symbol()<CR>
-nnoremap <silent> gw        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" nnoremap <silent> ga        <cmd>lua vim.lsp.buf.code_action()<CR>
-nnoremap <silent> ga        <cmd>CodeActionMenu<CR>
-nnoremap <silent> ]z        <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]x        <cmd>lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> ]]s        <cmd>lua vim.diagnostic.show()<CR>
-" nnoremap <silent> <space>q  <cmd>lua vim.diagnostic.setloclist()<CR>
-nnoremap <silent> <space>q  <cmd>Trouble<CR>
+nnoremap <silent> <leader>k   <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gc          <cmd>lua vim.lsp.buf.incoming_calls()<CR>
+nnoremap <silent> gd          <cmd>lua vim.lsp.buf.type_definition()<CR>
+nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gn          <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> gs          <cmd>lua vim.lsp.buf.document_symbol()<CR>
+nnoremap <silent> gw          <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" nnoremap <silent> ga          <cmd>lua vim.lsp.buf.code_action()<CR>
+nnoremap <silent> ga          <cmd>CodeActionMenu<CR>
+nnoremap <silent> ]z          <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]x          <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> <leader>ds  <cmd>lua vim.diagnostic.show()<CR>
+" nnoremap <silent> <leader>di  <cmd>lua vim.diagnostic.setloclist()<CR>
+nnoremap <silent> <leader>dc  <cmd>TroubleClose<CR>
+nnoremap <silent> <leader>di  <cmd>TroubleToggle document_diagnostics<CR>
+nnoremap <silent> <leader>dw  <cmd>TroubleToggle workspace_diagnostics<CR>
+nnoremap <silent> <leader>dr  <cmd>TroubleToggle lsp_references<CR>
+nnoremap <silent> <leader>dq  <cmd>TroubleToggle quickfix<CR> <bar> :ccl<CR>
+nnoremap <silent> <leader>dl  <cmd>TroubleToggle loclist<CR> <bar> :lcl<CR>
 
 " Setup Completion
 " https://github.com/hrsh7th/nvim-cmp#recommended-configuration
