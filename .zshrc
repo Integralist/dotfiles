@@ -219,6 +219,7 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 function brew_update {
   brew update
   brew outdated
+  brew upgrade
 }
 
 # sshagent ensures each shell instance knows about our GitHub SSH connection key(s).
@@ -616,11 +617,13 @@ if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
 fi
 function rust_update_tools {
   brew_update # called because of rust-analyzer
+  rustup self update
   rustup component add rustfmt
   rustup component add clippy
   cargo install cargo-audit --features=fix
   cargo install cargo-nextest
   cargo install cargo-edit
+  rustup update
 }
 
 
