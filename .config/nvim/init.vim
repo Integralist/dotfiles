@@ -337,10 +337,9 @@ Plug 'folke/lsp-colors.nvim'
 "
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'endel/vim-github-colorscheme'
-Plug 'lunarvim/onedarker.nvim'
 Plug 'morhetz/gruvbox'
-Plug 'yeddaif/neovim-purple'
 call plug#end()
 
 " remove default vim colorschemes
@@ -382,7 +381,7 @@ function DarkTheme()
     autocmd ColorScheme * highlight QuickScopePrimary guifg='#5fffff' gui=underline ctermfg=155 cterm=underline
     autocmd ColorScheme * highlight QuickScopeSecondary guifg='#ff6700' gui=underline ctermfg=81 cterm=underline
   augroup END
-  colorscheme neovim_purple
+  colorscheme nightfox
   set background=dark
 endfunction
 
