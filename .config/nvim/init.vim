@@ -117,7 +117,7 @@ map <leader>a :Ack! ''
 
 " Make closing terminal simple
 "
-" NOTE: We have to use <leader> before <Esc> other FZF's <Esc> will be overridden.
+" NOTE: We have to use <leader> before <Esc> otherwise Telescope's <Esc> will be overridden.
 tnoremap <leader><Esc> <C-\><C-n>
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -182,10 +182,6 @@ Plug 'google/vim-searchindex'
 
 " JavaScript Programming Language Syntax Highlighter
 Plug 'jelera/vim-javascript-syntax'
-
-" Fuzzy Finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim' " <Tab> to select multiple results
 
 " Run, view, and manage UNIX shell commands
 Plug 'ledesmablt/vim-run'
@@ -328,6 +324,10 @@ Plug 'stevearc/dressing.nvim'
 
 " Creates missing LSP diagnostics highlight groups for color schemes that don't yet support the Neovim 0.5 builtin LSP client
 Plug 'folke/lsp-colors.nvim'
+
+" Find, Filter, Preview, Pick
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
@@ -480,38 +480,6 @@ nmap <silent> <leader>z :ALEPrevious<cr>
 let g:run_use_loclist = 1
 
 " ------------------------------------
-" junegunn/fzf
-" junegunn/fzf.vim
-" ------------------------------------
-"
-" Shift-Tab to select multiple files
-"
-" Ctrl-t = tab
-" Ctrl-x = split
-" Ctrl-v = vertical
-"
-" We also set FZF_DEFAULT_COMMAND in ~/.zshrc to use `ag` (aka The Silver Searcher).
-" As part of the configuartion we set --ignore-dir multiple times.
-" We also set --hidden which enables searching hidden directories (like .github).
-" The --hidden flag will still respect a .ignore file (which is where we typically ignore things like .git).
-" NOTE: you need `--path-to-ignore ~/.ignore` otherwise ag only uses a local ignore file `./.ignore`.
-"
-" NOTE: append ! to command (e.g. :FZF vs :FZF! or place it just before the ?
-" in the case of :GFiles!?) to have preview open full screen.
-"
-" NOTE: <Shift + up> and <Shift + down> scrolls the preview window.
-"
-let g:fzf_preview_window = ['right:50%']
-map <leader>f :FZF<CR>
-map <leader>b :Buffers<CR>
-map <leader>g :GFiles?<CR>
-map <leader>w :Windows<CR>
-map <leader>l :Lines<CR>
-map <leader>t :Rg<CR>
-set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
-set wildmode=list:longest,list:full
-
-" ------------------------------------
 " mileszs/ack.vim
 " ------------------------------------
 "
@@ -618,6 +586,42 @@ lua require('which-key').setup()
 " ------------------------------------
 "
 lua require('dressing').setup()
+
+" ------------------------------------
+" nvim-telescope/telescope.nvim
+" ------------------------------------
+"
+" :help telescope.setup()
+"
+nnoremap <leader>f <cmd>Telescope find_files hidden=true<cr>
+nnoremap <leader>t <cmd>Telescope live_grep<cr>
+nnoremap <leader>b <cmd>Telescope buffers<cr>
+nnoremap <leader>h <cmd>Telescope help_tags<cr>
+nnoremap <leader>c <cmd>Telescope colorscheme<cr>
+nnoremap <leader>q <cmd>Telescope quickfix<cr>
+nnoremap <leader>r <cmd>Telescope current_buffer_fuzzy_find<cr>
+nnoremap <leader>tr <cmd>Telescope lsp_references<cr>
+nnoremap <leader>ts <cmd>Telescope lsp_document_symbols<cr>
+lua <<EOF
+  local actions = require("telescope.actions")
+
+  require("telescope").setup{
+    defaults = {
+      mappings = {
+        i = {
+          ["<esc>"] = actions.close,
+          ["<C-o>"] = actions.send_selected_to_qflist,
+        },
+      },
+    }
+  }
+EOF
+
+" ------------------------------------
+" nvim-telescope/telescope-fzf-native.nvim
+" ------------------------------------
+"
+lua require('telescope').load_extension('fzf')
 
 " ------------------------------------
 " dash
