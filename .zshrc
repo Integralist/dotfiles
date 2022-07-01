@@ -160,7 +160,7 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 #
 export EDITOR="vim"
 export FZF_COMPLETION_OPTS='--border --info=inline'
-export FZF_DEFAULT_COMMAND="ag --path-to-ignore ~/.ignore --hidden --ignore-dir node_modules --ignore-dir vendor --filename-pattern ''"
+export FZF_DEFAULT_COMMAND="rg --hidden --files"
 export FZF_DEFAULT_OPTS='--multi --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap'
 export GPG_TTY=$(tty)
 export GREP_COLOR="1;32"
@@ -203,7 +203,8 @@ export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/go/bin:$PATH" # go command (e.g. go version) install location
 export PATH="$HOME/go/bin:$PATH"      # go executables (e.g. go install) install location
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"  # rust executables
+export PATH="$HOME/bin:$PATH"         # terraform executables (via tfswitch)
 
 # rustup
 #
@@ -472,11 +473,12 @@ alias wut='echo "$git_icons"'
 # the cursor on the command prompt (e.g. vim <Ctrl-t>). Which is better than
 # using my own Ctrl+f binding below if you don't need to preview the file.
 
-# we want Ctrl+f to 'find' files using fzf and copy filename to clipboard
-bindkey -s '^f' 'fzf | pbcopy'
-
 # we want Ctrl+g to pass files into vim for editing (e.g. 'go to').
-bindkey -s '^g' 'vim $(fzf)'
+#
+# NOTE: Pressing Ctrl+v followed by another key will insert the relevant key
+# code into the text for you. So this is what I do with the <Enter> key. Also,
+# for <Enter> you can just use \n too.
+bindkey -s '^g' 'vim $(fzf)'
 
 # help fix VI mode, and not being able to delete characters
 bindkey "^?" backward-delete-char

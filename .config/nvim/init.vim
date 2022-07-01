@@ -406,7 +406,7 @@ nmap <leader>cl :call LightTheme()<CR>
 nmap <leader>cgd :call DefaultTheme()<CR>
 nmap <leader>cgl :call LightTheme() <bar> colorscheme gruvbox<CR>
 
-colorscheme gruvbox
+colorscheme nightfox
 
 " Configure the highlighted Vim tab
 "
@@ -490,7 +490,7 @@ let g:run_use_loclist = 1
 " Ctrl-x = split
 " Ctrl-v = vertical
 "
-" We also set FZF_DEFAULT_COMMAND in ~/.bashrc to use `ag` (aka The Silver Searcher).
+" We also set FZF_DEFAULT_COMMAND in ~/.zshrc to use `ag` (aka The Silver Searcher).
 " As part of the configuartion we set --ignore-dir multiple times.
 " We also set --hidden which enables searching hidden directories (like .github).
 " The --hidden flag will still respect a .ignore file (which is where we typically ignore things like .git).
@@ -507,29 +507,15 @@ map <leader>b :Buffers<CR>
 map <leader>g :GFiles?<CR>
 map <leader>w :Windows<CR>
 map <leader>l :Lines<CR>
-map <leader>t :AgC<CR>
+map <leader>t :Rg<CR>
 set wildignore+=*/.git/*,*/node_modules/*,*/.hg/*,*/.svn/*.,*/.DS_Store " Files matched are ignored when expanding wildcards
 set wildmode=list:longest,list:full
-
-" configure FZF text search command to have default flags included
-"
-" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
-" project's .gitignore being quite complex I was missing out of files that I
-" did actually want to find. But for most other projects respecting the
-" ignore file is what I want and so I'll try to resolve in other ways.
-"
-autocmd VimEnter * command! -nargs=* -bang AgC call fzf#vim#ag(<q-args>, '--path-to-ignore ~/.ignore --hidden --ignore "node_modules" --ignore-dir="vendor"', <bang>0)
 
 " ------------------------------------
 " mileszs/ack.vim
 " ------------------------------------
 "
-" NOTE: Originally I added --skip-vcs-ignores because of the Fastly CLI
-" project's .gitignore being quite complex I was missing out of files that I
-" did actually want to find. But for most other projects respecting the
-" ignore file is what I want and so I'll try to resolve in other ways.
-"
-let g:ackprg = 'ag --vimgrep --smart-case --path-to-ignore ~/.ignore --hidden --ignore-dir=node_modules --ignore-dir=vendor'
+let g:ackprg = 'rg --vimgrep --smart-case --hidden'
 
 " help Ack mappings to respect my split settings
 let g:ack_mappings = {
