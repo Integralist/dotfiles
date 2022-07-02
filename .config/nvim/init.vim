@@ -201,9 +201,6 @@ Plug 'nvie/vim-flake8', { 'for': 'python' }
 " Python requirements.txt Syntax Highlighter
 Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 
-" Search Dash.app
-Plug 'rizzatti/dash.vim'
-
 " Open GitHub links in web browser
 Plug 'ruanyl/vim-gh-line'
 
@@ -215,9 +212,6 @@ Plug 'sheerun/vim-polyglot'
 
 " VCL Syntax Highlighter
 Plug 'smerrill/vcl-vim-plugin'
-
-" Code Comments
-Plug 'tpope/vim-commentary'
 
 " Normalises repeat operator
 Plug 'tpope/vim-repeat'
@@ -314,7 +308,8 @@ Plug 'folke/trouble.nvim'
 " Plug 'dstein64/nvim-scrollview', { 'branch': 'main' }
 
 " Improve spell checking based on file context
-Plug 'lewis6991/spellsitter.nvim'
+"
+" Plug 'lewis6991/spellsitter.nvim'
 
 " Displays popup window for available key bindings
 Plug 'folke/which-key.nvim'
@@ -328,6 +323,25 @@ Plug 'folke/lsp-colors.nvim'
 " Find, Filter, Preview, Pick
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+
+" Markdown header search
+Plug 'crispgm/telescope-heading.nvim'
+
+" Search Dash app from Telescope
+" https://kapeli.com/dash
+Plug 'mrjones2014/dash.nvim', { 'do': 'make install' }
+
+" Search emojis from Telescope
+Plug 'xiyaowong/telescope-emoji.nvim'
+
+" Search windows from Telescope
+Plug 'kyoh86/telescope-windows.nvim'
+
+" Search changed files from Telescope
+Plug 'axkirillov/telescope-changed-files'
+
+" Code Comments
+Plug 'b3nj5m1n/kommentary'
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
@@ -482,7 +496,6 @@ let g:run_use_loclist = 1
 " ------------------------------------
 " mileszs/ack.vim
 " ------------------------------------
-"
 let g:ackprg = 'rg --vimgrep --smart-case --hidden'
 
 " help Ack mappings to respect my split settings
@@ -491,12 +504,15 @@ let g:ack_mappings = {
   \ "v": "<C-W><CR>:exe 'wincmd ' (&splitright ? 'L' : 'H')<CR><C-W>p<C-W>J<C-W>p"}
 
 " ------------------------------------
-" tpope/vim-commentary
+" b3nj5m1n/kommentary
 " ------------------------------------
-xmap <leader><leader><leader> <Plug>Commentary
-nmap <leader><leader><leader> <Plug>Commentary
-omap <leader><leader><leader> <Plug>Commentary
-nmap <leader><leader><leader> <Plug>CommentaryLine
+lua <<EOF
+  require('kommentary.config').configure_language("rust", {
+      single_line_comment_string = "//",
+      multi_line_comment_strings = {"/*", "*/"},
+  })
+EOF
+nmap <silent> <leader><leader><leader> :norm gcc<CR>
 
 " ------------------------------------
 " zivyangll/git-blame.vim
@@ -573,7 +589,9 @@ lua require("trouble").setup()
 " lewis6991/spellsitter.nvim
 " ------------------------------------
 "
-lua require('spellsitter').setup()
+" DISABLED: Broke with latest treesitter.
+"
+" lua require('spellsitter').setup()
 
 " ------------------------------------
 " folke/which-key.nvim
@@ -586,6 +604,33 @@ lua require('which-key').setup()
 " ------------------------------------
 "
 lua require('dressing').setup()
+
+" ------------------------------------
+" nvim-treesitter/nvim-treesitter
+" ------------------------------------
+"
+" NOTE: originally used `ensure_installed = "all"` but an experimental PHP
+" parser was causing NPM lockfile errors.
+"
+lua <<EOF
+require('nvim-treesitter.configs').setup({
+  ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html", "http", "javascript", "json", "lua", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml", "zig" },
+  highlight = {
+    enable = true,
+  },
+  rainbow = {
+    enable = true,
+    extended_mode = true,
+    max_file_lines = nil,
+  }
+})
+EOF
+
+" ------------------------------------
+" m-demare/hlargs.nvim
+" ------------------------------------
+"
+lua require('hlargs').setup()
 
 " ------------------------------------
 " nvim-telescope/telescope.nvim
@@ -605,7 +650,7 @@ nnoremap <leader>ts <cmd>Telescope lsp_document_symbols<cr>
 lua <<EOF
   local actions = require("telescope.actions")
 
-  require("telescope").setup{
+  require("telescope").setup({
     defaults = {
       mappings = {
         i = {
@@ -613,8 +658,13 @@ lua <<EOF
           ["<C-o>"] = actions.send_selected_to_qflist,
         },
       },
-    }
-  }
+    },
+    extensions = {
+      heading = {
+        treesitter = true,
+      },
+    },
+  })
 EOF
 
 " ------------------------------------
@@ -624,12 +674,44 @@ EOF
 lua require('telescope').load_extension('fzf')
 
 " ------------------------------------
-" dash
+" crispgm/telescope-heading.nvim
 " ------------------------------------
 "
-" https://kapeli.com/dash
+lua require('telescope').load_extension('heading')
+
+" ------------------------------------
+" xiyaowong/telescope-emoji.nvim
+" ------------------------------------
 "
-:nmap <silent> <leader>do <Plug>DashSearch
+lua require('telescope').load_extension('emoji')
+
+:nmap <silent> <leader>e :Telescope emoji<CR>
+
+" ------------------------------------
+" kyoh86/telescope-windows.nvim
+" ------------------------------------
+"
+lua require('telescope').load_extension('windows')
+
+:nmap <silent> <leader>w :Telescope windows<CR>
+
+" ------------------------------------
+" axkirillov/telescope-changed-files
+" ------------------------------------
+"
+lua require('telescope').load_extension('changed_files')
+
+lua <<EOF
+  vim.g.telescope_changed_files_base_branch = 'main'
+EOF
+:nmap <silent> <leader>g :Telescope changed_files<CR>
+:nmap <silent> <leader>gc :Telescope changed_files choose_base_branch<CR>
+
+" ------------------------------------
+" mrjones2014/dash.nvim
+" ------------------------------------
+"
+:nmap <silent> <leader>do :DashWord<CR>
 
 " ------------------------------------
 " Neovim LSP
@@ -686,7 +768,7 @@ EOF
 
 " Configure Rust Environment
 "
-autocmd BufWritePost *.rs :RustFmt
+autocmd BufWritePre *.rs lua vim.lsp.buf.formatting_sync()
 autocmd FileType rust map <buffer> <leader>rr :RustRunnables<CR>
 
 " Configure Golang LSP.
@@ -715,7 +797,6 @@ require('lspconfig').gopls.setup{
       usePlaceholders = true,
     },
   },
-	on_attach = on_attach,
 }
 EOF
 
@@ -755,37 +836,21 @@ autocmd BufWritePre *.go lua OrgImports(1000)
 
 " Configure Terraform LSP.
 "
-lua <<EOF
-require('lspconfig').terraformls.setup{
-	on_attach = on_attach,
-}
-EOF
-" autocmd BufWritePost *.tf :!terraform fmt %
+lua require('lspconfig').terraformls.setup{}
+
 autocmd BufWritePre *.tf lua vim.lsp.buf.formatting_sync()
 
 " Configure Terraform Linter LSP.
 "
-lua <<EOF
-require('lspconfig').tflint.setup{
-	on_attach = on_attach,
-}
-EOF
+lua require('lspconfig').tflint.setup{}
 
 " Configure JavaScript Linter LSP.
 "
-lua <<EOF
-require('lspconfig').quick_lint_js.setup{
-	on_attach = on_attach,
-}
-EOF
+lua require('lspconfig').quick_lint_js.setup{}
 
 " Configure TypeScript LSP.
 "
-lua <<EOF
-require('lspconfig').tsserver.setup{
-	on_attach = on_attach,
-}
-EOF
+lua require('lspconfig').tsserver.setup{}
 
 " Configure LSP code navigation shortcuts
 " as found in :help lsp
@@ -847,24 +912,4 @@ cmp.setup({
     { name = 'nvim_lsp_signature_help' },
   },
 })
-EOF
-
-" Setup Treesitter and friends
-"
-" NOTE: originall used `ensure_installed = "all"` but an experimental PHP
-" parser was causing NPM lockfile errors.
-"
-lua <<EOF
-require('nvim-treesitter.configs').setup {
-  ensure_installed = { "bash", "c", "cmake", "css", "dockerfile", "go", "gomod", "gowork", "hcl", "help", "html", "http", "javascript", "json", "lua", "make", "markdown", "python", "regex", "ruby", "rust", "toml", "vim", "yaml", "zig" },
-  highlight = {
-    enable = true,
-  },
-  rainbow = {
-    enable = true,
-    extended_mode = true,
-    max_file_lines = nil,
-  }
-}
-require('hlargs').setup()
 EOF
