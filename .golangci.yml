@@ -1,0 +1,17 @@
+# https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
+# https://golangci-lint.run/usage/linters/#enabled-by-default-linters
+linters:
+  enable:
+    - deadcode
+    - errcheck
+    - gosimple
+    - gofumpt
+    - goimports
+    - govet
+    - ineffassign
+    - revive
+    - staticcheck
+    - structcheck
+    - typecheck
+    - unused
+    - varcheck
