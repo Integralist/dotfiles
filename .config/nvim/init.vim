@@ -86,7 +86,7 @@ set showmatch
 " comma-separated list of paths for determining where to lookup words for autocomplete
 set dictionary=/usr/share/dict/words
 " use silver searcher for vim grep
-set grepprg=ag\ --nogroup\ --nocolor\ --skip-vcs-ignores
+set grepprg=rg\ --vimgrep
 " activate spell checking
 set spell
 " display pipe character for any tabs
@@ -167,9 +167,6 @@ Plug 'bkad/CamelCaseMotion'
 
 " Inactive Window Highlighter
 Plug 'blueyed/vim-diminactive'
-
-" Code Linter
-Plug 'dense-analysis/ale'
 
 " Markdown sidebars
 Plug 'gabenespoli/vim-mutton'
@@ -309,7 +306,7 @@ Plug 'folke/trouble.nvim'
 
 " Improve spell checking based on file context
 "
-" Plug 'lewis6991/spellsitter.nvim'
+Plug 'lewis6991/spellsitter.nvim'
 
 " Displays popup window for available key bindings
 Plug 'folke/which-key.nvim'
@@ -342,6 +339,15 @@ Plug 'axkirillov/telescope-changed-files'
 
 " Code Comments
 Plug 'b3nj5m1n/kommentary'
+
+" Code Linter
+Plug 'mfussenegger/nvim-lint'
+
+" Colour indicator for code colours like HEX and RGB etc.
+Plug 'norcalli/nvim-colorizer.lua'
+
+" Search and Replace (requires gsed)
+Plug 'windwp/nvim-spectre'
 
 " >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 " Color Schemes
@@ -477,18 +483,6 @@ nnoremap <leader><Tab> :NvimTreeToggle<CR>
 lua require('gitsigns').setup()
 
 " ------------------------------------
-" dense-analysis/ale
-" ------------------------------------
-"
-let g:ale_linters = {'go': ['gopls', 'staticcheck', 'revive', 'govet'], 'rust': ['cargo', 'analyzer']}
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '▲'
-highlight link ALEWarningSign String
-highlight link ALEErrorSign Title
-nmap <silent> <leader>x :ALENext<cr>
-nmap <silent> <leader>z :ALEPrevious<cr>
-
-" ------------------------------------
 " ledesmablt/vim-run
 " ------------------------------------
 let g:run_use_loclist = 1
@@ -547,6 +541,10 @@ let g:indentLine_concealcursor = "nv"
 " gelguy/wilder.nvim
 " ------------------------------------
 "
+" NOTE: We have to use Shift up/down keys instead of Tab because otherwise
+" we'd break the tab mapping from nvim-cmp.
+" https://github.com/gelguy/wilder.nvim/issues/120#issuecomment-1108530151
+"
 call wilder#setup({
       \ 'modes': ['/', '?', ':'],
       \ 'previous_key': '<S-Up>',
@@ -591,7 +589,7 @@ lua require("trouble").setup()
 "
 " DISABLED: Broke with latest treesitter.
 "
-" lua require('spellsitter').setup()
+lua require('spellsitter').setup()
 
 " ------------------------------------
 " folke/which-key.nvim
@@ -714,6 +712,27 @@ EOF
 :nmap <silent> <leader>do :DashWord<CR>
 
 " ------------------------------------
+" norcalli/nvim-colorizer.lua
+" ------------------------------------
+"
+lua require('colorizer').setup()
+
+" ------------------------------------
+" windwp/nvim-spectre
+" ------------------------------------
+"
+lua <<EOF
+  require('spectre').setup({
+    replace_engine={
+      ['sed']={
+          cmd = "gsed",
+      },
+    },
+  })
+EOF
+nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
+
+" ------------------------------------
 " Neovim LSP
 " ------------------------------------
 "
@@ -800,18 +819,62 @@ require('lspconfig').gopls.setup{
 }
 EOF
 
+" ------------------------------------
+" mfussenegger/nvim-lint
+" ------------------------------------
+"
+" NOTE: Issues with the go configuration detailed here:
+" https://github.com/golangci/golangci-lint/discussions/2956
+" https://github.com/mfussenegger/nvim-lint/issues/227
+"
+" Fundamentally, gofumpt and goimports isn't working (and revive is a bit broken too).
+"
+" Another issue is the typecheck linter which can't be disabled:
+" https://github.com/golangci/golangci-lint/discussions/2863#discussioncomment-3077146
+"
+lua <<EOF
+  -- https://github.com/mfussenegger/nvim-lint#custom-linters
+  local lint = require('lint')
+  lint.linters.cargo = {
+    cmd = 'cargo check',
+    stdin = false,
+    args = {},
+    stream = 'both',
+    ignore_exitcode = false,
+    env = nil,
+  }
+  lint.linters_by_ft = {
+    go = {'golangcilint', 'revive'},
+    rust = {'cargo'},
+  }
+  local golangcilint = require("lint.linters.golangcilint")
+  golangcilint.append_fname = true
+  golangcilint.args = {
+    'run',
+    '--out-format',
+    'json',
+    }
+EOF
+autocmd BufWritePre <buffer> lua require('lint').try_lint()
+
 " Configure Golang Environment.
+"
+autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"%+v\\n\", )")<CR> <bar> :norm $a<CR><esc>j==$i
+autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
+
+" NOTE: Once I get nvim-lint + golangci-lint issues resolved I should be able
+" to remove this gofumpt autocmd/function.
 "
 fun! GoFumpt()
   :silent !gofumpt -w %
   :edit
 endfun
-autocmd FileType go map <buffer> <leader>p :call append(".", "fmt.Printf(\"%+v\\n\", )")<CR> <bar> :norm $a<CR><esc>j==$i
-autocmd FileType go map <buffer> <leader>e :call append(".", "if err != nil {return err}")<CR> <bar> :w<CR>
 autocmd BufWritePost *.go call GoFumpt()
-autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
 
 " Order imports on save, like goimports does:
+"
+" NOTE: Once I get nvim-lint + golangci-lint issues resolved I should be able
+" to remove this goimports autocmd/function.
 "
 lua <<EOF
   function OrgImports(wait_ms)
@@ -830,6 +893,11 @@ lua <<EOF
   end
 EOF
 autocmd BufWritePre *.go lua OrgImports(1000)
+
+" NOTE: Once I get nvim-lint + golangci-lint issues resolved I should be able
+" to remove this revive autocmd.
+"
+autocmd BufWritePost *.go :cex system('revive '..expand('%:p')) | cwindow
 
 " NOTE: When using :LspInstallInfo to install available LSPs, we need to still
 " add calls to their setup here in our Vim configuration.
@@ -860,7 +928,7 @@ autocmd FileType *\(^help\)\@<! nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf
 nnoremap <silent> <leader>k   <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> K           <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gi          <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gc          <cmd>lua vim.lsp.buf.incoming_calls()<CR>
+nnoremap <silent> gic          <cmd>lua vim.lsp.buf.incoming_calls()<CR>
 nnoremap <silent> gd          <cmd>lua vim.lsp.buf.type_definition()<CR>
 nnoremap <silent> gr          <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gn          <cmd>lua vim.lsp.buf.rename()<CR>
@@ -868,8 +936,8 @@ nnoremap <silent> gs          <cmd>lua vim.lsp.buf.document_symbol()<CR>
 nnoremap <silent> gw          <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
 " nnoremap <silent> ga          <cmd>lua vim.lsp.buf.code_action()<CR>
 nnoremap <silent> ga          <cmd>CodeActionMenu<CR>
-nnoremap <silent> ]z          <cmd>lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]x          <cmd>lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> <leader>z          <cmd>lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> <leader>x          <cmd>lua vim.diagnostic.goto_next()<CR>
 nnoremap <silent> <leader>ds  <cmd>lua vim.diagnostic.show()<CR>
 " nnoremap <silent> <leader>di  <cmd>lua vim.diagnostic.setloclist()<CR>
 nnoremap <silent> <leader>dc  <cmd>TroubleClose<CR>
