@@ -15,3 +15,13 @@ linters:
     - typecheck
     - unused
     - varcheck
+
+# https://github.com/mgechev/revive#configuration
+linters-settings:
+  revive:
+    enableAllRules: true
+    severity: warning
+    rules:
+      - name: line-length-limit
+        severity: error
+        arguments: [80]
