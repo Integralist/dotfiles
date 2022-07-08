@@ -1,27 +1,3 @@
-local shared_on_attach = function(client, bufnr)
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', '<c-]>', "<Cmd>lua vim.lsp.buf.definition()<CR>", bufopts)
-  vim.keymap.set('n', '<leader>k', "<Cmd>lua vim.lsp.buf.signature_help()<CR>", bufopts)
-  vim.keymap.set('n', 'K', "<Cmd>lua vim.lsp.buf.hover()<CR>", bufopts)
-  vim.keymap.set('n', 'gi', "<Cmd>lua vim.lsp.buf.implementation()<CR>", bufopts)
-  vim.keymap.set('n', 'giC', "<Cmd>lua vim.lsp.buf.incoming_calls()<CR>", bufopts)
-  vim.keymap.set('n', 'gd', "<Cmd>lua vim.lsp.buf.type_definition()<CR>", bufopts)
-  vim.keymap.set('n', 'gr', "<Cmd>lua vim.lsp.buf.references()<CR>", bufopts)
-  vim.keymap.set('n', 'gn', "<Cmd>lua vim.lsp.buf.rename()<CR>", bufopts)
-  vim.keymap.set('n', 'gs', "<Cmd>lua vim.lsp.buf.document_symbol()<CR>", bufopts)
-  vim.keymap.set('n', 'gw', "<Cmd>lua vim.lsp.buf.workspace_symbol()<CR>", bufopts)
-  vim.keymap.set('n', '<leader>z', "<Cmd>lua vim.diagnostic.goto_prev()<CR>", bufopts)
-  vim.keymap.set('n', '<leader>x', "<Cmd>lua vim.diagnostic.goto_next()<CR>", bufopts)
-  vim.keymap.set('n', '<leader>ds', "<Cmd>lua vim.diagnostic.show()<CR>", bufopts)
-
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = {
-      "*.rs", "*.go", "*.tf"
-    },
-    command = [[lua vim.lsp.buf.formatting_sync()]]
-  })
-end
-
 function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = {only = {"source.organizeImports"}}
@@ -37,11 +13,9 @@ function OrgImports(wait_ms)
   end
 end
 
-local lspcfg = require("lspconfig")
-
-lspcfg.gopls.setup({
+require("lspconfig").gopls.setup({
   on_attach = function(client, bufnr)
-    shared_on_attach(client, bufnr)
+    require("shared").on_attach(client, bufnr)
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = {
@@ -86,7 +60,7 @@ require("rust-tools").setup({
   -- https://rust-analyzer.github.io/manual.html#features
   server = {
     on_attach = function(client, bufnr)
-      shared_on_attach(client, bufnr)
+      require("shared").on_attach(client, bufnr)
       vim.keymap.set('n', '<leader>rr', "<Cmd>RustRunnables<CR>", bufopts)
     end,
     settings = {
@@ -112,16 +86,3 @@ require("rust-tools").setup({
       }
     },
 })
-
-
--- NOTE: When using :LspInstallInfo to install available LSPs, we need to still
--- add calls to their setup here in our Vim configuration.
-
-lspcfg.quick_lint_js.setup{}
-lspcfg.terraformls.setup({
-  on_attach = function(client, bufnr)
-    shared_on_attach(client, bufnr)
-  end,
-})
-lspcfg.tflint.setup{}
-lspcfg.tsserver.setup{}

@@ -37,7 +37,10 @@ return require("packer").startup({
     -- searching
     use { "nvim-telescope/telescope.nvim", requires = {{ "nvim-lua/plenary.nvim" }} }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-    --use { "mrjones2014/dash.nvim", run = "make install" }
+    -- TODO: check this ui-select actually works.
+    use "nvim-telescope/telescope-ui-select.nvim"
+    -- ISSUE: https://github.com/wbthomason/packer.nvim/issues/138#issuecomment-1178868260
+    -- use { "mrjones2014/dash.nvim", run = "make install" }
     use "kyoh86/telescope-windows.nvim"
     use "crispgm/telescope-heading.nvim"
     use "xiyaowong/telescope-emoji.nvim"
@@ -132,6 +135,20 @@ return require("packer").startup({
     use { "williamboman/nvim-lsp-installer",
       config = function()
         require("nvim-lsp-installer").setup()
+
+        -- NOTE: When using :LspInstallInfo to install available LSPs, we need to still
+        -- add calls to their setup here in our Vim configuration.
+        --
+        -- These must be located here, as otherwise if placed inside 
+        -- plugin/lsp-config.lua we would find that file is loaded first before 
+        -- we have even setup nvim-lsp-installer.
+        local lspcfg = require("lspconfig")
+        lspcfg.quick_lint_js.setup{}
+        lspcfg.terraformls.setup({
+          on_attach = require("shared").on_attach,
+        })
+        lspcfg.tflint.setup{}
+        lspcfg.tsserver.setup{}
       end
     }
     use { "j-hui/fidget.nvim",
@@ -147,6 +164,7 @@ return require("packer").startup({
     use { "kosayoda/nvim-lightbulb", requires = "antoinemadec/FixCursorHold.nvim" }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
+    -- TODO: check this code-action actually works.
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
   end
