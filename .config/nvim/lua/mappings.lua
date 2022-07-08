@@ -1,8 +1,6 @@
 --[[
 These are general purpose mappings and LSP mappings.
 Mappings for plugins are inside ~/.config/nvim/plugin/<name>.lua
-
-NOTE: ~/.config/nvim/lua/autocmds.lua contains one other LSP mapping.
 --]]
 
 vim.keymap.set("", "±", "<Cmd>nohlsearch<CR>", { desc = "turn off search highlight" })
