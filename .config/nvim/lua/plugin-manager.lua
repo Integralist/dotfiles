@@ -11,6 +11,13 @@ Then execute :PackerSync
 Plugins will be compiled into the ~/.config/nvim/plugin directory.
 --]]
 
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugin-manager.lua source <afile> | PackerCompile
+  augroup end
+]])
+
 return require("packer").startup({
   function()
     -- plugin manager
@@ -123,6 +130,7 @@ return require("packer").startup({
     -- autocomplete
     use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-nvim-lua"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "hrsh7th/cmp-path"
@@ -167,5 +175,10 @@ return require("packer").startup({
     -- TODO: check this code-action actually works.
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
-  end
+  end,
+  config = {
+    git = {
+      clone_timeout = 120
+    }
+  }
 })
