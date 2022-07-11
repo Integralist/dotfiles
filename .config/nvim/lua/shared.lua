@@ -18,8 +18,7 @@ function export.on_attach(client, bufnr)
 
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = {
-      -- TODO: try just *
-      "*.rs", "*.go", "*.tf"
+      "*"
     },
     command = [[lua vim.lsp.buf.formatting_sync()]]
   })

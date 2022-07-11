@@ -56,12 +56,19 @@ require("rust-tools").setup({
 
   -- all the opts to send to nvim-lspconfig
   -- these override the defaults set by rust-tools.nvim
+  --
+  -- REFERENCE:
   -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+  -- https://rust-analyzer.github.io/manual.html#configuration
   -- https://rust-analyzer.github.io/manual.html#features
+  --
+  -- NOTE: The configuration format is `rust-analyzer.<section>.<property>`.
+  --       <section> should be an object.
+  --       <property> should be a primitive.
   server = {
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
-      vim.keymap.set('n', '<leader>rr', "<Cmd>RustRunnables<CR>", bufopts)
+      vim.keymap.set('n', '<leader>rr', "<Cmd>RustRunnables<CR>", { noremap=true, silent=true, buffer=bufnr })
     end,
     settings = {
       ["rust-analyzer"] = {

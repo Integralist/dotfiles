@@ -14,9 +14,9 @@ Plugins will be compiled into the ~/.config/nvim/plugin directory.
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugin-manager.lua source <afile> | PackerCompile
+    autocmd BufWritePost *.lua source <afile> | PackerCompile
   augroup end
-]]) -- TODO use better pattern for any config files
+]])
 
 return require("packer").startup({
   function()
