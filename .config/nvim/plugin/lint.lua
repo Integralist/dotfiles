@@ -24,7 +24,7 @@ golangcilint.args = {
 
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = {
-    "<buffer>"
+    "<afile>"
   },
   command = [[lua require('lint').try_lint()]]
 })

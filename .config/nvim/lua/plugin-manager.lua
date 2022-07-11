@@ -16,7 +16,7 @@ vim.cmd([[
     autocmd!
     autocmd BufWritePost plugin-manager.lua source <afile> | PackerCompile
   augroup end
-]])
+]]) -- TODO use better pattern for any config files
 
 return require("packer").startup({
   function()
@@ -44,10 +44,6 @@ return require("packer").startup({
     -- searching
     use { "nvim-telescope/telescope.nvim", requires = {{ "nvim-lua/plenary.nvim" }} }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
-    -- TODO: check this ui-select actually works.
-    use "nvim-telescope/telescope-ui-select.nvim"
-    -- ISSUE: https://github.com/wbthomason/packer.nvim/issues/138#issuecomment-1178868260
-    -- use { "mrjones2014/dash.nvim", run = "make install" }
     use "kyoh86/telescope-windows.nvim"
     use "crispgm/telescope-heading.nvim"
     use "xiyaowong/telescope-emoji.nvim"
@@ -176,7 +172,6 @@ return require("packer").startup({
     use { "kosayoda/nvim-lightbulb", requires = "antoinemadec/FixCursorHold.nvim" }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
-    -- TODO: check this code-action actually works.
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
   end,

@@ -20,7 +20,6 @@ require('telescope').load_extension("heading")
 require('telescope').load_extension("emoji")
 require('telescope').load_extension("windows")
 require('telescope').load_extension("changed_files")
-require('telescope').load_extension("ui-select")
 
 vim.g.telescope_changed_files_base_branch = "main"
 
