@@ -6,6 +6,7 @@ NOTE: .. is equivalent to += in vimscript
 
 vim.o.backup = false
 vim.o.clipboard = "unnamed"
+vim.o.completeopt = "menuone,noinsert,noselect"
 vim.o.cursorline = true
 vim.o.dictionary = "/usr/share/dict/words"
 vim.o.expandtab = true
