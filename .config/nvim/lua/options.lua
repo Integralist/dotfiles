@@ -1,7 +1,5 @@
 --[[
 To see what an option is set to execute :lua = vim.o.<name>
-
-NOTE: .. is equivalent to += in vimscript
 --]]
 
 vim.o.backup = false
@@ -18,7 +16,7 @@ vim.o.lazyredraw = true
 vim.o.number = true
 vim.o.scrolloff = 5
 vim.o.shiftwidth = 2
-vim.o.shortmess = vim.o.shortmess .. "c"
+vim.o.shortmess = vim.o.shortmess .. "c" -- .. is equivalent to += in vimscript
 vim.o.showmatch = true
 vim.o.smartcase = true
 vim.o.smartindent = true
@@ -27,6 +25,7 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 vim.o.swapfile = false
 vim.o.tabstop = 2
+vim.o.updatetime = 1000 -- affects CursorHold and subsequently things like highlighting Code Actions.
 vim.o.wrap = false
 
 if vim.fn.has("termguicolors") == 1 then

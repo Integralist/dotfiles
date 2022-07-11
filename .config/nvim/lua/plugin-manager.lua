@@ -135,7 +135,11 @@ return require("packer").startup({
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "hrsh7th/cmp-path"
     use "hrsh7th/cmp-vsnip"
-    use "hrsh7th/vim-vsnip"
+    use { "hrsh7th/vim-vsnip",
+      config = function()
+        -- vim.keymap.set("i", "<expr> <Tab> vsnip#jumpable(1)", "<Plug>(vsnip-jump-next)")
+      end
+    }
     use "hrsh7th/vim-vsnip-integ"
 
     -- lsp
