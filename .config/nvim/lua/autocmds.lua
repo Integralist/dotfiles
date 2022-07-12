@@ -18,3 +18,10 @@ vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
   },
   command = [[set filetype=markdown]]
 })
+
+vim.cmd([[
+  augroup WrapLineInMarkdown
+      autocmd!
+      autocmd FileType markdown setlocal wrap
+  augroup END
+]])
