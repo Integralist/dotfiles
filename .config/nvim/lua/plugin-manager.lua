@@ -127,21 +127,6 @@ return require("packer").startup({
     -- search and replace
     use { "nvim-pack/nvim-spectre", requires = "nvim-lua/plenary.nvim" }
 
-    -- autocomplete
-    use "hrsh7th/nvim-cmp"
-    use "hrsh7th/cmp-buffer"
-    use "hrsh7th/cmp-nvim-lua"
-    use "hrsh7th/cmp-nvim-lsp"
-    use "hrsh7th/cmp-nvim-lsp-signature-help"
-    use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-vsnip"
-    use { "hrsh7th/vim-vsnip",
-      config = function()
-        -- vim.keymap.set("i", "<expr> <Tab> vsnip#jumpable(1)", "<Plug>(vsnip-jump-next)")
-      end
-    }
-    use "hrsh7th/vim-vsnip-integ"
-
     -- lsp
     use "neovim/nvim-lspconfig"
     use { "williamboman/nvim-lsp-installer",
@@ -178,6 +163,17 @@ return require("packer").startup({
     use "mfussenegger/nvim-lint"
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
+
+    -- autocomplete
+    use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-nvim-lua"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "hrsh7th/cmp-nvim-lsp-signature-help"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-vsnip"
+    use "hrsh7th/vim-vsnip"
+    use "hrsh7th/vim-vsnip-integ"
   end,
   config = {
     git = {
