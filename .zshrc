@@ -357,6 +357,7 @@ connectivity debugging steps...
 EOF
 alias networkhelp='echo "$network_help"'
 
+alias dockerprune='docker system prune --all'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
