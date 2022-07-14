@@ -563,7 +563,9 @@ function go_install {
   osname=$(uname -s | tr '[:upper:]' '[:lower:]')
   hardware=$(uname -m)
   mkdir -p ~/goversions
-  if ! test -f "~/goversions/go$v.$osname-$hardware.pkg"; then
+  local dl=true
+  ls "$HOME/goversions/go$v.$osname-$hardware.pkg" > /dev/null 2>&1 && dl=false
+  if [[ $dl == true ]]; then
     printf "\nDownloading %s\n\n" "go$v.$osname-$hardware"
     curl -L -o ~/goversions/go$v.$osname-$hardware.pkg https://go.dev/dl/go$v.$osname-$hardware.pkg
   fi
