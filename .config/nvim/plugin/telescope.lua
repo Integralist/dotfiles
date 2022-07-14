@@ -1,5 +1,7 @@
 local actions = require("telescope.actions")
-require("telescope").setup({
+local ts = require("telescope")
+
+ts.setup({
   defaults = {
     mappings = {
       i = {
@@ -15,11 +17,11 @@ require("telescope").setup({
   },
 })
 
-require('telescope').load_extension("fzf")
-require('telescope').load_extension("heading")
-require('telescope').load_extension("emoji")
-require('telescope').load_extension("windows")
-require('telescope').load_extension("changed_files")
+ts.load_extension("fzf")
+ts.load_extension("heading")
+ts.load_extension("emoji")
+ts.load_extension("windows")
+ts.load_extension("changed_files")
 
 vim.g.telescope_changed_files_base_branch = "main"
 

@@ -42,7 +42,7 @@ return require("packer").startup({
     }
 
     -- searching
-    use { "nvim-telescope/telescope.nvim", requires = {{ "nvim-lua/plenary.nvim" }} }
+    use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
     use "kyoh86/telescope-windows.nvim"
     use "crispgm/telescope-heading.nvim"
@@ -122,10 +122,10 @@ return require("packer").startup({
     }
 
     -- git history
-    use { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" }
+    use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
     -- search and replace
-    use { "nvim-pack/nvim-spectre", requires = "nvim-lua/plenary.nvim" }
+    use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
 
     -- lsp
     use "neovim/nvim-lspconfig"
@@ -158,7 +158,7 @@ return require("packer").startup({
         require("trouble").setup()
       end
     }
-    use { "kosayoda/nvim-lightbulb", requires = "antoinemadec/FixCursorHold.nvim" }
+    use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
     use "weilbith/nvim-code-action-menu"
