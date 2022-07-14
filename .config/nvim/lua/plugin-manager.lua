@@ -174,6 +174,28 @@ return require("packer").startup({
     use "hrsh7th/cmp-vsnip"
     use "hrsh7th/vim-vsnip"
     use "hrsh7th/vim-vsnip-integ"
+
+    -- debugging
+    use "mfussenegger/nvim-dap"
+    use { "rcarriga/nvim-dap-ui", 
+      requires = { "mfussenegger/nvim-dap" },
+      config = function()
+        require("dapui").setup()
+      end
+    }
+    use { "leoluz/nvim-dap-go", 
+      requires = { "mfussenegger/nvim-dap" },
+      run = "go install github.com/go-delve/delve/cmd/dlv@latest",
+      config = function()
+        require("dap-go").setup()
+      end
+    }
+    use { "theHamsta/nvim-dap-virtual-text", 
+      requires = { "mfussenegger/nvim-dap" },
+      config = function()
+        require("nvim-dap-virtual-text").setup()
+      end
+    }
   end,
   config = {
     git = {
