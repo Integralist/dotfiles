@@ -171,9 +171,12 @@ return require("packer").startup({
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "hrsh7th/cmp-path"
-    use "hrsh7th/cmp-vsnip"
-    use "hrsh7th/vim-vsnip"
-    use "hrsh7th/vim-vsnip-integ"
+    use { "L3MON4D3/LuaSnip", 
+      requires = { "saadparwaiz1/cmp_luasnip" },
+      config = function()
+        require("luasnip.loaders.from_lua").load({ paths = "~/.snippets" })
+      end
+    }
 
     -- debugging
     use "mfussenegger/nvim-dap"
