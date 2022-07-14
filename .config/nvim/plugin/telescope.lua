@@ -17,11 +17,12 @@ ts.setup({
   },
 })
 
+ts.load_extension("changed_files")
+ts.load_extension("emoji")
 ts.load_extension("fzf")
 ts.load_extension("heading")
-ts.load_extension("emoji")
+ts.load_extension("ui-select")
 ts.load_extension("windows")
-ts.load_extension("changed_files")
 
 vim.g.telescope_changed_files_base_branch = "main"
 
@@ -31,7 +32,6 @@ vim.keymap.set("n", "<leader>ej", "<Cmd>Telescope emoji<CR>", { desc = "search e
 vim.keymap.set("n", "<leader>ex", "<Cmd>Telescope commands<CR>", { desc = "search Ex commands" })
 vim.keymap.set("n", "<leader>f", "<Cmd>Telescope find_files hidden=true<CR>", { desc = "search files" })
 vim.keymap.set("n", "<leader>g", "<Cmd>Telescope changed_files<CR>", { desc = "search changed files" })
-vim.keymap.set("n", "<leader>gc", "<Cmd>Telescope changed_files choose_base_branch<CR>", { desc = "search changed files and choose branch" })
 vim.keymap.set("n", "<leader>h", "<Cmd>Telescope help_tags<CR>", { desc = "search help" })
 vim.keymap.set("n", "<leader>i", "<Cmd>Telescope builtin<CR>", { desc = "search builtins" })
 vim.keymap.set("n", "<leader>k", "<Cmd>Telescope keymaps<CR>", { desc = "search key mappings" })

@@ -1,4 +1,4 @@
-vim.keymap.set("n", "ga", "<Cmd>CodeActionMenu<CR>", { 
+vim.keymap.set("n", "<leader>la", "<Cmd>CodeActionMenu<CR>", { 
   noremap = true, 
   desc = "code action menu" 
 })

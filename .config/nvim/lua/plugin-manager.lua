@@ -44,6 +44,11 @@ return require("packer").startup({
     -- searching
     use { "nvim-telescope/telescope.nvim", requires = { "nvim-lua/plenary.nvim" } }
     use { "nvim-telescope/telescope-fzf-native.nvim", run = "make" }
+    use { "nvim-telescope/telescope-ui-select.nvim",
+      config = function()
+        require("telescope").setup({})
+      end
+    }
     use "kyoh86/telescope-windows.nvim"
     use "crispgm/telescope-heading.nvim"
     use "xiyaowong/telescope-emoji.nvim"
