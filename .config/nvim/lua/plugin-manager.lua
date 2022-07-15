@@ -55,7 +55,18 @@ return require("packer").startup({
     use "axkirillov/telescope-changed-files"
 
     -- file system navigation
-    use { "kyazdani42/nvim-tree.lua", requires = { "kyazdani42/nvim-web-devicons" } }
+    use { "kyazdani42/nvim-tree.lua", 
+      requires = { "kyazdani42/nvim-web-devicons" },
+      config = function()
+        require("nvim-tree").setup({
+          renderer = {
+            indent_markers = {
+              enable = true
+            }
+          },
+        })
+      end
+    }
 
     -- status line
     use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
