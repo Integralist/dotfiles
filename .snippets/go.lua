@@ -9,4 +9,5 @@ return {
     return fmt.Errorf("error: %w", err)
   }
   ]]),
+	parse("pfmt", "fmt.Printf(\"%+v\\n\", )"),
 }
