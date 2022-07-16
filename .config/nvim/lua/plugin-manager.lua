@@ -71,6 +71,9 @@ return require("packer").startup({
               enable = true
             }
           },
+          git = {
+            ignore = false
+          }
         })
       end
     }
