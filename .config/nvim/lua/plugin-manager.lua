@@ -78,11 +78,7 @@ return require("packer").startup({
     use "b3nj5m1n/kommentary"
 
     -- git change indicator
-    use { "lewis6991/gitsigns.nvim",
-      config = function()
-        require("gitsigns").setup()
-      end
-    }
+    use { "lewis6991/gitsigns.nvim" }
 
     -- ui improvements
     use { "stevearc/dressing.nvim",
