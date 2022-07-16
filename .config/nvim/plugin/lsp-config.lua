@@ -68,7 +68,7 @@ require("rust-tools").setup({
   server = {
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
-      vim.keymap.set('n', '<leader>rr', "<Cmd>RustRunnables<CR>", { noremap=true, silent=true, buffer=bufnr })
+      vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>", { noremap=true, silent=true, buffer=bufnr })
     end,
     settings = {
       ["rust-analyzer"] = {

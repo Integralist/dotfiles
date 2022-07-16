@@ -9,6 +9,13 @@ Ensure https://github.com/wbthomason/packer.nvim is cloned inside of the ~/.conf
 Then execute :PackerSync
 
 Plugins will be compiled into the ~/.config/nvim/plugin directory.
+
+NOTE: The plugin mappings defined have the following convention:
+
+* Single <leader> for search operations (inc. file explorer + search/replace)
+* Double <leader> for all other mappings
+
+This helps to avoid overlap in letters.
 --]]
 
 vim.cmd([[
