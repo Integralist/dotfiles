@@ -95,7 +95,19 @@ return require("packer").startup({
     }
 
     -- motion highlighter
-    use "unblevable/quick-scope"
+    use { "jinh0/eyeliner.nvim", 
+      config = function()
+        vim.api.nvim_set_hl(0, "EyelinerPrimary", { underline = true })
+        vim.api.nvim_create_autocmd("ColorScheme", {
+          pattern = {
+            "*"
+          },
+          callback = function() 
+            vim.api.nvim_set_hl(0, "EyelinerPrimary", { underline = true })
+          end
+        })
+      end
+    }
 
     -- modify surrounding characters
     use "tpope/vim-surround"
