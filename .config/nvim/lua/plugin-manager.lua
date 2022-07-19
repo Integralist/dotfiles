@@ -174,12 +174,18 @@ return require("packer").startup({
         -- plugin/lsp-config.lua we would find that file is loaded first before 
         -- we have even setup nvim-lsp-installer.
         local lspcfg = require("lspconfig")
-        lspcfg.quick_lint_js.setup{}
+        lspcfg.quick_lint_js.setup{
+          on_attach = require("shared").on_attach,
+        }
         lspcfg.terraformls.setup({
           on_attach = require("shared").on_attach,
         })
-        lspcfg.tflint.setup{}
-        lspcfg.tsserver.setup{}
+        lspcfg.tflint.setup{
+          on_attach = require("shared").on_attach,
+        }
+        lspcfg.tsserver.setup{
+          on_attach = require("shared").on_attach,
+        }
       end
     }
     use { "j-hui/fidget.nvim",
