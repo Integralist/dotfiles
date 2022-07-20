@@ -128,7 +128,11 @@ return require("packer").startup({
     use "matze/vim-move"
 
     -- open lines in github
-    use "ruanyl/vim-gh-line"
+    use { "ruanyl/vim-gh-line",
+      config = function()
+        vim.g.gh_line_map = "<leader><leader>gl"
+      end
+    }
 
     -- suggest mappings
     use { "folke/which-key.nvim",
@@ -207,6 +211,7 @@ return require("packer").startup({
     -- autocomplete
     use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-cmdline"
     use "hrsh7th/cmp-nvim-lua"
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lsp-signature-help"
