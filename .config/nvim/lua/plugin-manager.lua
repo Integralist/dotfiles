@@ -190,6 +190,9 @@ return require("packer").startup({
         lspcfg.tsserver.setup{
           on_attach = require("shared").on_attach,
         }
+        lspcfg.yamlls.setup{
+          on_attach = require("shared").on_attach,
+        }
       end
     }
     use { "j-hui/fidget.nvim",
