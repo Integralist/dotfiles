@@ -301,6 +301,14 @@ function list_contents() {
   echo unsupported file extension
 }
 
+# clean out docker
+#
+function docker_clean() {
+  dockerrmc
+  dockerrmi
+  dockerprune
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
