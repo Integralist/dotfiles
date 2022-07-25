@@ -149,15 +149,7 @@ return require("packer").startup({
     }
 
     -- tab ui improvments
-    use { "kdheepak/tabline.nvim", 
-      config = function()
-        require("tabline").setup({
-          options = {
-            show_tabs_only = true
-          }
-        })
-      end
-    }
+    use { "romgrk/barbar.nvim", requires = { "kyazdani42/nvim-web-devicons" } }
 
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
