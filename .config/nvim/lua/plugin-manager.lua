@@ -166,35 +166,31 @@ return require("packer").startup({
     use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
 
     -- lsp
-    use "neovim/nvim-lspconfig"
-    use { "williamboman/nvim-lsp-installer",
-      config = function()
-        require("nvim-lsp-installer").setup()
-
-        -- NOTE: When using :LspInstallInfo to install available LSPs, we need to still
-        -- add calls to their setup here in our Vim configuration.
-        --
-        -- These must be located here, as otherwise if placed inside 
-        -- plugin/lsp-config.lua we would find that file is loaded first before 
-        -- we have even setup nvim-lsp-installer.
-        local lspcfg = require("lspconfig")
-        lspcfg.quick_lint_js.setup{
-          on_attach = require("shared").on_attach,
-        }
-        lspcfg.terraformls.setup({
-          on_attach = require("shared").on_attach,
-        })
-        lspcfg.tflint.setup{
-          on_attach = require("shared").on_attach,
-        }
-        lspcfg.tsserver.setup{
-          on_attach = require("shared").on_attach,
-        }
-        lspcfg.yamlls.setup{
+    use {
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
+      "neovim/nvim-lspconfig",
+    }
+    require("mason").setup()
+    mason_lspconfig = require("mason-lspconfig")
+    mason_lspconfig.setup({
+      ensure_installed = {
+        "eslint-lsp",
+        "rome",
+        "terraform-ls",
+        "tflint",
+        "typescript-language-server",
+        "yaml-language-server",
+        "yamllint",
+      }
+    })
+    mason_lspconfig.setup_handlers({
+      function (server_name)
+        require("lspconfig")[server_name].setup {
           on_attach = require("shared").on_attach,
         }
       end
-    }
+    })
     use { "j-hui/fidget.nvim",
       config = function()
         require("fidget").setup()
