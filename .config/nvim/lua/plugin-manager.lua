@@ -206,6 +206,12 @@ return require("packer").startup({
         require("trouble").setup()
       end
     }
+    use({
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim", -- See also: https://github.com/Maan2003/lsp_lines.nvim
+      config = function()
+        require("lsp_lines").setup()
+      end,
+    })
     use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
