@@ -41,7 +41,7 @@ return require("packer").startup({
         require("spellsitter").setup()
       end
     }
-    use { "m-demare/hlargs.nvim", 
+    use { "m-demare/hlargs.nvim",
       requires = { "nvim-treesitter/nvim-treesitter" },
       config = function()
         require("hlargs").setup()
@@ -62,7 +62,7 @@ return require("packer").startup({
     use "axkirillov/telescope-changed-files"
 
     -- file system navigation
-    use { "kyazdani42/nvim-tree.lua", 
+    use { "kyazdani42/nvim-tree.lua",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function()
         require("nvim-tree").setup({
@@ -98,14 +98,14 @@ return require("packer").startup({
     }
 
     -- motion highlighter
-    use { "jinh0/eyeliner.nvim", 
+    use { "jinh0/eyeliner.nvim",
       config = function()
         vim.api.nvim_set_hl(0, "EyelinerPrimary", { underline = true })
         vim.api.nvim_create_autocmd("ColorScheme", {
           pattern = {
             "*"
           },
-          callback = function() 
+          callback = function()
             vim.api.nvim_set_hl(0, "EyelinerPrimary", { underline = true })
           end
         })
@@ -149,12 +149,19 @@ return require("packer").startup({
     }
 
     -- tab ui improvments
-    use { "romgrk/barbar.nvim", 
+    use { "romgrk/barbar.nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
       config = function()
         vim.keymap.set("n", "gb", "<Cmd>BufferNext<CR>", { desc = "move to next buffer" })
         vim.keymap.set("n", "gB", "<Cmd>BufferPrevious<CR>", { desc = "move to previous buffer" })
-      end 
+      end
+    }
+
+    -- whitespace management
+    use { "zakharykaplan/nvim-retrail",
+      config = function()
+        require("retrail").setup()
+      end
     }
 
     -- git history
@@ -213,7 +220,7 @@ return require("packer").startup({
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/cmp-nvim-lsp-signature-help"
     use "hrsh7th/cmp-path"
-    use { "L3MON4D3/LuaSnip", 
+    use { "L3MON4D3/LuaSnip",
       requires = { "saadparwaiz1/cmp_luasnip" },
       config = function()
         require("luasnip.loaders.from_lua").load({ paths = "~/.snippets" })
@@ -222,20 +229,20 @@ return require("packer").startup({
 
     -- debugging
     use "mfussenegger/nvim-dap"
-    use { "rcarriga/nvim-dap-ui", 
+    use { "rcarriga/nvim-dap-ui",
       requires = { "mfussenegger/nvim-dap" },
       config = function()
         require("dapui").setup()
       end
     }
-    use { "leoluz/nvim-dap-go", 
+    use { "leoluz/nvim-dap-go",
       requires = { "mfussenegger/nvim-dap" },
       run = "go install github.com/go-delve/delve/cmd/dlv@latest",
       config = function()
         require("dap-go").setup()
       end
     }
-    use { "theHamsta/nvim-dap-virtual-text", 
+    use { "theHamsta/nvim-dap-virtual-text",
       requires = { "mfussenegger/nvim-dap" },
       config = function()
         require("nvim-dap-virtual-text").setup()
