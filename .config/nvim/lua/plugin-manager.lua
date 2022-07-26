@@ -254,6 +254,16 @@ return require("packer").startup({
         require("nvim-dap-virtual-text").setup()
       end
     }
+
+    -- writing
+    use { "marcelofern/vale.nvim",
+      config = function()
+        require("vale").setup({
+          bin="/usr/local/bin/vale",
+          vale_config_path="$HOME/.vale.ini",
+        })
+      end
+    }
   end,
   config = {
     git = {
