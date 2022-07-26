@@ -31,5 +31,3 @@ vim.o.wrap = false
 if vim.fn.has("termguicolors") == 1 then
   vim.o.termguicolors = true
 end
-
-vim.cmd [[set mouse=a]] -- used for barbar plugin

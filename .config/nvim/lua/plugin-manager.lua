@@ -149,11 +149,15 @@ return require("packer").startup({
     }
 
     -- tab ui improvments
-    use { "romgrk/barbar.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
+    use { "akinsho/bufferline.nvim",
+      tag = "v2.*",
+      requires = "kyazdani42/nvim-web-devicons",
       config = function()
-        vim.keymap.set("n", "gb", "<Cmd>BufferNext<CR>", { desc = "move to next buffer" })
-        vim.keymap.set("n", "gB", "<Cmd>BufferPrevious<CR>", { desc = "move to previous buffer" })
+        require("bufferline").setup({
+          options = {
+            mode = "tabs"
+          }
+        })
       end
     }
 
