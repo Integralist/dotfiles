@@ -149,7 +149,13 @@ return require("packer").startup({
     }
 
     -- tab ui improvments
-    use { "romgrk/barbar.nvim", requires = { "kyazdani42/nvim-web-devicons" } }
+    use { "romgrk/barbar.nvim", 
+      requires = { "kyazdani42/nvim-web-devicons" },
+      config = function()
+        vim.keymap.set("n", "gb", "<Cmd>BufferNext<CR>", { desc = "move to next buffer" })
+        vim.keymap.set("n", "gB", "<Cmd>BufferPrevious<CR>", { desc = "move to previous buffer" })
+      end 
+    }
 
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
