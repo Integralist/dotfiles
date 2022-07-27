@@ -181,10 +181,11 @@ return require("packer").startup({
       "neovim/nvim-lspconfig",
     }
     require("mason").setup()
-    mason_lspconfig = require("mason-lspconfig")
+    local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup({
       ensure_installed = {
         "eslint-lsp",
+        "lua-language-server",
         "rome",
         "terraform-ls",
         "tflint",
@@ -194,7 +195,7 @@ return require("packer").startup({
       }
     })
     mason_lspconfig.setup_handlers({
-      function (server_name)
+      function(server_name)
         require("lspconfig")[server_name].setup {
           on_attach = require("shared").on_attach,
         }
@@ -263,8 +264,8 @@ return require("packer").startup({
     use { "marcelofern/vale.nvim",
       config = function()
         require("vale").setup({
-          bin="/usr/local/bin/vale",
-          vale_config_path="$HOME/.vale.ini",
+          bin = "/usr/local/bin/vale",
+          vale_config_path = "$HOME/.vale.ini",
         })
       end
     }
