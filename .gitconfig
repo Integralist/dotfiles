@@ -38,9 +38,11 @@
   rebase = true
 
 [color]
+  branch = always
   commit = red
   diff = always
   interactive = always
+  status = always
   ui = true
 
 [color "diff"]
