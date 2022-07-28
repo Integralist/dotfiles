@@ -312,6 +312,7 @@ function docker_clean() {
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
+#       the use of `type` doesn't always work in Zsh so use `whence -c` instead
 #       alternatively use the `list` alias to show all defined alias' from this file
 #       the `alias` function itself with no arguments will actually print all too
 #
@@ -639,7 +640,6 @@ function rust_update_tools {
   rustup update
 }
 
-
 # broot (tree replacement) requires a companion shell function (br) to allow
 # alt+enter to cd into a directory.
 #
@@ -671,7 +671,7 @@ function __zoxide_cd {
 
 # Alacritty
 #
-if [ -f "~/.bash_completion/alacritty" ]; then
+if [ -f "$HOME/.bash_completion/alacritty" ]; then
   source ~/.bash_completion/alacritty
 fi
 
