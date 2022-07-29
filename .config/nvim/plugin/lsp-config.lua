@@ -1,6 +1,6 @@
 function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
-  params.context = {only = {"source.organizeImports"}}
+  params.context = { only = { "source.organizeImports" } }
   local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, wait_ms)
   for _, res in pairs(result or {}) do
     for _, r in pairs(res.result or {}) do
@@ -24,7 +24,7 @@ require("lspconfig").gopls.setup({
       command = [[lua OrgImports(1000)]]
     })
   end,
-	cmd = {"gopls"},
+  cmd = { "gopls" },
   settings = {
     gopls = {
       analyses = {
@@ -37,6 +37,15 @@ require("lspconfig").gopls.setup({
       gofumpt = true,
       staticcheck = true,
       usePlaceholders = true,
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        compositeLiteralTypes = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      }
     },
   },
 })
@@ -51,8 +60,8 @@ require("rust-tools").setup({
       show_parameter_hints = true,
       parameter_hints_prefix = "<- ",
       other_hints_prefix = "=> ",
-      },
     },
+  },
 
   -- all the opts to send to nvim-lspconfig
   -- these override the defaults set by rust-tools.nvim
@@ -68,28 +77,29 @@ require("rust-tools").setup({
   server = {
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
-      vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>", { noremap=true, silent=true, buffer=bufnr })
+      vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>",
+        { noremap = true, silent = true, buffer = bufnr })
     end,
     settings = {
       ["rust-analyzer"] = {
         assist = {
           importEnforceGranularity = true,
           importPrefix = "crate"
-          },
+        },
         cargo = {
           allFeatures = true
-          },
+        },
         checkOnSave = {
           -- default: `cargo check`
           command = "clippy"
-          },
         },
-        inlayHints = {
-          lifetimeElisionHints = {
-            enable = true,
-            useParameterNames = true
-          },
+      },
+      inlayHints = {
+        lifetimeElisionHints = {
+          enable = true,
+          useParameterNames = true
         },
-      }
-    },
+      },
+    }
+  },
 })
