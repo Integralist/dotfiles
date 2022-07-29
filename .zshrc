@@ -484,12 +484,14 @@ alias wut='echo "$git_icons"'
 # the cursor on the command prompt (e.g. vim <Ctrl-t>). Which is better than
 # using my own Ctrl+f binding below if you don't need to preview the file.
 
-# we want Ctrl+g to pass files into vim for editing (e.g. 'go to').
+# we want Ctrl+f to pass files into vim for editing.
 #
 # NOTE: Pressing Ctrl+v followed by another key will insert the relevant key
-# code into the text for you. So this is what I do with the <Enter> key. Also,
-# for <Enter> you can just use \n too.
-bindkey -s '^g' 'vim $(fzf)'
+# code into the text for you (unless you're like me and have Zellij setup to use
+# Ctrl-v for sessions. So this is what I do with the <Enter> key.
+#
+# Also, for <Enter> you can just use \n too.
+bindkey -s '^f' 'vim $(fzf)'
 
 # help fix VI mode, and not being able to delete characters
 bindkey "^?" backward-delete-char
