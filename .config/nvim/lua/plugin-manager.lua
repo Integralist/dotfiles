@@ -269,6 +269,14 @@ return require("packer").startup({
         })
       end
     }
+
+    -- terminal management
+    use { "akinsho/toggleterm.nvim",
+      tag = "v2.*",
+      config = function()
+        require("toggleterm").setup()
+      end
+    }
   end,
   config = {
     git = {
