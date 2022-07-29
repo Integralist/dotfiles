@@ -309,6 +309,16 @@ function docker_clean() {
   dockerprune
 }
 
+# zellij terminal multiplexer
+#
+function zell() {
+  if [ -z "$1" ]; then
+    echo "USAGE: zell <SESSION_NAME>"
+    return
+  fi
+  zellij -s $1
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
@@ -459,7 +469,6 @@ alias updates="softwareupdate --list" # --install --all (or) --install <product 
 alias vim=nvim
 alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
 alias vimlight="vim -u /Users/integralist/.vimrc-light"
-alias zell="zellij"
 
 read -r -d '' git_icons <<- EOF
 # starship prompt...
@@ -586,13 +595,17 @@ function go_install {
   clear
   go version
 }
+if [ ! -f "$HOME/go/bin/gopls" ]; then
+  go install golang.org/x/tools/gopls@latest
+fi
 if [ ! -f "$HOME/go/bin/gofumpt" ]; then
-    go install mvdan.cc/gofumpt@latest
+  go install mvdan.cc/gofumpt@latest
 fi
 if [ ! -f "$HOME/go/bin/revive" ]; then
-    go install github.com/mgechev/revive@latest
+  go install github.com/mgechev/revive@latest
 fi
 function go_update_tools {
+  go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
   go install github.com/mgechev/revive@latest
 }
