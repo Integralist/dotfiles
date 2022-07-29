@@ -61,6 +61,15 @@ return require("packer").startup({
     use "xiyaowong/telescope-emoji.nvim"
     use "axkirillov/telescope-changed-files"
 
+    -- pattern searching
+    use "mileszs/ack.vim"
+
+    -- search indexer
+    use "google/vim-searchindex"
+
+    -- search and replace
+    use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
+
     -- file system navigation
     use { "kyazdani42/nvim-tree.lua",
       requires = { "kyazdani42/nvim-web-devicons" },
@@ -81,14 +90,14 @@ return require("packer").startup({
     -- status line
     use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
 
-    -- pattern searching
-    use "mileszs/ack.vim"
-
     -- code comments
     use "b3nj5m1n/kommentary"
 
     -- git change indicator
     use { "lewis6991/gitsigns.nvim" }
+
+    -- git history
+    use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
     -- ui improvements
     use { "stevearc/dressing.nvim",
@@ -117,9 +126,6 @@ return require("packer").startup({
 
     -- camel case motion support
     use "bkad/CamelCaseMotion"
-
-    -- search indexer
-    use "google/vim-searchindex"
 
     -- highlight yanked region
     use "machakann/vim-highlightedyank"
@@ -167,12 +173,6 @@ return require("packer").startup({
         require("retrail").setup()
       end
     }
-
-    -- git history
-    use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
-
-    -- search and replace
-    use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
 
     -- lsp
     use {
