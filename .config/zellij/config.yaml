@@ -7,7 +7,7 @@
 
 # To prevent Vim from breaking as it uses C-i and C-o
 # to navigate back and forth between 'jumps', we remap
-# the C-o for 'Session' to C-v
+# the C-o for 'Session' to C-e
 
 themes:
   gruvbox-dark:
@@ -37,7 +37,7 @@ keybinds:
         - action: [SwitchToMode: Scroll,]
           key: [Ctrl: 's',]
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [SwitchToMode: Move,]
           key: [Ctrl: 'h',]
         - action: [SwitchToMode: Tmux,]
@@ -78,7 +78,7 @@ keybinds:
         - action: [SwitchToMode: Scroll,]
           key: [Ctrl: 's']
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [SwitchToMode: Move,]
           key: [Ctrl: 'h',]
         - action: [SwitchToMode: Tmux,]
@@ -127,7 +127,7 @@ keybinds:
         - action: [SwitchToMode: Scroll,]
           key: [Ctrl: 's']
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [SwitchToMode: Move,]
           key: [Ctrl: 'h',]
         - action: [SwitchToMode: Tmux,]
@@ -192,7 +192,7 @@ keybinds:
         - action: [SwitchToMode: Scroll,]
           key: [Ctrl: 's']
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [Quit]
           key: [Ctrl: 'q']
         - action: [MovePane: ,]
@@ -237,7 +237,7 @@ keybinds:
         - action: [SwitchToMode: Tmux,]
           key: [Ctrl: 'b',]
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [SwitchToMode: RenameTab, TabNameInput: [0],]
           key: [Char: 'r']
         - action: [Quit,]
@@ -304,7 +304,7 @@ keybinds:
         - action: [SwitchToMode: Tmux,]
           key: [Ctrl: 'b',]
         - action: [SwitchToMode: Session,]
-          key: [Ctrl: 'v',]
+          key: [Ctrl: 'e',]
         - action: [SwitchToMode: Resize,]
           key: [Ctrl: 'n',]
         - action: [ScrollToBottom, SwitchToMode: Normal,]
