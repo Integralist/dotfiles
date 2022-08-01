@@ -200,6 +200,7 @@ export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 
 # programming language modifications
 #
+export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/go/bin:$PATH" # go command (e.g. go version) install location
 export PATH="$HOME/go/bin:$PATH"      # go executables (e.g. go install) install location
