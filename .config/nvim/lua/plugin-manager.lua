@@ -31,8 +31,11 @@ return require("packer").startup({
     use "wbthomason/package.nvim"
 
     -- colorschemes
-    use "gruvbox-community/gruvbox"
     use "EdenEast/nightfox.nvim"
+    use "gruvbox-community/gruvbox"
+
+    -- make dot operator work in a sensible way
+    use "tpope/vim-repeat"
 
     -- syntax tree parsing for more intelligent syntax highlighting and code navigation
     use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
