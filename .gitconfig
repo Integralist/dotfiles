@@ -132,3 +132,6 @@
 # we already use SSH for every github repo, and so this puts the clone back to using HTTPS.
 [url "https://github.com/RustSec/advisory-db"]
   insteadOf = https://github.com/RustSec/advisory-db
+
+[credential]
+	helper = osxkeychain
