@@ -218,6 +218,11 @@ return require("packer").startup({
       "https://git.sr.ht/~whynothugo/lsp_lines.nvim", -- See also: https://github.com/Maan2003/lsp_lines.nvim
       config = function()
         require("lsp_lines").setup()
+
+        -- disable virtual_text since it's redundant due to lsp_lines.
+        vim.diagnostic.config({
+          virtual_text = false,
+        })
       end,
     })
     use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
