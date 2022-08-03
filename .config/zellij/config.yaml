@@ -570,4 +570,4 @@ mouse_mode: false # this allows Alacritty to click on links again, and also the 
 #copy_on_select: true
 
 # Path to the default editor to use to edit pane scrollbuffer
-# scrollback_editor: /usr/bin/nano
+scrollback_editor: /opt/homebrew/bin/nvim
