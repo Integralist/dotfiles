@@ -540,7 +540,7 @@ theme: gruvbox-dark
 # Options:
 #   - true (default)
 #   - false
-#mouse_mode: false
+mouse_mode: false # this allows Alacritty to click on links again, and also the selection highlight colours are from Alacritty too.
 
 # Configure the scroll back buffer size
 # This is the number of lines zellij stores for each pane in the scroll back
