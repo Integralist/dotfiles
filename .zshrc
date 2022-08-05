@@ -317,7 +317,11 @@ function zell() {
     echo "USAGE: zell <SESSION_NAME>"
     return
   fi
-  zellij -s $1
+  if zellij list-sessions | grep '(current)' &> /dev/null; then
+    zellij -s $1
+  else
+    FIG_NEW_SESSION=1 zellij -s $1 # env var is necessary until fig supports Zellij
+  fi
 }
 
 # ⚠️  ALIAS ⚠️
