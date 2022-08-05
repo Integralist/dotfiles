@@ -510,17 +510,13 @@ bindkey -s '^f' 'vim $(fzf)'
 # help fix VI mode, and not being able to delete characters
 bindkey "^?" backward-delete-char
 
-# To support the configuring our go environment we will override the cd
-# command to call the go logic for checking the go version.
-#
-# We also make sure to call ls when changing directories as it's nice to see
-# what's in each directory.
+# We override the cd command to call ls when changing directories as it's nice
+# to see what's in each directory.
 #
 function cd {
   builtin cd "$@"
   RET=$?
   ls
-  go_version
   return $RET
 }
 
@@ -652,7 +648,6 @@ function __zoxide_cd {
   builtin cd "$@"
   RET=$?
   ls
-  go_version
   return $RET
 }
 
