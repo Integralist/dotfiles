@@ -610,9 +610,10 @@ if [ ! -f "$HOME/go/bin/revive" ]; then
   go install github.com/mgechev/revive@latest
 fi
 function go_update_tools {
+  go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
-  go install github.com/mgechev/revive@latest
+  go install honnef.co/go/tools/cmd/staticcheck@latest                                                                                                                                                                      │
 }
 
 # configure rust environment
