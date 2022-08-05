@@ -554,52 +554,17 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # configure go environment
 #
-# Custom go binaries are installed in $HOME/go/bin.
+# brew install goenv
 #
-# NOTE: Some tools, e.g. TinyGo, won't work with this approach because we're
-# just replacing the go binary and the VERSION file, where the originally
-# installed version of go will have things like CGO files that TinyGo will try
-# to use and if those don't align with the version of the binary we've switched
-# to, then it means TinyGo will fail to compile. In that scenario use
-# `go_install` function defined below.
-#
-function go_version {
-    if [ -f "go.mod" ]; then
-        v=$(grep -E '^go \d.+$' ./go.mod | grep -oE '\d.+$')
-        if [[ ! $(go version | grep "go$v") ]]; then
-          echo ""
-          echo "About to switch go version to: $v"
-          if ! command -v "$HOME/go/bin/go$v" &> /dev/null
-          then
-            go install golang.org/dl/go$v@latest && go$v download && sudo cp $(which go$v) $(which go)
-          fi
-          sudo cp $(which go$v) $(which go)
-          echo -n go$v | sudo tee $(dirname $(dirname $(which go)))/VERSION > /dev/null
-        fi
-    fi
-}
-# full go pkg install, not a simple binary switch like 'go_version'
-#
-function go_install {
-  if [ -z "$1" ]; then
-    echo USAGE: go_install 1.18.1 OR go_install \$\(golatest\)
-    return
-  fi
-  v=$1
-  osname=$(uname -s | tr '[:upper:]' '[:lower:]')
-  hardware=$(uname -m)
-  mkdir -p ~/goversions
-  local dl=true
-  ls "$HOME/goversions/go$v.$osname-$hardware.pkg" > /dev/null 2>&1 && dl=false
-  if [[ $dl == true ]]; then
-    printf "\nDownloading %s\n\n" "go$v.$osname-$hardware"
-    curl -L -o ~/goversions/go$v.$osname-$hardware.pkg https://go.dev/dl/go$v.$osname-$hardware.pkg
-  fi
-  echo ""
-  sudo rm -rf /usr/local/go; sudo installer -pkg ~/goversions/go$v.$osname-$hardware.pkg -target /usr/local/
-  clear
-  go version
-}
+if [ ! -d "$HOME/.goenv" ]; then
+  git clone https://github.com/syndbg/goenv.git ~/.goenv
+fi
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+export PATH="$GOROOT/bin:$PATH"
+export PATH="$PATH:$GOPATH/bin"
+
 if [ ! -f "$HOME/go/bin/gopls" ]; then
   go install golang.org/x/tools/gopls@latest
 fi
@@ -613,7 +578,7 @@ function go_update_tools {
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
-  go install honnef.co/go/tools/cmd/staticcheck@latest                                                                                                                                                                      │
+  go install honnef.co/go/tools/cmd/staticcheck@latest
 }
 
 # configure rust environment
