@@ -3,4 +3,5 @@ vim.cmd([[
   silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null
   set background=dark
   colorscheme gruvbox
+  highlight link GitSignsChange GruvboxYellowSign
 ]])

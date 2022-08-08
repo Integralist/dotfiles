@@ -33,6 +33,8 @@ return require("packer").startup({
     -- colorschemes
     use "EdenEast/nightfox.nvim"
     use "gruvbox-community/gruvbox"
+    use "luisiacc/gruvbox-baby"
+    use "nikolvs/vim-sunbather"
 
     -- make dot operator work in a sensible way
     use "tpope/vim-repeat"
@@ -125,7 +127,12 @@ return require("packer").startup({
     }
 
     -- modify surrounding characters
-    use "tpope/vim-surround"
+    use({
+      "kylechui/nvim-surround",
+      config = function()
+        require("nvim-surround").setup()
+      end
+    })
 
     -- camel case motion support
     use "bkad/CamelCaseMotion"

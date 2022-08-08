@@ -10,8 +10,8 @@ lint.linters.cargo = {
 }
 
 lint.linters_by_ft = {
-  go = {"golangcilint", "revive"},
-  rust = {"cargo"},
+  go = { "golangcilint", "revive" },
+  rust = { "cargo" },
 }
 
 local golangcilint = require("lint.linters.golangcilint")

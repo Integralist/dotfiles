@@ -20,9 +20,13 @@ require("gitsigns").setup({
       return '<Ignore>'
     end, { desc = "prev change hunk", expr = true })
 
-    map('n', '<leader><leader>gb', function() 
-      gs.blame_line{full=true} 
+    map('n', '<leader><leader>gb', function()
+      gs.blame_line { full = true }
     end, { desc = "git blame" })
+
+    map('n', '<leader><leader>gs', function()
+      gs.blame_line {}
+    end, { desc = "git blame short" })
 
     map('n', '<leader><leader>gd', gs.diffthis, { desc = "git diff" })
   end
