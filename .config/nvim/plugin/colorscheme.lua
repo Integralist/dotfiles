@@ -2,6 +2,8 @@
 vim.cmd([[
   silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null
   set background=dark
-  colorscheme gruvbox
+  let g:gruvbox_material_background = "hard"
+  let g:gruvbox_material_foreground = "original"
+  colorscheme gruvbox-material
   highlight link GitSignsChange GruvboxYellowSign
 ]])

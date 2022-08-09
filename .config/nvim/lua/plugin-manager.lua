@@ -32,9 +32,9 @@ return require("packer").startup({
 
     -- colorschemes
     use "EdenEast/nightfox.nvim"
-    use "gruvbox-community/gruvbox"
     use "luisiacc/gruvbox-baby"
     use "nikolvs/vim-sunbather"
+    use "sainnhe/gruvbox-material"
 
     -- make dot operator work in a sensible way
     use "tpope/vim-repeat"
@@ -282,6 +282,13 @@ return require("packer").startup({
           bin = "/usr/local/bin/vale",
           vale_config_path = "$HOME/.vale.ini",
         })
+      end
+    }
+
+    -- swappable arguments and list elements
+    use { "mizlan/iswap.nvim",
+      config = function()
+        require("iswap").setup()
       end
     }
 
