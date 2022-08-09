@@ -54,7 +54,6 @@ require("rust-tools").setup({
   -- rust-tools options
   tools = {
     autoSetHints = true,
-    hover_with_actions = true,
     inlay_hints = {
       show_variable_name = true,
       show_parameter_hints = true,
@@ -78,6 +77,8 @@ require("rust-tools").setup({
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
       vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>",
+        { noremap = true, silent = true, buffer = bufnr })
+      vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>",
         { noremap = true, silent = true, buffer = bufnr })
     end,
     settings = {
