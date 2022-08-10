@@ -12,6 +12,7 @@ error_symbol = "[✗](bold red) "
 
 [directory]
 truncation_symbol = "…/"
+truncate_to_repo = false
 
 [gcloud]
 disabled = true
