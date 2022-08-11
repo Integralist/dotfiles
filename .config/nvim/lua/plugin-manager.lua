@@ -197,7 +197,6 @@ return require("packer").startup({
       ensure_installed = {
         "eslint-lsp",
         "lua-language-server",
-        "rome",
         "terraform-ls",
         "tflint",
         "typescript-language-server",
