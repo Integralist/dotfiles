@@ -615,6 +615,7 @@ fi
 function rust_update_tools {
   brew_update # called because of rust-analyzer
   rustup self update
+  rustup update stable
   rustup component add rustfmt
   rustup component add clippy
   cargo install cargo-audit --features=fix
