@@ -100,7 +100,7 @@ return require("packer").startup({
     use "b3nj5m1n/kommentary"
 
     -- git change indicator
-    use { "lewis6991/gitsigns.nvim" }
+    use "lewis6991/gitsigns.nvim"
 
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
@@ -182,6 +182,15 @@ return require("packer").startup({
     use { "zakharykaplan/nvim-retrail",
       config = function()
         require("retrail").setup()
+      end
+    }
+
+    -- buffer scroll context
+    use { "nvim-treesitter/nvim-treesitter-context", requires = "nvim-treesitter/nvim-treesitter",
+      config = function()
+        require("treesitter-context").setup({
+          separator = "-",
+        })
       end
     }
 
