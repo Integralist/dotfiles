@@ -1,3 +1,10 @@
+--[[
+NOTE: I currently manually attach my shared mappings for each LSP server.
+      But, we can set a generic one using lspconfig:
+
+      require("lspconfig").util.default_config.on_attach = function()
+--]]
+
 function OrgImports(wait_ms)
   local params = vim.lsp.util.make_range_params()
   params.context = { only = { "source.organizeImports" } }
@@ -99,7 +106,8 @@ require("rust-tools").setup({
         },
         checkOnSave = {
           -- default: `cargo check`
-          command = "clippy"
+          command = "clippy",
+          allFeatures = true,
         },
       },
       inlayHints = {
