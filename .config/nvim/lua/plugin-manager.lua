@@ -256,6 +256,11 @@ return require("packer").startup({
         })
       end,
     })
+    use { "simrat39/symbols-outline.nvim",
+      config = function()
+        require("symbols-outline").setup()
+      end
+    }
     use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"

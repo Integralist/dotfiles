@@ -32,7 +32,6 @@ require("lspconfig").gopls.setup({
       command = [[lua OrgImports(1000)]]
     })
   end,
-  cmd = { "gopls" },
   settings = {
     gopls = {
       analyses = {
