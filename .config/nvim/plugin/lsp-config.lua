@@ -16,6 +16,14 @@ end
 require("lspconfig").gopls.setup({
   on_attach = function(client, bufnr)
     require("shared").on_attach(client, bufnr)
+    require("lsp-inlayhints").setup({
+      inlay_hints = {
+        type_hints = {
+          prefix = "=> "
+        },
+      },
+    })
+    require("lsp-inlayhints").on_attach(bufnr, client)
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = {
