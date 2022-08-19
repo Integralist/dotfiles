@@ -6,6 +6,10 @@ cmp.setup({
       require("luasnip").lsp_expand(args.body)
     end,
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
   mapping = {
     ["<Up>"] = cmp.mapping.select_prev_item(),
     ["<Down>"] = cmp.mapping.select_next_item(),
@@ -30,4 +34,3 @@ cmp.setup({
     { name = "path" },
   },
 })
-

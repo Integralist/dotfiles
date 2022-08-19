@@ -105,13 +105,6 @@ return require("packer").startup({
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
-    -- ui improvements
-    use { "stevearc/dressing.nvim",
-      config = function()
-        require("dressing").setup()
-      end
-    }
-
     -- highlighters and indicators
     use { "RRethy/vim-illuminate", -- word usage highlighter
       config = function()
@@ -339,6 +332,20 @@ return require("packer").startup({
       tag = "v2.*",
       config = function()
         require("toggleterm").setup()
+      end
+    }
+
+    -- ui improvements
+    use { "stevearc/dressing.nvim",
+      config = function()
+        require("dressing").setup()
+      end
+    }
+
+    -- todos
+    use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim",
+      config = function()
+        require("todo-comments").setup()
       end
     }
   end,
