@@ -71,7 +71,7 @@ return require("packer").startup({
     use "mileszs/ack.vim"
 
     -- search indexer
-    use "google/vim-searchindex"
+    use "kevinhwang91/nvim-hlslens"
 
     -- search and replace
     use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
@@ -112,8 +112,16 @@ return require("packer").startup({
       end
     }
 
-    -- motion highlighter
-    use { "jinh0/eyeliner.nvim",
+    -- highlighters and indicators
+    use { "RRethy/vim-illuminate", -- word usage highlighter
+      config = function()
+        -- vim.cmd("highlight illuminatedWord guifg=red guibg=white")
+        -- vim.api.nvim_command [[ highlight LspReferenceText guifg=red guibg=white ]]
+        -- vim.api.nvim_command [[ highlight LspReferenceWrite guifg=red guibg=white ]]
+        -- vim.api.nvim_command [[ highlight LspReferenceRead guifg=red guibg=white ]]
+      end
+    }
+    use { "jinh0/eyeliner.nvim", -- jump to word indictors
       config = function()
         vim.api.nvim_set_hl(0, "EyelinerPrimary", { underline = true })
         vim.api.nvim_create_autocmd("ColorScheme", {
@@ -126,6 +134,7 @@ return require("packer").startup({
         })
       end
     }
+    use "DanilaMihailov/beacon.nvim" -- cursor movement highlighter
 
     -- modify surrounding characters
     use({
@@ -231,7 +240,10 @@ return require("packer").startup({
     mason_lspconfig.setup_handlers({
       function(server_name)
         require("lspconfig")[server_name].setup {
-          on_attach = require("shared").on_attach,
+          on_attach = function(client, bufnr)
+            require("shared").on_attach(client, bufnr)
+            require("illuminate").on_attach(client)
+          end
         }
       end
     })

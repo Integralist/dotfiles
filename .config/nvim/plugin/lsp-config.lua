@@ -31,6 +31,7 @@ require("lspconfig").gopls.setup({
       },
     })
     require("lsp-inlayhints").on_attach(bufnr, client)
+    require("illuminate").on_attach(client)
 
     vim.api.nvim_create_autocmd("BufWritePre", {
       pattern = {
@@ -90,6 +91,7 @@ require("rust-tools").setup({
   server = {
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
+      require("illuminate").on_attach(client)
       vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>",
         { noremap = true, silent = true, buffer = bufnr })
       vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>",
