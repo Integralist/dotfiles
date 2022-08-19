@@ -237,6 +237,7 @@ return require("packer").startup({
       ensure_installed = {
         "eslint-lsp",
         "lua-language-server",
+        "marksman",
         "terraform-ls",
         "tflint",
         "typescript-language-server",
