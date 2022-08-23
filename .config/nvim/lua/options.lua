@@ -28,6 +28,8 @@ vim.o.tabstop = 2
 vim.o.updatetime = 1000 -- affects CursorHold and subsequently things like highlighting Code Actions.
 vim.o.wrap = false
 
+vim.cmd([[ set colorcolumn=80 ]])
+
 if vim.fn.has("termguicolors") == 1 then
   vim.o.termguicolors = true
 end
