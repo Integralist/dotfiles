@@ -79,6 +79,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 
 ## GUI
 
+- [Marta File Manager](https://marta.sh/): `brew install --cask marta`
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): YouTube without advertisements and no Google tracking.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
