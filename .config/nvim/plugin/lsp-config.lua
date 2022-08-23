@@ -50,22 +50,15 @@ require("lspconfig").gopls.setup({
     require("lsp-inlayhints").on_attach(bufnr, client)
     require("illuminate").on_attach(client)
 
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      pattern = {
-        "*.go"
-      },
-      command = [[lua OrgImports(1000)]]
-    })
-
-    -- neither gofumpt (configured via gopls) nor revive (configured via mfussenegger/nvim-lint)
-    -- appear to work so I have to manually trigger them.
+    -- autocommands can overlap and consequently not run
+    -- so for these we have a little duplication to ensure they run
     vim.cmd([[
       fun! GoLint()
-       :silent !gofumpt -w %
-       :edit
-       :cex system('revive '..expand('%:p:h')) | cwindow
+       :lua vim.lsp.buf.formatting_sync()
+       :lua OrgImports(1000)
+       :lua require("lint").try_lint() -- golangci-lint configuration via ./lint.lua
      endfun
-     autocmd! BufWritePost *.go call GoLint()
+     autocmd! BufWritePre *.go call GoLint()
     ]])
 
     local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = "lint code" }
@@ -128,6 +121,16 @@ require("rust-tools").setup({
       local bufopts = { noremap = true, silent = true, buffer = bufnr }
       vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>", bufopts)
       vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>", bufopts)
+
+      -- autocommands can overlap and consequently not run
+      -- so for these we have a little duplication to ensure they run
+      vim.cmd([[
+        fun! RustPreLint()
+         :lua vim.lsp.buf.formatting_sync()
+         :lua require("lint").try_lint()
+       endfun
+       autocmd! BufWritePre *.rs call RustPreLint()
+      ]])
     end,
     settings = {
       ["rust-analyzer"] = {

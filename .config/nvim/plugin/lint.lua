@@ -10,7 +10,7 @@ lint.linters.cargo = {
 }
 
 lint.linters_by_ft = {
-  go = { "golangcilint", "revive" },
+  go = { "golangcilint" }, -- ~/.golangci.yml
   rust = { "cargo" },
 }
 
@@ -22,9 +22,4 @@ golangcilint.args = {
   "json",
 }
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = {
-    "<afile>"
-  },
-  command = [[lua require('lint').try_lint()]]
-})
+-- see plugin/lsp-config.lua for calls to this plugin's try_lint() function.
