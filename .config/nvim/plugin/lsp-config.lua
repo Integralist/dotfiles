@@ -70,6 +70,10 @@ require("lspconfig").gopls.setup({
       },
       command = [[cex system('revive '..expand('%:p')) | cwindow]]
     })
+
+    local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = "lint code" }
+    vim.keymap.set('n', '<leader><leader>lv', "<Cmd>cex system('revive -exclude vendor/... ./...') | cwindow<CR>",
+      bufopts)
   end,
   settings = {
     gopls = {
@@ -123,10 +127,10 @@ require("rust-tools").setup({
     on_attach = function(client, bufnr)
       require("shared").on_attach(client, bufnr)
       require("illuminate").on_attach(client)
-      vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>",
-        { noremap = true, silent = true, buffer = bufnr })
-      vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>",
-        { noremap = true, silent = true, buffer = bufnr })
+
+      local bufopts = { noremap = true, silent = true, buffer = bufnr }
+      vim.keymap.set('n', '<leader><leader>rr', "<Cmd>RustRunnables<CR>", bufopts)
+      vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>", bufopts)
     end,
     settings = {
       ["rust-analyzer"] = {
