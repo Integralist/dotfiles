@@ -55,11 +55,20 @@ require("lspconfig").gopls.setup({
       },
       command = [[lua OrgImports(1000)]]
     })
+
+    -- neither gofumpt (configured via gopls) nor revive (configured via mfussenegger/nvim-lint)
+    -- appear to work so I have to manually trigger them.
     vim.api.nvim_create_autocmd("BufWritePost", {
       pattern = {
         "*.go"
       },
       command = [[silent !gofumpt -w % | edit]]
+    })
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      pattern = {
+        "*.go"
+      },
+      command = [[cex system('revive '..expand('%:p')) | cwindow]]
     })
   end,
   settings = {
