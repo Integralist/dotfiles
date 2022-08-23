@@ -17,11 +17,35 @@ linters:
     - varcheck
 
 # https://github.com/mgechev/revive#configuration
+# https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 linters-settings:
   revive:
     enableAllRules: true
-    severity: warning
     rules:
-      - name: line-length-limit
-        severity: error
+      - name: "add-constant"
+        severity: "error"
+        maxLitCount: "3"
+      - name: "argument-limit"
+        severity: "warning"
+        arguments: [4]
+      - name: "atomic"
+        severity: "warning"
+      - name: "bare-return"
+        severity: "warning"
+      - name: "bool-literal-in-expr"
+        severity: "warning"
+      - name: "confusing-naming"
+        severity: "warning"
+      - name: "confusing-results"
+        severity: "warning"
+      - name: "constant-logical-expr"
+        severity: "error"
+      - name: "context-as-argument"
+        severity: "error"
+      - name: "context-keys-type"
+        severity: "error"
+      - name: "line-length-limit"
+        severity: "warning"
         arguments: [80]
+      - name: "package-comments"
+        severity: "warning"

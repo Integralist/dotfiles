@@ -30,6 +30,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
   { border = "rounded" }
 )
 
+-- TODO: move this and above vim settings to ../lua/options.lua
 vim.diagnostic.config({
   float = {
     border = "rounded",

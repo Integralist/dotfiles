@@ -271,6 +271,7 @@ return require("packer").startup({
         require("lsp_lines").setup()
 
         -- disable virtual_text since it's redundant due to lsp_lines.
+        -- TODO: move this to ../lua/options.lua
         vim.diagnostic.config({
           virtual_text = false,
         })
