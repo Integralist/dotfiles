@@ -55,6 +55,12 @@ require("lspconfig").gopls.setup({
       },
       command = [[lua OrgImports(1000)]]
     })
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      pattern = {
+        "*.go"
+      },
+      command = [[silent !gofumpt -w % | edit]]
+    })
   end,
   settings = {
     gopls = {
