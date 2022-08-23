@@ -247,12 +247,12 @@ return require("packer").startup({
     })
     mason_lspconfig.setup_handlers({
       function(server_name)
-        require("lspconfig")[server_name].setup {
+        require("lspconfig")[server_name].setup({
           on_attach = function(client, bufnr)
             require("shared").on_attach(client, bufnr)
             require("illuminate").on_attach(client)
           end
-        }
+        })
       end
     })
     use { "j-hui/fidget.nvim",
@@ -357,7 +357,7 @@ return require("packer").startup({
       end
     }
 
-    -- todos
+    -- surface any TODO or NOTE code references
     use { "folke/todo-comments.nvim", requires = "nvim-lua/plenary.nvim",
       config = function()
         require("todo-comments").setup()
