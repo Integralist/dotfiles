@@ -30,7 +30,7 @@ require("lspconfig").gopls.setup({
         },
       },
     })
-    require("lsp-inlayhints").on_attach(bufnr, client)
+    require("lsp-inlayhints").on_attach(client, bufnr)
     require("illuminate").on_attach(client)
 
     -- autocommands can overlap and consequently not run
