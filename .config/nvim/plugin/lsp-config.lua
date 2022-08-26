@@ -34,7 +34,8 @@ require("lspconfig").gopls.setup({
     require("illuminate").on_attach(client)
 
     -- autocommands can overlap and consequently not run
-    -- so for these we have a little duplication to ensure they run
+    -- for example, a generic "*" wildcard pattern will override another autocmd even if it has a more specific pattern
+    -- so for these we have a little duplication (see rust augroup below) to ensure they run
     local id = vim.api.nvim_create_augroup("GoLint", { clear = true })
     vim.api.nvim_create_autocmd({ "BufWritePost" }, {
       group = id,
@@ -108,7 +109,8 @@ require("rust-tools").setup({
       vim.keymap.set('n', 'K', "<Cmd>RustHoverActions<CR>", bufopts)
 
       -- autocommands can overlap and consequently not run
-      -- so for these we have a little duplication to ensure they run
+      -- for example, a generic "*" wildcard pattern will override another autocmd even if it has a more specific pattern
+      -- so for these we have a little duplication (see golang augroup above) to ensure they run
       local id = vim.api.nvim_create_augroup("RustLint", { clear = true })
       vim.api.nvim_create_autocmd({ "BufWritePre" }, {
         group = id,
