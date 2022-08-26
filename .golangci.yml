@@ -73,7 +73,7 @@ linters-settings:
         arguments: [3]
       - name: "function-length"
         severity: "warning"
-        arguments: [20,0]
+        arguments: [40,0]
       - name: "get-return"
         severity: "error"
       - name: "identical-branches"
