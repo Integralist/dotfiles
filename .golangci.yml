@@ -18,6 +18,8 @@ linters:
 
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
+#
+# NOTE: These rules need to be duplicated into ~/revive.toml
 linters-settings:
   revive:
     enableAllRules: true
