@@ -35,14 +35,16 @@ require("lspconfig").gopls.setup({
 
     -- autocommands can overlap and consequently not run
     -- so for these we have a little duplication to ensure they run
-    vim.cmd([[
-      fun! GoLint()
-       :lua vim.lsp.buf.formatting_sync()
-       :lua OrgImports(1000)
-       :lua require("lint").try_lint() -- golangci-lint configuration via ./lint.lua
-     endfun
-     autocmd! BufWritePre *.go call GoLint()
-    ]])
+    local id = vim.api.nvim_create_augroup("GoLint", { clear = true })
+    vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      group = id,
+      pattern = "*.go",
+      callback = function()
+        vim.lsp.buf.formatting_sync()
+        OrgImports(1000)
+        require("lint").try_lint() -- golangci-lint configuration via ./lint.lua
+      end,
+    })
 
     local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = "lint code" }
     vim.keymap.set('n', '<leader><leader>lv', "<Cmd>cex system('revive -exclude vendor/... ./...') | cwindow<CR>",
@@ -107,13 +109,15 @@ require("rust-tools").setup({
 
       -- autocommands can overlap and consequently not run
       -- so for these we have a little duplication to ensure they run
-      vim.cmd([[
-        fun! RustPreLint()
-         :lua vim.lsp.buf.formatting_sync()
-         :lua require("lint").try_lint()
-       endfun
-       autocmd! BufWritePre *.rs call RustPreLint()
-      ]])
+      local id = vim.api.nvim_create_augroup("RustLint", { clear = true })
+      vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+        group = id,
+        pattern = "*.rs",
+        callback = function()
+          vim.lsp.buf.formatting_sync()
+          require("lint").try_lint()
+        end,
+      })
     end,
     settings = {
       ["rust-analyzer"] = {
