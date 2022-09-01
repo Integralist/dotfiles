@@ -5,8 +5,7 @@ enableAllRules = true
 
 [rule.add-constant]
   severity = "error"
-  maxLitCount = "3"
-  allowInts = "0,1,2,3,4,5" # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+  arguments = [{ maxLitCount = "3", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
 [rule.argument-limit]
   severity = "warning"
   arguments = [4]
