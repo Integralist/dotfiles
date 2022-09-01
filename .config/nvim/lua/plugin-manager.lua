@@ -278,7 +278,9 @@ return require("packer").startup({
     })
     use { "simrat39/symbols-outline.nvim",
       config = function()
-        require("symbols-outline").setup()
+        require("symbols-outline").setup({
+          auto_close = true,
+        })
       end
     }
     use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
