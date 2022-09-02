@@ -4,11 +4,12 @@ enableAllRules = true
 # NOTE: There are some rules disabled here which didn't need to be disabled for golangci-lint
 
 [rule.add-constant]
-  severity = "error"
-  arguments = [{ maxLitCount = "3", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+  severity = "warning"
+  arguments = [{ maxLitCount = "10", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+  disabled = true # most of the time it's fine, and the performance isn't a concern
 [rule.argument-limit]
   severity = "warning"
-  arguments = [4]
+  arguments = [5]
 [rule.atomic]
   severity = "warning"
 [rule.banned-characters]
@@ -127,6 +128,7 @@ enableAllRules = true
   severity = "warning"
 [rule.unused-receiver]
   severity = "warning"
+  disabled = true # too many false positives caused by golang interfaces
 [rule.use-any]
   severity = "warning"
 [rule.useless-break]

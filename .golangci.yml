@@ -19,17 +19,24 @@ linters:
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
+# To validate things from outside of code editor, run:
+# golangci-lint run -v
+#
 # NOTE: These rules need to be duplicated into ~/revive.toml
 linters-settings:
   revive:
     enableAllRules: true
     rules:
       - name: "add-constant"
-        severity: "error"
-        arguments: [{ maxLitCount = "3", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+        severity: "warning"
+        # Commented out the following line because although it's valid for ~/revive.toml it's not valid for this file.
+        # Even though I could see it worked fine, but a GitHub issue commenter suggested it was invalid (shrug).
+        #
+        # arguments: [{ maxLitCount = "10", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+        disabled: true # most of the time it's fine, and the performance isn't a concern
       - name: "argument-limit"
         severity: "warning"
-        arguments: [4]
+        arguments: [5]
       - name: "atomic"
         severity: "warning"
       - name: "bare-return"
@@ -138,6 +145,7 @@ linters-settings:
         severity: "warning"
       - name: "unused-receiver"
         severity: "warning"
+        disabled: true
       - name: "use-any"
         severity: "warning"
       - name: "useless-break"
