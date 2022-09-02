@@ -86,7 +86,6 @@ return require("packer").startup({
       end
     }
 
-
     -- search and replace
     use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
 
