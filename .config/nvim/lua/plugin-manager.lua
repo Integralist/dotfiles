@@ -6,9 +6,14 @@ Ensure https://github.com/wbthomason/packer.nvim is cloned inside of the ~/.conf
         └── start
             └── packer.nvim
 
-Then execute :PackerSync
+Alternatively, the configuration in this file should automatically install packer.nvim for you.
 
-Plugins will be compiled into the ~/.config/nvim/plugin directory.
+Then execute :PackerSync to install/update all configured plugins.
+
+Plugins will be compiled into:
+/Users/integralist/.local/share/nvim/site/pack/packer/start
+
+The ~/.config/nvim/plugin directory contains my own configuration files + the compiled package plugin.
 
 NOTE: The plugin mappings defined have the following convention:
 
@@ -18,12 +23,29 @@ NOTE: The plugin mappings defined have the following convention:
 This helps to avoid overlap in letters.
 --]]
 
+vim.keymap.set("", "<leader><leader>ps", "<Cmd>PackerSync<CR>", { desc = "update vim plugins" })
+
 vim.cmd([[
   augroup packer_user_config
     autocmd!
     autocmd BufWritePost *.lua source <afile> | PackerCompile
   augroup end
 ]])
+
+-- The following configuration ensures that when we clone these dotfiles to a
+-- new laptop, that they'll continue to work without any manual intervention.
+-- Check the bottom of the .startup() function for our call to packer_bootstrap.
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
+end
+local packer_bootstrap = ensure_packer()
 
 return require("packer").startup({
   function()
@@ -364,6 +386,12 @@ return require("packer").startup({
         require("todo-comments").setup()
       end
     }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Put this at the end after all plugins
+    if packer_bootstrap then
+      require('packer').sync()
+    end
   end,
   config = {
     git = {
