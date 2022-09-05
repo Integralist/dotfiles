@@ -1,3 +1,14 @@
+--[[
+Opening mulitple files doesn't work by default.
+
+You can either following the implementation detailed here:
+https://github.com/nvim-telescope/telescope.nvim/issues/1048#issuecomment-1220846367
+
+Or you can have a more complex workflow:
+- Select multiple files using <Tab>
+- Send the selected files to the quickfix window using <C-o>
+- Search the quickfix window (using either :copen or <leader>q)
+]]
 local actions = require("telescope.actions")
 local ts = require("telescope")
 
