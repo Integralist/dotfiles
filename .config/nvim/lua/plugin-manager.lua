@@ -1,12 +1,5 @@
 --[[
-Ensure https://github.com/wbthomason/packer.nvim is cloned inside of the ~/.config/nvim/pack directory.
-.
-└── pack
-    └── packer
-        └── start
-            └── packer.nvim
-
-Alternatively, the configuration in this file should automatically install packer.nvim for you.
+The configuration in this file should automatically install packer.nvim for you.
 
 Then execute :PackerSync to install/update all configured plugins.
 
@@ -50,7 +43,7 @@ local packer_bootstrap = ensure_packer()
 return require("packer").startup({
   function()
     -- plugin manager
-    use "wbthomason/package.nvim"
+    use "wbthomason/packer.nvim"
 
     -- colorschemes
     use "EdenEast/nightfox.nvim"
