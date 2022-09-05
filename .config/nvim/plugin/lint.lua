@@ -14,12 +14,4 @@ lint.linters_by_ft = {
   rust = { "cargo" },
 }
 
-local golangcilint = require("lint.linters.golangcilint")
-golangcilint.append_fname = true
-golangcilint.args = {
-  "run",
-  "--out-format",
-  "json",
-}
-
 -- see plugin/lsp-config.lua for calls to this plugin's try_lint() function.
