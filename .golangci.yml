@@ -29,10 +29,9 @@ linters-settings:
     rules:
       - name: "add-constant"
         severity: "warning"
-        # Commented out the following line because although it's valid for ~/revive.toml it's not valid for this file.
-        # Even though I could see it worked fine, but a GitHub issue commenter suggested it was invalid (shrug).
-        #
-        # arguments: [{ maxLitCount = "10", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+        arguments:
+          - maxLitCount: "10"
+            allowInts: "0,1,2,3,4,5"
         disabled: true # most of the time it's fine, and the performance isn't a concern
       - name: "argument-limit"
         severity: "warning"
