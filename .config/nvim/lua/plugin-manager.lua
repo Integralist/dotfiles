@@ -387,10 +387,10 @@ return require("packer").startup({
       end
     }
 
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
+    -- automatically set up your configuration after cloning packer.nvim
+    -- put this at the end after all plugins
     if packer_bootstrap then
-      require('packer').sync()
+      require("packer").sync()
     end
   end,
   config = {
