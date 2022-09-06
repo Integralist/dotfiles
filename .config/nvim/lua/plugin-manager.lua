@@ -48,9 +48,7 @@ return require("packer").startup({
     -- colorschemes
     use "EdenEast/nightfox.nvim"
     use "fenetikm/falcon"
-    use "nikolvs/vim-sunbather"
     use "sainnhe/gruvbox-material"
-    use "integralist/hart-foundation"
 
     -- make dot operator work in a sensible way
     use "tpope/vim-repeat"
