@@ -576,6 +576,7 @@ function go_update_tools {
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
   go install honnef.co/go/tools/cmd/staticcheck@latest
+  go install golang.org/x/vuln/cmd/govulncheck@latest
 }
 
 # configure rust environment
