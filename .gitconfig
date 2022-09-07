@@ -68,7 +68,7 @@
   gpgsign = false
 
 [core]
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore
   ignorecase = false
   pager = delta --color-only --dark --line-numbers

@@ -158,7 +158,7 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 
 # application configuration
 #
-export EDITOR="vim"
+export EDITOR="nvim"
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND="rg --hidden --files"
 export FZF_DEFAULT_OPTS='--multi --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap'
