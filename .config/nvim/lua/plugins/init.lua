@@ -261,7 +261,7 @@ return require("packer").startup({
       function(server_name)
         require("lspconfig")[server_name].setup({
           on_attach = function(client, bufnr)
-            require("shared").on_attach(client, bufnr)
+            require("settings/shared").on_attach(client, bufnr)
             require("illuminate").on_attach(client)
           end
         })

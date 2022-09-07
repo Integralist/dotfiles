@@ -1,14 +1,27 @@
---[[
-Neovim knows to search:
+require("settings/autocmds")
+require("settings/mappings")
+require("settings/options")
+require("settings/quickfix")
 
-* ~/.config/nvim/lua for our custom scripts when we call require().
-* ~/.config/nvim/plugin for installed plugins (+ our own plugin configuration scripts).
-
-:h runtimepath
---]]
-
-require("plugin-manager")
-require("options")
-require("quickfix")
-require("mappings")
-require("autocmds")
+require("plugins")
+require("plugins/config/ack")
+require("plugins/config/camelcasemotion")
+require("plugins/config/cmp")
+require("plugins/config/code-action-menu")
+require("plugins/config/colorscheme")
+require("plugins/config/cursor-hold")
+require("plugins/config/dap")
+require("plugins/config/diffview")
+require("plugins/config/file-navigator")
+require("plugins/config/gitsigns")
+require("plugins/config/kommentary")
+require("plugins/config/lightbulb")
+require("plugins/config/lsp-config")
+require("plugins/config/lualine")
+require("plugins/config/nvim-lint")
+require("plugins/config/spectre")
+require("plugins/config/telescope")
+require("plugins/config/toggleterm")
+require("plugins/config/treesitter")
+require("plugins/config/trouble")
+require("plugins/config/vim-move")

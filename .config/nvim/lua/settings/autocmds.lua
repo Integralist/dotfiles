@@ -40,6 +40,6 @@ vim.api.nvim_create_autocmd({ "WinEnter" }, {
   group = id,
   pattern = "*",
   callback = function()
-    require("shared").toggleDimWindows()
+    require("settings/shared").toggleDimWindows()
   end,
 })
