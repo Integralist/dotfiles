@@ -4,24 +4,20 @@ require("settings/options")
 require("settings/quickfix")
 
 require("plugins")
-require("plugins/config/ack")
-require("plugins/config/camelcasemotion")
-require("plugins/config/cmp")
-require("plugins/config/code-action-menu")
-require("plugins/config/colorscheme")
-require("plugins/config/cursor-hold")
-require("plugins/config/dap")
-require("plugins/config/diffview")
-require("plugins/config/file-navigator")
-require("plugins/config/gitsigns")
-require("plugins/config/kommentary")
-require("plugins/config/lightbulb")
-require("plugins/config/lsp-config")
-require("plugins/config/lualine")
-require("plugins/config/nvim-lint")
-require("plugins/config/spectre")
-require("plugins/config/telescope")
-require("plugins/config/toggleterm")
-require("plugins/config/treesitter")
-require("plugins/config/trouble")
-require("plugins/config/vim-move")
+
+local function ends_with(str, ending)
+  return ending == "" or str:sub(- #ending) == ending
+end
+
+local files = vim.api.nvim_get_runtime_file("lua/plugins/config/*.lua", true)
+for _, v in ipairs(files) do -- NOTE: ipairs() keeps key order, pairs() doesn't.
+  for _, s in ipairs(vim.split(v, "/lua/")) do
+    if ends_with(s, ".lua") then
+      for _, p in ipairs(vim.split(s, "[.]lua")) do
+        if (p ~= "") then
+          require(p)
+        end
+      end
+    end
+  end
+end
