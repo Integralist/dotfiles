@@ -193,6 +193,9 @@ return require("packer").startup({
       end
     }
 
+    -- generate hex colours
+    use { "uga-rosa/ccc.nvim" }
+
     -- tab ui improvments
     use { "akinsho/bufferline.nvim",
       tag = "v2.*",
