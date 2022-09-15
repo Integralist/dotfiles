@@ -245,6 +245,7 @@ return require("packer").startup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
+      "Afourcat/treesitter-terraform-doc.nvim", -- opens Terraform resource docs
     }
     require("mason").setup()
     local mason_lspconfig = require("mason-lspconfig")
@@ -266,6 +267,12 @@ return require("packer").startup({
           on_attach = function(client, bufnr)
             require("settings/shared").on_attach(client, bufnr)
             require("illuminate").on_attach(client)
+
+            if server_name == "terraformls" then
+              -- https://github.com/Afourcat/treesitter-terraform-doc.nvim/issues/1
+              -- doesn't support providers outside of the hashicorp namespace 🤦
+              require("treesitter-terraform-doc").setup()
+            end
           end
         })
       end
