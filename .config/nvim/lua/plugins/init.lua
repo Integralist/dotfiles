@@ -227,7 +227,25 @@ return require("packer").startup({
     -- whitespace management
     use { "zakharykaplan/nvim-retrail",
       config = function()
-        require("retrail").setup()
+        require("retrail").setup({
+          filetype = {
+            exclude = {
+              "markdown",
+              -- following are defaults that need to be added or they'll be overridden
+              "",
+              "alpha",
+              "checkhealth",
+              "diff",
+              "help",
+              "lspinfo",
+              "man",
+              "mason",
+              "TelescopePrompt",
+              "Trouble",
+              "WhichKey",
+            }
+          }
+        })
       end
     }
 
