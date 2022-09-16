@@ -388,6 +388,9 @@ return require("packer").startup({
       end
     }
 
+    -- block sorter
+    use "chiedo/vim-sort-blocks-by"
+
     -- automatically set up your configuration after cloning packer.nvim
     -- put this at the end after all plugins
     if packer_bootstrap then
