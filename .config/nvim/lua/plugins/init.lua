@@ -164,6 +164,7 @@ return require("packer").startup({
     })
 
     -- camel case motion support
+    -- NOTE: custom mappings (../plugins/config/camelcasemotion.lua) auto-loaded by ../../init.lua
     use "bkad/CamelCaseMotion"
 
     -- highlight yanked region
