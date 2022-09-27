@@ -43,7 +43,7 @@ require("lspconfig").gopls.setup({
       callback = function()
         -- NOTE: ../../settings/shared.lua has a broader wildcard executing formatting.
         OrgImports(1000)
-        require("lint").try_lint() -- golangci-lint configuration via ./lint.lua
+        require("lint").try_lint() -- golangci-lint configuration via ./nvim-lint.lua
       end,
     })
 
