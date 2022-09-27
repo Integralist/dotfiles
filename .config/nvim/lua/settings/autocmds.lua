@@ -2,21 +2,21 @@ vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = {
     "*.lua"
   },
-  command = [[source ~/.config/nvim/init.lua]]
+  command = "source ~/.config/nvim/init.lua"
 })
 
 vim.api.nvim_create_autocmd("FileType", {
   pattern = {
     "sh", "go", "rust"
   },
-  command = [[setlocal textwidth=80]]
+  command = "setlocal textwidth=80"
 })
 
 vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
   pattern = {
     "*.mdx"
   },
-  command = [[set filetype=markdown]]
+  command = "set filetype=markdown"
 })
 
 vim.api.nvim_create_autocmd("ColorScheme", {
@@ -28,12 +28,14 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end
 })
 
-vim.cmd([[
-  augroup WrapLineInMarkdown
-      autocmd!
-      autocmd FileType markdown setlocal wrap
-  augroup END
-]])
+local id = vim.api.nvim_create_augroup("WrapLineInMarkdown", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+  group = id,
+  pattern = {
+    "markdown"
+  },
+  command = "setlocal wrap"
+})
 
 -- The following code implements dimming of inactive buffers
 
