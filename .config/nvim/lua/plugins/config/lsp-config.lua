@@ -41,7 +41,7 @@ require("lspconfig").gopls.setup({
       group = id,
       pattern = "*.go",
       callback = function()
-        vim.lsp.buf.formatting_sync()
+        -- NOTE: ../../settings/shared.lua has a broader wildcard executing formatting.
         OrgImports(1000)
         require("lint").try_lint() -- golangci-lint configuration via ./lint.lua
       end,
@@ -116,7 +116,7 @@ require("rust-tools").setup({
         group = id,
         pattern = "*.rs",
         callback = function()
-          vim.lsp.buf.formatting_sync()
+          -- NOTE: ../../settings/shared.lua has a broader wildcard executing formatting.
           require("lint").try_lint()
         end,
       })
