@@ -24,13 +24,27 @@ cmp.setup({
       select = true,
     })
   },
-  sources = {
+  sources = cmp.config.sources({
     { name = "buffer" },
-    { name = "cmdline" },
     { name = "luasnip" },
     { name = "nvim_lua" },
     { name = "nvim_lsp" },
     { name = "nvim_lsp_signature_help" },
     { name = "path" },
-  },
+  }),
+})
+
+cmp.setup.cmdline({ "/", "?" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "buffer" }
+  }
+})
+
+cmp.setup.cmdline({ ":" }, {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = "cmdline" },
+    { name = "path" }
+  }
 })

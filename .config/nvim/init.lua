@@ -1,5 +1,6 @@
 require("settings/autocmds")
 require("settings/mappings")
+require("settings/netrw")
 require("settings/options")
 require("settings/quickfix")
 

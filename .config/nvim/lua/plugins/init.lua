@@ -18,12 +18,12 @@ This helps to avoid overlap in letters.
 
 vim.keymap.set("", "<leader><leader>ps", "<Cmd>PackerSync<CR>", { desc = "update vim plugins" })
 
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost *.lua source <afile> | PackerCompile
-  augroup end
-]])
+local id = vim.api.nvim_create_augroup("PackerCompiler", { clear = true })
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  group = id,
+  pattern = "*.lua",
+  command = "source <afile> | PackerCompile",
+})
 
 -- The following configuration ensures that when we clone these dotfiles to a
 -- new laptop, that they'll continue to work without any manual intervention.
