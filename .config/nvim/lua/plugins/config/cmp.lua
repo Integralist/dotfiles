@@ -25,12 +25,13 @@ cmp.setup({
     })
   },
   sources = cmp.config.sources({
-    { name = "buffer" },
-    { name = "luasnip" },
-    { name = "nvim_lua" },
+    -- ordered by priority
     { name = "nvim_lsp" },
     { name = "nvim_lsp_signature_help" },
     { name = "path" },
+    { name = "buffer" },
+    { name = "luasnip" },
+    { name = "nvim_lua" },
   }),
 })
 
