@@ -81,7 +81,6 @@ require("rust-tools").setup({
   tools = {
     autoSetHints = true,
     inlay_hints = {
-      show_variable_name = true,
       show_parameter_hints = true,
       parameter_hints_prefix = "<- ",
       other_hints_prefix = "=> ",
@@ -121,27 +120,25 @@ require("rust-tools").setup({
         end,
       })
     end,
-    settings = {
-      ["rust-analyzer"] = {
-        assist = {
-          importEnforceGranularity = true,
-          importPrefix = "crate"
-        },
-        cargo = {
-          allFeatures = true
-        },
-        checkOnSave = {
-          -- default: `cargo check`
-          command = "clippy",
-          allFeatures = true,
-        },
+    ["rust-analyzer"] = {
+      assist = {
+        importEnforceGranularity = true,
+        importPrefix = "crate"
       },
-      inlayHints = {
-        lifetimeElisionHints = {
-          enable = true,
-          useParameterNames = true
-        },
+      cargo = {
+        allFeatures = true
       },
-    }
-  },
+      checkOnSave = {
+        -- default: `cargo check`
+        command = "clippy",
+        allFeatures = true,
+      },
+    },
+    inlayHints = { -- NOT SURE THIS IS VALID/WORKS 😬
+      lifetimeElisionHints = {
+        enable = true,
+        useParameterNames = true
+      },
+    },
+  }
 })
