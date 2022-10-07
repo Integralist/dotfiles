@@ -58,7 +58,7 @@ enableAllRules = true
   severity = "warning"
 [rule.function-result-limit]
   severity = "warning"
-  arguments = [3]
+  arguments = [4]
 [rule.function-length]
   severity = "warning"
   arguments = [40,0]
