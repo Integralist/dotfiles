@@ -23,7 +23,7 @@ function export.on_attach(_, bufnr)
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     group = id,
     pattern = "*",
-    command = "lua vim.lsp.buf.formatting_sync()",
+    command = "lua vim.lsp.buf.format()",
   })
 end
 
