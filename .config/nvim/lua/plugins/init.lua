@@ -225,6 +225,19 @@ return require("packer").startup({
       end,
     }
 
+    -- window zoom (avoids layout reset from <Ctrl-w>=)
+    use { "nyngwang/NeoZoom.lua",
+      config = function()
+        require('neo-zoom').setup({
+          left_ratio = 0.2,
+          top_ratio = 0,
+          width_ratio = 0.6,
+          height_ration = 1,
+        })
+        vim.keymap.set("", "<leader><leader>z", "<Cmd>NeoZoomToggle<CR>", { desc = "full screen active window" })
+      end
+    }
+
     -- whitespace management
     use { "zakharykaplan/nvim-retrail",
       config = function()
