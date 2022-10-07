@@ -136,6 +136,13 @@ linters-settings:
         severity: "error"
       - name: "unhandled-error"
         severity: "warning"
+        arguments:
+          - "fmt.Print"
+          - "fmt.Printf"
+          - "fmt.Println"
+          - "fmt.Fprint"
+          - "fmt.Fprintf"
+          - "fmt.Fprintln"
       - name: "unnecessary-stmt"
         severity: "warning"
       - name: "unreachable-code"

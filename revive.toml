@@ -120,6 +120,7 @@ enableAllRules = true
   severity = "error"
 [rule.unhandled-error]
   severity = "warning"
+  arguments = ["fmt.Print", "fmt.Printf", "fmt.Println", "fmt.Fprint", "fmt.Fprintf", "fmt.Fprintln"]
 [rule.unnecessary-stmt]
   severity = "warning"
 [rule.unreachable-code]
