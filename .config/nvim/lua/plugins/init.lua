@@ -137,6 +137,7 @@ return require("packer").startup({
                 "node_modules"
               },
             },
+            hijack_netrw_behavior = "open_current",
           },
         })
       end

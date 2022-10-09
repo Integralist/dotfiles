@@ -1,3 +1,4 @@
-vim.keymap.set("n", "w", "<Plug>CamelCaseMotion_w", { desc = "camel case motion w" })
-vim.keymap.set("n", "b", "<Plug>CamelCaseMotion_b", { desc = "camel case motion b" })
-vim.keymap.set("n", "e", "<Plug>CamelCaseMotion_e", { desc = "camel case motion e" })
+vim.keymap.set('', 'w', '<Plug>CamelCaseMotion_w', { silent = true })
+vim.keymap.set('', 'b', '<Plug>CamelCaseMotion_b', { silent = true })
+vim.keymap.set('', 'e', '<Plug>CamelCaseMotion_e', { silent = true })
+vim.keymap.set('', 'ge', '<Plug>CamelCaseMotion_ge', { silent = true })
