@@ -311,6 +311,7 @@ return require("packer").startup({
     }
 
     -- window zoom (avoids layout reset from <Ctrl-w>=)
+    -- Caveat: NeoZoom doesn't play well with workflows that use the quickfix window.
     use { "nyngwang/NeoZoom.lua",
       config = function()
         require('neo-zoom').setup({
@@ -320,6 +321,23 @@ return require("packer").startup({
           height_ration = 1,
         })
         vim.keymap.set("", "<leader><leader>z", "<Cmd>NeoZoomToggle<CR>", { desc = "full screen active window" })
+      end
+    }
+    -- windows.nvim is more like the traditional <Ctrl-w>_ and <Ctrl-w>|
+    use { "anuvyklack/windows.nvim",
+      requires = {
+        "anuvyklack/middleclass",
+        "anuvyklack/animation.nvim"
+      },
+      config = function()
+        vim.o.winwidth = 10
+        vim.o.winminwidth = 10
+        vim.o.equalalways = false
+        require('windows').setup()
+
+        vim.keymap.set("n", "<c-w>_", "<Cmd>WindowsMaximizeVertically<CR>", { desc = "full vertical window space" })
+        vim.keymap.set("n", "<c-w>|", "<Cmd>WindowsMaximizeHorizontally<CR>", { desc = "full horizontal window space" })
+        vim.keymap.set("n", "<c-w>=", "<Cmd>WindowsMaximize<CR>", { desc = "maximise full window space" })
       end
     }
 
