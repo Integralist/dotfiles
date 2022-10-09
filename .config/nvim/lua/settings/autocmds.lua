@@ -38,6 +38,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- The following code implements dimming of inactive buffers
+-- An alternative is https://github.com/levouh/tint.nvim
 
 local function windowIsRelative(windowId)
   return vim.api.nvim_win_get_config(windowId).relative ~= ''
