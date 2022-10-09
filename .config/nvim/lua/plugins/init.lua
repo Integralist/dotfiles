@@ -240,7 +240,7 @@ return require("packer").startup({
               win_options = {
                 winhighlight = {
                   Normal = "Normal",
-                  FloatBorder = "DiagnosticInfo",
+                  FloatBorder = "DiagnosticSignInfo",
                   IncSearch = "",
                   Search = "",
                 },
