@@ -79,6 +79,11 @@ return require("packer").startup({
     use "crispgm/telescope-heading.nvim"
     use "xiyaowong/telescope-emoji.nvim"
     use "axkirillov/telescope-changed-files"
+    use { "LukasPietzschmann/telescope-tabs",
+      config = function()
+        vim.keymap.set("n", "<leader>t", "<Cmd>lua require('telescope-tabs').list_tabs()<CR>", { desc = "search tabs" })
+      end
+    }
 
     -- pattern searching
     use "mileszs/ack.vim"
@@ -103,18 +108,36 @@ return require("packer").startup({
     use { "nvim-pack/nvim-spectre", requires = { "nvim-lua/plenary.nvim" } }
 
     -- file system navigation
-    use { "kyazdani42/nvim-tree.lua",
-      requires = { "kyazdani42/nvim-web-devicons" },
+    use { "nvim-neo-tree/neo-tree.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+        "MunifTanjim/nui.nvim",
+      },
       config = function()
-        require("nvim-tree").setup({
-          renderer = {
-            indent_markers = {
-              enable = true
-            }
+        vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+        vim.fn.sign_define("DiagnosticSignError",
+          { text = " ", texthl = "DiagnosticSignError" })
+        vim.fn.sign_define("DiagnosticSignWarn",
+          { text = " ", texthl = "DiagnosticSignWarn" })
+        vim.fn.sign_define("DiagnosticSignInfo",
+          { text = " ", texthl = "DiagnosticSignInfo" })
+        vim.fn.sign_define("DiagnosticSignHint",
+          { text = "", texthl = "DiagnosticSignHint" })
+
+        vim.keymap.set("n", "<leader><Tab>", "<Cmd>Neotree toggle<CR>", { desc = "open file tree" })
+
+        require("neo-tree").setup({
+          filesystem = {
+            filtered_items = {
+              hide_dotfiles = false,
+              hide_gitignored = true,
+              hide_by_name = {
+                "node_modules"
+              },
+            },
           },
-          git = {
-            ignore = false
-          }
         })
       end
     }
@@ -196,6 +219,58 @@ return require("packer").startup({
 
     -- generate hex colours
     use { "uga-rosa/ccc.nvim" }
+
+    -- gui improvements
+    use({
+      "folke/noice.nvim",
+      event = "VimEnter",
+      config = function()
+        require("noice").setup({
+          views = {
+            cmdline_popup = {
+              position = {
+                row = "40%",
+                col = "50%",
+              },
+              size = {
+                width = 60,
+                height = "auto",
+              },
+              win_options = {
+                winhighlight = {
+                  Normal = "Normal",
+                  FloatBorder = "DiagnosticInfo",
+                  IncSearch = "",
+                  Search = "",
+                },
+              },
+            },
+            popupmenu = {
+              relative = "editor",
+              position = {
+                row = 8,
+                col = "50%",
+              },
+              size = {
+                width = 60,
+                height = 10,
+              },
+              border = {
+                style = "rounded",
+                padding = { 0, 1 },
+              },
+              win_options = {
+                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+              },
+            },
+          },
+        })
+      end,
+      requires = {
+        "MunifTanjim/nui.nvim",
+        "rcarriga/nvim-notify",
+      }
+    })
 
     -- tab ui improvments
     use { "akinsho/bufferline.nvim",

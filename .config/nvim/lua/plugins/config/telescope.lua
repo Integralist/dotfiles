@@ -55,5 +55,5 @@ vim.keymap.set("n", "<leader>ls", "<Cmd>Telescope lsp_document_symbols<CR>", { d
 vim.keymap.set("n", "<leader>m", "<Cmd>Telescope heading<CR>", { desc = "search markdown headings" })
 vim.keymap.set("n", "<leader>q", "<Cmd>Telescope quickfix<CR>", { desc = "search quickfix list" })
 vim.keymap.set("n", "<leader>r", "<Cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "search current buffer text" })
-vim.keymap.set("n", "<leader>t", "<Cmd>Telescope live_grep<CR>", { desc = "search text" })
 vim.keymap.set("n", "<leader>w", "<Cmd>Telescope windows<CR>", { desc = "search windows" })
+vim.keymap.set("n", "<leader>x", "<Cmd>Telescope live_grep<CR>", { desc = "search text" })
