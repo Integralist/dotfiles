@@ -147,7 +147,16 @@ return require("packer").startup({
     use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
 
     -- code comments
-    use "b3nj5m1n/kommentary"
+    use {
+      "numToStr/Comment.nvim",
+      config = function()
+        require("Comment").setup()
+
+        vim.keymap.set("n", "<leader><leader><leader>", "<Cmd>norm gcc<CR>", { desc = "comment a single line" })
+        vim.keymap.set("v", "<leader><leader><leader>", "<Plug>(comment_toggle_linewise_visual)",
+          { desc = "comment multiple lines" })
+      end
+    }
 
     -- git change indicator
     use "lewis6991/gitsigns.nvim"
@@ -418,6 +427,12 @@ return require("packer").startup({
     use "mfussenegger/nvim-lint"
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
+    use { "saecki/crates.nvim",
+      requires = { "nvim-lua/plenary.nvim" },
+      config = function()
+        require("crates").setup()
+      end,
+    }
     use "lvimuser/lsp-inlayhints.nvim" -- rust-tools already provides this feature, but gopls doesn't
 
     -- autocomplete
