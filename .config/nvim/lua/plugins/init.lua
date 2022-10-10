@@ -63,7 +63,7 @@ return require("packer").startup({
             select = {
               enable = true,
               lookahead = true,
-              include_surrounding_whitespace = true,
+              include_surrounding_whitespace = false,
               keymaps = {
                 ["af"] = { query = "@function.outer", desc = "select around a function" },
                 ["if"] = { query = "@function.inner", desc = "select inner part of a function" },
