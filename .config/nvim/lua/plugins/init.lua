@@ -76,6 +76,18 @@ return require("packer").startup({
                 ['@class.outer'] = '<c-v>',
               },
             },
+            move = {
+              enable = true,
+              set_jumps = true,
+              goto_next_start = {
+                ["]]"] = "@function.outer",
+                ["]\\"] = "@class.outer",
+              },
+              goto_previous_start = {
+                ["[["] = "@function.outer",
+                ["[\\"] = "@class.outer",
+              },
+            },
           },
         })
       end
