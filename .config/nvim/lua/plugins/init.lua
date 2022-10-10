@@ -127,6 +127,8 @@ return require("packer").startup({
           { text = "", texthl = "DiagnosticSignHint" })
 
         vim.keymap.set("n", "<leader><Tab>", "<Cmd>Neotree toggle<CR>", { desc = "open file tree" })
+        vim.keymap.set("n", "gp", "<Cmd>Neotree reveal_force_cwd<CR>",
+          { desc = "change working directory to current file location" })
 
         require("neo-tree").setup({
           filesystem = {
@@ -231,6 +233,8 @@ return require("packer").startup({
     use { "uga-rosa/ccc.nvim" }
 
     -- gui improvements
+    --
+    -- NOTE: `:Noice` to open message history + `:Noice telescope` to open message history in Telescope.
     use({
       "folke/noice.nvim",
       event = "VimEnter",
@@ -330,14 +334,14 @@ return require("packer").startup({
         "anuvyklack/animation.nvim"
       },
       config = function()
-        vim.o.winwidth = 10
-        vim.o.winminwidth = 10
+        vim.o.winwidth = 1
+        vim.o.winminwidth = 0
         vim.o.equalalways = false
         require('windows').setup()
 
         vim.keymap.set("n", "<c-w>_", "<Cmd>WindowsMaximizeVertically<CR>", { desc = "full vertical window space" })
         vim.keymap.set("n", "<c-w>|", "<Cmd>WindowsMaximizeHorizontally<CR>", { desc = "full horizontal window space" })
-        vim.keymap.set("n", "<c-w>=", "<Cmd>WindowsMaximize<CR>", { desc = "maximise full window space" })
+        vim.keymap.set("n", "<c-w>\\", "<Cmd>WindowsMaximize<CR>", { desc = "maximise full window space" })
       end
     }
 
