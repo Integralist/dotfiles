@@ -55,6 +55,31 @@ return require("packer").startup({
 
     -- syntax tree parsing for more intelligent syntax highlighting and code navigation
     use { "nvim-treesitter/nvim-treesitter", run = ":TSUpdate" }
+    use { "nvim-treesitter/nvim-treesitter-textobjects",
+      requires = { "nvim-treesitter/nvim-treesitter" },
+      config = function()
+        require("nvim-treesitter.configs").setup({
+          textobjects = {
+            select = {
+              enable = true,
+              lookahead = true,
+              include_surrounding_whitespace = true,
+              keymaps = {
+                ["af"] = { query = "@function.outer", desc = "select around a function" },
+                ["if"] = { query = "@function.inner", desc = "select inner part of a function" },
+                ["ac"] = { query = "@class.outer", desc = "select around a class" },
+                ["ic"] = { query = "@class.inner", desc = "select inner part of a class" },
+              },
+              selection_modes = {
+                ['@parameter.outer'] = 'v',
+                ['@function.outer'] = 'V',
+                ['@class.outer'] = '<c-v>',
+              },
+            },
+          },
+        })
+      end
+    }
     use { "lewis6991/spellsitter.nvim",
       config = function()
         require("spellsitter").setup()
@@ -331,17 +356,21 @@ return require("packer").startup({
     use { "anuvyklack/windows.nvim",
       requires = {
         "anuvyklack/middleclass",
-        "anuvyklack/animation.nvim"
       },
       config = function()
         vim.o.winwidth = 1
         vim.o.winminwidth = 0
         vim.o.equalalways = false
-        require('windows').setup()
+        require("windows").setup()
 
-        vim.keymap.set("n", "<c-w>_", "<Cmd>WindowsMaximizeVertically<CR>", { desc = "full vertical window space" })
-        vim.keymap.set("n", "<c-w>|", "<Cmd>WindowsMaximizeHorizontally<CR>", { desc = "full horizontal window space" })
-        vim.keymap.set("n", "<c-w>\\", "<Cmd>WindowsMaximize<CR>", { desc = "maximise full window space" })
+        local function cmd(command)
+          return table.concat({ "<Cmd>", command, "<CR>" })
+        end
+
+        vim.keymap.set("n", "<C-w>\\", cmd "WindowsMaximize")
+        vim.keymap.set("n", "<C-w>_", cmd "WindowsMaximizeVertically")
+        vim.keymap.set("n", "<C-w>|", cmd "WindowsMaximizeHorizontally")
+        vim.keymap.set("n", "<C-w>=", cmd "WindowsEqualize")
       end
     }
 
