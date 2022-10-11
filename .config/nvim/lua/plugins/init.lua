@@ -498,6 +498,17 @@ return require("packer").startup({
     }
     use "lvimuser/lsp-inlayhints.nvim" -- rust-tools already provides this feature, but gopls doesn't
 
+    -- null-ls
+    use { "jose-elias-alvarez/null-ls.nvim",
+      config = function()
+        require("null-ls").setup({
+          sources = {
+            require("null-ls").builtins.diagnostics.checkmake, -- https://github.com/mrtazz/checkmake
+          }
+        })
+      end
+    }
+
     -- autocomplete
     use "hrsh7th/nvim-cmp"
     use "hrsh7th/cmp-buffer"
