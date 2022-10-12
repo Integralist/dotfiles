@@ -167,6 +167,10 @@ return require("packer").startup({
         vim.keymap.set("n", "gp", "<Cmd>Neotree reveal_force_cwd<CR>",
           { desc = "change working directory to current file location" })
 
+        -- Remap :Ex, :Sex to Neotree
+        vim.cmd(":command! Ex Neotree toggle current reveal_force_cwd")
+        vim.cmd(":command! Sex sp | Neotree toggle current reveal_force_cwd")
+
         require("neo-tree").setup({
           filesystem = {
             filtered_items = {
@@ -425,7 +429,7 @@ return require("packer").startup({
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "neovim/nvim-lspconfig",
-      "Afourcat/treesitter-terraform-doc.nvim", -- opens Terraform resource docs
+      "Afourcat/treesitter-terraform-doc.nvim",
     }
     require("mason").setup()
     local mason_lspconfig = require("mason-lspconfig")
@@ -449,8 +453,6 @@ return require("packer").startup({
             require("illuminate").on_attach(client)
 
             if server_name == "terraformls" then
-              -- https://github.com/Afourcat/treesitter-terraform-doc.nvim/issues/1
-              -- doesn't support providers outside of the hashicorp namespace 🤦
               require("treesitter-terraform-doc").setup()
             end
           end
