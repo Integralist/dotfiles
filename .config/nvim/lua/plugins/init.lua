@@ -48,7 +48,13 @@ return require("packer").startup({
     -- colorschemes
     use "EdenEast/nightfox.nvim"
     use "fenetikm/falcon"
-    use "sainnhe/gruvbox-material"
+    use { "ellisonleao/gruvbox.nvim",
+      config = function()
+        require("gruvbox").setup({
+          contrast = "hard",
+        })
+      end
+    }
 
     -- make dot operator work in a sensible way
     use "tpope/vim-repeat"
@@ -447,14 +453,13 @@ return require("packer").startup({
     local mason_lspconfig = require("mason-lspconfig")
     mason_lspconfig.setup({
       ensure_installed = {
-        "eslint-lsp",
-        "lua-language-server",
+        "eslint",
+        "sumneko_lua",
         "marksman",
-        "terraform-ls",
+        "terraformls",
         "tflint",
-        "typescript-language-server",
-        "yaml-language-server",
-        "yamllint",
+        "tsserver",
+        "yamlls",
       }
     })
     mason_lspconfig.setup_handlers({
