@@ -333,8 +333,19 @@ return require("packer").startup({
                 padding = { 0, 1 },
               },
               win_options = {
-                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+                winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticSignInfo" },
               },
+            },
+          },
+          routes = {
+            -- skip displaying message that file was written to.
+            {
+              filter = {
+                event = "msg_show",
+                kind = "",
+                find = "written",
+              },
+              opts = { skip = true },
             },
           },
         })
