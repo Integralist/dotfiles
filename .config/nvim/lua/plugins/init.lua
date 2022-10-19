@@ -415,6 +415,7 @@ return require("packer").startup({
           filetype = {
             exclude = {
               "markdown",
+              "neo-tree",
               -- following are defaults that need to be added or they'll be overridden
               "",
               "alpha",
