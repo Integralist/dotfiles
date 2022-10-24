@@ -144,7 +144,11 @@ return require("packer").startup({
     use "mileszs/ack.vim"
 
     -- search indexer
-    use "kevinhwang91/nvim-hlslens"
+    use { "kevinhwang91/nvim-hlslens",
+      config = function()
+        require("hlslens").setup()
+      end
+    }
     use { "haya14busa/vim-asterisk",
       config = function()
         vim.api.nvim_set_keymap('n', '*', [[<Plug>(asterisk-z*)<Cmd>lua require('hlslens').start()<CR>]], {})
