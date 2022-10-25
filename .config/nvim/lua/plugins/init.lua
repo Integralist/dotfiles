@@ -538,6 +538,16 @@ return require("packer").startup({
         })
       end
     }
+    use {
+      "gorbit99/codewindow.nvim",
+      config = function()
+        require("codewindow").setup({
+          auto_enable = true,
+        })
+        vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
+          { noremap = true, silent = true, desc = "Toggle minimap" })
+      end,
+    }
     use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
