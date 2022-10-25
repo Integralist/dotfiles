@@ -216,7 +216,12 @@ return require("packer").startup({
     }
 
     -- status line
-    use { "nvim-lualine/lualine.nvim", requires = { "kyazdani42/nvim-web-devicons", opt = true } }
+    use { "nvim-lualine/lualine.nvim",
+      requires = { "kyazdani42/nvim-web-devicons", opt = true },
+      config = function()
+        require("lualine").setup({})
+      end
+    }
 
     -- code comments
     use {
@@ -564,11 +569,44 @@ return require("packer").startup({
     -- null-ls
     use { "jose-elias-alvarez/null-ls.nvim",
       config = function()
-        require("null-ls").setup({
+        local null_ls = require("null-ls")
+        local helpers = require("null-ls.helpers")
+
+        null_ls.setup({
           sources = {
             require("null-ls").builtins.diagnostics.checkmake, -- https://github.com/mrtazz/checkmake
           }
         })
+
+        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/HELPERS.md
+        -- local tfproviderlintx = {
+        --   method = null_ls.methods.DIAGNOSTICS,
+        --   filetypes = { "go" },
+        --   generator = null_ls.generator({
+        --     command = "tfproviderlintx",
+        --     args = { "-XAT001=false", "-R018=false", "$FILENAME" },
+        --     to_stdin = true,
+        --     from_stderr = true,
+        --     format = "line",
+        --     check_exit_code = function(code, stderr)
+        --       local success = code <= 1
+        --
+        --       if not success then
+        --         print(stderr)
+        --       end
+        --
+        --       return success
+        --     end,
+        --     on_output = helpers.diagnostics.from_patterns({
+        --       {
+        --         pattern = [[(^[^:]+):(\d+):(\d+):\s([^:]+):\s(.+)$]], -- https://regex101.com/r/wytcMN/1
+        --         groups = { "path", "row", "col", "message", "code", "message" },
+        --       },
+        --     }),
+        --   }),
+        -- }
+        --
+        -- null_ls.register(tfproviderlintx)
       end
     }
 
