@@ -417,7 +417,11 @@ return require("packer").startup({
         vim.o.winwidth = 1
         vim.o.winminwidth = 0
         vim.o.equalalways = false
-        require("windows").setup()
+        require("windows").setup({
+          autowidth = {
+            enable = false, -- prevents messing up simrat39/symbols-outline.nvim (e.g. relative width of side-bar was being made larger)
+          }
+        })
 
         local function cmd(command)
           return table.concat({ "<Cmd>", command, "<CR>" })
