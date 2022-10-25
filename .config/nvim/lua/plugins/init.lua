@@ -229,6 +229,13 @@ return require("packer").startup({
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
 
+    -- indentation autopairing
+    use { "windwp/nvim-autopairs",
+      config = function()
+        require("nvim-autopairs").setup {}
+      end
+    }
+
     -- highlighters and indicators
     use { "RRethy/vim-illuminate", -- word usage highlighter
       config = function()
