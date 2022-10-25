@@ -45,6 +45,13 @@ return require("packer").startup({
     -- plugin manager
     use "wbthomason/packer.nvim"
 
+    -- optimizations
+    use { "lewis6991/impatient.nvim",
+      config = function()
+        require("impatient")
+      end
+    }
+
     -- colorschemes
     use "EdenEast/nightfox.nvim"
     use "fenetikm/falcon"
