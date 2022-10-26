@@ -16,6 +16,20 @@ NOTE: The plugin mappings defined have the following convention:
 This helps to avoid overlap in letters.
 --]]
 
+-- Dump will return the contents of a table so it can be printed.
+function Dump(o)
+  if type(o) == 'table' then
+    local s = '{ '
+    for k, v in pairs(o) do
+      if type(k) ~= 'number' then k = '"' .. k .. '"' end
+      s = s .. '[' .. k .. '] = ' .. Dump(v) .. ','
+    end
+    return s .. '} '
+  else
+    return tostring(o)
+  end
+end
+
 vim.keymap.set("", "<leader><leader>ps", "<Cmd>PackerSync<CR>", { desc = "update vim plugins" })
 
 local id = vim.api.nvim_create_augroup("PackerCompiler", { clear = true })
@@ -548,7 +562,7 @@ return require("packer").startup({
       config = function()
         require("codewindow").setup({
           auto_enable = true,
-          use_treesitter = false, -- wasn't useful seeing dots coloured to match the code syntax
+          use_treesitter = true, -- disable to lose colours
         })
         vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
           { noremap = true, silent = true, desc = "Toggle minimap" })
@@ -571,56 +585,53 @@ return require("packer").startup({
     use { "jose-elias-alvarez/null-ls.nvim",
       config = function()
         local null_ls = require("null-ls")
-        local helpers = require("null-ls.helpers")
+        local helpers = require("null-ls.helpers") -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/HELPERS.md
 
-        null_ls.setup({
-          sources = {
-            require("null-ls").builtins.diagnostics.checkmake, -- https://github.com/mrtazz/checkmake
-          }
-        })
-
-        -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/HELPERS.md
         local tfproviderlintx = {
           name = "tfproviderlintx",
           method = null_ls.methods.DIAGNOSTICS,
           filetypes = { "go" },
-          -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/BUILTIN_CONFIG.md#runtime_condition
-          --
-          -- We can improve performance by caching this operation:
-          -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/HELPERS.md#cache
-          --
-          -- Example:
-          -- helpers.cache.by_bufnr(function(params) ... end)
-          runtime_condition = function(params)
-            -- params spec can be found here:
-            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/1569ad4817492e0daefa4e1bcf55f8280cdc82db/doc/MAIN.md#generators
-            return params.bufname:find("terraform-provider-") ~= nil
-          end,
-          generator = null_ls.generator({
-            command = "tfproviderlintx",
+          generator = helpers.generator_factory({
             args = { "-XAT001=false", "-R018=false", "$FILENAME" },
-            to_stdin = true,
-            from_stderr = true,
-            format = "line",
             check_exit_code = function(code, stderr)
               local success = code < 1
-
               if not success then
                 print(stderr)
               end
-
               return success
             end,
+            command = "tfproviderlintx",
+            format = "line",
+            from_stderr = true,
             on_output = helpers.diagnostics.from_patterns({
               {
-                pattern = [[(^[^:]+):(%d+):(%d+):%s([^:]+):%s(.+)$]], -- https://regex101.com/r/wytcMN/1 (converted using non-regex Lua patterns https://www.lua.org/pil/20.2.html)
-                groups = { "path", "row", "col", "message", "code", "message" },
+                -- /Users/integralist/Code/fastly/terraform-provider-fastly/fastly/block_fastly_service_vcl.go:15:3: undeclared name: DefaultServiceAttributeHandler
+                pattern = [[([^:]+):(%d+):(%d+):%s([^:]+):%s(.+)]], -- Lua patterns https://www.lua.org/pil/20.2.html
+                groups = { "path", "row", "col", "code", "message" },
               },
             }),
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/BUILTIN_CONFIG.md#runtime_condition
+            --
+            -- We can improve performance by caching this operation:
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/HELPERS.md#cache
+            --
+            -- Example:
+            -- helpers.cache.by_bufnr(function(params) ... end)
+            runtime_condition = function(params)
+              -- params spec can be found here:
+              -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/1569ad4817492e0daefa4e1bcf55f8280cdc82db/doc/MAIN.md#generators
+              return params.bufname:find("terraform%-provider%-") ~= nil -- % is a character escape
+            end,
+            to_stdin = true,
           }),
         }
 
-        null_ls.register(tfproviderlintx)
+        null_ls.setup({
+          sources = {
+            tfproviderlintx,
+            require("null-ls").builtins.diagnostics.checkmake, -- https://github.com/mrtazz/checkmake
+          }
+        })
       end
     }
 
