@@ -406,6 +406,19 @@ return require("packer").startup({
       end
     }
 
+    -- quickfix improvements
+    --
+    -- <Tab> to select items.
+    -- zn to keep selected items.
+    -- zN to filter selected items.
+    -- zf to fuzzy search items.
+    use { "kevinhwang91/nvim-bqf", ft = "qf" }
+    use { "junegunn/fzf",
+      run = function()
+        vim.fn["fzf#install"]()
+      end
+    }
+
     -- window picker
     use { "s1n7ax/nvim-window-picker", tag = "v1.*",
       config = function()
