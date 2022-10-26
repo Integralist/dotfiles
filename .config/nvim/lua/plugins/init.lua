@@ -548,6 +548,7 @@ return require("packer").startup({
       config = function()
         require("codewindow").setup({
           auto_enable = true,
+          use_treesitter = false, -- wasn't useful seeing dots coloured to match the code syntax
         })
         vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
           { noremap = true, silent = true, desc = "Toggle minimap" })
@@ -579,34 +580,47 @@ return require("packer").startup({
         })
 
         -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/HELPERS.md
-        -- local tfproviderlintx = {
-        --   method = null_ls.methods.DIAGNOSTICS,
-        --   filetypes = { "go" },
-        --   generator = null_ls.generator({
-        --     command = "tfproviderlintx",
-        --     args = { "-XAT001=false", "-R018=false", "$FILENAME" },
-        --     to_stdin = true,
-        --     from_stderr = true,
-        --     format = "line",
-        --     check_exit_code = function(code, stderr)
-        --       local success = code <= 1
-        --
-        --       if not success then
-        --         print(stderr)
-        --       end
-        --
-        --       return success
-        --     end,
-        --     on_output = helpers.diagnostics.from_patterns({
-        --       {
-        --         pattern = [[(^[^:]+):(\d+):(\d+):\s([^:]+):\s(.+)$]], -- https://regex101.com/r/wytcMN/1
-        --         groups = { "path", "row", "col", "message", "code", "message" },
-        --       },
-        --     }),
-        --   }),
-        -- }
-        --
-        -- null_ls.register(tfproviderlintx)
+        local tfproviderlintx = {
+          name = "tfproviderlintx",
+          method = null_ls.methods.DIAGNOSTICS,
+          filetypes = { "go" },
+          -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/BUILTIN_CONFIG.md#runtime_condition
+          --
+          -- We can improve performance by caching this operation:
+          -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/6a98411e70fad6928f7311eeade4b1753cb83524/doc/HELPERS.md#cache
+          --
+          -- Example:
+          -- helpers.cache.by_bufnr(function(params) ... end)
+          runtime_condition = function(params)
+            -- params spec can be found here:
+            -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/1569ad4817492e0daefa4e1bcf55f8280cdc82db/doc/MAIN.md#generators
+            return params.bufname:find("terraform-provider-") ~= nil
+          end,
+          generator = null_ls.generator({
+            command = "tfproviderlintx",
+            args = { "-XAT001=false", "-R018=false", "$FILENAME" },
+            to_stdin = true,
+            from_stderr = true,
+            format = "line",
+            check_exit_code = function(code, stderr)
+              local success = code < 1
+
+              if not success then
+                print(stderr)
+              end
+
+              return success
+            end,
+            on_output = helpers.diagnostics.from_patterns({
+              {
+                pattern = [[(^[^:]+):(%d+):(%d+):%s([^:]+):%s(.+)$]], -- https://regex101.com/r/wytcMN/1 (converted using non-regex Lua patterns https://www.lua.org/pil/20.2.html)
+                groups = { "path", "row", "col", "message", "code", "message" },
+              },
+            }),
+          }),
+        }
+
+        null_ls.register(tfproviderlintx)
       end
     }
 
