@@ -554,6 +554,7 @@ return require("packer").startup({
       config = function()
         require("symbols-outline").setup({
           auto_close = true,
+          -- autofold_depth = 1, -- h: close, l: open, W: close all, E: open all
         })
       end
     }
