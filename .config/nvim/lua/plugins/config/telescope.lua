@@ -8,6 +8,8 @@ Or you can have a more complex workflow:
 - Select multiple files using <Tab>
 - Send the selected files to the quickfix window using <C-o>
 - Search the quickfix window (using either :copen or <leader>q)
+
+NOTE: Scroll the preview window using <C-d> and <C-u>.
 ]]
 local actions = require("telescope.actions")
 local ts = require("telescope")
@@ -53,6 +55,7 @@ vim.keymap.set("n", "<leader>lo", "<Cmd>Telescope lsp_outgoing_calls<CR>", { des
 vim.keymap.set("n", "<leader>lr", "<Cmd>Telescope lsp_references<CR>", { desc = "search lsp code reference" })
 vim.keymap.set("n", "<leader>ls", "<Cmd>Telescope lsp_document_symbols<CR>", { desc = "search lsp document tree" })
 vim.keymap.set("n", "<leader>m", "<Cmd>Telescope heading<CR>", { desc = "search markdown headings" })
+vim.keymap.set("n", "<leader>n", "<Cmd>Noice telescope<CR>", { desc = "search messages handled by Noice plugin" })
 vim.keymap.set("n", "<leader>q", "<Cmd>Telescope quickfix<CR>", { desc = "search quickfix list" })
 vim.keymap.set("n", "<leader>r", "<Cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "search current buffer text" })
 vim.keymap.set("n", "<leader>w", "<Cmd>Telescope windows<CR>", { desc = "search windows" })
