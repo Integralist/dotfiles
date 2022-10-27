@@ -28,9 +28,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   end
 })
 
-local id = vim.api.nvim_create_augroup("WrapLineInMarkdown", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
-  group = id,
+  group = vim.api.nvim_create_augroup("WrapLineInMarkdown", { clear = true }),
   pattern = {
     "markdown"
   },
@@ -76,9 +75,8 @@ local function toggleDimWindows()
   end
 end
 
-local id = vim.api.nvim_create_augroup("DimInactiveBuffers", { clear = true })
 vim.api.nvim_create_autocmd({ "WinEnter" }, {
-  group = id,
+  group = vim.api.nvim_create_augroup("DimInactiveBuffers", { clear = true }),
   pattern = "*",
   callback = function()
     toggleDimWindows()

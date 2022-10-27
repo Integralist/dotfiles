@@ -19,9 +19,8 @@ function export.on_attach(_, bufnr)
   vim.keymap.set('n', ']r', "<Cmd>lua vim.diagnostic.open_float()<CR>", bufopts)
   vim.keymap.set('n', ']s', "<Cmd>lua vim.diagnostic.show()<CR>", bufopts)
 
-  local id = vim.api.nvim_create_augroup("SharedLspFormatting", { clear = true })
   vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-    group = id,
+    group = vim.api.nvim_create_augroup("SharedLspFormatting", { clear = true }),
     pattern = "*",
     command = "lua vim.lsp.buf.format()",
   })

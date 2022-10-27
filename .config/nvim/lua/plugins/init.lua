@@ -566,8 +566,11 @@ return require("packer").startup({
     use { "simrat39/symbols-outline.nvim",
       config = function()
         require("symbols-outline").setup({
-          auto_close = true,
           -- autofold_depth = 1, -- h: close, l: open, W: close all, E: open all
+          auto_close = false,
+          highlight_hovered_item = true,
+          position = "left",
+          width = 15,
         })
       end
     }
@@ -577,6 +580,7 @@ return require("packer").startup({
         require("codewindow").setup({
           auto_enable = true,
           use_treesitter = true, -- disable to lose colours
+          exclude_filetypes = { "Outline" }
         })
         vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
           { noremap = true, silent = true, desc = "Toggle minimap" })
