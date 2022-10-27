@@ -3,9 +3,6 @@
 --
 -- GLOBAL VARS:
 -- https://github.com/L3MON4D3/LuaSnip/blob/69cb81cf7490666890545fef905d31a414edc15b/lua/luasnip/config.lua#L82-L104§
---
--- EXAMPLES:
--- https://github.com/rafamadriz/friendly-snippets/blob/main/snippets/go.json
 
 local session = require("luasnip.session")
 
