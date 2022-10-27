@@ -1,5 +1,21 @@
 -- We remove the Vim builtin colorschemes so they don't show in Telescope.
 vim.cmd([[
+  function! FixGruvboxForNoice() abort
+    if g:colors_name == "gruvbox"
+      highlight NoiceCmdlinePopupBorderCmdline guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlinePopupBorderFilter guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlinePopupBorderHelp guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlinePopupBorderInput guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlinePopupBorderLua guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlinePopupBorderSearch guifg=#fabd2f guibg=NONE
+    endif
+  endfunction
+
+  augroup ApplyFixGruvboxForNoice
+    autocmd!
+    autocmd ColorScheme * call FixGruvboxForNoice()
+  augroup END
+
   silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null
   set background=dark
   colorscheme gruvbox
