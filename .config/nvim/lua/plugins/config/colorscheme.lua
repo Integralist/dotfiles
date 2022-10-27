@@ -8,6 +8,13 @@ vim.cmd([[
       highlight NoiceCmdlinePopupBorderInput guifg=#83a598 guibg=NONE
       highlight NoiceCmdlinePopupBorderLua guifg=#83a598 guibg=NONE
       highlight NoiceCmdlinePopupBorderSearch guifg=#fabd2f guibg=NONE
+
+      highlight NoiceCmdlineIconCmdline guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlineIconFilter guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlineIconHelp guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlineIconInput guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlineIconLua guifg=#83a598 guibg=NONE
+      highlight NoiceCmdlineIconSearch guifg=#fabd2f guibg=NONE
     endif
   endfunction
 
