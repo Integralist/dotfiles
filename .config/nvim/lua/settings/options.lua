@@ -15,7 +15,8 @@ vim.o.inccommand = "split"
 vim.o.number = true
 vim.o.scrolloff = 5
 vim.o.shiftwidth = 2
-vim.o.shortmess = vim.o.shortmess .. "c" -- .. is equivalent to += in vimscript
+-- vim.o.shortmess = vim.o.shortmess .. "c" -- .. is equivalent to += in vimscript
+vim.o.shortmess = "filnxToOFc" -- copied default and removed `t` (long paths were being truncated) while adding `c`
 vim.o.showmatch = true
 vim.o.signcolumn = "yes"
 vim.o.smartcase = true
