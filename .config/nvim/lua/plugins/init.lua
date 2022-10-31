@@ -68,7 +68,6 @@ return require("packer").startup({
 
     -- colorschemes
     use "EdenEast/nightfox.nvim"
-    use "fenetikm/falcon"
     use { "ellisonleao/gruvbox.nvim",
       config = function()
         require("gruvbox").setup({
@@ -76,6 +75,8 @@ return require("packer").startup({
         })
       end
     }
+    use "fenetikm/falcon"
+    use "kvrohit/mellow.nvim"
 
     -- make dot operator work in a sensible way
     use "tpope/vim-repeat"
