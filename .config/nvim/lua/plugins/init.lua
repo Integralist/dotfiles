@@ -307,7 +307,12 @@ return require("packer").startup({
     use "machakann/vim-highlightedyank"
 
     -- move lines around
-    use "matze/vim-move"
+    use { "matze/vim-move",
+      config = function()
+        vim.g.move_key_modifier = "C"
+        vim.g.move_key_modifier_visualmode = "S" -- e.g. Shift-k to move up, Shift-j to move down
+      end
+    }
 
     -- open lines in github
     use { "ruanyl/vim-gh-line",
