@@ -6,6 +6,8 @@ require("settings/quickfix")
 
 require("plugins")
 
+-- The following code loads any external plugin configuration settings.
+
 local function ends_with(str, ending)
   return ending == "" or str:sub(- #ending) == ending
 end
