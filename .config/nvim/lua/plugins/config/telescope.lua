@@ -58,5 +58,6 @@ vim.keymap.set("n", "<leader>m", "<Cmd>Telescope heading<CR>", { desc = "search 
 vim.keymap.set("n", "<leader>n", "<Cmd>Noice telescope<CR>", { desc = "search messages handled by Noice plugin" })
 vim.keymap.set("n", "<leader>q", "<Cmd>Telescope quickfix<CR>", { desc = "search quickfix list" })
 vim.keymap.set("n", "<leader>r", "<Cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = "search current buffer text" })
+vim.keymap.set("n", "<leader>s", "<Cmd>Telescope treesitter<CR>", { desc = "search symbols" })
 vim.keymap.set("n", "<leader>w", "<Cmd>Telescope windows<CR>", { desc = "search windows" })
 vim.keymap.set("n", "<leader>x", "<Cmd>Telescope live_grep<CR>", { desc = "search text" })
