@@ -28,6 +28,6 @@ require("gitsigns").setup({
       gs.blame_line {}
     end, { desc = "git blame short" })
 
-    map('n', '<leader><leader>gd', gs.diffthis, { desc = "git diff" })
+    map('n', '<leader><leader>gd', gs.diffthis, { desc = "git diff (:q to close)" })
   end
 })
