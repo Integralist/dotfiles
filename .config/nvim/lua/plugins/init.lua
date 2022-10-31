@@ -422,12 +422,12 @@ return require("packer").startup({
     -- zn to keep selected items.
     -- zN to filter selected items.
     -- zf to fuzzy search items.
-    use { "kevinhwang91/nvim-bqf", ft = "qf" }
     use { "junegunn/fzf",
       run = function()
         vim.fn["fzf#install"]()
       end
     }
+    use { "kevinhwang91/nvim-bqf", ft = "qf" }
 
     -- window picker
     use { "s1n7ax/nvim-window-picker", tag = "v1.*",
