@@ -251,7 +251,11 @@ return require("packer").startup({
     }
 
     -- git change indicator
-    use "lewis6991/gitsigns.nvim"
+    use { "lewis6991/gitsigns.nvim",
+      config = function()
+        vim.api.nvim_set_hl(0, "GitSignsChange", { link = "GruvboxYellowSign" })
+      end
+    }
 
     -- git history
     use { "sindrets/diffview.nvim", requires = { "nvim-lua/plenary.nvim" } }
@@ -609,7 +613,7 @@ return require("packer").startup({
         require("codewindow").setup({
           auto_enable = true,
           use_treesitter = true, -- disable to lose colours
-          exclude_filetypes = { "Outline", "neo-tree", "qf", "packer" }
+          exclude_filetypes = { "Outline", "neo-tree", "qf", "packer", "help" }
         })
         vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
           { noremap = true, silent = true, desc = "Toggle minimap" })

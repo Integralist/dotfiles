@@ -2,6 +2,7 @@
 To see what an option is set to execute :lua = vim.o.<name>
 --]]
 
+vim.o.background = "dark"
 vim.o.backup = false
 vim.o.clipboard = "unnamedplus"
 vim.o.completeopt = "menuone,noinsert,noselect"

@@ -1,33 +1,37 @@
 -- We remove the Vim builtin colorschemes so they don't show in Telescope.
-vim.cmd([[
-  function! FixGruvboxForNoice() abort
-    if g:colors_name == "gruvbox"
-      highlight NoiceCmdlinePopupBorderCmdline guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlinePopupBorderFilter guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlinePopupBorderHelp guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlinePopupBorderInput guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlinePopupBorderLua guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlinePopupBorderSearch guifg=#fabd2f guibg=NONE
+vim.cmd("silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null")
 
-      highlight NoiceCmdlineIconCmdline guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlineIconFilter guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlineIconHelp guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlineIconInput guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlineIconLua guifg=#83a598 guibg=NONE
-      highlight NoiceCmdlineIconSearch guifg=#fabd2f guibg=NONE
-    endif
-  endfunction
+vim.api.nvim_create_autocmd("ColorScheme", {
+  group = vim.api.nvim_create_augroup("FixGruvboxForNoice", { clear = true }),
+  pattern = "*",
+  callback = function()
+    if vim.g.colors_name == "gruvbox" then
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderCmdline", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderFilter", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderHelp", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderInput", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderLua", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlinePopupBorderSearch", { fg = "#fabd2f", bg = "NONE" })
 
-  augroup ApplyFixGruvboxForNoice
-    autocmd!
-    autocmd ColorScheme * call FixGruvboxForNoice()
-  augroup END
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconCmdline", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconFilter", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconHelp", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconInput", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconLua", { fg = "#83a598", bg = "NONE" })
+      vim.api.nvim_set_hl(0, "NoiceCmdlineIconSearch", { fg = "#fabd2f", bg = "NONE" })
+    end
+  end
+})
 
-  silent !rm $VIMRUNTIME/colors/*.vim &> /dev/null
-  set background=dark
-  colorscheme gruvbox
-  highlight link GitSignsChange GruvboxYellowSign
-]])
+vim.cmd("colorscheme gruvbox")
+
+-- EXAMPLE:
+-- ExtendHL('Comment', { italic = true })
+function ExtendHL(name, def)
+  local current_def = vim.api.nvim_get_hl_by_name(name, true)
+  local new_def = vim.tbl_extend("force", {}, current_def, def)
+  vim.api.nvim_set_hl(0, name, new_def)
+end
 
 -- NOTE: If you want to quickly change the background colour of a theme, and
 -- also the default text colour (e.g. the Ex command line color) then the
