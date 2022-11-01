@@ -618,7 +618,7 @@ return require("packer").startup({
         require("codewindow").setup({
           auto_enable = true,
           use_treesitter = true, -- disable to lose colours
-          exclude_filetypes = { "Outline", "neo-tree", "qf", "packer", "help" }
+          exclude_filetypes = { "Outline", "neo-tree", "qf", "packer", "help", "noice" }
         })
         vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
           { noremap = true, silent = true, desc = "Toggle minimap" })
@@ -661,8 +661,9 @@ return require("packer").startup({
             from_stderr = true,
             on_output = helpers.diagnostics.from_patterns({
               {
+                -- EXAMPLE:
                 -- /Users/integralist/Code/fastly/terraform-provider-fastly/fastly/block_fastly_service_vcl.go:15:3: undeclared name: DefaultServiceAttributeHandler
-                pattern = [[([^:]+):(%d+):(%d+):%s([^:]+):%s(.+)]], -- Lua patterns https://www.lua.org/pil/20.2.html
+                pattern = "([^:]+):(%d+):(%d+):%s([^:]+):%s(.+)", -- Lua patterns https://www.lua.org/pil/20.2.html
                 groups = { "path", "row", "col", "code", "message" },
               },
             }),
@@ -682,9 +683,36 @@ return require("packer").startup({
           }),
         }
 
+        local revive = {
+          name = "revive",
+          method = null_ls.methods.DIAGNOSTICS,
+          filetypes = { "go" },
+          generator = helpers.generator_factory({
+            args = { "-exclude=vendor/...", "$FILENAME" },
+            check_exit_code = function()
+              -- NOTE: revive may return issues but the exit code is always zero 😞
+              return false
+            end,
+            command = "revive",
+            format = "line",
+            from_stderr = true,
+            on_output = helpers.diagnostics.from_patterns({
+              {
+                -- EXAMPLE:
+                -- /Users/integralist/Code/fastly/go-fastly/fastly/acl_entry.go:83:6: exported type ListACLEntriesPaginator should have comment or be unexported
+                -- /Users/integralist/Code/fastly/terraform-provider-fastly/fastly/block_fastly_service_logging_s3.go:259:1: maximum number of statements per function exceeded; max 40 but got 46
+                pattern = "([^:]+):(%d+):(%d+):%s(.+)", -- Lua patterns https://www.lua.org/pil/20.2.html
+                groups = { "path", "row", "col", "message" },
+              },
+            }),
+            to_stdin = true,
+          }),
+        }
+
         null_ls.setup({
           sources = {
             tfproviderlintx,
+            revive,
             require("null-ls").builtins.diagnostics.checkmake, -- https://github.com/mrtazz/checkmake
           }
         })
