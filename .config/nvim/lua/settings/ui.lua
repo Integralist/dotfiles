@@ -40,6 +40,8 @@ function _G.qfSort()
   fn.setqflist(items, 'r')
 end
 
+vim.keymap.set("", "<leader><leader>qs", "<Cmd>lua _G.qfSort()<CR>", { desc = "sort quickfix window" })
+
 -- This will align the quickfix window list.
 function _G.qftf(info)
   local items
@@ -53,19 +55,7 @@ function _G.qftf(info)
   -- vim.cmd(('noa lcd %s'):format(fn.fnameescape(root)))
   --
   if info.quickfix == 1 then
-    local list = fn.getqflist({ id = info.id, items = 0 })
-    table.sort(list, function(a, b)
-      if a.bufnr == b.bufnr then
-        if a.lnum == b.lnum then
-          return a.col < b.col
-        else
-          return a.lnum < b.lnum
-        end
-      else
-        return a.bufnr < b.bufnr
-      end
-    end)
-    items = list.items
+    items = fn.getqflist({ id = info.id, items = 0 }).items
   else
     items = fn.getloclist(info.winid, { id = info.id, items = 0 }).items
   end
