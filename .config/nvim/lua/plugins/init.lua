@@ -662,7 +662,7 @@ return require("packer").startup({
             on_output = helpers.diagnostics.from_patterns({
               {
                 -- EXAMPLE:
-                -- /Users/integralist/Code/fastly/terraform-provider-fastly/fastly/block_fastly_service_vcl.go:15:3: undeclared name: DefaultServiceAttributeHandler
+                -- /Users/integralist/Code/EXAMPLE/example.go:123:456: an error code: whoops you did X wrong
                 pattern = "([^:]+):(%d+):(%d+):%s([^:]+):%s(.+)", -- Lua patterns https://www.lua.org/pil/20.2.html
                 groups = { "path", "row", "col", "code", "message" },
               },
@@ -688,11 +688,14 @@ return require("packer").startup({
           method = null_ls.methods.DIAGNOSTICS,
           filetypes = { "go" },
           generator = helpers.generator_factory({
-            args = { "-exclude=vendor/...", "$FILENAME" },
-            check_exit_code = function()
-              -- NOTE: revive may return issues but the exit code is always zero 😞
-              -- https://github.com/mgechev/revive/issues/769
-              return false
+            args = {
+              "-set_exit_status",
+              "-config=/Users/integralist/revive-single-file.toml",
+              "-exclude=vendor/...",
+              "$FILENAME"
+            },
+            check_exit_code = function(code)
+              return code < 1
             end,
             command = "revive",
             format = "line",
@@ -700,8 +703,7 @@ return require("packer").startup({
             on_output = helpers.diagnostics.from_patterns({
               {
                 -- EXAMPLE:
-                -- /Users/integralist/Code/fastly/go-fastly/fastly/acl_entry.go:83:6: exported type ListACLEntriesPaginator should have comment or be unexported
-                -- /Users/integralist/Code/fastly/terraform-provider-fastly/fastly/block_fastly_service_logging_s3.go:259:1: maximum number of statements per function exceeded; max 40 but got 46
+                -- /Users/integralist/Code/EXAMPLE/example.go:123:456: whoops you did X wrong
                 pattern = "([^:]+):(%d+):(%d+):%s(.+)", -- Lua patterns https://www.lua.org/pil/20.2.html
                 groups = { "path", "row", "col", "message" },
               },

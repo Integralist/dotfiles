@@ -1,0 +1,140 @@
+enableAllRules = true
+
+# NOTE: This file is used by Neovim's null-ls plugin (for single file usage)
+# This means certain errors (like "needs package comment") should be excluded.
+# See configuration in ./.config/nvim/lua/plugins/init.lua
+
+[rule.add-constant]
+  severity = "warning"
+  arguments = [{ maxLitCount = "10", allowInts = "0,1,2,3,4,5" }] # e.g. avoid matching `if len(...) > 0` and other simple assignments.
+  disabled = true # most of the time it's fine, and the performance isn't a concern
+[rule.argument-limit]
+  severity = "warning"
+  arguments = [5]
+[rule.atomic]
+  severity = "warning"
+[rule.banned-characters]
+  disabled = true
+[rule.bare-return]
+  severity = "warning"
+[rule.bool-literal-in-expr]
+  severity = "warning"
+[rule.cognitive-complexity]
+  disabled = true
+[rule.confusing-naming]
+  severity = "warning"
+[rule.confusing-results]
+  severity = "warning"
+[rule.constant-logical-expr]
+  severity = "error"
+[rule.context-as-argument]
+  severity = "error"
+[rule.context-keys-type]
+  severity = "error"
+[rule.cyclomatic]
+  disabled = true
+[rule.deep-exit]
+  severity = "warning"
+[rule.defer]
+  severity = "warning"
+[rule.early-return]
+  severity = "warning"
+[rule.empty-block]
+  severity = "error"
+[rule.empty-lines]
+  severity = "warning"
+[rule.error-naming]
+  severity = "error"
+[rule.error-return]
+  severity = "error"
+[rule.error-strings]
+  severity = "error"
+[rule.errorf]
+  severity = "warning"
+[rule.exported]
+  severity = "error"
+[rule.file-header]
+  disabled = true
+[rule.flag-parameter]
+  severity = "warning"
+[rule.function-result-limit]
+  severity = "warning"
+  arguments = [4]
+[rule.function-length]
+  severity = "warning"
+  arguments = [40,0]
+[rule.get-return]
+  severity = "error"
+[rule.identical-branches]
+  severity = "error"
+[rule.if-return]
+  severity = "warning"
+[rule.increment-decrement]
+  severity = "error"
+[rule.indent-error-flow]
+  severity = "warning"
+[rule.import-shadowing]
+  severity = "warning"
+[rule.line-length-limit]
+  disabled = true
+[rule.max-public-structs]
+  disabled = true
+[rule.modifies-parameter]
+  severity = "warning"
+[rule.modifies-value-receiver]
+  severity = "warning"
+[rule.nested-structs]
+  severity = "warning"
+[rule.optimize-operands-order]
+  severity = "warning"
+[rule.package-comments]
+  severity = "warning"
+  disabled = true # will commonly report false positive with single files.
+[rule.range]
+  severity = "warning"
+[rule.range-val-in-closure]
+  severity = "warning"
+[rule.range-val-address]
+  severity = "warning"
+[rule.receiver-naming]
+  severity = "warning"
+[rule.redefines-builtin-id]
+  severity = "error"
+[rule.string-of-int]
+  severity = "warning"
+[rule.struct-tag]
+  severity = "warning"
+[rule.superfluous-else]
+  severity = "warning"
+[rule.time-equal]
+  severity = "warning"
+[rule.time-naming]
+  severity = "warning"
+[rule.var-declaration]
+  severity = "warning"
+[rule.var-naming]
+  severity = "warning"
+[rule.unconditional-recursion]
+  severity = "error"
+[rule.unexported-naming]
+  severity = "warning"
+[rule.unexported-return]
+  severity = "error"
+[rule.unhandled-error]
+  severity = "warning"
+  arguments = ["fmt.Print", "fmt.Printf", "fmt.Println", "fmt.Fprint", "fmt.Fprintf", "fmt.Fprintln"]
+[rule.unnecessary-stmt]
+  severity = "warning"
+[rule.unreachable-code]
+  severity = "warning"
+[rule.unused-parameter]
+  severity = "warning"
+[rule.unused-receiver]
+  severity = "warning"
+  disabled = true # too many false positives caused by golang interfaces
+[rule.use-any]
+  severity = "warning"
+[rule.useless-break]
+  severity = "warning"
+[rule.waitgroup-by-value]
+  severity = "warning"
