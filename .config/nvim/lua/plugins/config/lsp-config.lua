@@ -46,9 +46,16 @@ require("lspconfig").gopls.setup({
       end,
     })
 
-    local bufopts = { noremap = true, silent = true, buffer = bufnr, desc = "lint project code" }
-    vim.keymap.set('n', '<leader><leader>lv', "<Cmd>cex system('revive -exclude vendor/... ./...') | cwindow<CR>",
-      bufopts)
+    vim.keymap.set(
+      "n", "<leader><leader>lv",
+      "<Cmd>cex system('revive -exclude vendor/... ./...') | cwindow<CR>",
+      {
+        noremap = true,
+        silent = true,
+        buffer = bufnr,
+        desc = "lint project code"
+      }
+    )
   end,
   settings = {
     gopls = {
