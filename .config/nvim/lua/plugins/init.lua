@@ -691,6 +691,7 @@ return require("packer").startup({
             args = { "-exclude=vendor/...", "$FILENAME" },
             check_exit_code = function()
               -- NOTE: revive may return issues but the exit code is always zero 😞
+              -- https://github.com/mgechev/revive/issues/769
               return false
             end,
             command = "revive",
