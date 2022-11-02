@@ -1,4 +1,10 @@
 vim.api.nvim_create_autocmd("BufWritePost", {
+  group = vim.api.nvim_create_augroup("PackerCompiler", { clear = true }),
+  pattern = "*.lua",
+  command = "source <afile> | PackerCompile",
+})
+
+vim.api.nvim_create_autocmd("BufWritePost", {
   pattern = {
     "*.lua"
   },
@@ -12,7 +18,7 @@ vim.api.nvim_create_autocmd("FileType", {
   command = "setlocal textwidth=80"
 })
 
-vim.api.nvim_create_autocmd("BufRead,BufNewFile", {
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   pattern = {
     "*.mdx"
   },
