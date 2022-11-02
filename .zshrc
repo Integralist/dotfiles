@@ -202,10 +202,11 @@ export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 #
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/go/bin:$PATH" # go command (e.g. go version) install location
-export PATH="$HOME/go/bin:$PATH"      # go executables (e.g. go install) install location
-export PATH="$HOME/.cargo/bin:$PATH"  # rust executables
-export PATH="$HOME/bin:$PATH"         # terraform executables (via tfswitch)
+export PATH="/usr/local/go/bin:$PATH"          # go command (e.g. go version) install location
+export PATH="$HOME/go/bin:$PATH"               # go executables (e.g. go install) install location
+export PATH="$HOME/.cargo/bin:$PATH"           # rust executables
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # ruby executables
+export PATH="$HOME/bin:$PATH"                  # terraform executables (via tfswitch)
 
 # rustup
 #
@@ -213,6 +214,10 @@ export PATH="$HOME/bin:$PATH"         # terraform executables (via tfswitch)
 #
 # NOTE: Has to be defined after PATH update to locate .cargo directory.
 #
+if ! command -v rustc &> /dev/null
+then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+fi
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # ⚠️  CUSTOM FUNCTIONS ⚠️
@@ -282,8 +287,8 @@ function git_tag_delete() {
 #
 function git_tag_release() {
   tag="v$1"
-  # git tag -s $tag -m "$tag" && git push origin $tag
-  git tag $tag -m "$tag" && git push origin $tag
+  git tag -s $tag -m "$tag" && git push origin $tag
+  # git tag $tag -m "$tag" && git push origin $tag
 }
 
 # display contents of archive file
@@ -577,6 +582,11 @@ function go_update_tools {
   go install mvdan.cc/gofumpt@latest
   go install honnef.co/go/tools/cmd/staticcheck@latest
   go install golang.org/x/vuln/cmd/govulncheck@latest
+
+  # documentation preview
+  go get golang.org/x/tools/godoc@v0.1.8
+  go get golang.org/x/tools/godoc/redirect@v0.1.8
+  go install golang.org/x/tools/cmd/godoc
 }
 
 # configure rust environment
