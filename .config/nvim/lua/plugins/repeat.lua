@@ -1,5 +1,6 @@
 local function init(use)
-  print("hello")
+  -- make dot operator work in a sensible way
+  use "tpope/vim-repeat"
 end
 
 return { init = init }
