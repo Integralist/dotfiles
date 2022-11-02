@@ -16,8 +16,8 @@ NOTE: The plugin mappings defined have the following convention:
 This helps to avoid overlap in letters.
 --]]
 
--- Dump will return the contents of a table so it can be printed.
-function Dump(o)
+-- dump will return the contents of a table so it can be printed.
+local function dump(o)
   if type(o) == 'table' then
     local s = '{ '
     for k, v in pairs(o) do
@@ -624,12 +624,13 @@ return require("packer").startup({
           { noremap = true, silent = true, desc = "Toggle minimap" })
       end,
     }
-    use { "kosayoda/nvim-lightbulb", requires = { "antoinemadec/FixCursorHold.nvim" } }
+    use "kosayoda/nvim-lightbulb"
     use "folke/lsp-colors.nvim"
     use "mfussenegger/nvim-lint"
     use "weilbith/nvim-code-action-menu"
     use "simrat39/rust-tools.nvim"
-    use { "saecki/crates.nvim",
+    use {
+      "saecki/crates.nvim",
       requires = { "nvim-lua/plenary.nvim" },
       config = function()
         require("crates").setup()
@@ -809,6 +810,25 @@ return require("packer").startup({
     -- put this at the end after all plugins
     if packer_bootstrap then
       require("packer").sync()
+    end
+
+    -- The following code loads any external plugin configuration settings in ./config/
+
+    local function ends_with(str, ending)
+      return ending == "" or str:sub(- #ending) == ending
+    end
+
+    local files = vim.api.nvim_get_runtime_file("lua/plugins/config/*.lua", true)
+    for _, v in ipairs(files) do -- NOTE: ipairs() keeps key order, pairs() doesn't.
+      for _, s in ipairs(vim.split(v, "/lua/")) do
+        if ends_with(s, ".lua") then
+          for _, p in ipairs(vim.split(s, "[.]lua")) do
+            if (p ~= "") then
+              require(p)
+            end
+          end
+        end
+      end
     end
   end,
   config = {
