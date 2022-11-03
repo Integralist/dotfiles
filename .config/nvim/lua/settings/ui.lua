@@ -1,7 +1,9 @@
--- UI related configuration that didn't fit anywhere else.
-
--- LSP configuration options
--- NOTE: I believe these settings are overridden by the Noice UI plugin.
+-- LSP UI boxes improvements
+--
+-- WARNING: Noice plugin might be an issue.
+-- https://github.com/folke/noice.nvim/issues/151
+-- https://www.reddit.com/r/neovim/comments/ykz36x/i_refactored_my_lua_structure_and_have_lost_some/
+--
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover,
   { border = "rounded" }
@@ -15,7 +17,6 @@ vim.diagnostic.config({
     border = "rounded",
   },
 })
-
 
 -- Configure the UI aspect of the quickfix window
 -- NOTE: See https://github.com/kevinhwang91/nvim-bqf#customize-quickfix-window-easter-egg and ~/.config/nvim/syntax/qf.vim

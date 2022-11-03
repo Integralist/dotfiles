@@ -16,20 +16,6 @@ NOTE: The plugin mappings defined have the following convention:
 This helps to avoid overlap in letters.
 --]]
 
--- dump will return the contents of a table so it can be printed.
-local function dump(o)
-  if type(o) == 'table' then
-    local s = '{ '
-    for k, v in pairs(o) do
-      if type(k) ~= 'number' then k = '"' .. k .. '"' end
-      s = s .. '[' .. k .. '] = ' .. dump(v) .. ','
-    end
-    return s .. '} '
-  else
-    return tostring(o)
-  end
-end
-
 -- ends_with returns a bool indicating if the str ends with the specified substring.
 local function ends_with(str, ending)
   return ending == "" or str:sub(- #ending) == ending

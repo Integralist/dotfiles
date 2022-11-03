@@ -5,8 +5,10 @@ local function init(use)
     "neovim/nvim-lspconfig",
     "Afourcat/treesitter-terraform-doc.nvim",
   }
+
   require("mason").setup()
   local mason_lspconfig = require("mason-lspconfig")
+
   mason_lspconfig.setup({
     ensure_installed = {
       "eslint",
@@ -20,6 +22,7 @@ local function init(use)
       "yamlls",
     }
   })
+
   mason_lspconfig.setup_handlers({
     function(server_name)
       require("lspconfig")[server_name].setup({
@@ -34,11 +37,13 @@ local function init(use)
       })
     end
   })
+
   use { "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup()
     end
   }
+
   use { "folke/trouble.nvim",
     config = function()
       require("trouble").setup()
@@ -52,6 +57,7 @@ local function init(use)
       vim.keymap.set("n", "<leader><leader>ll", "<Cmd>TroubleToggle loclist<CR>", bufopts)
     end
   }
+
   use({
     "https://git.sr.ht/~whynothugo/lsp_lines.nvim", -- See also: https://github.com/Maan2003/lsp_lines.nvim
     config = function()
@@ -63,6 +69,7 @@ local function init(use)
       })
     end,
   })
+
   use { "simrat39/symbols-outline.nvim",
     config = function()
       require("symbols-outline").setup({
@@ -102,6 +109,7 @@ local function init(use)
       })
     end
   }
+
   use {
     "gorbit99/codewindow.nvim",
     config = function()
@@ -114,6 +122,7 @@ local function init(use)
         { noremap = true, silent = true, desc = "Toggle minimap" })
     end,
   }
+
   use {
     "kosayoda/nvim-lightbulb",
     config = function()
@@ -123,7 +132,14 @@ local function init(use)
       })
     end
   }
-  use "folke/lsp-colors.nvim"
+
+  use {
+    "folke/lsp-colors.nvim",
+    config = function()
+      require("lsp-colors").setup()
+    end
+  }
+
   use {
     "mfussenegger/nvim-lint",
     config = function()
@@ -134,6 +150,7 @@ local function init(use)
       -- see ./lsp.lua for calls to this plugin's try_lint() function.
     end
   }
+
   use {
     "weilbith/nvim-code-action-menu",
     config = function()
@@ -144,7 +161,7 @@ local function init(use)
       vim.g.code_action_menu_window_border = "single"
     end
   }
-  use "simrat39/rust-tools.nvim"
+
   use {
     "saecki/crates.nvim",
     requires = { "nvim-lua/plenary.nvim" },
@@ -152,14 +169,16 @@ local function init(use)
       require("crates").setup()
     end,
   }
+
+  use "simrat39/rust-tools.nvim"
   use "lvimuser/lsp-inlayhints.nvim" -- rust-tools already provides this feature, but gopls doesn't
 
   --[[
-      NOTE: I currently manually attach my shared mappings for each LSP server.
-      But, we can set a generic one using lspconfig:
+    NOTE: I currently manually attach my shared mappings for each LSP server.
+    But, we can set a generic one using lspconfig:
 
-      require("lspconfig").util.default_config.on_attach = function()
-    --]]
+    require("lspconfig").util.default_config.on_attach = function()
+  --]]
 
   local function org_imports(wait_ms)
     local params = vim.lsp.util.make_range_params()

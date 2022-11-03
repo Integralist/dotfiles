@@ -13,6 +13,7 @@ local function init(use)
       require("dressing").setup()
     end
   }
+
   -- NOTE: `:Noice` to open message history + `:Noice telescope` to open message history in Telescope.
   use({
     "folke/noice.nvim",
@@ -67,7 +68,7 @@ local function init(use)
             },
             opts = { skip = true },
           },
-        },
+        }
       })
     end,
     requires = {
