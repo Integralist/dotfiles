@@ -45,6 +45,7 @@ local function init(use)
         }),
       }
 
+      local config = vim.fn.expand("$HOME/revive-single-file.toml")
       local revive = {
         name = "revive",
         method = null_ls.methods.DIAGNOSTICS,
@@ -52,7 +53,7 @@ local function init(use)
         generator = helpers.generator_factory({
           args = {
             "-set_exit_status",
-            "-config=/Users/integralist/revive-single-file.toml",
+            "-config=" .. config,
             "-exclude=vendor/...",
             "$FILENAME"
           },

@@ -26,6 +26,7 @@ function export.on_attach(client, bufnr)
   })
 
   if client.server_capabilities.documentSymbolProvider then
+    -- https://github.com/SmiteshP/nvim-navic/issues/72
     -- require("nvim-navic").attach(client, bufnr)
   end
 end
