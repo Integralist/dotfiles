@@ -102,6 +102,12 @@ local function init(use)
     end
   }
   use { "kevinhwang91/nvim-bqf", ft = "qf" }
+
+  -- window bar breadcrumbs
+  use {
+    "SmiteshP/nvim-navic",
+    requires = "neovim/nvim-lspconfig",
+  }
 end
 
 return { init = init }

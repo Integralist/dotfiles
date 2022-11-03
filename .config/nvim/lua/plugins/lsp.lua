@@ -117,7 +117,7 @@ local function init(use)
       require("codewindow").setup({
         auto_enable = true,
         use_treesitter = true, -- disable to lose colours
-        exclude_filetypes = { "Outline", "neo-tree", "qf", "packer", "help", "noice" }
+        exclude_filetypes = { "Outline", "neo-tree", "qf", "packer", "help", "noice", "Trouble" }
       })
       vim.api.nvim_set_keymap("n", "<leader><leader>m", "<cmd>lua require('codewindow').toggle_minimap()<CR>",
         { noremap = true, silent = true, desc = "Toggle minimap" })
