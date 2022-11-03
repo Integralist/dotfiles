@@ -41,6 +41,9 @@ return require("packer").startup({
     -- plugin manager
     use "wbthomason/packer.nvim"
 
+    -- icons used by many plugins
+    use "nvim-tree/nvim-web-devicons"
+
     -- The following code loads our plugins based on their category group (e.g. autocomplete, lsp, search etc).
     local plugins = vim.api.nvim_get_runtime_file("lua/plugins/*.lua", true)
     for _, v in ipairs(plugins) do -- NOTE: ipairs() keeps key order, pairs() doesn't.

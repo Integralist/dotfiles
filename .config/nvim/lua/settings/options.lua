@@ -19,7 +19,7 @@ vim.o.shiftwidth = 2
 -- vim.o.shortmess = vim.o.shortmess .. "c" -- .. is equivalent to += in vimscript
 vim.o.shortmess = "filnxToOFc" -- copied default and removed `t` (long paths were being truncated) while adding `c`
 vim.o.showmatch = true
-vim.o.signcolumn = "yes"
+vim.o.signcolumn = "auto"
 vim.o.smartcase = true
 vim.o.smartindent = true
 vim.o.spell = true
