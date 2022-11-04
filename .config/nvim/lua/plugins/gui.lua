@@ -68,7 +68,20 @@ local function init(use)
             },
             opts = { skip = true },
           },
-        }
+        },
+        presets = {
+          long_message_to_split = true,
+          lsp_doc_border = true,
+        },
+        documentation = {
+          opts = {
+            win_options = {
+              winhighlight = {
+                FloatBorder = "DiagnosticSignInfo",
+              },
+            },
+          },
+        },
       })
     end,
     requires = {
