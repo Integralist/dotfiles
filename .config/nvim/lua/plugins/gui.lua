@@ -22,12 +22,8 @@ local function init(use)
       require("noice").setup({
         views = {
           cmdline_popup = {
-            position = {
-              row = "40%",
-              col = "50%",
-            },
             size = {
-              width = 60,
+              width = "60%",
               height = "auto",
             },
             win_options = {
@@ -46,7 +42,7 @@ local function init(use)
               col = "50%",
             },
             size = {
-              width = 60,
+              width = 100,
               height = 10,
             },
             border = {

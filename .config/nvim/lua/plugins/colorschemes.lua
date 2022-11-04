@@ -55,7 +55,6 @@ local function init(use)
     end
   }
   use "fenetikm/falcon"
-  use "kvrohit/mellow.nvim"
 end
 
 return { init = init }
