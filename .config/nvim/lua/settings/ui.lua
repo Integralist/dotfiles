@@ -1,9 +1,6 @@
 -- LSP UI boxes improvements
 --
--- WARNING: Noice plugin might be an issue and overrides these settings.
--- https://github.com/folke/noice.nvim/issues/151
--- https://www.reddit.com/r/neovim/comments/ykz36x/i_refactored_my_lua_structure_and_have_lost_some/
---
+-- NOTE: Noice plugin will override these settings.
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
   vim.lsp.handlers.hover,
   { border = "rounded" }

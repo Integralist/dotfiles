@@ -1,7 +1,7 @@
 vim.api.nvim_create_autocmd("BufWritePost", {
   group = vim.api.nvim_create_augroup("PackerCompiler", { clear = true }),
   pattern = "*.lua",
-  command = "source <afile> | PackerCompile",
+  command = "source <afile> | PackerCompile | LuaCacheClear",
 })
 
 vim.api.nvim_create_autocmd("BufWritePost", {

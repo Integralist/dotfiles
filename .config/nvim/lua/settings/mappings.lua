@@ -17,11 +17,3 @@ function _G.set_terminal_keymaps()
 end
 
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
-
-vim.keymap.set(
-  "",
-  "<leader><leader>lf", "<Cmd>lua require('utils').style_lsp_hover()<CR>",
-  {
-    desc = "temp fix to https://github.com/folke/noice.nvim/issues/151#issuecomment-1301934607"
-  }
-)
