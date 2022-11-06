@@ -3,7 +3,18 @@ local function init(use)
   use { "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
     config = function()
-      require("lualine").setup({})
+      require("lualine").setup({
+        sections = {
+          lualine_c = {
+            {
+              "filename",
+              file_status = true, -- displays file status (readonly status, modified status)
+              path = 1, -- relative path
+              shorting_target = 40 -- Shortens path to leave 40 space in the window
+            }
+          },
+        }
+      })
     end
   }
 
@@ -47,7 +58,7 @@ local function init(use)
             },
             border = {
               style = "rounded",
-              padding = { 0, 1 },
+              padding = { 0, 0.5 },
             },
             win_options = {
               winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticSignInfo" },
@@ -116,6 +127,11 @@ local function init(use)
   use {
     "SmiteshP/nvim-navic",
     requires = "neovim/nvim-lspconfig",
+    config = function()
+      require("nvim-navic").setup({
+        highlight = true,
+      })
+    end
   }
 end
 
