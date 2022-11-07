@@ -11,7 +11,7 @@ local function init(use)
               file_status = true, -- displays file status (readonly status, modified status)
               path = 1, -- relative path
               shorting_target = 40 -- Shortens path to leave 40 space in the window
-            }
+            },
           },
         }
       })
@@ -34,7 +34,7 @@ local function init(use)
         views = {
           cmdline_popup = {
             size = {
-              width = "60%",
+              width = "40%",
               height = "auto",
             },
             win_options = {
@@ -89,6 +89,11 @@ local function init(use)
             },
           },
         },
+        lsp = {
+          progress = {
+            enabled = false, -- I already use fidget configured in ./lsp.lua
+          }
+        }
       })
     end,
     requires = {

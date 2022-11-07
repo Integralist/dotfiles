@@ -12,6 +12,7 @@ vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
 vim.diagnostic.config({
   float = {
     border = "rounded",
+    style = "minimal",
   },
 })
 
