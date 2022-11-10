@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- camel case motion support
   use {
     "bkad/CamelCaseMotion",
@@ -18,5 +18,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

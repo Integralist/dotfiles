@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use "EdenEast/nightfox.nvim"
   use { "ellisonleao/gruvbox.nvim",
     config = function()
@@ -56,5 +56,3 @@ local function init(use)
   }
   use "fenetikm/falcon"
 end
-
-return { init = init }

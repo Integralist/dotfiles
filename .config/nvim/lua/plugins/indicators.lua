@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- word usage highlighter
   use { "RRethy/vim-illuminate",
     config = function()
@@ -38,5 +38,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

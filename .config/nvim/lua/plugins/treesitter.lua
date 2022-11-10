@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- syntax tree parsing for more intelligent syntax highlighting and code navigation
   use {
     "nvim-treesitter/nvim-treesitter",
@@ -87,5 +87,3 @@ local function init(use)
     end
   } -- buffer scroll context
 end
-
-return { init = init }

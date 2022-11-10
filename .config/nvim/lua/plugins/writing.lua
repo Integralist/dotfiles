@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "marcelofern/vale.nvim",
     config = function()
@@ -9,5 +9,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

@@ -16,11 +16,6 @@ NOTE: The plugin mappings defined have the following convention:
 This helps to avoid overlap in letters.
 --]]
 
--- ends_with returns a bool indicating if the str ends with the specified substring.
-local function ends_with(str, ending)
-  return ending == "" or str:sub(- #ending) == ending
-end
-
 -- The following configuration ensures that when we clone these dotfiles to a
 -- new laptop, that they'll continue to work without any manual intervention.
 -- Check the bottom of the .startup() function for our call to packer_bootstrap.
@@ -46,15 +41,11 @@ return require("packer").startup({
 
     -- The following code loads our plugins based on their category group (e.g. autocomplete, lsp, search etc).
     local plugins = vim.api.nvim_get_runtime_file("lua/plugins/*.lua", true)
-    for _, v in ipairs(plugins) do -- NOTE: ipairs() keeps key order, pairs() doesn't.
-      for _, s in ipairs(vim.split(v, "/lua/")) do
-        -- skip init.lua as that is this file and would cause an infinite loop!
-        -- but ensure we don't accidentally try to load the directory itself (i.e. .config/nvim)
-        if not ends_with(s, "/init.lua") and ends_with(s, ".lua") then
-          for _, p in ipairs(vim.split(s, "[.]lua")) do
-            if (p ~= "") then
-              require(p).init(use)
-            end
+    for _, abspath in ipairs(plugins) do
+      for _, filename in ipairs(vim.split(abspath, "/lua/", { trimempty = true })) do
+        if vim.endswith(filename, ".lua") and not vim.endswith(filename, "init.lua") then
+          for _, name in ipairs(vim.split(filename, "[.]lua", { trimempty = true })) do
+            require(name)(use)
           end
         end
       end

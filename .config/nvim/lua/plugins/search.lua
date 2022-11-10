@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "nvim-telescope/telescope.nvim",
     requires = { "nvim-lua/plenary.nvim" },
@@ -137,5 +137,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

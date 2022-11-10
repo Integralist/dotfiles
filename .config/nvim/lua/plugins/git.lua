@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- git change indicator
   use {
     "lewis6991/gitsigns.nvim",
@@ -61,5 +61,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

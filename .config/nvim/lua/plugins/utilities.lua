@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- swappable arguments and list elements
   use {
     "mizlan/iswap.nvim",
@@ -41,5 +41,3 @@ local function init(use)
   -- generate hex colours
   use "uga-rosa/ccc.nvim"
 end
-
-return { init = init }

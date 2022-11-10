@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "jose-elias-alvarez/null-ls.nvim",
     config = function()
@@ -11,12 +11,8 @@ local function init(use)
         filetypes = { "go" },
         generator = helpers.generator_factory({
           args = { "-XAT001=false", "-R018=false", "$FILENAME" },
-          check_exit_code = function(code, stderr)
-            local success = code < 1
-            if not success then
-              print(stderr)
-            end
-            return success
+          check_exit_code = function(code)
+            return code < 1
           end,
           command = "tfproviderlintx",
           format = "line",
@@ -85,5 +81,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

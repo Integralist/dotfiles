@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "hrsh7th/nvim-cmp",
     config = function()
@@ -73,5 +73,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

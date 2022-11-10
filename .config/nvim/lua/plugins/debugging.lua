@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "mfussenegger/nvim-dap",
     config = function()
@@ -35,5 +35,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

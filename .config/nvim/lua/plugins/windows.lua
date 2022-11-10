@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- window picker
   use { "s1n7ax/nvim-window-picker", tag = "v1.*",
     config = function()
@@ -53,5 +53,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

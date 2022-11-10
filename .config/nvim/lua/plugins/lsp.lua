@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "williamboman/mason.nvim",
     "williamboman/mason-lspconfig.nvim",
@@ -312,5 +312,3 @@ local function init(use)
     }
   })
 end
-
-return { init = init }

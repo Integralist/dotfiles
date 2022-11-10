@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   use {
     "akinsho/toggleterm.nvim",
     tag = "v2.*",
@@ -21,5 +21,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

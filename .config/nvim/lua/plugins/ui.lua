@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- status line
   use { "nvim-lualine/lualine.nvim",
     requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -139,5 +139,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }

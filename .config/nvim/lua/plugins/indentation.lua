@@ -1,4 +1,4 @@
-local function init(use)
+return function(use)
   -- indentation autopairing
   use {
     "windwp/nvim-autopairs",
@@ -34,5 +34,3 @@ local function init(use)
     end
   }
 end
-
-return { init = init }
