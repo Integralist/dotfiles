@@ -55,4 +55,5 @@ return function(use)
     end
   }
   use "fenetikm/falcon"
+  use "vito-c/jq.vim" -- not a colourscheme but syntax highlighting
 end
