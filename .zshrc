@@ -469,7 +469,6 @@ alias ping="gping"
 alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
-alias rm="rip"
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
@@ -584,9 +583,9 @@ function go_update_tools {
   go install golang.org/x/vuln/cmd/govulncheck@latest
 
   # documentation preview
-  go get golang.org/x/tools/godoc@v0.1.8
-  go get golang.org/x/tools/godoc/redirect@v0.1.8
-  go install golang.org/x/tools/cmd/godoc
+  # go get golang.org/x/tools/godoc@v0.1.8
+  # go get golang.org/x/tools/godoc/redirect@v0.1.8
+  # go install golang.org/x/tools/cmd/godoc
 }
 
 # configure rust environment
