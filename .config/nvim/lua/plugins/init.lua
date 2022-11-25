@@ -38,6 +38,27 @@ return require("packer").startup({
 
     -- icons used by many plugins
     use "nvim-tree/nvim-web-devicons"
+    use {
+      "DaikyXendo/nvim-material-icon",
+      requires = "nvim-tree/nvim-web-devicons",
+      config = function()
+        local web_devicons_ok, web_devicons = pcall(require, "nvim-web-devicons")
+        if not web_devicons_ok then
+          return
+        end
+
+        local material_icon_ok, material_icon = pcall(require, "nvim-material-icon")
+        if not material_icon_ok then
+          return
+        end
+
+        web_devicons.setup({
+          override = material_icon.get_icons(),
+        })
+
+        require("nvim-material-icon").setup()
+      end
+    } -- replacement for nvim-web-devicons
 
     -- The following code loads our plugins based on their category group (e.g. autocomplete, lsp, search etc).
     local plugins = vim.api.nvim_get_runtime_file("lua/plugins/*.lua", true)

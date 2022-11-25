@@ -110,7 +110,15 @@ return function(use)
       require("bufferline").setup({
         options = {
           mode = "tabs"
-        }
+        },
+        highlights = {
+          tab = {
+            fg = "#CCCCCC",
+          },
+          -- tab_selected = {
+          --   fg = "#FF0000"
+          -- },
+        },
       })
     end
   }

@@ -40,14 +40,14 @@ return function(use)
       })
 
       cmp.setup.cmdline({ "/", "?" }, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
         sources = {
           { name = "buffer" }
         }
       })
 
       cmp.setup.cmdline({ ":" }, {
-        mapping = cmp.mapping.preset.cmdline(),
+        mapping = cmp.mapping.preset.cmdline(), -- Tab for selection (arrows needed for selecting past items)
         sources = {
           { name = "cmdline" },
           { name = "path" }
