@@ -27,6 +27,8 @@ return function(use)
             vim.api.nvim_set_hl(0, "NoiceCmdlineIconInput", { fg = "#83a598", bg = "NONE" })
             vim.api.nvim_set_hl(0, "NoiceCmdlineIconLua", { fg = "#83a598", bg = "NONE" })
             vim.api.nvim_set_hl(0, "NoiceCmdlineIconSearch", { fg = "#fabd2f", bg = "NONE" })
+
+            vim.api.nvim_set_hl(0, "NeoTreeCursorLine", { fg = "#000000", bg = "#fabd2f" })
           end
         end
       })

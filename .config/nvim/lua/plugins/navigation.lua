@@ -21,6 +21,10 @@ return function(use)
       vim.keymap.set("n", "gp", "<Cmd>Neotree reveal_force_cwd<CR>",
         { desc = "change working directory to current file location" })
 
+      if vim.g.colors_name == "gruvbox" then
+        vim.api.nvim_set_hl(0, "NeoTreeCursorLine", { fg = "#000000", bg = "#fabd2f" })
+      end
+
       -- Remap :Ex, :Sex to Neotree
       vim.cmd(":command! Ex Neotree toggle current reveal_force_cwd")
       vim.cmd(":command! Sex sp | Neotree toggle current reveal_force_cwd")
