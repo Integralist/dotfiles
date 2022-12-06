@@ -161,7 +161,7 @@ font:
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
   # spacing.
-  #offset:
+  # offset:
   #  x: 0
   #  y: 0
 
@@ -240,39 +240,40 @@ font:
 #     magenta: '0xe1acff'
 #     cyan:    '0xa3f7ff'
 #     white:   '0xffffff'
-# Colors
-colors:
-  # Default colors
-  primary:
-    background: "0x1E1E3F"
-    foreground: "0xE1EFFF"
 
-  # Colors the cursor will use if `custom_cursor_colors` is true
-  cursor:
-    text: "0x1E1E3F"
-    cursor: "0xFAD000"
-
-  # Normal colors
-  normal:
-    black: "0x000000"
-    red: "0xEC3A37"
-    green: "0x75e44c"
-    yellow: "0xFAD000"
-    blue: "0x6943FF"
-    magenta: "0xFF2C70"
-    cyan: "0x80FCFF"
-    white: "0xFFFFFF"
-
-  # Bright colors
-  bright:
-    black: "0x5C5C61"
-    red: "0xEC3A37"
-    green: "0x3AD900"
-    yellow: "0xFAD000"
-    blue: "0x6943FF"
-    magenta: "0xFB94FF"
-    cyan: "0x80FCFF"
-    white: "0xCCCCCC"
+# Colors (????)
+# colors:
+#   # Default colors
+#   primary:
+#     background: "0x1E1E3F"
+#     foreground: "0xE1EFFF"
+#
+#   # Colors the cursor will use if `custom_cursor_colors` is true
+#   cursor:
+#     text: "0x1E1E3F"
+#     cursor: "0xFAD000"
+#
+#   # Normal colors
+#   normal:
+#     black: "0x000000"
+#     red: "0xEC3A37"
+#     green: "0x75e44c"
+#     yellow: "0xFAD000"
+#     blue: "0x6943FF"
+#     magenta: "0xFF2C70"
+#     cyan: "0x80FCFF"
+#     white: "0xFFFFFF"
+#
+#   # Bright colors
+#   bright:
+#     black: "0x5C5C61"
+#     red: "0xEC3A37"
+#     green: "0x3AD900"
+#     yellow: "0xFAD000"
+#     blue: "0x6943FF"
+#     magenta: "0xFB94FF"
+#     cyan: "0x80FCFF"
+#     white: "0xCCCCCC"
 
 
 # Colors (Tomorrow Night)
@@ -524,9 +525,9 @@ colors:
 # NOTE: I've configured this to NOT be a login shell because it causes the
 # Starship prompt to get confused when it loads its 'jobs' module and thinks
 # there is already an open job (which is very annoying). I also don't NEED a
-# login shell and just running .bashrc is actually a simpler setup.
+# login shell and just running .zshrc is actually a simpler setup.
 shell:
-  program: /opt/homebrew/bin/bash
+  program: /opt/homebrew/bin/zsh
   args:
     - -i
 
