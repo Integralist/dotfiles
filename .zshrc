@@ -544,6 +544,11 @@ dedupe
 
 # ⚠️  SOFTWARE ⚠️
 
+if ! command -v shellcheck &> /dev/null
+then
+  brew install shellcheck
+fi
+
 # configure fnm node version manager
 #
 eval "$(fnm env --use-on-cd)"
