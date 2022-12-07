@@ -339,6 +339,25 @@ function zell() {
 alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c="clear"
 alias cat="bat"
+
+read -r -d '' commit_types <<- EOF
+https://www.conventionalcommits.org/
+
+npm install -g commitlint-format-json @commitlint/cli @commitlint/config-conventional @commitlint/format
+echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
+
+build:    Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
+ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
+docs:     Documentation only changes
+feat:     A new feature
+fix:      A bug fix
+perf:     A code change that improves performance
+refactor: A code change that neither fixes a bug nor adds a feature
+style:    Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
+test:     Adding missing tests or correcting existing tests
+EOF
+alias commit='echo "$commit_types"'
+
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' network_help <<- EOF
