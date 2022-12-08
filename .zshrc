@@ -343,9 +343,6 @@ alias cat="bat"
 read -r -d '' commit_types <<- EOF
 https://www.conventionalcommits.org/
 
-npm install -g commitlint-format-json @commitlint/cli @commitlint/config-conventional @commitlint/format
-echo "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
-
 build:    Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
 ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
 docs:     Documentation only changes
