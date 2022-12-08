@@ -65,7 +65,8 @@
   untracked = white
 
 [commit]
-  gpgsign = false
+  gpgsign = true
+  template = /Users/integralist/.gitcommit
 
 [core]
   editor = nvim
@@ -104,6 +105,7 @@
 [user]
   name = Integralist
   email = mark.mcdx@gmail.com
+  signingkey = 56408DFE
 
 # https://blog.github.com/changelog/2018-11-08-git-protocol-v2-support/
 [protocol]
@@ -113,7 +115,7 @@
   program = /opt/homebrew/bin/gpg
 
 [init]
-	defaultBranch = main
+  defaultBranch = main
 
 # force authentication to use SSH rather than HTTPS.
 # be aware this affects everything that tries to use git.
@@ -121,7 +123,7 @@
 #
 # git config --global --add url."git@github.com:".insteadOf "https://github.com/"
 [url "git@github.com:"]
-	insteadOf = https://github.com/
+  insteadOf = https://github.com/
 
 # avoid issues where the cargo-edit tool tries to clone from a repo you do not have WRITE access to.
 # we already use SSH for every github repo, and so this puts the clone back to using HTTPS.
@@ -134,4 +136,4 @@
   insteadOf = https://github.com/RustSec/advisory-db
 
 [credential]
-	helper = osxkeychain
+  helper = osxkeychain
