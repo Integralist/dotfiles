@@ -76,6 +76,10 @@ source $HOME/Code/shell/forgit/forgit.plugin.sh
 #
 # https://zsh.sourceforge.io/Doc/Release/Options.html
 #
+# If you want to share history across terminal instances:
+#   setopt SHARE_HISTORY
+# But be warned this can be annoying when you want to ⬆️ the history and find your recent command is no longer the most recent.
+#
 setopt AUTO_CD
 setopt CDABLE_VARS
 setopt CD_SILENT
