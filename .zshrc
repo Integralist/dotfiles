@@ -102,7 +102,7 @@ setopt LIST_TYPES
 setopt MENU_COMPLETE
 setopt EXTENDED_GLOB
 setopt REMATCH_PCRE
-setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
 setopt HIST_FCNTL_LOCK
 setopt HIST_FIND_NO_DUPS
@@ -489,6 +489,7 @@ alias ping="gping"
 alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
+alias ripall='rip * .*'
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
