@@ -601,6 +601,7 @@ if [ ! -f "$HOME/go/bin/revive" ]; then
   go install github.com/mgechev/revive@latest
 fi
 function go_update_tools {
+  brew_update # called because of goenv
   go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
