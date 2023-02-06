@@ -580,8 +580,6 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # configure go environment
 #
-# brew install goenv
-#
 if [ ! -d "$HOME/.goenv" ]; then
   git clone https://github.com/syndbg/goenv.git ~/.goenv
 fi
