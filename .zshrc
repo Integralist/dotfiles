@@ -305,7 +305,6 @@ function zell() {
 #       alternatively use the `list` alias to show all defined alias' from this file
 #       the `alias` function itself with no arguments will actually print all too
 #
-alias brew="HOMEBREW_NO_AUTO_UPDATE=1 brew"
 alias c="clear"
 alias cat="bat"
 
