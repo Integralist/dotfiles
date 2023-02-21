@@ -2,6 +2,7 @@
 #
 # TYPES
 #
+#    breaking: Changes that should result in a new major version release.
 #    build:    Changes that affect the build system or external dependencies
 #    ci:       Changes to our CI configuration files and scripts
 #    docs:     Documentation only changes
