@@ -169,12 +169,10 @@ export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
 export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
 export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
 
-# programming language modifications
+# PATH modifications
 #
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
-export PATH="/usr/local/go/bin:$PATH"          # go command (e.g. go version) install location
-export PATH="$HOME/go/bin:$PATH"               # go executables (e.g. go install) install location
 export PATH="$HOME/.cargo/bin:$PATH"           # rust executables
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH" # ruby executables
 export PATH="$HOME/bin:$PATH"                  # terraform executables (via tfswitch)
@@ -331,22 +329,25 @@ connectivity debugging steps...
   * Check your upload/download speed:
     networkQuality -s
 
-  * check what dns servers are being used by executing the 'dns' alias:
+  * Check IPs available on the LAN (local area network):
+    arp -a
+
+  * Check what dns servers are being used by executing the 'dns' alias:
     dns
 
     > you can also check via nslookup
     > default should be: 192.168.86.1
 
-  * check we can reach a highly available public domain:
+  * Check we can reach a highly available public domain:
     ping google.com
 
-  * check route from home router to internet:
+  * Check route from home router to internet:
     traceroute -av google.com
 
-  * check hostnames can be resolved:
+  * Check hostnames can be resolved:
     host www.integralist.co.uk
 
-  * execute a dns lookup using different dns servers (one remote, one local):
+  * Execute a dns lookup using different dns servers (one remote, one local):
     nslookup google.com 8.8.8.8
     nslookup google.com 192.168.1.1
 
@@ -359,10 +360,10 @@ connectivity debugging steps...
     > networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4
     > sudo discoveryutil mdnsflushcache
 
-  * can we curl an endpoint:
+  * Check if we can curl an endpoint:
     curl -Lsvo /dev/null http://google.com/
 
-  * also check performance:
+  * Check performance via external sites:
     https://www.speedcheck.org/
     https://www.speedtest.net/
     https://speed.cloudflare.com/
@@ -426,6 +427,7 @@ alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
 alias gwip="git wip"
 
+alias ips="arp -a" # some IPs (like my NAS DS220) don't show up until I able to ping it as that starts up the box.
 alias json="python -m json.tool"
 
 bold=$(tput bold)
@@ -458,6 +460,7 @@ alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
 alias top='htop'
+alias tree='tree -I node_modules'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias vim=nvim
@@ -548,6 +551,7 @@ if [ ! -f "$HOME/go/bin/revive" ]; then
 fi
 function go_update_tools {
   brew_update # called because of goenv
+  go install github.com/rakyll/gotest@latest
   go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
@@ -656,3 +660,5 @@ eval "$(starship init zsh)"
 echo .zshrc loaded
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+
+source /Users/integralist/.config/broot/launcher/bash/br
