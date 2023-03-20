@@ -34,4 +34,14 @@ return {
     t(": %w\", err)"),
     t({ "", "}" })
   }),
+
+  parse({ trig = "ma", name = "Main Package", dscr = "Basic main package structure" }, [[
+  package main
+
+  import "fmt"
+
+  func main() {
+    fmt.Printf("%+v\n", "...")
+  }
+  ]]),
 }

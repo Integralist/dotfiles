@@ -10,7 +10,7 @@ local env = session.config.snip_env
 local parse = env["parse"]
 
 return {
-  parse({ trig = "ch", name = "Changelog entry", dscr = "Insert a static changelog entry" }, [[
+  parse({ trig = "ch", name = "Changelog", dscr = "Insert a complete changelog release entry" }, [[
   ## [v1.0.0](https://github.com/fastly/.../releases/tag/v1.0.0) (YYYY-MM-DD)
   
   [Full Changelog](https://github.com/fastly/.../compare/v0.0.0...v1.0.0)
@@ -32,4 +32,8 @@ return {
   * ... [#](https://github.com/fastly/.../pull/)
 
   ]]),
+
+  s({ trig = "che", name = "Changelog Entry", dscr = "Insert a single changelog entry line" }, {
+    t("* "), i(1, "description"), t(" [#"), i(2, "pull request number"), t("](https://github.com/fastly/"), i(3, "project"), t("/pull/"), i(4, "pull request number"), t(")")
+  }),
 }
