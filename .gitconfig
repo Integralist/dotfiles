@@ -8,6 +8,12 @@
 #
 
 [alias]
+  # https://github.com/nedbat/watchgha
+  action = "!f() { \
+      watch_gha_runs \
+          \"$(git remote get-url origin)\" \
+          \"$(git rev-parse --abbrev-ref HEAD)\"; \
+  }; f"
   branch-verbose = branch -vv
   code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
   cc = "!git code-changes"
