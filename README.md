@@ -4,7 +4,9 @@
 
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
-[This post](https://www.integralist.co.uk/posts/new-laptop-configuration/) which gives a detailed break down of how to set up a new macOS laptop.
+[This blog post](https://www.integralist.co.uk/posts/tools/) which gives a summary of all my favourite developer tools.
+
+[This blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/) which gives a detailed break down of how to set up a new macOS laptop.
 
 [This gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) which gives a concise summary of the steps from the blog post.
 
@@ -79,7 +81,8 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 
 ## GUI
 
-- [Marta File Manager](https://marta.sh/): `brew install --cask marta`
+- [Warp Terminal](https://www.warp.dev/): `brew install --cask warp`.
+- [Marta File Manager](https://marta.sh/): `brew install --cask marta`.
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): YouTube without advertisements and no Google tracking.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
