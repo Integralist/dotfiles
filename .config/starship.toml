@@ -1,45 +1,123 @@
 # https://starship.rs/config/
 
-command_timeout = 1000
+command_timeout = 5000
 
-[[battery.display]]
-threshold = 50
-style = "bold red"
+# [[battery.display]]
+# threshold = 50
+# style = "bold red"
+#
+# [character]
+# success_symbol = "[➜](bold green) "
+# error_symbol = "[✗](bold red) "
+#
+# [directory]
+# truncation_symbol = "…/"
+# truncate_to_repo = false
+#
+# [gcloud]
+# disabled = true
+#
+# [git_metrics]
+# disabled = false
+#
+# [status]
+# style = "bg:blue"
+# symbol = "🔴"
+# format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+# map_symbol = true
+# disabled = true
+#
+# # Because the starship provided modules don't work for me.
+# [custom.gittag]
+# command = "echo \"(tag: $(git describe --tags --abbrev=0), commit: $(git rev-parse --short HEAD))\""
+# when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
+# ignore_timeout = true
+#
+# [custom.datetime]
+# style = "bold white"
+# command = "date"
+# # when = """ test "$HOME/Code" == "$PWD" """
+# when = "" # always run it
+# format = " [$output]($style) "
+#
+# [jobs]
+# symbol = "+ "
+# style = "bold white"
 
-[character]
-success_symbol = "[➜](bold green) "
-error_symbol = "[✗](bold red) "
+# https://dev.to/therubberduckiee/how-to-configure-starship-to-look-exactly-like-p10k-zsh-warp-h9h
+#
+# NOTE: The Warp Terminal font size needs to be 15 rather than 13 now (otherwise line-height breaks the rendering).
+
+format = """\
+[](bg:#282A36 fg:#7DF9AA)\
+[$jobs](bg:#7DF9AA fg:#282A36)\
+[](fg:#7DF9AA bg:#1C3A5E)\
+$time\
+[](fg:#1C3A5E bg:#3B76F0)\
+$directory\
+[](fg:#3B76F0 bg:#FCF392)\
+$git_branch\
+[](fg:#FCF392 bg:#f0af22)\
+$git_status\
+$git_metrics\
+[](fg:#f0af22 bg:#bd4024)\
+$custom\
+[](fg:#bd4024 bg:#282A36)\
+$character\
+"""
 
 [directory]
-truncation_symbol = "…/"
-truncate_to_repo = false
+format = "[ ﱮ $path ]($style)"
+style = "fg:#E4E4E4 bg:#3B76F0"
 
-[gcloud]
-disabled = true
+[git_branch]
+format = '[ $symbol$branch(:$remote_branch) ]($style)'
+symbol = "  "
+style = "fg:#1C3A5E bg:#FCF392"
+
+[git_status]
+format = '[ $all_status]($style)'
+style = "fg:#1C3A5E bg:#f0af22"
 
 [git_metrics]
+format = "([ +$added]($added_style))[]($added_style)"
+added_style = "fg:#1C3A5E bg:#f0af22"
+deleted_style = "fg:bright-red bg:235"
 disabled = false
 
-[status]
-style = "bg:blue"
-symbol = "🔴"
-format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
-map_symbol = true
-disabled = true
+[hg_branch]
+format = "[ $symbol$branch ]($style)"
+symbol = " "
 
-# Because the starship provided modules don't work for me.
-[custom.gittag]
-command = "echo \"(tag: $(git describe --tags --abbrev=0), commit: $(git rev-parse --short HEAD))\""
-when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
-ignore_timeout = true
+[cmd_duration]
+format = "[  $duration ]($style)"
+style = "fg:bright-white bg:18"
 
-[custom.datetime]
-style = "bold white"
-command = "date"
-# when = """ test "$HOME/Code" == "$PWD" """
-when = "" # always run it
-format = " [$output]($style) "
+[character]
+success_symbol = '[ ➜](bold green) '
+error_symbol = '[ ✗](#E84D44) '
+
+[time]
+disabled = false
+time_format = "%R"                                      # Hour:Minute Format
+style = "bg:#1d2230"
+format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
 
 [jobs]
-symbol = "+ "
-style = "bold white"
+symbol = " +"
+style = "bg:#7DF9AA fg:#282A36"
+
+# Because the starship provided [git_commit] module don't work for me.
+[custom.gittag]
+command = "echo \"tag: $(git describe --tags --abbrev=0)\""
+when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
+ignore_timeout = true
+style = "fg:#ffffff bg:#bd4024"
+format = "[ $output]($style)"
+
+[custom.gitcommit]
+command = "echo \"commit: $(git rev-parse --short HEAD)\""
+when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
+ignore_timeout = true
+style = "fg:#ffffff bg:#bd4024"
+format = "[ $output]($style)"
