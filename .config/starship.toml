@@ -76,7 +76,7 @@ symbol = "  "
 style = "fg:#1C3A5E bg:#FCF392"
 
 [git_status]
-format = '[ $all_status]($style)'
+format = '[ $conflicted$deleted$renamed$modified$staged$untracked]($style)'
 style = "fg:#1C3A5E bg:#f0af22"
 
 [git_metrics]
