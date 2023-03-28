@@ -2,13 +2,11 @@
 
 ![Terminal Prompt](./terminal-prompt.png)
 
-Read [this post](https://www.integralist.co.uk/posts/new-laptop-configuration/) for a detailed setup of a new laptop.
+The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
-Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) for a concise summary of steps.
+[This post](https://www.integralist.co.uk/posts/new-laptop-configuration/) which gives a detailed break down of how to set up a new macOS laptop.
 
-In general the blog post is stale. The gist should be up-to-date. 
-
-I would suggest reading the blog post for things that require more manual steps, like setting up a password store.
+[This gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) which gives a concise summary of the steps from the blog post.
 
 ## Terminal
 
