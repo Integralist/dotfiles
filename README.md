@@ -1,5 +1,7 @@
 # dotfiles
 
+![Terminal Prompt](./terminal-prompt.png)
+
 Read [this post](https://www.integralist.co.uk/posts/new-laptop-configuration/) for a detailed setup of a new laptop.
 
 Follow [this gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) for a concise summary of steps.
