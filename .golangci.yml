@@ -2,20 +2,22 @@
 # https://golangci-lint.run/usage/linters/#enabled-by-default-linters
 linters:
   enable:
-    - deadcode
+    - bodyclose
+    - durationcheck
     - errcheck
-    - gosimple
+    - exhaustive
+    - gocritic
     - gofumpt
     - goimports
+    - gosec
+    - gosimple
     - govet
     - ineffassign
     - revive
     - staticcheck
-    - structcheck
     - typecheck
     - unused
     - varcheck
-
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
@@ -35,7 +37,7 @@ linters-settings:
         disabled: true # most of the time it's fine, and the performance isn't a concern
       - name: "argument-limit"
         severity: "warning"
-        arguments: [5]
+        arguments: [6]
       - name: "atomic"
         severity: "warning"
       - name: "bare-return"
@@ -81,7 +83,7 @@ linters-settings:
         arguments: [4]
       - name: "function-length"
         severity: "warning"
-        arguments: [40,0]
+        arguments: [40, 0]
       - name: "get-return"
         severity: "error"
       - name: "identical-branches"
