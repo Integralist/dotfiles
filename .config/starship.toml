@@ -62,7 +62,7 @@ $git_status\
 $git_metrics\
 [](fg:#f0af22 bg:#bd4024)\
 $custom\
-[](fg:#bd4024 bg:#ffa6df)\
+[](fg:#bd4024 bg:#ff8a9f)\
 $golang\
 $rust\
 $ruby\
@@ -73,7 +73,7 @@ $shell\
 $perl\
 $nodejs\
 $lua\
-[](fg:#ffa6df bg:#282A36)\
+[](fg:#ff8a9f bg:#282A36)\
 $character\
 """
 
@@ -83,43 +83,43 @@ style = "fg:#E4E4E4 bg:#3B76F0"
 
 [golang]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [rust]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [ruby]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [php]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [python]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [terraform]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [shell]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [perl]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [nodejs]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [lua]
 format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ffa6df"
+style = "fg:#282A36 bg:#ff8a9f"
 
 [git_branch]
 format = '[ $symbol$branch(:$remote_branch) ]($style)'
