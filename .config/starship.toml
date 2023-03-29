@@ -76,7 +76,7 @@ symbol = "  "
 style = "fg:#1C3A5E bg:#FCF392"
 
 [git_status]
-format = '[ $conflicted$deleted$renamed$modified$staged$untracked]($style)'
+format = '([ $conflicted$deleted$renamed$modified$staged$untracked]($style))'
 style = "fg:#1C3A5E bg:#f0af22"
 
 [git_metrics]
@@ -113,7 +113,7 @@ command = "echo \"tag: $(git describe --tags --abbrev=0)\""
 when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
 ignore_timeout = true
 style = "fg:#ffffff bg:#bd4024"
-format = "[ $output]($style)"
+format = "([ $output]($style))"
 
 [custom.gitcommit]
 command = "echo \"commit: $(git rev-parse --short HEAD)\""
