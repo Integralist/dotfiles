@@ -62,13 +62,64 @@ $git_status\
 $git_metrics\
 [](fg:#f0af22 bg:#bd4024)\
 $custom\
-[](fg:#bd4024 bg:#282A36)\
+[](fg:#bd4024 bg:#ffa6df)\
+$golang\
+$rust\
+$ruby\
+$php\
+$python\
+$terraform\
+$shell\
+$perl\
+$nodejs\
+$lua\
+[](fg:#ffa6df bg:#282A36)\
 $character\
 """
 
 [directory]
 format = "[ ﱮ $path ]($style)"
 style = "fg:#E4E4E4 bg:#3B76F0"
+
+[golang]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[rust]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[ruby]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[php]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[python]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[terraform]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[shell]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[perl]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[nodejs]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
+
+[lua]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ffa6df"
 
 [git_branch]
 format = '[ $symbol$branch(:$remote_branch) ]($style)'
@@ -120,4 +171,4 @@ command = "echo \"commit: $(git rev-parse --short HEAD)\""
 when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
 ignore_timeout = true
 style = "fg:#ffffff bg:#bd4024"
-format = "[ $output]($style)"
+format = "[ $output ]($style)"
