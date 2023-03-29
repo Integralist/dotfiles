@@ -1,6 +1,6 @@
 # dotfiles
 
-![Terminal Prompt](./terminal-prompt.png)
+![Terminal Prompt](./terminal-prompt-ui.png)
 
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
