@@ -2,48 +2,6 @@
 
 command_timeout = 5000
 
-# [[battery.display]]
-# threshold = 50
-# style = "bold red"
-#
-# [character]
-# success_symbol = "[➜](bold green) "
-# error_symbol = "[✗](bold red) "
-#
-# [directory]
-# truncation_symbol = "…/"
-# truncate_to_repo = false
-#
-# [gcloud]
-# disabled = true
-#
-# [git_metrics]
-# disabled = false
-#
-# [status]
-# style = "bg:blue"
-# symbol = "🔴"
-# format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
-# map_symbol = true
-# disabled = true
-#
-# # Because the starship provided modules don't work for me.
-# [custom.gittag]
-# command = "echo \"(tag: $(git describe --tags --abbrev=0), commit: $(git rev-parse --short HEAD))\""
-# when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
-# ignore_timeout = true
-#
-# [custom.datetime]
-# style = "bold white"
-# command = "date"
-# # when = """ test "$HOME/Code" == "$PWD" """
-# when = "" # always run it
-# format = " [$output]($style) "
-#
-# [jobs]
-# symbol = "+ "
-# style = "bold white"
-
 # https://dev.to/therubberduckiee/how-to-configure-starship-to-look-exactly-like-p10k-zsh-warp-h9h
 #
 # NOTE: The Warp Terminal font size needs to be 15 rather than 13 now (otherwise line-height breaks the rendering).
@@ -75,6 +33,7 @@ $nodejs\
 $lua\
 [](fg:#ff8a9f bg:#282A36)\
 $character\
+$cmd_duration\
 """
 
 [directory]
@@ -127,13 +86,13 @@ symbol = "  "
 style = "fg:#1C3A5E bg:#FCF392"
 
 [git_status]
-format = '([ $conflicted$deleted$renamed$modified$staged$untracked]($style))'
-style = "fg:#1C3A5E bg:#f0af22"
+format = '([ $conflicted$deleted$renamed$modified$staged$untracked ]($style))'
+style = "bold fg:#1C3A5E bg:#f0af22"
 
 [git_metrics]
-format = "([ +$added ]($added_style))[]($added_style)"
-added_style = "fg:#1C3A5E bg:#f0af22"
-deleted_style = "fg:bright-red bg:235"
+format = "([+$added]($added_style))([ -$deleted ]($deleted_style))"
+added_style = "bold fg:#35a115 bg:#f0af22"
+deleted_style = "bold fg:#ff0000 bg:#f0af22"
 disabled = false
 
 [hg_branch]
@@ -141,8 +100,8 @@ format = "[ $symbol$branch ]($style)"
 symbol = " "
 
 [cmd_duration]
-format = "[  $duration ]($style)"
-style = "fg:bright-white bg:18"
+format = "[ $duration ]($style)"
+style = "fg:bright-white"
 
 [character]
 success_symbol = '[ ➜](bold green) '
