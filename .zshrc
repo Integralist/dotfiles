@@ -451,7 +451,7 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 # alias ll="ls -laGpFHh"
 
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
-alias mtr="sudo mtr"
+alias mtr="sudo mtr --report --show-ips"
 alias nv="novowels"
 alias ping="gping"
 alias ps="procs"
