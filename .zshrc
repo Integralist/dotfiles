@@ -343,6 +343,7 @@ connectivity debugging steps...
 
   * Check route from home router to internet:
     traceroute -av google.com
+    sudo mtr google.com --report --show-ips (brew install mtr)
 
   * Check hostnames can be resolved:
     host www.integralist.co.uk
@@ -450,6 +451,7 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 # alias ll="ls -laGpFHh"
 
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
+alias mtr="sudo mtr"
 alias nv="novowels"
 alias ping="gping"
 alias ps="procs"
