@@ -324,51 +324,50 @@ alias commit='echo "$commit_types"'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' network_help <<- EOF
-connectivity debugging steps...
+* Check DNS resolution:
 
-  * Check your upload/download speed:
-    networkQuality -s
+  $ scutil --dns | grep 'nameserver[[0-9]*]'
+  $ host {HOSTNAME}
+  $ nslookup {HOSTNAME} <RESOLVER_IP: 8.8.8.8|1.1.1.1>
+  $ dog {HOSTNAME}
 
-  * Check IPs available on the LAN (local area network):
-    arp -a
+  > Change DNS Resolver via the Network UI tab in macOS or via Terminal:
+  > https://superuser.com/a/86188
+  >
+  > e.g.
+  > networksetup -getdnsservers Wi-Fi
+  > networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4
+  > sudo discoveryutil mdnsflushcache
 
-  * Check what dns servers are being used by executing the 'dns' alias:
-    dns
+* Check HTTP (while avoiding DNS resolution):
 
-    > you can also check via nslookup
-    > default should be: 192.168.86.1
+  $ curl -v -H "Host:{HOSTNAME}" \$(dog {HOSTNAME} --short)
 
-  * Check we can reach a highly available public domain:
-    ping google.com
+* Check hostname availability:
 
-  * Check route from home router to internet:
-    traceroute -av google.com
-    sudo mtr google.com --report --show-ips (brew install mtr)
+  $ /sbin/ping {HOSTNAME}
+  $ gping {HOSTNAME...}
+  $ gping github.com fastly.com integralist.co.uk
 
-  * Check hostnames can be resolved:
-    host www.integralist.co.uk
+* Check route from home router to internet:
 
-  * Execute a dns lookup using different dns servers (one remote, one local):
-    nslookup google.com 8.8.8.8
-    nslookup google.com 192.168.1.1
+  $ traceroute -av {HOSTNAME}
+  $ sudo mtr {HOSTNAME} --report-wide --show-ips --aslookup
 
-    > you can also use Cloudfare's 1.1.1.1 resolvers
-    > you can change via Network UI tab in macOS (dns sub tab)
-    > or via terminal: https://superuser.com/a/86188
-    >
-    > e.g.
-    > networksetup -getdnsservers Wi-Fi
-    > networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4
-    > sudo discoveryutil mdnsflushcache
+* Check LAN (Local Area Network) IPs:
 
-  * Check if we can curl an endpoint:
-    curl -Lsvo /dev/null http://google.com/
+  $ arp -a # ARP (Address Resolution Protocol)
 
-  * Check performance via external sites:
-    https://www.speedcheck.org/
-    https://www.speedtest.net/
-    https://speed.cloudflare.com/
-    https://fast.com/
+* Check upload/download speed:
+
+  $ networkQuality -s
+
+* Check performance via external sites:
+
+  https://www.speedcheck.org/
+  https://www.speedtest.net/
+  https://speed.cloudflare.com/
+  https://fast.com/
 EOF
 alias networkhelp='echo "$network_help"'
 
@@ -451,7 +450,7 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 # alias ll="ls -laGpFHh"
 
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
-alias mtr="sudo mtr --report --show-ips"
+alias mtr="sudo mtr --report-wide --show-ips --aslookup"
 alias nv="novowels"
 alias ping="gping"
 alias ps="procs"
