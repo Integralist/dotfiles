@@ -423,6 +423,7 @@ alias gli="forgit::log"
 alias gld="git log-detailed"
 alias gls="git log-short"
 alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | awk NR==1 | ag '\d.+' -o"
+alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
 alias gwip="git wip"
@@ -514,6 +515,14 @@ pgrep gpg-agent &>/dev/null || eval $(gpg-agent --daemon)
 # to ensure there are no duplicates in the $PATH we call dedupe
 #
 dedupe
+
+# ensure we use https://github.com/garabik/grc (brew install grc) to colourize
+# the shell output for some standard tools.
+#
+if (( $+commands[grc] )) && (( $+commands[brew] ))
+then
+  source `brew --prefix`/etc/grc.zsh
+fi
 
 # ⚠️  SOFTWARE ⚠️
 
