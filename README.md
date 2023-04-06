@@ -81,12 +81,12 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 
 ## GUI
 
+- [Android File Transfer](https://www.android.com/filetransfer/): `brew install --cask android-file-transfer`
 - [Warp Terminal](https://www.warp.dev/): `brew install --cask warp`.
 - [Marta File Manager](https://marta.sh/): `brew install --cask marta`.
 - [FreeTube](https://github.com/FreeTubeApp/FreeTube): YouTube without advertisements and no Google tracking.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [bitbar/xbar](https://xbarapp.com/): gui for installing 'menu bar' apps ([github repo](https://github.com/matryer/xbar)).
-- [handshaker](https://apps.apple.com/us/app/handshaker-manage-your-android-phones-at-ease/id1012930195?mt=12): manage videos/photos for your Android phone.
 - [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
 - [meeting bar](https://github.com/leits/MeetingBar): shows calendar meetings in macOS menu bar ([guide](https://support.google.com/calendar/answer/99358?co=GENIE.Platform%3DDesktop&hl=en)).
 - [menu hidden](https://github.com/dwarvesf/hidden): macOS utility that helps hide menu bar icons.
