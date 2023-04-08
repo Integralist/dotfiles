@@ -354,6 +354,10 @@ read -r -d '' network_help <<- EOF
   $ traceroute -av {HOSTNAME}
   $ sudo mtr {HOSTNAME} --report-wide --show-ips --aslookup
 
+  You can also get the geolocation information using:
+
+  $ curl -s https://api.ipbase.com/v1/json/{IP} | jq
+
 * Check LAN (Local Area Network) IPs:
 
   $ arp -a # ARP (Address Resolution Protocol)
