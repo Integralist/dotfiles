@@ -22,6 +22,7 @@
   diff = diff -w ; ignore whitespace
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
   diff-word = diff --word-diff=color
+  history = "!f() { git log -p --follow \"$1\"; }; f" # pass in a file path to see its complete history
   log-detailed = log --graph --pretty=format:'%Cred%h%Creset (%an) -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
   log-graph = log --graph
   log-me = log --graph --author='Integralist'
