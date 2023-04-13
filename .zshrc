@@ -454,6 +454,7 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 #
 # alias ll="ls -laGpFHh"
 
+alias ldd="otool -L" # display shared object files a binary is linked to
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
 alias mtr="sudo mtr --report-wide --show-ips --aslookup"
 alias nv="novowels"
