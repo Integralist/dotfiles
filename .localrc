@@ -23,7 +23,7 @@ eval "$(pyenv virtualenv-init -)"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # to ensure there are no duplicates in the $PATH we call dedupe
-# the dedupe function is defined in .bashrc
+# the dedupe function is defined in .zshrc
 #
 dedupe
 
