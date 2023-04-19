@@ -86,6 +86,12 @@ unsetopt BEEP
 unsetopt CASE_GLOB
 unsetopt CASE_MATCH
 
+# http://zsh.sourceforge.net/Doc/Release/Options.html#Expansion-and-Globbing
+# By default, if a command line contains a globbing expression which doesn't
+# match anything, Zsh will print the error message you're seeing, and not run
+# the command at all. You can disable this using the following...
+setopt +o nomatch
+
 # increase number of file descriptors from default of 254
 ulimit -n 10240
 
@@ -462,7 +468,7 @@ alias ping="gping"
 alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
-alias ripall='rip * .* &> /dev/null' # for redirection to work in Zsh we need to set `setopt +o nomatch`
+alias ripall='rip * &> /dev/null ; rip .* &> /dev/null' # for redirection to work in Zsh we need to set `setopt +o nomatch`
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="terraform"
