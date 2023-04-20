@@ -506,6 +506,7 @@ function cd {
   builtin cd "$@"
   RET=$?
   ls
+  source ~/.zshrc
   return $RET
 }
 
@@ -551,6 +552,9 @@ eval "$(fnm env --use-on-cd)"
 complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # configure go environment
+#
+# BUG: https://github.com/syndbg/goenv/issues/294
+# See workaround (to re-source zshrc) in my `__zoxide_cd` and `cd` functions defined in this file.
 #
 if [ ! -d "$HOME/.goenv" ]; then
   git clone https://github.com/syndbg/goenv.git ~/.goenv
@@ -658,6 +662,7 @@ function __zoxide_cd {
   builtin cd "$@"
   RET=$?
   ls
+  source ~/.zshrc
   return $RET
 }
 
