@@ -438,6 +438,13 @@ alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
 alias gwip="git wip"
 
+# To view built-in command help documentation Zsh doesn't have a `help` command like Bash.
+# So we have to install its equivalent: run-help.
+unalias run-help 2>/dev/null
+autoload run-help
+HELPDIR=$(command brew --prefix)/share/zsh/help
+alias help=run-help
+
 alias ips="arp -a" # some IPs (like my NAS DS220) don't show up until I able to ping it as that starts up the box.
 alias json="python -m json.tool"
 
