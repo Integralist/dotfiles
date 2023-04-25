@@ -428,9 +428,9 @@ alias gco="git checkout origin/main --" # followed by path to file to checkout
 alias gcoi="forgit::checkout::file"
 alias gcv="git commit -v"
 alias gf="git pushit"
-alias gl="git log"
+alias gl="git log-graphstat"
 alias gli="forgit::log"
-alias gld="git log-detailed"
+alias glm="git log-me"
 alias gls="git log-short"
 alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | awk NR==1 | ag '\d.+' -o"
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
@@ -540,7 +540,8 @@ dedupe
 #
 if (( $+commands[grc] )) && (( $+commands[brew] ))
 then
-  source `brew --prefix`/etc/grc.zsh
+  # DISABLED: as grc was breaking docker command
+  # source `brew --prefix`/etc/grc.zsh
 fi
 
 # ⚠️  SOFTWARE ⚠️
