@@ -508,14 +508,11 @@ alias wut='echo "$git_icons"'
 # ⚠️  BINDINGS ⚠️
 
 # We override the cd command to call ls when changing directories as it's nice
-# to see what's in each directory.
-#
-function cd {
-  builtin cd "$@"
-  RET=$?
-  ls
-  source ~/.zshrc # we resource to fix bug with goenv
-  return $RET
+# to see what's in each directory. We do this using a Zsh hook function.
+# https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions
+function chpwd() {
+    ls
+    source ~/.zshrc # we resource to fix bug with goenv
 }
 
 # ⚠️  SHELL ⚠️
@@ -563,7 +560,7 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 # configure go environment
 #
 # BUG: https://github.com/syndbg/goenv/issues/294
-# See workaround (to re-source zshrc) in my `__zoxide_cd` and `cd` functions defined in this file.
+# See workaround (to re-source zshrc) `chpwd` function defined in this file.
 #
 if [ ! -d "$HOME/.goenv" ]; then
   git clone https://github.com/syndbg/goenv.git ~/.goenv
@@ -663,17 +660,6 @@ fi
 # zoxide query -ls
 #
 eval "$(zoxide init zsh)"
-
-# Refer to overridden `cd` function ☝️ for implementation details.
-function __zoxide_cd {
-  # Original implementation...
-  # https://github.com/ajeetdsouza/zoxide/blob/df148c834fa0eb4a99cac18720e05059bf771430/templates/bash.txt#L17-L21
-  builtin cd "$@"
-  RET=$?
-  ls
-  source ~/.zshrc # we resource to fix bug with goenv
-  return $RET
-}
 
 # Alacritty
 #
