@@ -514,7 +514,7 @@ function cd {
   builtin cd "$@"
   RET=$?
   ls
-  source ~/.zshrc
+  source ~/.zshrc # we resource to fix bug with goenv
   return $RET
 }
 
@@ -671,7 +671,7 @@ function __zoxide_cd {
   builtin cd "$@"
   RET=$?
   ls
-  source ~/.zshrc
+  source ~/.zshrc # we resource to fix bug with goenv
   return $RET
 }
 
