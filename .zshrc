@@ -437,6 +437,7 @@ alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
+alias gstm="git stm"
 alias gwip="git wip"
 
 # To view built-in command help documentation Zsh doesn't have a `help` command like Bash.
