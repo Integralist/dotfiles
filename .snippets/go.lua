@@ -27,6 +27,12 @@ return {
   }
   ]]),
 
+  parse({ trig = "ifel", name = "If Err Log Fatal", dscr = "Insert a basic if err not nil statement with log.Fatal" }, [[
+  if err != nil {
+    log.Fatal(err)
+  }
+  ]]),
+
   s({ trig = "ifew", name = "If Err Wrapped", dscr = "Insert a if err not nil statement with wrapped error" }, {
     t("if err != nil {"),
     t({ "", "  return fmt.Errorf(\"failed to " }),
