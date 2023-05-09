@@ -400,7 +400,7 @@ alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias g="git"
 alias ga="git add"
 alias gai="forgit::add"
-alias gb="git branch"
+alias gb="git branch-verbose"
 alias gc="git checkout"
 alias gcp="forgit::cherry::pick"
 alias gd="git diff"
@@ -590,6 +590,7 @@ function go_update_tools {
   go install mvdan.cc/gofumpt@latest
   go install honnef.co/go/tools/cmd/staticcheck@2023.1
   go install golang.org/x/vuln/cmd/govulncheck@latest
+  go install github.com/go-delve/delve/cmd/dlv@latest
 
   # documentation preview
   # go get golang.org/x/tools/godoc@v0.1.8
