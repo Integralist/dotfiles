@@ -24,7 +24,7 @@
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
   diff-word = diff --word-diff=color
   history = "!f() { git log -p --follow \"$1\"; }; f" # pass in a file path to see its complete history
-  log-graphstat = log --graph --stat
+  log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n' --graph --stat
   log-me = log-graphstat --author='Integralist'
   log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
   pushit = push --force-with-lease origin head
@@ -52,6 +52,12 @@
   interactive = always
   status = always
   ui = true
+
+[color "decorate"]
+  branch = yellow
+  head = white
+  remoteBranch = red
+  tag = green
 
 [color "diff"]
   frag = magenta
