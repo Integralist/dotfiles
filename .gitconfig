@@ -30,6 +30,7 @@
   pushit = push --force-with-lease origin head
   recent = branch --sort=-committerdate
   search =! bash -c 'git rev-list --all | xargs git grep "$1"'
+  set-upstream = "!f() { git branch --set-upstream-to=origin/\"$1\" \"$1\"; }; f"
   show = show -w
   st = status
   stm = "!git status --porcelain | grep '^ M' | cut -c 4-" # display only modified files (exclude untracked)
