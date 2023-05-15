@@ -1,4 +1,4 @@
-# type(optional-scope): description
+# <type>[optional scope]: <description: imperative mood>
 #
 # TYPES
 #
@@ -14,7 +14,12 @@
 #    test:     Adding missing tests or correcting existing tests
 #    todo:     Adding notes like FIXME: WARNING: NOTE:
 #
-# SCOPE EXAMPLES
+# EXAMPLES:
+#   feat(net/http): support disabling built-in HTTP/2 with a new build tag
+#   fix(net/url, net/http): relax CTL-in-URL validation to only ASCII CTLs
+#   refactor(lsp): clean up neovim lsp implementation
 #
-#    fix(net/http): bug fix in a golang project
-#    refactor(lsp): cleaned up neovim lsp implementation
+# REFERENCE:
+#   https://www.conventionalcommits.org/
+#   https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/SubmittingPatches?h=v2.36.1#n181
+#   https://en.wikipedia.org/wiki/Imperative_mood
