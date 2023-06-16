@@ -384,6 +384,7 @@ alias networkhelp='echo "$network_help"'
 alias dockerprune='docker system prune --all'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
+alias ff='fzf --multi'
 
 # git alias' with git autocomplete support
 #
@@ -515,6 +516,9 @@ function chpwd() {
     ls
     source ~/.zshrc # we resource to fix bug with goenv
 }
+
+# Use fzf for fuzzy searching files and directories
+bindkey '^f' fzf
 
 # ⚠️  SHELL ⚠️
 
