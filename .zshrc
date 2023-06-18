@@ -489,6 +489,7 @@ alias updates="softwareupdate --list" # --install --all (or) --install <product 
 alias vim=nvim
 alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
 alias vimlight="vim -u /Users/integralist/.vimrc-light"
+alias weather="curl wttr.in"
 
 read -r -d '' git_icons <<- EOF
 # starship prompt...
