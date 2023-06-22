@@ -35,6 +35,7 @@
   st = status
   stm = "!git status --porcelain | grep '^ M' | cut -c 4-" # display only modified files (exclude untracked)
   unstage = reset HEAD --
+  untracked = ls-files --others --exclude-standard
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 
 [apply]
