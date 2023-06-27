@@ -332,6 +332,9 @@ alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 read -r -d '' network_help <<- EOF
 * Check DNS resolution:
 
+  $ networksetup -listnetworkserviceorder
+  $ networksetup -getinfo Wi-Fi
+  $ networksetup -getdnsservers Wi-Fi
   $ scutil --dns | grep 'nameserver[[0-9]*]'
   $ host {HOSTNAME}
   $ nslookup {HOSTNAME} <RESOLVER_IP: 8.8.8.8|1.1.1.1>
