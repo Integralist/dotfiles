@@ -18,7 +18,7 @@ return {
   }),
 
   s({ trig = "pf", name = "Formatted Print", dscr = "Insert a formatted print statement" }, {
-    t("fmt.Printf(\"%+v\\n\", "), i(1, "value"), t(")")
+    t("fmt.Printf(\"%#v\\n\", "), i(1, "value"), t(")")
   }),
 
   parse({ trig = "ife", name = "If Err", dscr = "Insert a basic if err not nil statement" }, [[
