@@ -519,7 +519,11 @@ alias wut='echo "$git_icons"'
 # https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions
 function chpwd() {
     ls
-    source ~/.zshrc # we resource to fix bug with goenv
+    if [ -e .go-version ]; then
+      $GOPATH/bin/g install $(cat .go-version)
+    else
+      $GOPATH/bin/g install $(golatest)
+    fi
 }
 
 # Use fzf for fuzzy searching files and directories
@@ -569,17 +573,25 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 
 # configure go environment
 #
-# BUG: https://github.com/syndbg/goenv/issues/294
-# See workaround (to re-source zshrc) `chpwd` function defined in this file.
+# https://github.com/stefanmaric/g
+# curl -sSL https://git.io/g-install | sh -s
 #
-if [ ! -d "$HOME/.goenv" ]; then
-  git clone https://github.com/syndbg/goenv.git ~/.goenv
+# auto-switching of go versions is done using .go-version file (see chpwd() function)
+#
+# Example version install location:
+# /Users/integralist/.go/.versions/1.21.0
+#
+# The $GOROOT/bin/go executable is either the latest go version or .go-version
+export GOROOT="$HOME/.go"
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+alias gov="$GOPATH/bin/g"
+
+if [ -e .go-version ]; then
+  $GOPATH/bin/g install $(cat .go-version)
+else
+  $GOPATH/bin/g install $(golatest)
 fi
-export GOENV_ROOT="$HOME/.goenv"
-export PATH="$GOENV_ROOT/bin:$PATH"
-eval "$(goenv init -)"
-export PATH="$GOROOT/bin:$PATH"
-export PATH="$PATH:$GOPATH/bin"
 
 if [ ! -f "$HOME/go/bin/gopls" ]; then
   go install golang.org/x/tools/gopls@latest
@@ -590,14 +602,17 @@ fi
 if [ ! -f "$HOME/go/bin/revive" ]; then
   go install github.com/mgechev/revive@latest
 fi
+
+# Go tools are installed into $GOPATH/bin
 function go_update_tools {
-  brew_update # called because of goenv
+  local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
+  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $golangcilatest
+
   go install github.com/rakyll/gotest@latest
-  go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
-  go install honnef.co/go/tools/cmd/staticcheck@2023.1
+  go install honnef.co/go/tools/cmd/staticcheck@2023.1.5 # https://github.com/dominikh/go-tools
   go install golang.org/x/vuln/cmd/govulncheck@latest
   go install github.com/go-delve/delve/cmd/dlv@latest
 
