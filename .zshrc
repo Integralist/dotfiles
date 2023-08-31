@@ -582,6 +582,8 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 # /Users/integralist/.go/.versions/1.21.0
 #
 # The $GOROOT/bin/go executable is either the latest go version or .go-version
+#
+# Running `go install` will install binaries into ~/go/bin
 export GOROOT="$HOME/.go"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
