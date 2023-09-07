@@ -491,8 +491,11 @@ alias tree='tree -I node_modules'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias vim=nvim
-alias vimbasic="vim -u /Users/integralist/.vimrc-basic"
-alias vimlight="vim -u /Users/integralist/.vimrc-light"
+read -r -d '' vimbasic_info <<- EOF
+set nocompatible number cursorline expandtab hlsearch visualbell tabstop=2 shiftwidth=2
+syntax on
+EOF
+alias vimbasic='echo "$vimbasic_info"'
 alias weather="curl wttr.in"
 
 read -r -d '' git_icons <<- EOF
