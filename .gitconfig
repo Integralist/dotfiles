@@ -27,6 +27,15 @@
   log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n' --graph --stat
   log-me = log-graphstat --author='Integralist'
   log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+  pr = "!f() { \
+    if [ $# -lt 1 ]; then \
+      echo \"Usage: git pr <pull_request_number>\"; \
+    else \
+      git pull --rebase origin main; \
+      git fetch origin pull/\"$1\"/head:pr/\"$1\"; \
+      git checkout pr/\"$1\"; \
+    fi \
+  }; f"
   pushit = push --force-with-lease origin head
   recent = branch --sort=-committerdate
   search =! bash -c 'git rev-list --all | xargs git grep "$1"'
