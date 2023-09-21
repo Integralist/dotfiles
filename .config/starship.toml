@@ -22,15 +22,16 @@ $git_metrics\
 $custom\
 [](fg:#bd4024 bg:#ff8a9f)\
 $golang\
-$rust\
-$ruby\
+$lua\
+$nodejs\
+$perl\
 $php\
 $python\
-$terraform\
+$ruby\
+$rust\
 $shell\
-$perl\
-$nodejs\
-$lua\
+$terraform\
+$zig\
 [](fg:#ff8a9f bg:#282A36)\
 $character\
 $cmd_duration\
@@ -44,11 +45,15 @@ style = "fg:#E4E4E4 bg:#3B76F0"
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
-[rust]
+[lua]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
-[ruby]
+[nodejs]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ff8a9f"
+
+[perl]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
@@ -60,7 +65,11 @@ style = "fg:#282A36 bg:#ff8a9f"
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
-[terraform]
+[ruby]
+format = '[ $symbol($version )]($style)'
+style = "fg:#282A36 bg:#ff8a9f"
+
+[rust]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
@@ -68,15 +77,11 @@ style = "fg:#282A36 bg:#ff8a9f"
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
-[perl]
+[terraform]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
-[nodejs]
-format = '[ $symbol($version )]($style)'
-style = "fg:#282A36 bg:#ff8a9f"
-
-[lua]
+[zig]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
 
