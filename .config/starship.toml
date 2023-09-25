@@ -52,6 +52,7 @@ style = "fg:#282A36 bg:#ff8a9f"
 [nodejs]
 format = '[ $symbol($version )]($style)'
 style = "fg:#282A36 bg:#ff8a9f"
+not_capable_style = "fg:#282A36 bg:#ff8a9f"
 
 [perl]
 format = '[ $symbol($version )]($style)'
