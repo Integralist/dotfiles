@@ -476,6 +476,7 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 
 alias ldd="otool -L" # display shared object files a binary is linked to
 alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
+alias lsd="ls -s 'modified'"
 alias mtr="sudo mtr --report-wide --show-ips --aslookup"
 alias nv="novowels"
 alias ping="gping"
@@ -605,7 +606,7 @@ if [ ! -f "$HOME/go/bin/revive" ]; then
 fi
 
 # Go tools are installed into $GOPATH/bin
-function go_update_tools {
+function go_update {
   local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
   curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $golangcilatest
 
@@ -658,7 +659,7 @@ fi
 if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
   cargo install cargo-edit
 fi
-function rust_update_tools {
+function rust_update {
   brew_update # called because of rust-analyzer
   rustup self update
   rustup update stable
