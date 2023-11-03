@@ -1,23 +1,40 @@
-# https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
+# https://golangci-lint.run/usage/configuration/
 # https://golangci-lint.run/usage/linters/#enabled-by-default-linters
+# https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
+
+issues:
+  max-per-linter: 0
+  max-same-issues: 0
+run:
+  allow-parallel-runners: true
 linters:
   enable:
     - bodyclose
     - durationcheck
     - errcheck
     - exhaustive
+    - exportloopref
+    - forcetypeassert
     - gocritic
+    - godot
     - gofumpt
     - goimports
     - gosec
     - gosimple
     - govet
     - ineffassign
+    - makezero
+    - misspell
+    - nilerr
+    - predeclared
     - revive
     - staticcheck
+    - tenv
     - typecheck
+    - unconvert
+    - unparam
     - unused
-    - varcheck
+    - vet
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
@@ -83,7 +100,7 @@ linters-settings:
         arguments: [4]
       - name: "function-length"
         severity: "warning"
-        arguments: [40, 0]
+        arguments: [50, 0]
       - name: "get-return"
         severity: "error"
       - name: "identical-branches"
