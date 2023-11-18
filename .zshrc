@@ -617,6 +617,7 @@ function go_update {
   go install honnef.co/go/tools/cmd/staticcheck@2023.1.5 # https://github.com/dominikh/go-tools
   go install golang.org/x/vuln/cmd/govulncheck@latest
   go install github.com/go-delve/delve/cmd/dlv@latest
+  go install go.uber.org/nilaway/cmd/nilaway@latest
 
   # documentation preview
   # go get golang.org/x/tools/godoc@v0.1.8
