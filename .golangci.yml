@@ -44,8 +44,11 @@ linters:
 #
 # NOTE: These rules need to be duplicated into ~/revive.toml
 linters-settings:
+  misspell:
+    ignore-words:
+      - "Nominet"
   revive:
-    enableAllRules: true
+    enable-all-rules: true
     rules:
       - name: "add-constant"
         severity: "warning"
