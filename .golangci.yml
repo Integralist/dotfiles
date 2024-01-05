@@ -16,7 +16,6 @@ linters:
     - exportloopref
     - forcetypeassert
     - gocritic
-    - godot
     - gofumpt
     - goimports
     - gosec
@@ -35,6 +34,8 @@ linters:
     - unparam
     - unused
     - vet
+  disable:
+    - godot # just ended up being annoying (although can be configured with regexp exclude patterns in .godot.yaml -- https://github.com/tetafro/godot)
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
