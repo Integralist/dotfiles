@@ -1,6 +1,7 @@
 # <type>[optional scope]: <description: imperative mood>
 #
 # TYPES:
+#    all:      Changes to multiple files/modules/packages.
 #    breaking: Changes that should result in a new major version release.
 #    build:    Changes that affect the build system or external dependencies
 #    ci:       Changes to our CI configuration files and scripts
@@ -17,6 +18,7 @@
 #    Use plural if multiple items affected.
 #
 # EXAMPLES:
+#   all: replace interface{} with any
 #   feat(net/http): support disabling built-in HTTP/2 with a new build tag
 #   fix(net/url, net/http): relax CTL-in-URL validation to only ASCII CTLs
 #   refactor(lsp): clean up neovim lsp implementation
