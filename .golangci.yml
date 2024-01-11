@@ -3,7 +3,7 @@
 # https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
 
 issues:
-  max-per-linter: 0
+  max-issues-per-linter: 0
   max-same-issues: 0
 run:
   allow-parallel-runners: true
@@ -41,8 +41,6 @@ linters:
 #
 # To validate things from outside of code editor, run:
 # golangci-lint run -v
-#
-# NOTE: These rules need to be duplicated into ~/revive.toml
 linters-settings:
   misspell:
     ignore-words:
@@ -117,6 +115,8 @@ linters-settings:
         severity: "warning"
       - name: "import-shadowing"
         severity: "warning"
+      - name: "line-length-limit"
+        disabled: true
       - name: "modifies-parameter"
         severity: "warning"
       - name: "modifies-value-receiver"
