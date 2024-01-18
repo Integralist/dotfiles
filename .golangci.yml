@@ -1,3 +1,4 @@
+---
 # https://golangci-lint.run/usage/configuration/
 # https://golangci-lint.run/usage/linters/#enabled-by-default-linters
 # https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
@@ -9,33 +10,52 @@ run:
   allow-parallel-runners: true
 linters:
   enable:
-    - bodyclose
-    - durationcheck
-    - errcheck
-    - exhaustive
-    - exportloopref
-    - forcetypeassert
-    - gocritic
-    - gofumpt
-    - goimports
-    - gosec
-    - gosimple
-    - govet
-    - ineffassign
-    - makezero
-    - misspell
-    - nilerr
-    - predeclared
-    - revive
-    - staticcheck
-    - tenv
-    - typecheck
-    - unconvert
-    - unparam
-    - unused
+    - asasalint  # https://github.com/alingse/asasalint
+    - asciicheck  # https://github.com/tdakkota/asciicheck
+    - bidichk  # https://github.com/breml/bidichk
+    - bodyclose  # https://github.com/timakin/bodyclose
+    - containedctx  # https://github.com/sivchari/containedctx
+    - contextcheck  # https://github.com/kkHAIKE/contextcheck
+    - dogsled  # https://github.com/alexkohler/dogsled
+    - durationcheck  # https://github.com/charithe/durationcheck
+    - errcheck  # https://github.com/kisielk/errcheck
+    - errchkjson  # https://github.com/breml/errchkjson
+    - errname  # https://github.com/Antonboom/errname
+    - errorlint  # https://github.com/polyfloyd/go-errorlint
+    - exhaustive  # https://github.com/nishanths/exhaustive
+    - exportloopref  # https://github.com/kyoh86/exportloopref
+    - forcetypeassert  # https://github.com/gostaticanalysis/forcetypeassert
+    - goconst  # https://github.com/jgautheron/goconst
+    - gocritic  # https://github.com/go-critic/go-critic
+    - gofumpt  # https://github.com/mvdan/gofumpt
+    - goimports  # https://pkg.go.dev/golang.org/x/tools/cmd/goimports
+    - gomnd  # https://github.com/tommy-muehle/go-mnd
+    - gosec  # https://github.com/securego/gosec
+    - gosimple  # https://github.com/dominikh/go-tools/tree/master/simple
+    - govet  # https://pkg.go.dev/cmd/vet
+    - inamedparam  # https://github.com/macabu/inamedparam
+    - ineffassign  # https://github.com/gordonklaus/ineffassign
+    - makezero  # https://github.com/ashanbrown/makezero
+    - mirror  # https://github.com/butuzov/mirror
+    - misspell  # https://github.com/client9/misspell
+    - musttag  # https://github.com/go-simpler/musttag
+    - nilerr  # https://github.com/gostaticanalysis/nilerr
+    - perfsprint  # https://github.com/catenacyber/perfsprint
+    - prealloc  # https://github.com/alexkohler/prealloc
+    - predeclared  # https://github.com/nishanths/predeclared
+    - revive  # https://github.com/mgechev/revive
+    - staticcheck  # https://staticcheck.io/
+    - tenv  # https://github.com/sivchari/tenv
+    - thelper  # https://github.com/kulti/thelper
+    - typecheck  # https://golangci-lint.run/usage/faq/#why-do-you-have-typecheck-errors
+    - unconvert  # https://github.com/mdempsky/unconvert
+    - unparam  # https://github.com/mvdan/unparam
+    - unused  # https://github.com/dominikh/go-tools/tree/master/unused
+    - usestdlibvars  # https://github.com/sashamelentyev/usestdlibvars
     - vet
+    - wrapcheck  # https://github.com/tomarrell/wrapcheck
   disable:
-    - godot # just ended up being annoying (although can be configured with regexp exclude patterns in .godot.yaml -- https://github.com/tetafro/godot)
+    - godot # just ended up being annoying (can use regexp exclude in .godot.yaml -- https://github.com/tetafro/godot)
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
@@ -63,6 +83,8 @@ linters-settings:
         severity: "warning"
       - name: "bool-literal-in-expr"
         severity: "warning"
+      - name: "cognitive-complexity"
+        arguments: [10]
       - name: "confusing-naming"
         severity: "warning"
       - name: "confusing-results"
