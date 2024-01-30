@@ -269,7 +269,7 @@ function git_tag_release() {
 # display contents of archive file
 #
 function list_contents() {
-  if echo $1 | grep -Ei '.tar.gz$' &> /dev/null; then
+  if echo $1 | grep -Ei '\.t(ar\.)?gz$' &> /dev/null; then
     tar -ztvf $1
     return
   fi
