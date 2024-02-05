@@ -302,6 +302,18 @@ function zell() {
   fi
 }
 
+# reverse IP lookup
+# like `dig -x <IP>` but using dog instead
+# dog doesn't have a built in solution (https://github.com/ogham/dog/issues/32)
+#
+function dogr() {
+  if [ -z "$1" ]; then
+    echo "USAGE: dogr <IP>"
+    return
+  fi
+  echo "$1" | awk -F. '{print $4"."$3"."$2"."$1}' | xargs -I % dog %.in-addr.arpa ANY
+}
+
 # ⚠️  ALIAS ⚠️
 
 # NOTE: use `type <alias>` to see what is assigned to an alias/fn/builtin/keyword
