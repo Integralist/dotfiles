@@ -630,6 +630,8 @@ function go_update {
   go install golang.org/x/vuln/cmd/govulncheck@latest
   go install github.com/go-delve/delve/cmd/dlv@latest
   go install go.uber.org/nilaway/cmd/nilaway@latest
+  go install golang.org/x/tools/cmd/goimports@latest
+  go install github.com/incu6us/goimports-reviser/v3@latest
 
   # documentation preview
   # go get golang.org/x/tools/godoc@v0.1.8
