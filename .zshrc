@@ -214,19 +214,19 @@ function brew_update {
 function sshagent {
   local private_key=$1
   eval "$(ssh-agent -s)" > /dev/null
-  ssh-add --apple-use-keychain ~/.ssh/$1 > /dev/null 2>&1
+  ssh-add --apple-use-keychain ~/.ssh/"$1" > /dev/null 2>&1
 }
 
 # to ensure there are no duplicates in the $PATH
 # we call dedupe at the end of each sourced shell script.
 function dedupe {
-  export PATH=$(echo -n $PATH | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
+  export PATH=$(echo -n "$PATH" | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
 }
 
 # create directory structure and cd into it
 #
 function mkcdir() {
-  mkdir -p -- "$1" && cd -P -- "$1"
+  mkdir -p -- "$1" && cd -P -- "$1" || exit
 }
 
 # pretty print $PATH
@@ -240,7 +240,7 @@ function ppath() {
 #
 function rand() {
   local limit=${1:-100}
-  seq $limit | gshuf -n 1
+  seq "$limit" | gshuf -n 1
 }
 
 # tabs are indicated by ^I and line endings by $
@@ -248,7 +248,7 @@ function rand() {
 #
 function hiddenchars() {
   local filename=$1
-  cat -e -t -v $filename
+  cat -e -t -v "$filename"
 }
 
 # delete tag from both local and remote repositories
@@ -262,20 +262,20 @@ function git_tag_delete() {
 #
 function git_tag_release() {
   tag="v$1"
-  git tag -s $tag -m "$tag" && git push origin $tag
+  git tag -s "$tag" -m "$tag" && git push origin "$tag"
   # git tag $tag -m "$tag" && git push origin $tag
 }
 
 # display contents of archive file
 #
 function list_contents() {
-  if echo $1 | grep -Ei '\.t(ar\.)?gz$' &> /dev/null; then
-    tar -ztvf $1
+  if echo "$1" | grep -Ei '\.t(ar\.)?gz$' &> /dev/null; then
+    tar -ztvf "$1"
     return
   fi
 
-  if echo $1 | grep -Ei '.zip$' &> /dev/null; then
-    unzip -l $1
+  if echo "$1" | grep -Ei '.zip$' &> /dev/null; then
+    unzip -l "$1"
     return
   fi
 
@@ -298,7 +298,7 @@ function zell() {
     return
   fi
   if zellij list-sessions | grep '(current)' &> /dev/null; then
-    zellij -s $1
+    zellij -s "$1"
   fi
 }
 
@@ -532,9 +532,15 @@ alias wut='echo "$git_icons"'
 function chpwd() {
     ls
     if [ -e .go-version ]; then
-      $GOPATH/bin/g install $(cat .go-version)
+      "$GOPATH"/bin/g install $(cat .go-version)
     else
-      $GOPATH/bin/g install $(golatest)
+      "$GOPATH"/bin/g install $(golatest)
+    fi
+
+    # configure git maintenance
+    #
+    if git rev-parse --show-toplevel >/dev/null 2>&1; then
+      git maintenance start
     fi
 }
 
@@ -562,11 +568,11 @@ dedupe
 # ensure we use https://github.com/garabik/grc (brew install grc) to colourize
 # the shell output for some standard tools.
 #
-if (( $+commands[grc] )) && (( $+commands[brew] ))
-then
+# if (( $+commands[grc] )) && (( $+commands[brew] ))
+# then
   # DISABLED: as grc was breaking docker command
   # source `brew --prefix`/etc/grc.zsh
-fi
+# fi
 
 # ⚠️  SOFTWARE ⚠️
 
@@ -602,9 +608,9 @@ export PATH="$GOPATH/bin:$PATH"
 alias gov="$GOPATH/bin/g"
 
 if [ -e .go-version ]; then
-  $GOPATH/bin/g install $(cat .go-version)
+  "$GOPATH"/bin/g install $(cat .go-version)
 else
-  $GOPATH/bin/g install $(golatest)
+  "$GOPATH"/bin/g install $(golatest)
 fi
 
 if [ ! -f "$HOME/go/bin/gopls" ]; then
@@ -620,7 +626,7 @@ fi
 # Go tools are installed into $GOPATH/bin
 function go_update {
   local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
-  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin $golangcilatest
+  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin "$golangcilatest"
 
   go install github.com/rakyll/gotest@latest
   go install github.com/mgechev/revive@latest
@@ -649,7 +655,7 @@ function go_update {
 # - cargo clippy
 # - cargo edit
 #
-source $HOME/.cargo/env
+source "$HOME"/.cargo/env
 if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
   mkdir -p ~/.config/rustlang/autocomplete
   rustup completions zsh rustup >> ~/.config/rustlang/autocomplete/rustup
