@@ -15,6 +15,7 @@
           \"$(git rev-parse --abbrev-ref HEAD)\"; \
   }; f"
   ; branch-verbose = branch -vv
+  blame = blame -w -C -C -C
   branch-verbose = "!git branch --format '%(HEAD) %(refname:short),%(color:green)%(objectname:short)%(color:reset),%(color:blue)[%(upstream)]%(color:reset),%(color:red)%(contents:subject)%(color:reset)' | column -t -s ','"
   code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
   cc = "!git code-changes"
