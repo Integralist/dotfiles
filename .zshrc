@@ -323,22 +323,7 @@ function dogr() {
 #
 alias c="clear"
 alias cat="bat"
-
-read -r -d '' commit_types <<- EOF
-https://www.conventionalcommits.org/
-
-build:    Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)
-ci:       Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)
-docs:     Documentation only changes
-feat:     A new feature
-fix:      A bug fix
-perf:     A code change that improves performance
-refactor: A code change that neither fixes a bug nor adds a feature
-style:    Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)
-test:     Adding missing tests or correcting existing tests
-EOF
-alias commit='echo "$commit_types"'
-
+alias commit='cat ~/.gitcommit'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' network_help <<- EOF
@@ -455,6 +440,7 @@ alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c 
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
 alias gstm="git stm"
+alias gt="git tag --sort=-creatordate | tac" # brew install tac (cat backwards)
 alias gwip="git wip"
 
 # To view built-in command help documentation Zsh doesn't have a `help` command like Bash.
