@@ -107,6 +107,7 @@
   plus-style = 'syntax darkgreen'
 
 [diff]
+  algorithm = histogram
   indentHeuristic = true
   compactionHeuristic = true
 
