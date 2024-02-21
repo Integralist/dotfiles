@@ -127,7 +127,7 @@
   prompt = true
 
 [push]
-  default = upstream
+  default = current # https://git-scm.com/docs/git-config#Documentation/git-config.txt-pushdefault
 
 [user]
   name = Integralist
