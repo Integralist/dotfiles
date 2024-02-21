@@ -120,7 +120,7 @@
   diffFilter = delta --color-only --dark --line-numbers
 
 [merge]
-  conflictstyle = merge # previously 'diff3' (common ancestors) but wasn't that useful
+	conflictStyle = zdiff3
   tool = vimdiff # git mergetool --tool=vimdiff
 
 [mergetool]
@@ -142,7 +142,7 @@
   program = /opt/homebrew/bin/gpg
 
 [init]
-  defaultBranch = main
+	defaultBranch = main
 
 # force authentication to use SSH rather than HTTPS.
 # be aware this affects everything that tries to use git.
