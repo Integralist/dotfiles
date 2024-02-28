@@ -528,6 +528,10 @@ function chpwd() {
     if git rev-parse --show-toplevel >/dev/null 2>&1; then
       git maintenance start
     fi
+
+    # clean out any .DS_Store files
+    #
+    find . -type f -name '.DS_Store' -delete
 }
 
 # Use fzf for fuzzy searching files and directories
