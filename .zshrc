@@ -254,14 +254,24 @@ function hiddenchars() {
 # delete tag from both local and remote repositories
 #
 function git_tag_delete() {
-  git tag -d "v$1"
-  git push --delete origin "v$1"
+  if [ -z "$1" ]; then
+    echo "Please pass the tag you want deleted."
+    echo "NOTE: Go requires a v prefix."
+    return
+  fi
+  git tag -d "$1"
+  git push --delete origin "$1"
 }
 
 # cut a new release for a git project
 #
 function git_tag_release() {
-  tag="v$1"
+  if [ -z "$1" ]; then
+    echo "Please pass the tag you want created."
+    echo "NOTE: Go requires a v prefix."
+    return
+  fi
+  tag="$1"
   git tag -s "$tag" -m "$tag" && git push origin "$tag"
   # git tag $tag -m "$tag" && git push origin $tag
 }
