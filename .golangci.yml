@@ -16,6 +16,7 @@ linters:
     - bodyclose  # https://github.com/timakin/bodyclose
     - containedctx  # https://github.com/sivchari/containedctx
     - contextcheck  # https://github.com/kkHAIKE/contextcheck
+    - copyloopvar  # https://github.com/karamaru-alpha/copyloopvar
     - dogsled  # https://github.com/alexkohler/dogsled
     - durationcheck  # https://github.com/charithe/durationcheck
     - errcheck  # https://github.com/kisielk/errcheck
@@ -35,6 +36,7 @@ linters:
     - govet  # https://pkg.go.dev/cmd/vet
     - inamedparam  # https://github.com/macabu/inamedparam
     - ineffassign  # https://github.com/gordonklaus/ineffassign
+    - intrange  # https://github.com/ckaznocha/intrange
     - makezero  # https://github.com/ashanbrown/makezero
     - mirror  # https://github.com/butuzov/mirror
     - misspell  # https://github.com/client9/misspell
