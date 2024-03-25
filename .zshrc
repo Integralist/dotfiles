@@ -713,13 +713,37 @@ eval "$(zoxide init zsh)"
 # Alacritty
 #
 if [ -f "$HOME/.bash_completion/alacritty" ]; then
-  source ~/.bash_completion/alacritty
+  source "$HOME/.bash_completion/alacritty"
 fi
 
 # Configuration you don't want as part of your main .zshrc
 #
 if [ -f "$HOME/.localrc" ]; then
   source "$HOME/.localrc"
+fi
+
+# auto-run Go/Rust updates
+#
+cache_file=~/.cache/shell-update
+if [ -f "$cache_file" ]; then
+  # get the last modification date of the cache file
+  last_modified=$(date -r "$cache_file" +%s)
+  # get the current date
+  current_date=$(date +%s)
+  # calculate the difference in days
+  days_diff=$(( (current_date - last_modified) / (60*60*24) ))
+  # if the cache file is older than the current day, run the command
+  if [ "$days_diff" -ge 1 ]; then
+    go_update
+    rust_update
+    # update last_modified date
+    touch "$cache_file"
+  fi
+else
+  go_update
+  rust_update
+  # update last_modified date
+  touch "$cache_file"
 fi
 
 # Starship prompt
