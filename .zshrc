@@ -724,7 +724,8 @@ fi
 
 # auto-run Go/Rust updates
 #
-cache_file=~/.cache/shell-update
+mkdir -p "$HOME/.cache"
+cache_file="$HOME/.cache/shell-update"
 if [ -f "$cache_file" ]; then
   # get the last modification date of the cache file
   last_modified=$(date -r "$cache_file" +%s)
