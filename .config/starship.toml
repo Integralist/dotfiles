@@ -115,7 +115,7 @@ error_symbol = '[ ✗](#E84D44) '
 
 [time]
 disabled = false
-time_format = "%R"                                      # Hour:Minute Format
+time_format = "%T"                                      # Hour:Minute:Second Format (%r is 12h so shows AM/PR, or %R which is just Hour:Minute)
 style = "bg:#1d2230"
 format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
 
