@@ -1,4 +1,6 @@
 ---
+# yamllint disable rule:line-length
+#
 # https://golangci-lint.run/usage/configuration/
 # https://golangci-lint.run/usage/linters/#enabled-by-default-linters
 # https://github.com/golangci/golangci-lint/blob/master/.golangci.reference.yml
@@ -14,6 +16,7 @@ linters:
     - asciicheck  # https://github.com/tdakkota/asciicheck
     - bidichk  # https://github.com/breml/bidichk
     - bodyclose  # https://github.com/timakin/bodyclose
+    - canonicalheader  # https://github.com/lasiar/canonicalHeader
     - containedctx  # https://github.com/sivchari/containedctx
     - contextcheck  # https://github.com/kkHAIKE/contextcheck
     - copyloopvar  # https://github.com/karamaru-alpha/copyloopvar
@@ -25,12 +28,12 @@ linters:
     - errorlint  # https://github.com/polyfloyd/go-errorlint
     - exhaustive  # https://github.com/nishanths/exhaustive
     - exportloopref  # https://github.com/kyoh86/exportloopref
+    - fatcontext  # https://github.com/Crocmagnon/fatcontext
     - forcetypeassert  # https://github.com/gostaticanalysis/forcetypeassert
     - goconst  # https://github.com/jgautheron/goconst
     - gocritic  # https://github.com/go-critic/go-critic
     - gofumpt  # https://github.com/mvdan/gofumpt
     - goimports  # https://pkg.go.dev/golang.org/x/tools/cmd/goimports
-    - gomnd  # https://github.com/tommy-muehle/go-mnd
     - gosec  # https://github.com/securego/gosec
     - gosimple  # https://github.com/dominikh/go-tools/tree/master/simple
     - govet  # https://pkg.go.dev/cmd/vet
@@ -40,6 +43,7 @@ linters:
     - makezero  # https://github.com/ashanbrown/makezero
     - mirror  # https://github.com/butuzov/mirror
     - misspell  # https://github.com/client9/misspell
+    - mnd  # https://github.com/tommy-muehle/go-mnd
     - musttag  # https://github.com/go-simpler/musttag
     - nilerr  # https://github.com/gostaticanalysis/nilerr
     - perfsprint  # https://github.com/catenacyber/perfsprint
@@ -47,6 +51,7 @@ linters:
     - predeclared  # https://github.com/nishanths/predeclared
     - revive  # https://github.com/mgechev/revive
     - staticcheck  # https://staticcheck.io/
+    - stylecheck  # https://github.com/dominikh/go-tools
     - tenv  # https://github.com/sivchari/tenv
     - thelper  # https://github.com/kulti/thelper
     - typecheck  # https://golangci-lint.run/usage/faq/#why-do-you-have-typecheck-errors
