@@ -491,6 +491,7 @@ alias ping="gping"
 alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc"
+alias rg="rg --no-ignore --hidden"
 alias ripall='rip * &> /dev/null ; rip .* &> /dev/null' # for redirection to work in Zsh we need to set `setopt +o nomatch`
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
@@ -632,12 +633,13 @@ function go_update {
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
-  go install honnef.co/go/tools/cmd/staticcheck@2023.1.6 # https://github.com/dominikh/go-tools
+  go install honnef.co/go/tools/cmd/staticcheck@2023.1.7 # https://github.com/dominikh/go-tools
   go install golang.org/x/vuln/cmd/govulncheck@latest
   go install github.com/go-delve/delve/cmd/dlv@latest
   go install go.uber.org/nilaway/cmd/nilaway@latest
   go install golang.org/x/tools/cmd/goimports@latest
   go install github.com/incu6us/goimports-reviser/v3@latest
+  go install github.com/google/gops@latest
 
   # documentation preview
   # go get golang.org/x/tools/godoc@v0.1.8
@@ -726,15 +728,14 @@ fi
 #
 mkdir -p "$HOME/.cache"
 cache_file="$HOME/.cache/shell-update"
+current_day=$(date +%Y-%m-%d)
 if [ -f "$cache_file" ]; then
-  # get the last modification date of the cache file
-  last_modified=$(date -r "$cache_file" +%s)
-  # get the current date
-  current_date=$(date +%s)
-  # calculate the difference in days
-  days_diff=$(( (current_date - last_modified) / (60*60*24) ))
-  # if the cache file is older than the current day, run the command
-  if [ "$days_diff" -ge 1 ]; then
+  # get the last modification date of the cache file in YYYY-MM-DD format
+  last_modified_day=$(date -r "$cache_file" +%Y-%m-%d)
+  # if the cache file was last modified on a different day, run the command
+  if [ "$current_day" != "$last_modified_day" ]; then
+    echo "current_day: $current_day"
+    echo "last_modified_day: $last_modified_day"
     go_update
     rust_update
     # update last_modified date
