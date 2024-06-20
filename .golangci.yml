@@ -92,6 +92,8 @@ linters-settings:
         severity: "warning"
       - name: "cognitive-complexity"
         arguments: [20]
+      - name: "comment-spacings"
+        arguments: ["lint:ignore"]
       - name: "confusing-naming"
         severity: "warning"
       - name: "confusing-results"
