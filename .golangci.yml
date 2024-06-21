@@ -91,9 +91,9 @@ linters-settings:
       - name: "bool-literal-in-expr"
         severity: "warning"
       - name: "cognitive-complexity"
-        arguments: [20]
+        arguments: [40]
       - name: "comment-spacings"
-        arguments: ["lint:ignore"]
+        arguments: ["lint:ignore", "exhaustive:ignore"]
       - name: "confusing-naming"
         severity: "warning"
       - name: "confusing-results"
@@ -104,6 +104,8 @@ linters-settings:
         severity: "error"
       - name: "context-keys-type"
         severity: "error"
+      - name: "cyclomatic"
+        arguments: [20]
       # - name: "datarace"
       #   severity: "error"
       - name: "deep-exit"
@@ -148,6 +150,8 @@ linters-settings:
         severity: "warning"
       - name: "line-length-limit"
         disabled: true
+      - name: "max-public-structs"
+        arguments: [10]
       - name: "modifies-parameter"
         severity: "warning"
       - name: "modifies-value-receiver"
