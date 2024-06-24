@@ -93,7 +93,7 @@ linters-settings:
       - name: "cognitive-complexity"
         arguments: [40]
       - name: "comment-spacings"
-        arguments: ["lint:ignore", "exhaustive:ignore"]
+        arguments: ["lint:ignore", "exhaustive:ignore", "codespell:ignore"]
       - name: "confusing-naming"
         severity: "warning"
       - name: "confusing-results"
