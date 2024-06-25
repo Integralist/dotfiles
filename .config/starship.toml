@@ -125,7 +125,14 @@ style = "bg:#7DF9AA fg:#282A36"
 
 # Because the starship provided [git_commit] module don't work for me.
 [custom.gittag]
-command = "echo \"$(git describe --tags --abbrev=0)\""
+command = '''
+tag=$(git describe --tags --abbrev=0)
+if [ ${#tag} -gt 30 ]; then
+  echo "${tag:0:30}..."
+else
+  echo "$tag"
+fi
+'''
 when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
 ignore_timeout = true
 style = "fg:#ffffff bg:#bd4024"
