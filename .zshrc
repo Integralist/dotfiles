@@ -1,3 +1,5 @@
+#!/usr/bin/zsh
+#
 # NOTE:
 # additional configuration of the shell is handled by ~/.inputrc which
 # instructs the Readline utility as to what behaviours it should respect.
@@ -445,7 +447,7 @@ alias gl="git log-graphstat"
 alias gli="forgit::log"
 alias glm="git log-me"
 alias gls="git log-short"
-alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | awk NR==1 | ag '\d.+' -o"
+alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | grep -v 'rc' | awk NR==1 | ag '\d.+' -o"
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
 alias gpr="git pull --rebase origin" # make sure to specify the branch name!
 alias gst="git st"
