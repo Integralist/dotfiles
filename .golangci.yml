@@ -92,6 +92,7 @@ linters-settings:
         severity: "warning"
       - name: "cognitive-complexity"
         arguments: [40]
+        disabled: true  # most of the time you don't have time to rewrite/refactor
       - name: "comment-spacings"
         arguments: ["lint:ignore", "exhaustive:ignore", "codespell:ignore"]
       - name: "confusing-naming"
@@ -106,6 +107,7 @@ linters-settings:
         severity: "error"
       - name: "cyclomatic"
         arguments: [50]
+        disabled: true  # most of the time you don't have time to rewrite/refactor
       # - name: "datarace"
       #   severity: "error"
       - name: "deep-exit"
