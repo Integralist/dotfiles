@@ -69,6 +69,8 @@ linters:
 # To validate things from outside of code editor, run:
 # golangci-lint run -v
 linters-settings:
+  goconst:
+    min-occurrences: 4
   misspell:
     ignore-words:
       - "Nominet"
