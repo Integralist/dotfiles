@@ -97,6 +97,7 @@ linters-settings:
         disabled: true  # most of the time you don't have time to rewrite/refactor
       - name: "comment-spacings"
         arguments: ["lint:ignore", "exhaustive:ignore", "codespell:ignore"]
+        disabled: true  # the ability to ignore doesn't work so we'll just disable
       - name: "confusing-naming"
         severity: "warning"
       - name: "confusing-results"
