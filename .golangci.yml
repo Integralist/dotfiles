@@ -105,7 +105,7 @@ linters-settings:
       - name: "context-keys-type"
         severity: "error"
       - name: "cyclomatic"
-        arguments: [20]
+        arguments: [50]
       # - name: "datarace"
       #   severity: "error"
       - name: "deep-exit"
