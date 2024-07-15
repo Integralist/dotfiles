@@ -760,3 +760,7 @@ echo .zshrc loaded
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 source /Users/integralist/.config/broot/launcher/bash/br
+
+# Ensure terminal prompt is two lines under the actual Starship prompt.
+# This is how the Warp terminal used to work and mimics its behaviour.
+PROMPT="${PROMPT}"$'\n\n'
