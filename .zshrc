@@ -479,13 +479,13 @@ alias list='cat ~/.zshrc | grep "^alias" | gsed -En "s/alias (\w+)=(.+)/${bold}\
 # Vertical bar ('|') after each pathname is a FIFO
 #
 # DISABLED:
-# The ls command is now an alias to exa which doesn't have the same flags.
-# I've made ls display (using exa) how I want it to, to not need ll.
+# The ls command is now an alias to eza which doesn't have the same flags.
+# I've made ls display (using eza) how I want it to, to not need ll.
 #
 # alias ll="ls -laGpFHh"
 
 alias ldd="otool -L" # display shared object files a binary is linked to
-alias ls="exa -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
+alias ls="eza -lh --icons --octal-permissions --no-user --git --group-directories-first --ignore-glob '.git|node_modules' --all"
 alias lsd="ls -s 'modified'"
 alias mtr="sudo mtr --report-wide --show-ips --aslookup"
 alias nv="novowels"
