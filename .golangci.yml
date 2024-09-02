@@ -59,21 +59,36 @@ linters:
     - unparam  # https://github.com/mvdan/unparam
     - unused  # https://github.com/dominikh/go-tools/tree/master/unused
     - usestdlibvars  # https://github.com/sashamelentyev/usestdlibvars
-    - vet
     - wrapcheck  # https://github.com/tomarrell/wrapcheck
   disable:
     - godot  # just ended up being annoying (can use regexp exclude in .godot.yaml -- https://github.com/tetafro/godot)
+
 # https://github.com/mgechev/revive#configuration
 # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md
 #
 # To validate things from outside of code editor, run:
 # golangci-lint run -v
 linters-settings:
+  # https://golangci-lint.run/usage/linters/#errchkjson
+  errchkjson:
+    check-error-free-encoding: true
+
+  # https://golangci-lint.run/usage/linters/#errcheck
+  errcheck:
+    exclude-functions:  # Added because of the above errchkjson feature enabled
+      - encoding/json.Marshal
+      - encoding/json.MarshalIndent
+
+  # https://golangci-lint.run/usage/linters/#goconst
   goconst:
     min-occurrences: 4
+
+  # https://golangci-lint.run/usage/linters/#misspell
   misspell:
     ignore-words:
       - "Nominet"
+
+  # https://golangci-lint.run/usage/linters/#revive
   revive:
     enable-all-rules: true
     rules:
@@ -81,7 +96,8 @@ linters-settings:
         severity: "warning"
         arguments:
           - maxLitCount: "10"
-            allowInts: "0,1,2,3,4,5"
+            allowStrs: '""'
+            allowInts: "0,1,2,3,4,5,6,7,8,9,10,16,20,22,32,64,80,128,255,443,8080"
         disabled: true  # most of the time it's fine, and the performance isn't a concern
       - name: "argument-limit"
         severity: "warning"
