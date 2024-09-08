@@ -434,6 +434,8 @@ alias gsw="git switch"
 #
 # NOTE: some of these abstractions (e.g. gbd, gpr) need autocomplete support still.
 #
+alias gam="git add -u" # stage only modified files
+alias gan="git add -N" # stage only new files
 alias gap="git add --patch"
 alias gbi="git branch --list 'integralist*'"
 alias gbd="git branch -D"
@@ -461,6 +463,8 @@ unalias run-help 2>/dev/null
 autoload run-help
 HELPDIR=$(command brew --prefix)/share/zsh/help
 alias help=run-help
+
+alias history="history 0" # force history to show full history
 
 alias ips="arp -a" # some IPs (like my NAS DS220) don't show up until I able to ping it as that starts up the box.
 alias json="python -m json.tool"
@@ -556,6 +560,7 @@ bindkey '^f' fzf
 # as it's so tedious when I forget to execute this manually
 #
 sshagent github
+sshagent fastly
 sshagent fastly_integralist
 
 # ensure every new shell instance has a gpg-agent running
@@ -642,6 +647,7 @@ function go_update {
   go install golang.org/x/tools/cmd/goimports@latest
   go install github.com/incu6us/goimports-reviser/v3@latest
   go install github.com/google/gops@latest
+  go install github.com/securego/gosec/v2/cmd/gosec@latest
 
   # documentation preview
   # go get golang.org/x/tools/godoc@v0.1.8
