@@ -30,12 +30,12 @@
   log-me = log-graphstat --author='Integralist'
   log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
   pr = "!f() { \
-    if [ $# -lt 1 ]; then \
-      echo \"Usage: git pr <pull_request_number>\"; \
+    if [ $# -lt 2 ]; then \
+      echo \"Usage: git pr <pull_request_number> <branch_name>\"; \
     else \
       git pull --rebase origin main; \
-      git fetch origin pull/\"$1\"/head:pr/\"$1\"; \
-      git checkout pr/\"$1\"; \
+      git fetch origin pull/$1/head:$2; \
+      git checkout $2; \
     fi \
   }; f"
   pushit = push --force-with-lease origin head
