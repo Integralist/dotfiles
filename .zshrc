@@ -640,7 +640,7 @@ function go_update {
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
   go install mvdan.cc/gofumpt@latest
-  go install honnef.co/go/tools/cmd/staticcheck@2023.1.7 # https://github.com/dominikh/go-tools
+  go install honnef.co/go/tools/cmd/staticcheck@latest # https://github.com/dominikh/go-tools
   go install golang.org/x/vuln/cmd/govulncheck@latest
   go install github.com/go-delve/delve/cmd/dlv@latest
   go install go.uber.org/nilaway/cmd/nilaway@latest
@@ -726,35 +726,73 @@ if [ -f "$HOME/.bash_completion/alacritty" ]; then
   source "$HOME/.bash_completion/alacritty"
 fi
 
-# Configuration you don't want as part of your main .zshrc
-#
-if [ -f "$HOME/.localrc" ]; then
-  source "$HOME/.localrc"
-fi
+################################################################################
 
-# auto-run Go/Rust updates
+# auto-run Go/Rust updates with a manual lock mechanism
 #
 mkdir -p "$HOME/.cache"
 cache_file="$HOME/.cache/shell-update"
+lock_file="$HOME/.cache/shell-update.lock"
 current_day=$(date +%Y-%m-%d)
-if [ -f "$cache_file" ]; then
-  # get the last modification date of the cache file in YYYY-MM-DD format
-  last_modified_day=$(date -r "$cache_file" +%Y-%m-%d)
-  # if the cache file was last modified on a different day, run the command
-  if [ "$current_day" != "$last_modified_day" ]; then
-    echo "current_day: $current_day"
-    echo "last_modified_day: $last_modified_day"
-    go_update
-    rust_update
-    # update last_modified date
-    touch "$cache_file"
+
+# function to release the lock
+release_lock() {
+  rm -f "$lock_file"
+}
+
+# function to check if another process is holding the lock
+is_locked() {
+  if [ -f "$lock_file" ]; then
+    # check if the PID in the lock file is still running
+    lock_pid=$(cat "$lock_file")
+
+		# using /bin/ps as ps is aliased to procs binary
+    if /bin/ps -p "$lock_pid" > /dev/null 2>&1; then
+      return 0  # lock is still active
+    else
+      echo "stale lock detected, cleaning up."
+      rm -f "$lock_file"
+    fi
   fi
+  return 1  # no lock
+}
+
+# check if the script is locked
+if is_locked; then
+	echo "another shell (PID $(cat "$lock_file")) is already running dependency updates so skip-ahead"
 else
-  go_update
-  rust_update
-  # update last_modified date
-  touch "$cache_file"
+	echo "acquiring shell lock for PID $$ ($lock_file)"
+
+	# write the current process's PID to the lock file
+	echo $$ > "$lock_file"
+
+	# ensure lock is released if the script exits or is interrupted
+	trap release_lock EXIT
+
+	# run the dependency update logic if no lock is present
+	if [ -f "$cache_file" ]; then
+		# get the last modification date of the cache file in YYYY-MM-DD format
+		last_modified_day=$(date -r "$cache_file" +%Y-%m-%d)
+
+		# if the cache file was last modified on a different day, run the command
+		if [ "$current_day" != "$last_modified_day" ]; then
+			echo "updating dependencies for homebrew, go and rust (last updated: $last_modified_day)"
+			go_update
+			rust_update
+			touch "$cache_file" # update last_modified date
+		fi
+	else
+		echo "updating dependencies for homebrew, go and rust (no previous cache file found)"
+		go_update
+		rust_update
+		touch "$cache_file" # update last_modified date
+	fi
+
+	echo "releasing shell lock for PID $$ ($lock_file)"
+	release_lock
 fi
+
+################################################################################
 
 # Starship prompt
 # https://starship.rs/
@@ -762,6 +800,12 @@ fi
 eval "$(starship init zsh)"
 
 echo .zshrc loaded
+
+# Configuration you don't want as part of your main .zshrc
+#
+if [ -f "$HOME/.localrc" ]; then
+  source "$HOME/.localrc"
+fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
