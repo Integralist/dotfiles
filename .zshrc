@@ -24,15 +24,15 @@
 # general autocomplete helpers
 #
 autoload -U +X bashcompinit && bashcompinit
-autoload -Uz compinit && compinit
 
-# + brew install zsh-completions
-#
+# Setup fpath for brew-installed completions, if available
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  autoload -Uz compinit
-  compinit
+  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 fi
+
+# Load Zsh completion system
+autoload -Uz compinit && compinit
 
 # git autocomplete
 #
@@ -336,6 +336,7 @@ function dogr() {
 alias c="clear"
 alias cat="bat"
 alias commit='cat ~/.gitcommit'
+alias datets='date -u +"%s"'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
 read -r -d '' network_help <<- EOF
