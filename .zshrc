@@ -21,6 +21,11 @@
 
 # ⚠️  SCRIPTS ⚠️
 
+# 🚨 If using the Warp terminal you'll find it doesn't support shell auto-complete.
+# https://github.com/warpdotdev/Warp/discussions/434
+# The workaround is to spawn a subshell ($ zsh) but this DISABLES lots of Warp features 😞
+# But you can always `exit` the subshell after you're done (which is fine for me as I only use this workaround for searching `pass` entries).
+
 # general autocomplete helpers
 #
 autoload -U +X bashcompinit && bashcompinit
@@ -43,6 +48,9 @@ autoload -Uz compinit && compinit
 #
 fpath=(~/.zsh $fpath)
 zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+
+# Highlight the selected option when using auto-complete.
+zstyle ':completion:*:default' menu select=2
 
 # ⚠️  CONFIGURATION ⚠️
 #
@@ -552,8 +560,13 @@ function chpwd() {
     find . -type f -name '.DS_Store' -delete
 }
 
+# 🚨 If using the Warp terminal you'll find it doesn't support shell bindings.
+
 # Use fzf for fuzzy searching files and directories
 bindkey '^f' fzf
+
+# Shift-Tab for backward searching auto-complete entries
+bindkey '^[[Z' reverse-menu-complete
 
 # ⚠️  SHELL ⚠️
 
