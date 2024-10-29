@@ -2,6 +2,11 @@
 
 ![Terminal Prompt](./terminal-prompt-ui.png)
 
+> \[!NOTE\]
+> We need nerdfonts.com installed.\
+> `brew install font-hack-nerd-font go-mono-nerd-font`\
+> "Hack Nerd Font Mono" and "GoMono Nerd Font"
+
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
 [This blog post](https://www.integralist.co.uk/posts/tools/) which gives a summary of all my favourite developer tools.
@@ -26,7 +31,7 @@ Turning this feature on has been shown to improve the speed of certain terminal 
 
 ### OS Wake Up
 
-To improve your retina macOS 'wake-up from sleep' performance: 
+To improve your retina macOS 'wake-up from sleep' performance:
 
 ```bash
 sudo pmset -a standbydelay 7200
@@ -70,7 +75,7 @@ In the following list of tools the ❌ indicates what _isn't_ installed via the 
 - [rip](https://github.com/nivekuil/rip): replaces `rm` and allows restoring deleted files.
 - [sad](https://github.com/ms-jpq/sad): interactive sed replacement (use `<Tab>` to select files to apply changes to).
 - [sd](https://github.com/chmln/sd): sed replacement (not quite as powerful, but basically what I typically use sed for).
-- [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell ([font settings](./.alacritty.yml)).
+- [starship](https://starship.rs/): minimal, blazing-fast, and infinitely customizable prompt for any shell ([Alacritty font settings](./.alacritty.yml)).
 - [t-rec](https://github.com/sassman/t-rec-rs): record your terminal screen (outputs gif and mp4 unlike asciinema).
 - [tldr](https://github.com/isacikgoz/tldr): summarizes useful features of commands.
 - [tokei](https://github.com/XAMPPRocky/tokei): displays statistics about your code projects.
