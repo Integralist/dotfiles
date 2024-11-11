@@ -627,6 +627,7 @@ complete -o nospace -C /opt/homebrew/bin/terraform terraform
 export GOROOT="$HOME/.go"
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="$HOME/.humanlog/bin:$PATH" # https://github.com/humanlogio/humanlog (installed via `go install` then upgrade via the installed binary which installs the upgrade in a different path)
 alias gov="$GOPATH/bin/g"
 
 if [ -e .go-version ]; then

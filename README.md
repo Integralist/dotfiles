@@ -3,7 +3,7 @@
 ![Terminal Prompt](./terminal-prompt-ui.png)
 
 > \[!NOTE\]
-> We need nerdfonts.com installed.\
+> We need nerdfonts.com installed and selected as the terminal's font.\
 > `brew install font-hack-nerd-font go-mono-nerd-font`\
 > "Hack Nerd Font Mono" and "GoMono Nerd Font"
 
