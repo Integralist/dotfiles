@@ -149,10 +149,11 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 # application configuration
 #
 export EDITOR="nvim"
-export GPG_TTY=$(tty)
+export GPG_TTY=$(tty) # tell gpg which terminal to use when prompting for a passphrase
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
+# export PINENTRY_USER_DATA="USE_CURSES=1" # tell pinentry to use a terminal-based interface (not the OS UI prompt)
 export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
 export TERMINFO=/usr/share/terminfo
 export TIMEFORMAT="$(printf '\n\e[01;31m')elapsed:$(printf '\e[00m') %Rs, $(printf '\e[01;33m')user mode (cpu time):$(printf '\e[00m') %U, $(printf '\e[01;32m')system mode (cpu time):$(printf '\e[00m') %S"
@@ -604,8 +605,9 @@ then
 fi
 
 # configure fnm node version manager
+# https://github.com/Schniz/fnm/blob/master/docs/configuration.md
 #
-eval "$(fnm env --use-on-cd)"
+eval "$(fnm env --use-on-cd --version-file-strategy=recursive)"
 
 # configure terraform auto-complete
 #
