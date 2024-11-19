@@ -173,6 +173,7 @@ linters-settings:
         disabled: true
       - name: "max-public-structs"
         arguments: [10]
+        disabled: true
       - name: "modifies-parameter"
         severity: "warning"
       - name: "modifies-value-receiver"
