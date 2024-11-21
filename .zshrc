@@ -26,6 +26,11 @@
 # The workaround is to spawn a subshell ($ zsh) but this DISABLES lots of Warp features 😞
 # But you can always `exit` the subshell after you're done (which is fine for me as I only use this workaround for searching `pass` entries).
 
+# marlonrichert/zsh-autocomplete
+# requires removing any calls to compinit from your .zshrc file.
+#
+source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # general autocomplete helpers
 #
 autoload -U +X bashcompinit && bashcompinit
@@ -37,7 +42,9 @@ if type brew &>/dev/null; then
 fi
 
 # Load Zsh completion system
-autoload -Uz compinit && compinit
+# DISABLED: in favour of marlonrichert/zsh-autocomplete (loaded above)
+#
+# autoload -Uz compinit && compinit
 
 # git autocomplete
 #
