@@ -407,7 +407,7 @@ alias dockerprune='docker system prune --all'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias fd='fd --hidden'
-alias ff='fzf --multi'
+alias fzf='fzf --multi'
 
 # git alias' with git autocomplete support
 #
@@ -516,6 +516,8 @@ alias top='htop'
 alias tree='tree -I node_modules'
 alias uid="uuidgen"
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
+alias v=nvim
+alias vf='vim $(fzf)'
 alias vim=nvim
 alias vi='vi -c "set nocompatible" -c "set number" -c "set cursorline" -c "set expandtab" -c "set hlsearch" -c "set visualbell" -c "set tabstop=2" -c "set shiftwidth=2" -c "syntax on"'
 alias weather="curl wttr.in"
