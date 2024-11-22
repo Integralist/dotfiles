@@ -9,8 +9,8 @@
 #   - man zsh (+ /Readline Variables)
 #
 # STRUCTURE:
-#   - SCRIPTS
 #   - CONFIGURATION
+#   - SCRIPTS
 #   - EXPORTS
 #   - CUSTOM FUNCTIONS
 #   - ALIAS
@@ -18,46 +18,6 @@
 #   - SHELL
 #   - SOFTWARE
 #
-
-# ⚠️  SCRIPTS ⚠️
-
-# 🚨 If using the Warp terminal you'll find it doesn't support shell auto-complete.
-# https://github.com/warpdotdev/Warp/discussions/434
-# The workaround is to spawn a subshell ($ zsh) but this DISABLES lots of Warp features 😞
-# But you can always `exit` the subshell after you're done (which is fine for me as I only use this workaround for searching `pass` entries).
-
-# marlonrichert/zsh-autocomplete
-# requires removing any calls to compinit from your .zshrc file.
-#
-source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-# general autocomplete helpers
-#
-autoload -U +X bashcompinit && bashcompinit
-
-# Setup fpath for brew-installed completions, if available
-if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
-fi
-
-# Load Zsh completion system
-# DISABLED: in favour of marlonrichert/zsh-autocomplete (loaded above)
-#
-# autoload -Uz compinit && compinit
-
-# git autocomplete
-#
-# https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
-# https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
-#
-# NOTE: The zsh file is saved as: ~/.zsh/_git
-#
-fpath=(~/.zsh $fpath)
-zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
-
-# Highlight the selected option when using auto-complete.
-zstyle ':completion:*:default' menu select=2
 
 # ⚠️  CONFIGURATION ⚠️
 #
@@ -212,6 +172,46 @@ then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 fi
 export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
+
+# ⚠️  SCRIPTS ⚠️
+
+# 🚨 If using the Warp terminal you'll find it doesn't support shell auto-complete.
+# https://github.com/warpdotdev/Warp/discussions/434
+# The workaround is to spawn a subshell ($ zsh) but this DISABLES lots of Warp features 😞
+# But you can always `exit` the subshell after you're done (which is fine for me as I only use this workaround for searching `pass` entries).
+
+# marlonrichert/zsh-autocomplete
+# requires removing any calls to compinit from your .zshrc file.
+#
+source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# general autocomplete helpers
+#
+autoload -U +X bashcompinit && bashcompinit
+
+# Setup fpath for brew-installed completions, if available
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+fi
+
+# Load Zsh completion system
+# DISABLED: in favour of marlonrichert/zsh-autocomplete (loaded above)
+#
+# autoload -Uz compinit && compinit
+
+# git autocomplete
+#
+# https://github.com/git/git/blob/master/contrib/completion/git-completion.bash
+# https://github.com/git/git/blob/master/contrib/completion/git-completion.zsh
+#
+# NOTE: The zsh file is saved as: ~/.zsh/_git
+#
+fpath=(~/.zsh $fpath)
+zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+
+# Highlight the selected option when using auto-complete.
+zstyle ':completion:*:default' menu select=2
 
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
