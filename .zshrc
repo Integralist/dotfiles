@@ -10,8 +10,8 @@
 #
 # STRUCTURE:
 #   - CONFIGURATION
-#   - SCRIPTS
 #   - EXPORTS
+#   - SCRIPTS
 #   - CUSTOM FUNCTIONS
 #   - ALIAS
 #   - BINDINGS
@@ -116,6 +116,9 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 # application configuration
 #
 export EDITOR="nvim"
+export FZF_COMPLETION_OPTS='--border --info=inline'
+export FZF_DEFAULT_COMMAND="rg --hidden --files"
+export FZF_DEFAULT_OPTS='--multi --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap'
 export GPG_TTY=$(tty) # tell gpg which terminal to use when prompting for a passphrase
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
@@ -212,6 +215,19 @@ zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
 
 # Highlight the selected option when using auto-complete.
 zstyle ':completion:*:default' menu select=2
+
+# fzf shell support
+#
+# Enables ctrl-r for fuzzy searching command history.
+# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
+# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
+#
+if test -f ~/.fzf.zsh; then
+  source ~/.fzf.zsh
+else
+	$(brew --prefix)/opt/fzf/install
+  source ~/.fzf.zsh
+fi
 
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
@@ -414,7 +430,6 @@ alias dockerprune='docker system prune --all'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 alias fd='fd --hidden'
-alias fzf='fzf --multi'
 
 # git alias' with git autocomplete support
 #
@@ -574,18 +589,14 @@ function chpwd() {
 #
 # 🚨 If using the Warp terminal you'll find it doesn't support shell bindings.
 
-# fzf configuration
-#
-# Enables ctrl-r for fuzzy searching command history.
-# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
-# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
-source $(brew --prefix)/Cellar/fzf/$(fzf --version | cut -d ' ' -f 1)/shell/key-bindings.zsh
-
 # Shift-Tab for backward searching auto-complete entries
 bindkey '^[[Z' reverse-menu-complete
 
 # Explicitly override VI-MODE set because of EDITOR value.
 bindkey -e .
+
+# Configure a shortcut for the `vf` alias
+bindkey -s '^f' 'vim $(fzf)'
 
 # ⚠️  SHELL ⚠️
 
