@@ -15,6 +15,7 @@
 #   - CUSTOM FUNCTIONS
 #   - ALIAS
 #   - BINDINGS
+#   - BIND KEYS
 #   - SHELL
 #   - SOFTWARE
 #
@@ -570,6 +571,8 @@ function chpwd() {
     find . -type f -name '.DS_Store' -delete
 }
 
+# ⚠️  BIND KEYS ⚠️
+#
 # 🚨 If using the Warp terminal you'll find it doesn't support shell bindings.
 
 # fzf configuration
