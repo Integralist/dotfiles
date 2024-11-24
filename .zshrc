@@ -58,8 +58,7 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt ALIASES
 setopt VI
-setopt CORRECT
-setopt CORRECT_ALL
+setopt NOCORRECT NOCORRECTALL
 unsetopt BEEP
 unsetopt CASE_GLOB
 unsetopt CASE_MATCH
