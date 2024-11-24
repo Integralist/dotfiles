@@ -57,7 +57,7 @@ setopt HIST_FIND_NO_DUPS
 setopt HIST_IGNORE_ALL_DUPS
 setopt HIST_REDUCE_BLANKS
 setopt ALIASES
-setopt VI
+# setopt VI # EDITOR contains `nvim` and if `vi` is part of the substring then VI mode is auto-enabled, so we have to use `bindkey -e .` to disable it (see BIND KEYS section)
 setopt NOCORRECT NOCORRECTALL
 unsetopt BEEP
 unsetopt CASE_GLOB
@@ -583,6 +583,9 @@ source $(brew --prefix)/Cellar/fzf/$(fzf --version | cut -d ' ' -f 1)/shell/key-
 
 # Shift-Tab for backward searching auto-complete entries
 bindkey '^[[Z' reverse-menu-complete
+
+# Explicitly override VI-MODE set because of EDITOR value.
+bindkey -e .
 
 # ⚠️  SHELL ⚠️
 
