@@ -572,8 +572,12 @@ function chpwd() {
 
 # 🚨 If using the Warp terminal you'll find it doesn't support shell bindings.
 
-# Use fzf for fuzzy searching files and directories
-bindkey '^f' fzf
+# fzf configuration
+#
+# Enables ctrl-r for fuzzy searching command history.
+# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
+# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
+source $(brew --prefix)/Cellar/fzf/$(fzf --version | cut -d ' ' -f 1)/shell/key-bindings.zsh
 
 # Shift-Tab for backward searching auto-complete entries
 bindkey '^[[Z' reverse-menu-complete
