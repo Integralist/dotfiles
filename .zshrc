@@ -608,7 +608,10 @@ function chpwd() {
 
     # clean out any .DS_Store files
     #
-    find . -type f -name '.DS_Store' -delete
+    if [[ $PWD != $HOME ]]; then
+			# find . -type f -name '.DS_Store' -delete
+			fd '.DS_Store' --type f --hidden --absolute-path | xargs -I {} rm {}
+    fi
 }
 
 # ⚠️  BIND KEYS ⚠️
