@@ -235,6 +235,8 @@ zstyle ':completion:*:default' menu select=2
 
 # fzf shell support
 #
+# The `brew install fzf` installation provides an `install` script, which:
+#
 # Enables ctrl-r for fuzzy searching command history.
 # Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
 # Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
