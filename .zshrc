@@ -185,8 +185,9 @@ export RUST_SRC_PATH="$(rustc --print sysroot)/lib/rustlib/src/rust/src"
 
 # marlonrichert/zsh-autocomplete
 # requires removing any calls to compinit from your .zshrc file.
+# DISABLED: in favour of using fzf-tab (below)
 #
-source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # general autocomplete helpers
 #
@@ -200,8 +201,19 @@ fi
 
 # Load Zsh completion system
 # DISABLED: in favour of marlonrichert/zsh-autocomplete (loaded above)
+# RE-ENABLED: in favour of using fzf-tab (https://github.com/Aloxaf/fzf-tab)
 #
 # autoload -Uz compinit && compinit
+autoload -U compinit; compinit
+
+# fzf-tab
+#
+if test -f ~/fzf-tab/fzf-tab.plugin.zsh; then
+  source ~/fzf-tab/fzf-tab.plugin.zsh
+else
+	git clone https://github.com/Aloxaf/fzf-tab ~/fzf-tab
+  source ~/fzf-tab/fzf-tab.plugin.zsh
+fi
 
 # git autocomplete
 #
