@@ -250,6 +250,11 @@ fi
 #
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
+# zsh-users/zsh-syntax-highlighting
+#
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
 # update Homebrew and check for outdated packages
