@@ -208,11 +208,11 @@ autoload -U compinit; compinit
 
 # fzf-tab
 #
-if test -f ~/fzf-tab/fzf-tab.plugin.zsh; then
-  source ~/fzf-tab/fzf-tab.plugin.zsh
+if test -f ~/.zsh/fzf-tab/fzf-tab.plugin.zsh; then
+  source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
 else
-	git clone https://github.com/Aloxaf/fzf-tab ~/fzf-tab
-  source ~/fzf-tab/fzf-tab.plugin.zsh
+	git clone https://github.com/Aloxaf/fzf-tab ~/.zsh/fzf-tab
+  source ~/.zsh/fzf-tab/fzf-tab.plugin.zsh
 fi
 
 # git autocomplete
