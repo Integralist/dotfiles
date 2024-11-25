@@ -224,6 +224,11 @@ fi
 #
 fpath=(~/.zsh $fpath)
 zstyle ':completion:*:*:git:*' script ~/.git-completion.bash
+# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+# zstyle ':completion:*' menu no
+# zstyle ':completion:*' list-suffixes
+# zstyle ':completion:*' expand prefix suffix
 
 # Highlight the selected option when using auto-complete.
 zstyle ':completion:*:default' menu select=2
