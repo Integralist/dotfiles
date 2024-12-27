@@ -817,29 +817,12 @@ function rust_update {
   rustup update
 }
 
-# broot (tree replacement) requires a companion shell function (br) to allow
-# alt+enter to cd into a directory.
-#
-# If you install broot via Homebrew then `broot --install` will add a `source`
-# to the br function for you. So I've manually moved it from being appended to
-# within the following conditional.
-#
-if [ -f "/Users/integralist/.config/broot/launcher/zsh/br" ]; then
-  source /Users/integralist/.config/broot/launcher/zsh/br
-fi
-
 # zoxide is a directory switcher
 #
 # z <pattern>
 # zoxide query -ls
 #
 eval "$(zoxide init zsh)"
-
-# Alacritty
-#
-if [ -f "$HOME/.bash_completion/alacritty" ]; then
-  source "$HOME/.bash_completion/alacritty"
-fi
 
 ################################################################################
 
@@ -923,8 +906,6 @@ if [ -f "$HOME/.localrc" ]; then
 fi
 
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-
-source /Users/integralist/.config/broot/launcher/bash/br
 
 # Ensure terminal prompt is two lines under the actual Starship prompt.
 # This is how the Warp terminal used to work and mimics its behaviour.
