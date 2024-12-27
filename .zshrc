@@ -59,11 +59,19 @@ setopt HIST_IGNORE_ALL_DUPS # Removes all duplicate entries from history when a 
 setopt HIST_REDUCE_BLANKS # Removes extra whitespace from commands saved to history.
 setopt ALIASES # Enables alias expansion for command lines.
 
-# DISABLED:
-# BUT! If `vi` is part of the EDITOR substring then VI mode is auto-enabled!
-# So as we have EDITOR set to "nvim" we have to use `bindkey -e .` to explicitly disable it (see BIND KEYS section).
+# Enables Vi-style keybindings for command-line editing.
 #
-# setopt VI # Enables Vi-style keybindings for command-line editing.
+# DISABLED:
+# When using the Warp terminal it wasn't necessary to use vi-mode.
+# As the terminal had great text selection/navigation support built-in.
+#
+# WARNING: If `vi` is part of the EDITOR substring then VI mode is auto-enabled!
+# So as we set EDITOR to "nvim" we have to use `bindkey -e .` to forcibly disable.
+# See BIND KEYS section where we set that.
+#
+# RE-ENABLED:
+# Because ghostty doesn't have support for selecting text easily.
+setopt VI
 
 setopt NOCORRECT NOCORRECTALL # Disables spell checking for the current command or for all commands.
 unsetopt BEEP # Disables the terminal bell or audible beep when an error or alert occurs.
@@ -632,10 +640,30 @@ function chpwd() {
 bindkey '^[[Z' reverse-menu-complete
 
 # Explicitly override VI-MODE set because of EDITOR value.
-bindkey -e .
+#
+# DISABLED:
+# See `setopt VI` earlier in the file.
+# We went back to using vi-mode as ghostty doesn't support text selection.
+#
+# bindkey -e .
 
 # Configure a shortcut for the `vf` alias
 bindkey -s '^f' 'vim $(fzf)'
+
+# Allow yanking command input to system clipboard.
+#
+# It works like this:
+# echo $BUFFER prints the command you're currently typing.
+# Piping (|) it into pbcopy sends that text to the macOS system clipboard.
+# We use Zsh's zle (Zsh Line Editor) to intercept the buffer before execution and copy it to the clipboard.
+#
+# NOTE: This only works when you've typed a command but not run.
+copy-buffer-to-clipboard() {
+  echo $BUFFER | pbcopy
+  zle reset-prompt  # refresh the prompt to avoid command overlap
+}
+zle -N copy-buffer-to-clipboard
+bindkey '^Y' copy-buffer-to-clipboard
 
 # ⚠️  SHELL ⚠️
 
