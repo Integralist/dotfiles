@@ -271,7 +271,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 #
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-
 # ⚠️  CUSTOM FUNCTIONS ⚠️
 
 # update Homebrew and check for outdated packages
@@ -616,12 +615,6 @@ function chpwd() {
       "$GOPATH"/bin/g install $(cat .go-version)
     else
       "$GOPATH"/bin/g install $(golatest)
-    fi
-
-    # configure git maintenance
-    #
-    if git rev-parse --show-toplevel >/dev/null 2>&1; then
-      git maintenance start
     fi
 
     # clean out any .DS_Store files
