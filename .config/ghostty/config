@@ -1,5 +1,6 @@
 font-family = JetBrainsMono NFM Bold
 font-thicken = true
+keybind = global:cmd+§=toggle_visibility
 theme = nightfox
 window-padding-x = 20
 window-padding-y = 15
