@@ -637,6 +637,8 @@ function chpwd() {
 # 🚨 If using the Warp terminal you'll find it doesn't support shell bindings.
 
 # Shift-Tab for backward searching auto-complete entries
+#
+# NOTE: Not really necessary when using https://github.com/Aloxaf/fzf-tab
 bindkey '^[[Z' reverse-menu-complete
 
 # Explicitly override VI-MODE set because of EDITOR value.
@@ -648,7 +650,7 @@ bindkey '^[[Z' reverse-menu-complete
 # bindkey -e .
 
 # Configure a shortcut for the `vf` alias
-bindkey -s '^f' 'vim $(fzf)'
+bindkey -s '^f' 'vim $(fzf)\n'
 
 # Allow yanking command input to system clipboard.
 #
