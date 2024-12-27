@@ -519,6 +519,7 @@ alias gco="git checkout origin/main --" # followed by path to file to checkout
 alias gcoi="forgit::checkout::file"
 alias gcv="git commit -v"
 alias gf="git pushit"
+alias ghosttydocs="ghostty +show-config --default --docs"
 alias gl="git log-graphstat"
 alias gli="forgit::log"
 alias glm="git log-me"
