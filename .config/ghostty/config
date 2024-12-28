@@ -1,6 +1,10 @@
+# ghostty +show-config --default --docs | nvim
+
 font-family = JetBrainsMono NFM Bold
 font-thicken = true
-keybind = global:cmd+§=toggle_quick_terminal
+keybind = global:cmd+shift+w=toggle_quick_terminal
+quick-terminal-autohide = false
+quick-terminal-position = center
 theme = nightfox
 window-padding-x = 20
 window-padding-y = 15
