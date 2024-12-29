@@ -26,7 +26,7 @@ As of Dec 2024 I'm using [Ghostty](https://ghostty.org/).
 > e.g. `brew install font-hack-nerd-font`\
 > Will install "Hack Nerd Font Mono".
 
-### Tools
+## Tools
 
 There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew:
 
