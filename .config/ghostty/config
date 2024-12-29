@@ -1,5 +1,6 @@
 # ghostty +show-config --default --docs | nvim
 
+adjust-cell-height = +20%
 clipboard-trim-trailing-spaces = true
 copy-on-select = true
 font-family = Menlo
