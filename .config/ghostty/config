@@ -9,5 +9,6 @@ quick-terminal-autohide = false
 quick-terminal-position = center
 scrollback-limit = 10000
 theme = nightfox
+unfocused-split-opacity = 0.40
 window-padding-x = 20
 window-padding-y = 15
