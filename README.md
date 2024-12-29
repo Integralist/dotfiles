@@ -10,18 +10,21 @@ The ultimate source of truth is this dotfile repo, all other published content i
 
 ## Terminal
 
-As of Nov 2024 I'm using [Rio](https://raphamorim.io/rio/)
+As of 2022 I'm using [Warp](https://www.warp.dev/).
 
-As of Dec 2023 I'll likely be using Ghostty.
+As of Nov 2024 I'm using [Rio](https://raphamorim.io/rio/).
+
+As of Dec 2024 I'm using [Ghostty](https://ghostty.org/).
 
 ### Prompt
 
 ![Terminal Prompt](./terminal-prompt-ui.png)
 
 > \[!NOTE\]
-> We need nerdfonts.com installed and selected as the terminal's font.\
-> `brew install font-hack-nerd-font`\
-> "Hack Nerd Font Mono"
+> If using Ghostty, it comes with Nerd Fonts installed `ghostty +list-fonts`.\
+> Otherwise you'll need [nerdfonts.com](https://www.nerdfonts.com/) installed and selected as the terminal's font.\
+> e.g. `brew install font-hack-nerd-font`\
+> Will install "Hack Nerd Font Mono".
 
 ### Tools
 
