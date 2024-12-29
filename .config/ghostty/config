@@ -4,6 +4,7 @@ adjust-cell-height = +20%
 clipboard-trim-trailing-spaces = true
 copy-on-select = true
 font-family = Menlo
+font-feature = -liga
 font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 quick-terminal-autohide = false
