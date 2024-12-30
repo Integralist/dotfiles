@@ -7,6 +7,7 @@ font-family = Menlo
 font-feature = -liga
 font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
+keybind = super+shift+s=write_screen_file:paste
 quick-terminal-autohide = false
 quick-terminal-position = center
 scrollback-limit = 10000
