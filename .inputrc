@@ -1,22 +1,0 @@
-# DOCUMENTATION:
-# man bash (+ /Readline Variables)
-#
-set bell-style visible
-set colored-completion-prefix On
-set colored-stats On
-set completion-ignore-case On
-set completion-map-case On
-set completion-query-items 30
-set editing-mode vi
-set menu-complete-display-prefix On
-set print-completions-horizontally Off
-set revert-all-at-newline On
-set show-all-if-ambiguous On
-set show-all-if-unmodified On
-# set show-mode-in-prompt On
-set visible-stats On
-
-TAB: menu-complete
-
-zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
-zstyle ':completion:*' list-suffixes zstyle ':completion:*' expand prefix suffix 
