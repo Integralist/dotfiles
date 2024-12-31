@@ -8,6 +8,10 @@ font-feature = -liga
 font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 keybind = super+shift+s=write_screen_file:paste
+keybind = super+page_up=scroll_page_fractional:-0.5
+keybind = super+page_down=scroll_page_fractional:0.5
+keybind = super+shift+page_up=scroll_page_lines:-1
+keybind = super+shift+page_down=scroll_page_lines:1
 quick-terminal-autohide = false
 quick-terminal-position = center
 scrollback-limit = 10000
