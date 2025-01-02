@@ -35,7 +35,13 @@ $zig\
 [](fg:#ff8a9f bg:#282A36)\
 $character\
 $cmd_duration\
+$line_break\
 """
+
+add_newline = true
+
+[line_break]
+disabled = false
 
 [directory]
 format = "[ $path ]($style)"
@@ -106,7 +112,7 @@ format = "[ $symbol$branch ]($style)"
 symbol = " "
 
 [cmd_duration]
-format = "[ $duration ]($style)"
+format = "[󱑍 $duration ]($style)"
 style = "fg:bright-white"
 
 [character]
@@ -144,3 +150,9 @@ when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && 
 ignore_timeout = true
 style = "fg:#ffffff bg:#bd4024"
 format = "[ $output ]($style)"
+
+[custom.infra_context]
+command = "cat ~/.infra_context 2>/dev/null || echo 'No context'"
+when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/domainr-api\"* ]]" # make sure we check if we're inside a nested directory
+style = "fg:#ffffff bg:#bd4024"
+format = "[$output ]($style)"
