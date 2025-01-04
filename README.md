@@ -40,6 +40,7 @@ brew bundle install
 - [Android File Transfer](https://www.android.com/filetransfer/): `brew install --cask android-file-transfer`
 - [Rio Terminal](https://raphamorim.io/rio/): `brew install --cask rio`
 - [Warp Terminal](https://www.warp.dev/): `brew install --cask warp`.
+- [goread](https://github.com/TypicalAM/goread): `brew install goread`.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
 - [monosnap](https://monosnap.com/): annotate images.
