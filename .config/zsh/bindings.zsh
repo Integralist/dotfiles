@@ -18,7 +18,7 @@ bindkey '^[[Z' reverse-menu-complete
 # bindkey -e .
 
 # Configure a shortcut for the `vf` alias
-bindkey -s '^f' 'vim $(fzf)\n'
+bindkey -s '^f' 'nvim $(fzf)\n'
 
 # Allow yanking command input to system clipboard.
 #
