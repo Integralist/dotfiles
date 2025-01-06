@@ -1,7 +1,9 @@
 # ghostty +show-config --default --docs | nvim
 # ghostty +list-keybinds
 #
-# NOTE: cmd+<triple-mouse-click> == copy command output
+# NOTE: useful tips...
+# cmd+<triple-mouse-click> == copy command output
+# cmd+shift+c == copy selected text inside of neovim
 
 adjust-cell-height = +20%
 clipboard-trim-trailing-spaces = true
