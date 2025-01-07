@@ -79,3 +79,7 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # Terraform Autocomplete
 #
 complete -o nospace -C $(brew --prefix)/bin/terraform terraform
+
+# 1Password Autocomplete
+#
+eval "$(op completion zsh)"; compdef _op op
