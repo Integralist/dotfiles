@@ -36,12 +36,20 @@ fi
 
 # Git Autocomplete
 #
-path_git_completion="$HOME/git-completion.zsh"
-if ! test -f $path_git_completion; then
-	curl -so $path_git_completion https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-completion.zsh
-	chmod +x $path_git_completion
+# IMPORTANT: The bash completion script is required even when using zsh shell.
+#
+path_zsh_git_completion="$dir_zsh/_git"
+if ! test -f $path_zsh_git_completion; then
+	curl -so $path_zsh_git_completion https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-completion.zsh
+	chmod +x $path_zsh_git_completion
+fi
+path_bash_git_completion="$HOME/git-completion.bash"
+if ! test -f $path_bash_git_completion; then
+	curl -so $path_bash_git_completion https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-completion.bash
+	chmod +x $path_bash_git_completion
 fi
 fpath=($dir_zsh $fpath)
+zstyle ':completion:*:*:git:*' script $path_bash_git_completion
 zstyle ':completion:*:default' menu select=2 # Highlight the selected option when using auto-complete.
 
 # fzf shell support
