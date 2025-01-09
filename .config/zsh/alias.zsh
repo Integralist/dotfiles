@@ -73,7 +73,7 @@ alias networkhelp='echo "$network_help"'
 alias dockerprune='docker system prune --all'
 alias dockerrmi='docker rmi $(docker images -a -q)'
 alias dockerrmc='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
-alias fd='fd --hidden'
+alias fd='fd --hidden --no-ignore-vcs'
 
 alias g="git"
 alias ga="git add"
