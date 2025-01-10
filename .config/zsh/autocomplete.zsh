@@ -48,6 +48,18 @@ if ! test -f $path_bash_git_completion; then
 	curl -so $path_bash_git_completion https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-completion.bash
 	chmod +x $path_bash_git_completion
 fi
+
+# Rust Autocomplete
+#
+path_rustup_completion="$dir_zsh/_rustup"
+if ! test -f $path_rustup_completion; then
+	rustup completions zsh > $path_rustup_completion
+fi
+path_cargo_completion="$dir_zsh/_cargo"
+if ! test -f $path_cargo_completion; then
+	rustup completions zsh cargo > $path_cargo_completion
+fi
+
 fpath=($dir_zsh $fpath)
 zstyle ':completion:*:*:git:*' script $path_bash_git_completion
 zstyle ':completion:*:default' menu select=2 # Highlight the selected option when using auto-complete.
