@@ -67,11 +67,6 @@ fi
 # - cargo edit
 #
 source "$HOME"/.cargo/env
-if [ ! -f "$HOME/.config/rustlang/autocomplete/rustup" ]; then
-  mkdir -p ~/.config/rustlang/autocomplete
-  rustup completions zsh rustup >> ~/.config/rustlang/autocomplete/rustup
-fi
-source "$HOME/.config/rustlang/autocomplete/rustup"
 if ! command -v rust-analyzer &> /dev/null
 then
   brew install rust-analyzer

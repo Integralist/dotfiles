@@ -55,6 +55,7 @@ path_rustup_completion="$dir_zsh/_rustup"
 if ! test -f $path_rustup_completion; then
 	rustup completions zsh > $path_rustup_completion
 fi
+source "$path_rustup_completion"
 path_cargo_completion="$dir_zsh/_cargo"
 if ! test -f $path_cargo_completion; then
 	rustup completions zsh cargo > $path_cargo_completion
