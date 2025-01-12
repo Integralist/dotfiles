@@ -8,6 +8,10 @@ indent_style = tab
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+[*.rs, *.zig]
+indent_size = 4
+indent_style = space
+
 [{Makefile,go.mod,go.sum,*.go,.gitmodules,*.cue}]
 indent_size = 4
 indent_style = tab
