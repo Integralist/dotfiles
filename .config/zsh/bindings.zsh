@@ -4,6 +4,8 @@
 # Also, other tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
+# NOTE: For a complete list of shell bindings, run: `zle -l`.
+
 # Shift-Tab for backward searching auto-complete entries
 #
 # NOTE: Not really necessary when using https://github.com/Aloxaf/fzf-tab
@@ -16,6 +18,18 @@ bindkey '^[[Z' reverse-menu-complete
 # We went back to using vi-mode as ghostty doesn't support text selection.
 #
 # bindkey -e .
+
+# In zsh's vi mode, ensure pressing the Delete/Backspace key deletes the character before the cursor.
+# ^? == backspace (i.e. allow deleting backwards)
+#
+bindkey -v '^?' backward-delete-char
+
+# Support forward deletion
+# ^[[3~ == fn+backspace
+#
+# NOTE: To see what "escape sequence" your terminal uses, run `cat` and type.
+#
+bindkey '^[[3~' delete-char
 
 # Configure a shortcut for the `vf` alias
 bindkey -s '^f' 'nvim $(fzf)\n'
