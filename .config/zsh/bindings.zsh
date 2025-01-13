@@ -56,9 +56,21 @@ copy-buffer-to-clipboard() {
 zle -N copy-buffer-to-clipboard
 bindkey '^Y' copy-buffer-to-clipboard
 
+# WARNING: ghostty doesn't yet support advanced key binding selections.
+# https://github.com/ghostty-org/ghostty/discussions/3142
+#
+# But I stumbled into a partial work-around:
 # https://stackoverflow.com/questions/5407916/zsh-zle-shift-selection
 #
 # IMPORTANT: I've modified the following to use pbcopy and pbpaste.
+#
+# - `Shift+LeftArrow` and `Shift+RightArrow` to select by character.
+# - `Shift+Ctrl+LeftArrow` and `Shift+Ctrl+RightArrow` to select by word.
+# - `Shift+Fn+LeftArrow` and `Shift+Fn+RightArrow` to select to start/end of line.
+# - `Cmd+c` to copy the selection
+# - `Cmd+v` to paste the selection
+# - `Ctrl+Backspace` deletes the word to the left.
+# - `Ctrl+Fn+Backspace` deletes the word to the right.
 #
 ###############
 # Keybindings #
