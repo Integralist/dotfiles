@@ -64,17 +64,23 @@ bindkey '^Y' copy-buffer-to-clipboard
 #
 # IMPORTANT: I've modified the following to use pbcopy and pbpaste.
 #
-# - `Shift+LeftArrow` and `Shift+RightArrow` to select by character.
-# - `Shift+Ctrl+LeftArrow` and `Shift+Ctrl+RightArrow` to select by word.
-# - `Shift+Fn+LeftArrow` and `Shift+Fn+RightArrow` to select to start/end of line.
-# - `Cmd+c` to copy the selection
-# - `Cmd+v` to paste the selection
-# - `Ctrl+Backspace` deletes the word to the left.
-# - `Ctrl+Fn+Backspace` deletes the word to the right.
-#
+# - `Cmd+c` to copy the selection ✅
+# - `Cmd+v` to paste the selection ✅
+# - `Shift+LeftArrow` and `Shift+RightArrow` to select by character. ✅
+# - `Shift+Opt+LeftArrow` and `Shift+Opt+RightArrow` to select by word. ✅
+# - `Cmd+Shift+LeftArrow` and `Cmd+Shift+RightArrow` to select to start/end of line. ✅
+# - `Cmd+LeftArrow` and `Cmd+RightArrow` to move to start/end of line ✅
+# - `Ctrl+Backspace` deletes the word to the left. ❌
+# - `Ctrl+Fn+Backspace` deletes the word to the right. ❌
+
 ###############
 # Keybindings #
 ###############
+
+# FIXME: I want the following keybindings instead of the above...
+#
+# - `Opt+Backspace` deletes the word to the left.
+# - `Opt+Fn+Backspace` deletes the word to the right.
 
 # Bind Alt + Delete for forward deleting a word
 bindkey -M emacs '^[[3;3~' kill-word
@@ -142,6 +148,10 @@ export KEY_CTRL_LEFT='^[[1;5D'
 export KEY_CTRL_RIGHT='^[[1;5C'
 export KEY_SHIFT_CTRL_LEFT='^[[1;6D'
 export KEY_SHIFT_CTRL_RIGHT='^[[1;6C'
+export KEY_SHIFT_OPT_LEFT='^[[1;4D'
+export KEY_SHIFT_OPT_RIGHT='^[[1;4C'
+export KEY_SHIFT_CMD_LEFT='^[[1;10D'
+export KEY_SHIFT_CMD_RIGHT='^[[1;10C'
 
 export KEY_END='^[[F;'
 export KEY_HOME='^[[H'
@@ -265,15 +275,15 @@ for keyname        kcap   seq                   mode        widget (
 
     ctrl-right        x   $KEY_CTRL_RIGHT       unselect    forward-word
     ctrl-left         x   $KEY_CTRL_LEFT        unselect    backward-word
-    shift-cmd-right   x   $KEY_SHIFT_CTRL_RIGHT select      end-of-line
-    shift-cmd-left    x   $KEY_SHIFT_CTRL_LEFT  select      beginning-of-line
+    shift-cmd-right   x   $KEY_SHIFT_CMD_RIGHT  select      end-of-line
+    shift-cmd-left    x   $KEY_SHIFT_CMD_LEFT   select      beginning-of-line
 
     ctrl-e            x   $KEY_CTRL_E           unselect    end-of-line
     ctrl-a            x   $KEY_CTRL_A           unselect    beginning-of-line
     shift-ctrl-e      x   $KEY_SHIFT_CTRL_E     select      end-of-line
     shift-ctrl-a      x   $KEY_SHIFT_CTRL_A     select      beginning-of-line
-    shift-ctrl-right  x   $KEY_SHIFT_CTRL_RIGHT select      forward-word
-    shift-ctrl-left   x   $KEY_SHIFT_CTRL_LEFT  select      backward-word
+    shift-ctrl-right  x   $KEY_SHIFT_OPT_RIGHT  select      forward-word
+    shift-ctrl-left   x   $KEY_SHIFT_OPT_LEFT   select      backward-word
 
     end            kend   $KEY_END              unselect    end-of-line
     shift-end      kEND   $KEY_SHIFT_END        select      end-of-line
