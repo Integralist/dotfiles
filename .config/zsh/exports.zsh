@@ -52,8 +52,11 @@ export GPG_TTY=$tty_instance # tell gpg which terminal to use when prompting for
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
-export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
-export TERMINFO=/usr/share/terminfo
+
+# DISABLED: I'm using ghostty now with neovim and not vim or tmux anymore.
+# export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
+# export TERMINFO=/usr/share/terminfo
+
 export TIMEFORMAT="$(printf '\n\e[01;31m')elapsed:$(printf '\e[00m') %Rs, $(printf '\e[01;33m')user mode (cpu time):$(printf '\e[00m') %U, $(printf '\e[01;32m')system mode (cpu time):$(printf '\e[00m') %S"
 
 # DISABLED:
