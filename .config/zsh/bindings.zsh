@@ -7,38 +7,25 @@ export PATH="$MODIFIED_PATH"
 # NOTE: For a complete list of shell bindings, run: `zle -l`.
 # TIP: To see what "escape sequence" your terminal uses, run `cat` and type.
 
-# Shift-Tab for backward searching auto-complete entries
-#
-# DISABLED: Not necessary when using https://github.com/Aloxaf/fzf-tab
-#
-# bindkey '^[[Z' reverse-menu-complete
-
-# Explicitly override VI-MODE set because of EDITOR value.
-#
-# DISABLED:
-# See `setopt VI` earlier in the file.
-# We went back to using vi-mode as ghostty doesn't support text selection.
-#
-# bindkey -e .
-
 # Support moving cursor by words in vi-mode
+# Fn + Arrow
 #
-# DISABLED: Doesn't appear to work with ghostty without breaking vi-mode.
-#
-# bindkey '^[[1;5D' backward-word
-# bindkey '^[[1;5C' forward-word
+bindkey -M viins '^[[H' backward-word
+bindkey -M viins '^[[F' forward-word
+bindkey -M vicmd '^[[H' backward-word
+bindkey -M vicmd '^[[1;5C' forward-word
 
-# Support deleting characters to the left in vi-mode
+# Support deleting characters to the left.
 # Backspace
 #
 bindkey '^?' backward-delete-char
 
-# Support deleting characters to the right in vi-mode
+# Support deleting characters to the right.
 # Fn + Backspace
 #
 bindkey '^[[3~' delete-char
 
-# Support deleting word to the right in vi-mode
+# Support deleting word to the right.
 # Ctrl + Fn + Backspace
 #
 bindkey '^[[3;5~' kill-word
@@ -64,12 +51,11 @@ bindkey '^Y' copy-buffer-to-clipboard
 # WARNING: ghostty doesn't yet support advanced key binding selections.
 # https://github.com/ghostty-org/ghostty/discussions/3142
 #
-# But I stumbled into a partial work-around that partially supports them:
+# But I stumbled into a partial work-around that helps partially support it:
 # https://stackoverflow.com/questions/5407916/zsh-zle-shift-selection
-
-# IMPORTANT: I've modified the following code from the original.
+# I've modified the original code to fit my own requirements.
 #
-# | BINDING                  | ACTION                 | SUPPORTED |
+# | BINDING                  | ACTION                 | SUPPORTED | WORK-AROUND
 # | Cmd + c                  | Copy selection         | ✅        |
 # | Cmd + v                  | Paste selection        | ✅        |
 # | Shift + LeftArrow        | Select left character  | ✅        |
@@ -80,74 +66,25 @@ bindkey '^Y' copy-buffer-to-clipboard
 # | Cmd + Shift + RightArrow | Select to line end     | ✅        |
 # | Cmd + LeftArrow          | Move to line start     | ✅        |
 # | Cmd + RightArrow         | Move to line end       | ✅        |
-# | Opt + LeftArrow          | Move word to left      | ❌        | (Ctrl+)
-# | Opt + RightArrow         | Move word to right     | ❌        | (Ctrl+)
-# | Opt + Backspace          | Delete word to left    | ❌        | (Ctrl+)
-# | Opt + Fn + Backspace     | Delete word to right   | ❌        | (Ctrl+)
+# | Opt + LeftArrow          | Move word to left      | ❌        | (Fn + LeftArrow)
+# | Opt + RightArrow         | Move word to right     | ❌        | (Fn + RightArrow)
+# | Opt + Backspace          | Delete word to left    | ❌        | ❌
+# | Opt + Fn + Backspace     | Delete word to right   | ❌        | ❌
 
-################
-# Shift Select #
-################
-
-# for my own convenience I explicitly set the signals
-#   that my terminal sends to the shell as variables.
-#   you might have different signals. you can see what
-#   signal each of your keys sends by running `cat`
-#   and pressing keys (you'll be able to see most keys)
-#   also some of the signals sent might be set in your
-#   terminal emulator application/program
-#   configurations/preferences. finally some terminals
-#   have a feature that shows you what signals are sent
-#   per key press.
-#
-# for context, at the time of writing these variables are
-#   set for the kitty terminal program, i.e these signals
-#   are mostly ones sent by default by this terminal.
-export KEY_ALT_B='^[b'
-export KEY_ALT_D='^[d'
-export KEY_ALT_F='^[f'
-
-export KEY_CTRL_A='^A'
-export KEY_CTRL_E='^E'
-export KEY_CTRL_L='^L'
-export KEY_CTRL_R='^R'
-export KEY_CTRL_U='^U'
-export KEY_CTRL_Z='^Z'
-
-export KEY_SHIFT_CTRL_A='^[[27;6;65~'
-export KEY_SHIFT_CTRL_C='^[[27;6;67~'
-export KEY_SHIFT_CTRL_E='^[[27;6;69~'
-export KEY_SHIFT_CTRL_V='^[[27;6;86~'
-export KEY_SHIFT_CTRL_X='^[[27;6;88~'
-export KEY_SHIFT_CTRL_Z='^[[27;6;90~'
-
+export KEY_BACKSPACE='^?'
+export KEY_CMD_C='^[[27;6;67~'
+export KEY_CMD_LEFT='^A'
+export KEY_CMD_RIGHT='^E'
+export KEY_DELETE='^[[3~'
+export KEY_FN_CTRL_X='^X'
 export KEY_LEFT='^[[D'
 export KEY_RIGHT='^[[C'
-export KEY_SHIFT_UP='^[[1;2A'
-export KEY_SHIFT_DOWN='^[[1;2B'
-export KEY_SHIFT_RIGHT='^[[1;2C'
-export KEY_SHIFT_LEFT='^[[1;2D'
-export KEY_ALT_LEFT='^[[1;3D'
-export KEY_ALT_RIGHT='^[[1;3C'
-export KEY_SHIFT_ALT_LEFT='^[[1;4D'
-export KEY_SHIFT_ALT_RIGHT='^[[1;6C'
-export KEY_CTRL_LEFT='^[[1;5D'
-export KEY_CTRL_RIGHT='^[[1;5C'
-export KEY_SHIFT_CTRL_LEFT='^[[1;6D'
-export KEY_SHIFT_CTRL_RIGHT='^[[1;6C'
-export KEY_SHIFT_OPT_LEFT='^[[1;4D'
-export KEY_SHIFT_OPT_RIGHT='^[[1;4C'
 export KEY_SHIFT_CMD_LEFT='^[[1;10D'
 export KEY_SHIFT_CMD_RIGHT='^[[1;10C'
-
-export KEY_END='^[[F;'
-export KEY_HOME='^[[H'
-export KEY_SHIFT_END='^[[1;2F'
-export KEY_SHIFT_HOME='^[[1;2H'
-
-export KEY_DELETE='^[[3~'
-export KEY_BACKSPACE='^?'
-export KEY_CTRL_BACKSPACE='^H'
+export KEY_SHIFT_LEFT='^[[1;2D'
+export KEY_SHIFT_OPT_LEFT='^[[1;4D'
+export KEY_SHIFT_OPT_RIGHT='^[[1;4C'
+export KEY_SHIFT_RIGHT='^[[1;2C'
 
 # -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 
@@ -227,156 +164,28 @@ function widget::util-insertchar() {
     zle forward-char
 }
 
+bindkey $KEY_CMD_C widget::copy-selection
+bindkey $KEY_FN_CTRL_X widget::cut-selection
 
-#                       |  key sequence                   | command
-# --------------------- | ------------------------------- | -------------
+# NOTE: "keyname" column is arbitrarily descriptive.
+#
+for keyname           kcap   seq                   mode       widget (
+    # LEFT/RIGHT seems pointless but they specifically UNSELECT text.
+    left              kcub1  $KEY_LEFT             unselect   backward-char
+    right             kcuf1  $KEY_RIGHT            unselect   forward-char
 
-bindkey                   $KEY_ALT_F                        forward-word
-bindkey                   $KEY_ALT_B                        backward-word
-bindkey                   $KEY_ALT_D                        kill-word
-bindkey                   $KEY_CTRL_U                       backward-kill-line
-bindkey                   $KEY_CTRL_BACKSPACE               backward-kill-word
-bindkey                   $KEY_CTRL_Z                       undo
-bindkey                   $KEY_SHIFT_CTRL_Z                 redo
-bindkey                   $KEY_CTRL_R                       history-incremental-search-backward
-bindkey                   $KEY_SHIFT_CTRL_C                 widget::copy-selection
-bindkey                   $KEY_SHIFT_CTRL_X                 widget::cut-selection
-bindkey                   $KEY_SHIFT_CTRL_V                 widget::paste
-bindkey                   $KEY_SHIFT_CTRL_A                 widget::select-all
-bindkey                   $KEY_CTRL_L                       widget::scroll-and-clear-screen
+		# DELETE/BACKSPACE seems pointless but they specifically delete selected text.
+    del               x      $KEY_DELETE           delselect  delete-char
+    backspace         x      $KEY_BACKSPACE        delselect  backward-delete-char
 
-for keyname        kcap   seq                   mode        widget (
-
-    left           kcub1  $KEY_LEFT             unselect    backward-char
-    right          kcuf1  $KEY_RIGHT            unselect    forward-char
-
-    shift-up       kri    $KEY_SHIFT_UP         select      up-line-or-history
-    shift-down     kind   $KEY_SHIFT_DOWN       select      down-line-or-history
-    shift-right    kRIT   $KEY_SHIFT_RIGHT      select      forward-char
-    shift-left     kLFT   $KEY_SHIFT_LEFT       select      backward-char
-
-    alt-right         x   $KEY_ALT_RIGHT        unselect    forward-word
-    alt-left          x   $KEY_ALT_LEFT         unselect    backward-word
-    shift-alt-right   x   $KEY_SHIFT_ALT_RIGHT  select      forward-word
-    shift-alt-left    x   $KEY_SHIFT_ALT_LEFT   select      backward-word
-
-    ctrl-right        x   $KEY_CTRL_RIGHT       unselect    forward-word
-    ctrl-left         x   $KEY_CTRL_LEFT        unselect    backward-word
-    shift-cmd-right   x   $KEY_SHIFT_CMD_RIGHT  select      end-of-line
-    shift-cmd-left    x   $KEY_SHIFT_CMD_LEFT   select      beginning-of-line
-
-    ctrl-e            x   $KEY_CTRL_E           unselect    end-of-line
-    ctrl-a            x   $KEY_CTRL_A           unselect    beginning-of-line
-    shift-ctrl-e      x   $KEY_SHIFT_CTRL_E     select      end-of-line
-    shift-ctrl-a      x   $KEY_SHIFT_CTRL_A     select      beginning-of-line
-    shift-ctrl-right  x   $KEY_SHIFT_OPT_RIGHT  select      forward-word
-    shift-ctrl-left   x   $KEY_SHIFT_OPT_LEFT   select      backward-word
-
-    end            kend   $KEY_END              unselect    end-of-line
-    shift-end      kEND   $KEY_SHIFT_END        select      end-of-line
-
-    home           khome  $KEY_HOME             unselect    beginning-of-line
-    shift-home     kHOM   $KEY_SHIFT_HOME       select      beginning-of-line
-
-    del               x   $KEY_DELETE           delselect   delete-char
-    backspace         x   $KEY_BACKSPACE        delselect   backward-delete-char
-
-    a                 x       'a'               insertchar  'a'
-        b                 x       'b'               insertchar  'b'
-    c                 x       'c'               insertchar  'c'
-    d                 x       'd'               insertchar  'd'
-    e                 x       'e'               insertchar  'e'
-    f                 x       'f'               insertchar  'f'
-    g                 x       'g'               insertchar  'g'
-    h                 x       'h'               insertchar  'h'
-    i                 x       'i'               insertchar  'i'
-    j                 x       'j'               insertchar  'j'
-    k                 x       'k'               insertchar  'k'
-    l                 x       'l'               insertchar  'l'
-    m                 x       'm'               insertchar  'm'
-    n                 x       'n'               insertchar  'n'
-    o                 x       'o'               insertchar  'o'
-    p                 x       'p'               insertchar  'p'
-    q                 x       'q'               insertchar  'q'
-    r                 x       'r'               insertchar  'r'
-    s                 x       's'               insertchar  's'
-    t                 x       't'               insertchar  't'
-    u                 x       'u'               insertchar  'u'
-    v                 x       'v'               insertchar  'v'
-    w                 x       'w'               insertchar  'w'
-    x                 x       'x'               insertchar  'x'
-    y                 x       'y'               insertchar  'y'
-    z                 x       'z'               insertchar  'z'
-    A                 x       'A'               insertchar  'A'
-    B                 x       'B'               insertchar  'B'
-    C                 x       'C'               insertchar  'C'
-    D                 x       'D'               insertchar  'D'
-    E                 x       'E'               insertchar  'E'
-    F                 x       'F'               insertchar  'F'
-    G                 x       'G'               insertchar  'G'
-    H                 x       'H'               insertchar  'H'
-    I                 x       'I'               insertchar  'I'
-    J                 x       'J'               insertchar  'J'
-    K                 x       'K'               insertchar  'K'
-    L                 x       'L'               insertchar  'L'
-    M                 x       'M'               insertchar  'M'
-    N                 x       'N'               insertchar  'N'
-    O                 x       'O'               insertchar  'O'
-    P                 x       'P'               insertchar  'P'
-    Q                 x       'Q'               insertchar  'Q'
-    R                 x       'R'               insertchar  'R'
-    S                 x       'S'               insertchar  'S'
-    T                 x       'T'               insertchar  'T'
-    U                 x       'U'               insertchar  'U'
-    V                 x       'V'               insertchar  'V'
-    W                 x       'W'               insertchar  'W'
-    X                 x       'X'               insertchar  'X'
-    Y                 x       'Y'               insertchar  'Y'
-    Z                 x       'Z'               insertchar  'Z'
-    0                 x       '0'               insertchar  '0'
-    1                 x       '1'               insertchar  '1'
-    2                 x       '2'               insertchar  '2'
-    3                 x       '3'               insertchar  '3'
-    4                 x       '4'               insertchar  '4'
-    5                 x       '5'               insertchar  '5'
-    6                 x       '6'               insertchar  '6'
-    7                 x       '7'               insertchar  '7'
-    8                 x       '8'               insertchar  '8'
-    9                 x       '9'               insertchar  '9'
-
-    exclamation-mark      x  '!'                insertchar  '!'
-    hash-sign             x  '\#'               insertchar  '\#'
-    dollar-sign           x  '$'                insertchar  '$'
-    percent-sign          x  '%'                insertchar  '%'
-    ampersand-sign        x  '\&'               insertchar  '\&'
-    star                  x  '\*'               insertchar  '\*'
-    plus                  x  '+'                insertchar  '+'
-    comma                 x  ','                insertchar  ','
-    dot                   x  '.'                insertchar  '.'
-    forwardslash          x  '\\'               insertchar  '\\'
-    backslash             x  '/'                insertchar  '/'
-    colon                 x  ':'                insertchar  ':'
-    semi-colon            x  '\;'               insertchar  '\;'
-    left-angle-bracket    x  '\<'               insertchar  '\<'
-    right-angle-bracket   x  '\>'               insertchar  '\>'
-    equal-sign            x  '='                insertchar  '='
-    question-mark         x  '\?'               insertchar  '\?'
-    left-square-bracket   x  '['                insertchar  '['
-    right-square-bracket  x  ']'                insertchar  ']'
-    hat-sign              x  '^'                insertchar  '^'
-    underscore            x  '_'                insertchar  '_'
-    left-brace            x  '{'                insertchar  '{'
-    right-brace           x  '\}'               insertchar  '\}'
-    left-parenthesis      x  '\('               insertchar  '\('
-    right-parenthesis     x  '\)'               insertchar  '\)'
-    pipe                  x  '\|'               insertchar  '\|'
-    tilde                 x  '\~'               insertchar  '\~'
-    at-sign               x  '@'                insertchar  '@'
-    dash                  x  '\-'               insertchar  '\-'
-    double-quote          x  '\"'               insertchar  '\"'
-    single-quote          x  "\'"               insertchar  "\'"
-    backtick              x  '\`'               insertchar  '\`'
-    whitespace            x  '\ '               insertchar  '\ '
+    cmd-left          x      $KEY_CMD_RIGHT        unselect   end-of-line
+    cmd-right         x      $KEY_CMD_LEFT         unselect   beginning-of-line
+    shift-cmd-left    x      $KEY_SHIFT_CMD_LEFT   select     beginning-of-line
+    shift-cmd-right   x      $KEY_SHIFT_CMD_RIGHT  select     end-of-line
+    shift-ctrl-left   x      $KEY_SHIFT_OPT_LEFT   select     backward-word
+    shift-ctrl-right  x      $KEY_SHIFT_OPT_RIGHT  select     forward-word
+    shift-left        kLFT   $KEY_SHIFT_LEFT       select     backward-char
+    shift-right       kRIT   $KEY_SHIFT_RIGHT      select     forward-char
 ) {
     eval "function widget::key-$keyname() {
         widget::util-$mode $widget \$@
@@ -397,3 +206,14 @@ export ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=(
     widget::key-cmd-right
     widget::key-shift-cmd-right
 )
+
+###############################################################################
+# DISABLED STUFF
+###############################################################################
+
+# Support backward searching auto-complete entries
+# Shift-Tab
+#
+# DISABLED: Not necessary when using https://github.com/Aloxaf/fzf-tab
+#
+# bindkey '^[[Z' reverse-menu-complete
