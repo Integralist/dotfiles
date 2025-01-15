@@ -21,22 +21,27 @@ export PATH="$MODIFIED_PATH"
 #
 # bindkey -e .
 
-# In zsh's vi-mode, ensure pressing the Delete/Backspace key deletes the character before the cursor.
-# ^? == backspace (i.e. allow deleting backwards)
-#
-bindkey -v '^?' backward-delete-char
-
-# In zsh's vi-mode support moving backwards and forwards by word.
+# Support moving cursor by words in vi-mode
 #
 # DISABLED: Doesn't appear to work with ghostty without breaking vi-mode.
 #
-# bindkey -v '^[b' backward-word
-# bindkey -v '^[f' forward-word
+# bindkey '^[[1;5D' backward-word
+# bindkey '^[[1;5C' forward-word
 
-# Support forward deletion
-# ^[[3~ == fn+backspace
+# Support deleting characters to the left in vi-mode
+# Backspace
+#
+bindkey '^?' backward-delete-char
+
+# Support deleting characters to the right in vi-mode
+# Fn + Backspace
 #
 bindkey '^[[3~' delete-char
+
+# Support deleting word to the right in vi-mode
+# Ctrl + Fn + Backspace
+#
+bindkey '^[[3;5~' kill-word
 
 # Configure a shortcut for the `vf` alias
 bindkey -s '^f' 'nvim $(fzf)\n'
@@ -59,44 +64,26 @@ bindkey '^Y' copy-buffer-to-clipboard
 # WARNING: ghostty doesn't yet support advanced key binding selections.
 # https://github.com/ghostty-org/ghostty/discussions/3142
 #
-# But I stumbled into a partial work-around:
+# But I stumbled into a partial work-around that partially supports them:
 # https://stackoverflow.com/questions/5407916/zsh-zle-shift-selection
+
+# IMPORTANT: I've modified the following code from the original.
 #
-# IMPORTANT: I've modified the following to use pbcopy and pbpaste.
-#
-# - `Cmd+c` to copy the selection ✅
-# - `Cmd+v` to paste the selection ✅
-# - `Shift+LeftArrow` and `Shift+RightArrow` to select by character. ✅
-# - `Shift+Opt+LeftArrow` and `Shift+Opt+RightArrow` to select by word. ✅
-# - `Cmd+Shift+LeftArrow` and `Cmd+Shift+RightArrow` to select to start/end of line. ✅
-# - `Cmd+LeftArrow` and `Cmd+RightArrow` to move to start/end of line ✅
-# - `Ctrl+Backspace` deletes the word to the left. ❌
-# - `Ctrl+Fn+Backspace` deletes the word to the right. ❌
-
-###############
-# Keybindings #
-###############
-
-# FIXME: I want the following keybindings instead of the above...
-#
-# - `Opt+Backspace` deletes the word to the left.
-# - `Opt+Fn+Backspace` deletes the word to the right.
-
-# Bind Alt + Delete for forward deleting a word
-bindkey -M emacs '^[[3;3~' kill-word
-
-# Bind Delete to delete a letter to the right
-bindkey "^[[3~" delete-char
-
-# Ctrl binds
-# Bind Ctrl + Delete to delete word to the right
-bindkey '^[[3;5~' kill-word
-
-# Bind Ctrl + Backspace to delete word to the left
-bindkey '^H' backward-kill-word
-
-# Bind Ctrl + Right Arrow to move to the next word
-bindkey '^[[1;5C' forward-word
+# | BINDING                  | ACTION                 | SUPPORTED |
+# | Cmd + c                  | Copy selection         | ✅        |
+# | Cmd + v                  | Paste selection        | ✅        |
+# | Shift + LeftArrow        | Select left character  | ✅        |
+# | Shift + RightArrow       | Select right character | ✅        |
+# | Shift + Opt + LeftArrow  | Select word to left    | ✅        |
+# | Shift + Opt + RightArrow | Select word to right   | ✅        |
+# | Cmd + Shift + LeftArrow  | Select to line start   | ✅        |
+# | Cmd + Shift + RightArrow | Select to line end     | ✅        |
+# | Cmd + LeftArrow          | Move to line start     | ✅        |
+# | Cmd + RightArrow         | Move to line end       | ✅        |
+# | Opt + LeftArrow          | Move word to left      | ❌        | (Ctrl+)
+# | Opt + RightArrow         | Move word to right     | ❌        | (Ctrl+)
+# | Opt + Backspace          | Delete word to left    | ❌        | (Ctrl+)
+# | Opt + Fn + Backspace     | Delete word to right   | ❌        | (Ctrl+)
 
 ################
 # Shift Select #
