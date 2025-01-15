@@ -118,6 +118,7 @@ style = "fg:bright-white"
 [character]
 success_symbol = '[ ➜](bold green) '
 error_symbol = '[ ✗](#E84D44) '
+vimcmd_symbol = ' [❮](bold green)'
 
 [time]
 disabled = false
