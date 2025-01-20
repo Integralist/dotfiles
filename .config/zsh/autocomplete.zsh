@@ -21,9 +21,20 @@ autoload -U +X bashcompinit && bashcompinit
 #
 autoload -U compinit; compinit
 
+dir_zsh="$HOME/.zsh"
+
+# Install integralist/zsh-cli-json-parser
+# For custom CLI autocomplete (for when a CLI doesn't provide autocomplete itself)
+#
+path_json_parser="$dir_zsh/get_cli_options.zsh"
+if ! test -f $path_json_parser; then
+	curl -so $path_json_parser https://raw.githubusercontent.com/Integralist/zsh-cli-json-parser/refs/heads/main/get_cli_options.zsh
+	chmod +x $path_json_parser
+fi
+source $path_json_parser
+
 # fzf-tab
 #
-dir_zsh="$HOME/.zsh"
 dir_fzf_tab="$dir_zsh/fzf-tab"
 path_fzf_tab="$dir_fzf_tab/fzf-tab.plugin.zsh"
 if test -f $path_fzf_tab; then
