@@ -56,6 +56,7 @@ bindkey '^Y' copy-buffer-to-clipboard
 # I've modified the original code to fit my own requirements.
 #
 # | BINDING                  | ACTION                 | SUPPORTED | WORK-AROUND
+# | Cmd + x                  | Cut selection          | ❌        | (Fn + Ctrl + x)
 # | Cmd + c                  | Copy selection         | ✅        |
 # | Cmd + v                  | Paste selection        | ✅        |
 # | Shift + LeftArrow        | Select left character  | ✅        |
