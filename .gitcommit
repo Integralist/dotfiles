@@ -1,4 +1,12 @@
-# <type>(optional_scope): <description: imperative mood>
+# <subject> WHAT
+#
+# <body> WHY
+#
+# <trailers>
+#
+# STRUCTURE:
+#
+#		<type>(optional_scope): <description: imperative mood>
 #
 # TYPES:
 #    all:      Changes to multiple files/modules/packages.
@@ -28,3 +36,5 @@
 #   https://www.conventionalcommits.org/
 #   https://git.kernel.org/pub/scm/git/git.git/tree/Documentation/SubmittingPatches?h=v2.36.1#n181
 #   https://en.wikipedia.org/wiki/Imperative_mood
+#   https://git-scm.com/docs/git-interpret-trailers
+#   https://alchemists.io/articles/git_trailers
