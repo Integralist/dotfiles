@@ -177,10 +177,6 @@ function go_alias() {
 	local v="$1"
 	alias go="$GOPATH/bin/go$v"
 }
-# go_symlink_remove deletes the symlink so we're back to using the GOROOT version.
-function go_symlink_remove() {
-	rm -f "$GOPATH/bin/go"
-}
 # go_symlink is called by chpwd to allow a different go version binary to be used.
 # if the specified version binary doesn't exist, we install it first.
 function go_symlink() {
@@ -193,6 +189,10 @@ function go_symlink() {
 		go_install "$v"
 	fi
 	ln -sf "$GOPATH/bin/go$v" "$GOPATH/bin/go"
+}
+# go_symlink_remove deletes the symlink so we're back to using the GOROOT version.
+function go_symlink_remove() {
+	rm -f "$GOPATH/bin/go"
 }
 # go_list lists all installed tools
 function go_list() {
@@ -212,46 +212,46 @@ function go_clean() {
 # As we need to call them from this function.
 #
 function chpwd() {
-    ls
+	ls
 
-		# figure out go version
+	# figure out go version
+	#
+	local v=""
+	if [ -e go.mod ]; then
+		v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
+		# go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
+		# we need a complete version for installing and symlinking.
 		#
-    local v=""
-    if [ -e go.mod ]; then
-        v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
-        # go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
-        # we need a complete version for installing and symlinking.
-        #
-        if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
-                | grep -E "^go${v}\.[0-9]+$" \
-                | sed 's/^go//' \
-                | sort -V \
-                | tail -n 1)
-            if [ -n "$latest_patch" ]; then
-                v="$latest_patch"
-            else
-                echo "Failed to fetch the latest patch version for $v"
-                rm -f "$GOPATH/bin/go" # remove symlink so the PATH lookup finds the GOROOT binary.
-                v="" # Ensure v is empty to prevent executing the install steps
-            fi
-        fi
-    elif [ -e .go-version ]; then
-        v="$(cat .go-version)"
-    fi
-    if [ -n "$v" ]; then
-        go_install "$v" # installs the specified Go version
-        go_symlink "$v" # ensures `go` now references the specified Go version
-        go_tools # ensures we have all the tools we need for this Go version
-        r # reload shell so starship can display the updated go version
-    fi
+		if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+			latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
+				| grep -E "^go${v}\.[0-9]+$" \
+				| sed 's/^go//' \
+				| sort -V \
+				| tail -n 1)
+			if [ -n "$latest_patch" ]; then
+				v="$latest_patch"
+			else
+				echo "Failed to fetch the latest patch version for $v"
+				go_symlink_remove # remove symlink so the PATH lookup finds the GOROOT binary.
+				v="" # Ensure v is empty to prevent executing the install steps
+			fi
+		fi
+	elif [ -e .go-version ]; then
+		v="$(cat .go-version)"
+	fi
+	if [ -n "$v" ]; then
+		go_install "$v" # installs the specified Go version
+		go_symlink "$v" # ensures `go` now references the specified Go version
+		go_tools # ensures we have all the tools we need for this Go version
+		r # reload shell so starship can display the updated go version
+	fi
 
-    # clean out any .DS_Store files
-    #
-    if [[ $PWD != $HOME ]]; then
-			# find . -type f -name '.DS_Store' -delete
-			fd '.DS_Store' --type f --hidden --absolute-path | xargs -I {} rm {}
-    fi
+	# clean out any .DS_Store files
+	#
+	if [[ $PWD != $HOME ]]; then
+		# find . -type f -name '.DS_Store' -delete
+		fd '.DS_Store' --type f --hidden --absolute-path | xargs -I {} rm {}
+	fi
 }
 
 # zoxide is a directory switcher
