@@ -129,11 +129,21 @@ if [ ! -f $GOROOT/bin/go ]; then
 	echo "Cleaning up Go archive from $TMP_DL"
 	rm "$TMP_DL"
 fi
-# go_update updates/installs necessary Go tools.
-function go_update {
+# DISABLED:The following until I'm sure what workflow is best for me.
+#
+# # each new shell instance should start from the ROOT go install (not the symlink)
+# # but don't remove it when a second `source ~/.zshrc`.
+# # this is because when we install/switch to a new go version we reload the shell.
+# # we do this to ensure the Starship prompt can read the symlinked Go version.
+# if [ -z "$GO_RESET_SYMLINK" ]; then
+# 	echo "delete Go symlink (i.e. using GOROOT Go version)"
+# 	rm -f "$GOPATH/bin/go"
+# 	GO_RESET_SYMLINK=1
+# fi
+# go_tools installs/updates necessary Go tools.
+function go_tools {
   local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
   curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin "$golangcilatest"
-
   go install github.com/rakyll/gotest@latest
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
@@ -166,6 +176,10 @@ function go_alias() {
   fi
 	local v="$1"
 	alias go="$GOPATH/bin/go$v"
+}
+# go_symlink_remove deletes the symlink so we're back to using the GOROOT version.
+function go_symlink_remove() {
+	rm -f "$GOPATH/bin/go"
 }
 # go_symlink is called by chpwd to allow a different go version binary to be used.
 # if the specified version binary doesn't exist, we install it first.
@@ -202,32 +216,34 @@ function chpwd() {
 
 		# figure out go version
 		#
+    local v=""
     if [ -e go.mod ]; then
-			local v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
-			# go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
-			# we need a complete version for installing and symlinking.
-			#
-			if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-				latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
-					| grep -E "^go${v}\.[0-9]+$" \
-					| sed 's/^go//' \
-					| sort -V \
-					| tail -n 1)
-				if [ -n "$latest_patch" ]; then
-					v="$latest_patch"
-				else
-					echo "Failed to fetch the latest patch version for $v"
-					rm -f "$GOPATH/bin/go" # remove symlink so we PATH lookup finds the GOROOT binary.
-				fi
-			fi
-			go_install "$v"
-			go_symlink "$v"
-			r # reload shell so starship can display the updated go version
+        v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
+        # go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
+        # we need a complete version for installing and symlinking.
+        #
+        if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
+                | grep -E "^go${v}\.[0-9]+$" \
+                | sed 's/^go//' \
+                | sort -V \
+                | tail -n 1)
+            if [ -n "$latest_patch" ]; then
+                v="$latest_patch"
+            else
+                echo "Failed to fetch the latest patch version for $v"
+                rm -f "$GOPATH/bin/go" # remove symlink so the PATH lookup finds the GOROOT binary.
+                v="" # Ensure v is empty to prevent executing the install steps
+            fi
+        fi
     elif [ -e .go-version ]; then
-			local v="$(cat .go-version)"
-			go_install "$v"
-			go_symlink "$v"
-			r # reload shell so starship can display the updated go version
+        v="$(cat .go-version)"
+    fi
+    if [ -n "$v" ]; then
+        go_install "$v" # installs the specified Go version
+        go_symlink "$v" # ensures `go` now references the specified Go version
+        go_tools # ensures we have all the tools we need for this Go version
+        r # reload shell so starship can display the updated go version
     fi
 
     # clean out any .DS_Store files

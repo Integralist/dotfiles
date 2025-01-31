@@ -65,13 +65,13 @@ else
 		# if the cache file was last modified on a different day, run the command
 		if [ "$current_day" != "$last_modified_day" ]; then
 			echo "updating dependencies for homebrew, go and rust (last updated: $last_modified_day)"
-			go_update
+			go_tools
 			rust_update
 			touch "$cache_file" # update last_modified date
 		fi
 	else
 		echo "updating dependencies for homebrew, go and rust (no previous cache file found)"
-		go_update
+		go_tools
 		rust_update
 		touch "$cache_file" # update last_modified date
 	fi
