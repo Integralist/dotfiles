@@ -4,8 +4,10 @@
 # NOTE: useful tips...
 # cmd+<triple-mouse-click> == copy command output
 # cmd+shift+c == copy selected text inside of neovim
+# cmd+shift+v == paste whatever was selected using the mouse (vs cmd+v which pastes anything selected with the keyboard selection)
 
 adjust-cell-height = +20%
+auto-update = check
 clipboard-paste-protection=true
 clipboard-trim-trailing-spaces = true
 copy-on-select = true
@@ -18,10 +20,12 @@ keybind = super+page_up=scroll_page_fractional:-0.5
 keybind = super+shift+page_down=scroll_page_lines:1
 keybind = super+shift+page_up=scroll_page_lines:-1
 keybind = super+shift+s=write_screen_file:paste
+keybind = super+shift+alt+s=write_screen_file:open
 macos-option-as-alt = right
 quick-terminal-autohide = false
 quick-terminal-position = center
-scrollback-limit = 100000
+scrollback-limit = 100000000
+split-divider-color = #666666
 theme = nightfox
 unfocused-split-opacity = 0.40
 window-new-tab-position = end
