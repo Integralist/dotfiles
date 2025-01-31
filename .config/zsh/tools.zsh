@@ -20,6 +20,49 @@ then
   brew install shellcheck
 fi
 
+# Rust environment
+#
+# - autocomplete
+# - rust-analyzer
+# - cargo audit
+# - cargo-nextest
+# - cargo fmt
+# - cargo clippy
+# - cargo edit
+#
+source "$HOME"/.cargo/env
+if ! command -v rust-analyzer &> /dev/null
+then
+  brew install rust-analyzer
+fi
+if ! cargo audit --version &> /dev/null; then
+  cargo install cargo-audit --features=fix
+fi
+if ! cargo nextest --version &> /dev/null; then
+  cargo install cargo-nextest
+fi
+if ! cargo fmt --version &> /dev/null; then
+  rustup component add rustfmt
+fi
+if ! cargo clippy --version &> /dev/null; then
+  rustup component add clippy
+fi
+if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
+  cargo install cargo-edit
+fi
+# rust_update updates Homebrew and updates/installs necessary Rust tools.
+function rust_update {
+  brew_update # called because of rust-analyzer
+  rustup self update
+  rustup update stable
+  rustup component add rustfmt
+  rustup component add clippy
+  cargo install cargo-audit --features=fix
+  cargo install cargo-nextest
+  cargo install cargo-edit
+  rustup update
+}
+
 # Golang environment
 #
 # For complete list of all go versions:
@@ -107,70 +150,44 @@ function go_update {
 # go_install installs the specified version
 function go_install() {
   if [ -z "$1" ]; then
-		echo "Please pass the Go version to install (e.g. 1.21.13)"
+		echo "Pass a Go version (e.g. 1.21.13)"
     return
   fi
 	local v="$1"
 	go install "golang.org/dl/go$v@latest"
 	"$GOPATH/bin/go$v" download
 	"$GOPATH/bin/go$v" version
-	go_alias $v
 }
 # go_alias creates an alias for the specified version
 function go_alias() {
+  if [ -z "$1" ]; then
+		echo "Pass a Go version (e.g. 1.21.13)"
+    return
+  fi
 	local v="$1"
 	alias go="$GOPATH/bin/go$v"
 }
+# go_symlink is called by chpwd to allow a different go version binary to be used.
+# if the specified version binary doesn't exist, we install it first.
+function go_symlink() {
+  if [ -z "$1" ]; then
+		echo "Pass a Go version (e.g. 1.21.13)"
+    return
+  fi
+	local v=$1
+	if [ ! -f "$GOPATH/bin/go$v" ]; then
+		go_install "$v"
+	fi
+	ln -sf "$GOPATH/bin/go$v" "$GOPATH/bin/go"
+}
 # go_list lists all installed tools
 function go_list() {
+	echo "GOPATH: $GOPATH/bin"
 	ls $GOPATH/bin
 }
 # go_clean deletes the Go installation completely.
 function go_clean() {
 	sudo rm -rf ~/go ~/.go
-}
-
-# Rust environment
-#
-# - autocomplete
-# - rust-analyzer
-# - cargo audit
-# - cargo-nextest
-# - cargo fmt
-# - cargo clippy
-# - cargo edit
-#
-source "$HOME"/.cargo/env
-if ! command -v rust-analyzer &> /dev/null
-then
-  brew install rust-analyzer
-fi
-if ! cargo audit --version &> /dev/null; then
-  cargo install cargo-audit --features=fix
-fi
-if ! cargo nextest --version &> /dev/null; then
-  cargo install cargo-nextest
-fi
-if ! cargo fmt --version &> /dev/null; then
-  rustup component add rustfmt
-fi
-if ! cargo clippy --version &> /dev/null; then
-  rustup component add clippy
-fi
-if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
-  cargo install cargo-edit
-fi
-# rust_update updates Homebrew and updates/installs necessary Rust tools.
-function rust_update {
-  brew_update # called because of rust-analyzer
-  rustup self update
-  rustup update stable
-  rustup component add rustfmt
-  rustup component add clippy
-  cargo install cargo-audit --features=fix
-  cargo install cargo-nextest
-  cargo install cargo-edit
-  rustup update
 }
 
 # chpwd overrides the cd command to call ls when changing directories as it's
@@ -182,8 +199,35 @@ function rust_update {
 #
 function chpwd() {
     ls
-    if [ -e .go-version ]; then
-			go_install $(cat .go-version)
+
+		# figure out go version
+		#
+    if [ -e go.mod ]; then
+			local v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
+			# go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
+			# we need a complete version for installing and symlinking.
+			#
+			if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+				latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
+					| grep -E "^go${v}\.[0-9]+$" \
+					| sed 's/^go//' \
+					| sort -V \
+					| tail -n 1)
+				if [ -n "$latest_patch" ]; then
+					v="$latest_patch"
+				else
+					echo "Failed to fetch the latest patch version for $v"
+					rm -f "$GOPATH/bin/go" # remove symlink so we PATH lookup finds the GOROOT binary.
+				fi
+			fi
+			go_install "$v"
+			go_symlink "$v"
+			r # reload shell so starship can display the updated go version
+    elif [ -e .go-version ]; then
+			local v="$(cat .go-version)"
+			go_install "$v"
+			go_symlink "$v"
+			r # reload shell so starship can display the updated go version
     fi
 
     # clean out any .DS_Store files
