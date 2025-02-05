@@ -1,10 +1,21 @@
 #!/usr/bin/env zsh
 
+# 1Password
+#
+# When signing into our personal account it means the `op read` for API keys will work.
+# But it also means other scripts that use `op` have to call `op signin`.
+# Otherwise, they'll have the wrong 1Password vault context.
+#
+op signin --account my.1password.com
+
 # environment
 #
 export PATH="$PATH:$HOME/.rvm/bin"
 export PATH="$HOME/.pyenv/shims:$PATH"
 export GOPRIVATE=github.com/fastly
+
+# example 1Password secret reference:
+# export EXAMPLE_API_KEY=$(op read "op://<VAULT_NAME>/<ENTRY_NAME>/<SECTION_NAME>/<FIELD_NAME>")
 
 # ensure fnm supports yarn
 # https://github.com/Schniz/fnm/issues/87#issuecomment-751366346
