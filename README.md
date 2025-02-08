@@ -43,5 +43,5 @@ brew bundle install
 - [goread](https://github.com/TypicalAM/goread): `brew install goread`.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
-- [monosnap](https://monosnap.com/): annotate images.
+- [flameshot](https://flameshot.org/): annotate images.
 - [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
