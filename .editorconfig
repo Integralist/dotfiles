@@ -1,11 +1,12 @@
 root = true
 
 [*]
-indent_size = 2
 charset = utf-8
 end_of_line = lf
+indent_size = 2
 indent_style = tab
 insert_final_newline = true
+max_line_length = 80
 trim_trailing_whitespace = true
 
 [*.{rs,zig}]
@@ -17,8 +18,8 @@ indent_size = 4
 indent_style = tab
 
 [*.md]
-indent_size = 4
 eclint_indent_style = unset
+indent_size = 4
 trim_trailing_whitespace = false
 
 [Dockerfile*]
@@ -26,7 +27,7 @@ indent_size = 8
 indent_style = space
 
 [*.{yml,yaml}]
+eclint_indent_style = unset
 indent_size = 2
 indent_style = space
-eclint_indent_style = unset
 trim_trailing_whitespace = false
