@@ -154,6 +154,6 @@ format = "[ $output ]($style)"
 
 [custom.infra_context]
 command = "cat ~/.infra_context 2>/dev/null || echo 'No context'"
-when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/domainr-api\"* ]]" # make sure we check if we're inside a nested directory
+when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* ]]" # make sure we check if we're inside a nested directory
 style = "fg:#ffffff bg:#bd4024"
 format = "[$output ]($style)"
