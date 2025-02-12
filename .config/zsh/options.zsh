@@ -38,7 +38,6 @@ setopt HIST_FIND_NO_DUPS # Avoids showing duplicate history entries when searchi
 setopt HIST_IGNORE_ALL_DUPS # Removes all duplicate entries from history when a new duplicate command is added.
 setopt HIST_REDUCE_BLANKS # Removes extra whitespace from commands saved to history.
 setopt ALIASES # Enables alias expansion for command lines.
-setopt VI # Enable vi-style keybindings for command-line editing.
 setopt NOCORRECT NOCORRECTALL # Disables spell checking for the current command or for all commands.
 
 unsetopt BEEP # Disables the terminal bell or audible beep when an error or alert occurs.
@@ -50,3 +49,7 @@ unsetopt CASE_MATCH # Requires case-sensitive pattern matching (disabled here, s
 # match anything, Zsh will print the error message you're seeing, and not run
 # the command at all. You can disable this using the following...
 setopt +o nomatch
+
+# DISABLED: VI mode now I have ./bindings.zsh handling more natural editing.
+#
+# setopt VI # Enable vi-style keybindings for command-line editing.

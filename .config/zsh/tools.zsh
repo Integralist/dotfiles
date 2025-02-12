@@ -84,8 +84,11 @@ function rust_update {
 # $ go1.21.13 download
 # $ go1.21.13 version
 #
-# Once downloaded the associated SDK files (api, bin, doc, etc...) are stored in:
+# Once downloaded the GOROOT/associated SDK files (api, bin, doc, etc...) are stored in:
 # ~/sdk/go1.21.13/
+#
+# Use `go env GOROOT` to print the relevant root files for the current Go
+# version that is running/switched to.
 #
 # When installing a tool (like revive) it is installed into the $GOPATH/bin:
 # go install github.com/mgechev/revive@latest
@@ -105,7 +108,6 @@ function rust_update {
 export GOPATH="$HOME/go"
 export GOROOT="$HOME/.go"
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH";
-export PATH="$HOME/.humanlog/bin:$PATH" # https://github.com/humanlogio/humanlog (installed via `go install` then upgrade via the installed binary which installs the upgrade in a different path)
 if [ ! -f $GOROOT/bin/go ]; then
 	mkdir -p "$GOPATH"
 	mkdir -p "$GOROOT"
@@ -129,6 +131,14 @@ if [ ! -f $GOROOT/bin/go ]; then
 	echo "Cleaning up Go archive from $TMP_DL"
 	rm "$TMP_DL"
 fi
+
+# https://github.com/humanlogio/humanlog
+# You can't `go install`. You have to install via curl script piped to bash.
+# That custom install approach will install the binary into a custom directory.
+# You then run an `upgrade` command.
+#
+export PATH="$HOME/.humanlog/bin:$PATH"
+
 # DISABLED:The following until I'm sure what workflow is best for me.
 #
 # # each new shell instance should start from the ROOT go install (not the symlink)

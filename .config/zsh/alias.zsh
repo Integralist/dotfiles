@@ -101,7 +101,7 @@ alias ghosttydocs="ghostty +show-config --default --docs"
 alias gl="git log-graphstat" # defined in ~/.gitconfig
 alias glm="git log-me" # defined in ~/.gitconfig
 alias gls="git log-short" # defined in ~/.gitconfig
-alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | ag '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | grep -v 'rc' | awk NR==1 | ag '\d.+' -o"
+alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | rg '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | grep -v 'rc' | awk NR==1 | rg '\d.+' -o"
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
 alias gpr="git pull --rebase origin" # pass branch name
 alias gst="git st" # defined in ~/.gitconfig
