@@ -115,6 +115,14 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 #
 complete -o nospace -C $(brew --prefix)/bin/terraform terraform
 
+# Doggo Autocomplete
+#
+if ! command -v doggo &> /dev/null
+then
+  brew install doggo
+fi
+doggo completions zsh > "${fpath[1]}/_doggo"
+
 # 1Password Autocomplete
 #
 eval "$(op completion zsh)"; compdef _op op
