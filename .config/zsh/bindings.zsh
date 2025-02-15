@@ -7,24 +7,6 @@ export PATH="$MODIFIED_PATH"
 # NOTE: For a complete list of shell bindings, run: `zle -l`.
 # TIP: To see what "escape sequence" your terminal uses, run `cat` and type.
 
-# Support moving cursor by words in vi-mode
-# Fn + Arrow
-#
-bindkey -M viins '^[[H' backward-word
-bindkey -M viins '^[[F' forward-word
-bindkey -M vicmd '^[[H' backward-word
-bindkey -M vicmd '^[[1;5C' forward-word
-
-# Support deleting characters to the left.
-# Backspace
-#
-bindkey '^?' backward-delete-char
-
-# Support deleting characters to the right.
-# Fn + Backspace
-#
-bindkey '^[[3~' delete-char
-
 # Support deleting word to the right.
 # Ctrl + Fn + Backspace
 #
@@ -56,7 +38,7 @@ bindkey '^Y' copy-buffer-to-clipboard
 # I've modified the original code to fit my own requirements.
 #
 # | BINDING                  | ACTION                 | SUPPORTED | WORK-AROUND
-# | Cmd + x                  | Cut selection          | ❌        | (Fn + Ctrl + x)
+# | Cmd + x                  | Cut selection          | ❌        | Fn + Ctrl + x
 # | Cmd + c                  | Copy selection         | ✅        |
 # | Cmd + v                  | Paste selection        | ✅        |
 # | Shift + LeftArrow        | Select left character  | ✅        |
@@ -67,10 +49,10 @@ bindkey '^Y' copy-buffer-to-clipboard
 # | Cmd + Shift + RightArrow | Select to line end     | ✅        |
 # | Cmd + LeftArrow          | Move to line start     | ✅        |
 # | Cmd + RightArrow         | Move to line end       | ✅        |
-# | Opt + LeftArrow          | Move word to left      | ❌        | (Fn + LeftArrow)
-# | Opt + RightArrow         | Move word to right     | ❌        | (Fn + RightArrow)
-# | Opt + Backspace          | Delete word to left    | ❌        | ❌
-# | Opt + Fn + Backspace     | Delete word to right   | ❌        | ❌
+# | Opt + LeftArrow          | Move word to left      | ✅        |
+# | Opt + RightArrow         | Move word to right     | ✅        |
+# | Opt + Backspace          | Delete word to left    | ✅        |
+# | Opt + Fn + Backspace     | Delete word to right   | ❌        | Fn + Ctrl + Backspace
 
 export KEY_BACKSPACE='^?'
 export KEY_CMD_C='^[[27;6;67~'
