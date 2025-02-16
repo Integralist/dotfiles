@@ -209,6 +209,16 @@ function go_list() {
 	echo "GOPATH: $GOPATH/bin"
 	ls $GOPATH/bin
 }
+# go_rm deletes the specified Go version and the symlink
+function go_rm() {
+  if [ -z "$1" ]; then
+		echo "Pass a Go version (e.g. 1.21.13)"
+    return
+  fi
+	local v=$1
+	go_symlink_remove
+	rm -rf "$HOME/.cache/go-deps/go$v"
+}
 # go_clean deletes the Go installation completely.
 function go_clean() {
 	sudo rm -rf ~/go ~/.go
@@ -250,9 +260,32 @@ function chpwd() {
 		v="$(cat .go-version)"
 	fi
 	if [ -n "$v" ]; then
-		go_install "$v" # installs the specified Go version
-		go_symlink "$v" # ensures `go` now references the specified Go version
-		go_tools # ensures we have all the tools we need for this Go version
+		# create go dependencies cache directory if it doesn't exist.
+		local cache_dir="$HOME/.cache/go-deps"
+		if [[ ! -d "$cache_dir" ]]; then
+			mkdir -p "$HOME/.cache/go-deps"
+		fi
+		local cache_file="$cache_dir/go$v"
+
+		if [[ ! -f "$cache_file" ]]; then
+			go_install "$v" # installs the specified Go version
+			go_symlink "$v" # ensures `go` now references the specified Go version
+			go_tools # ensures we have all the tools we need for this Go version
+			touch "$cache_file" # update last_modified date
+		else
+			go_symlink "$v" # ensures `go` now references the specified Go version
+
+			local current_day=$(date +%Y-%m-%d)
+			local last_modified_day=$(date -r "$cache_file" +%Y-%m-%d)
+
+			# if the cache file was last modified on a different day, run the command
+			if [ "$current_day" != "$last_modified_day" ]; then
+				echo "updating go$v dependencies (last updated: $last_modified_day)"
+				go_tools # ensures we have all the tools we need for this Go version
+				touch "$cache_file" # update last_modified date
+			fi
+		fi
+
 		r # reload shell so starship can display the updated go version
 	fi
 
