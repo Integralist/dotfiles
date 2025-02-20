@@ -221,7 +221,8 @@ function go_rm() {
 }
 # go_clean deletes the Go installation completely.
 function go_clean() {
-	sudo rm -rf ~/go ~/.go
+	go_symlink_remove
+	sudo rm -rf ~/go ~/.go ~/sdk
 }
 
 # chpwd overrides the cd command to call ls when changing directories as it's
