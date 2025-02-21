@@ -143,9 +143,10 @@ alias top='htop'
 alias tree='tree -I node_modules'
 alias uid="uuidgen" # this is a macOS binary (man uuidgen)
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
-alias v=nvim
-alias vf='vim $(fzf)'
-alias vim=nvim
+alias v=/opt/homebrew/bin/nvim # brew stable version
+alias vn=/usr/local/bin/nvim # nightly version manually compiled
+alias vf='/opt/homebrew/bin/nvim $(fzf)'
+alias vim=/opt/homebrew/bin/nvim # brew stable version
 alias vi='vi -c "set nocompatible" -c "set number" -c "set cursorline" -c "set expandtab" -c "set hlsearch" -c "set visualbell" -c "set tabstop=2" -c "set shiftwidth=2" -c "syntax on"'
 alias weather="curl wttr.in"
 alias where='whence -va'

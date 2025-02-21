@@ -106,26 +106,19 @@ function docker_clean() {
   dockerprune
 }
 
-# zellij terminal multiplexer
+# digc is dig-clean meaning the output is just ANSWER and AUTHORITY.
+# it also hides comment lines that start with ;
 #
-function zell() {
+if ! command -v pcregrep &> /dev/null
+then
+  brew install pcre2
+fi
+function digc() {
   if [ -z "$1" ]; then
-    echo "USAGE: zell <SESSION_NAME>"
+    echo "USAGE: digc <DOMAIN> [RECORD-TYPE: SOA|CNAME|NS|A|...]"
     return
   fi
-  if zellij list-sessions | grep '(current)' &> /dev/null; then
-    zellij -s "$1"
-  fi
-}
+	# NOTE: I don't use `+noall` as it hides lines like `;; ANSWER` and `;; AUTHORITY` which I want to keep
+	dig "$1" $2 +answer +authority | pcregrep -v '^(;[^;]|;;(?! (ANSWER|AUTHORITY)))'
 
-# reverse IP lookup
-# like `dig -x <IP>` but using dog instead
-# dog doesn't have a built in solution (https://github.com/ogham/dog/issues/32)
-#
-function dogr() {
-  if [ -z "$1" ]; then
-    echo "USAGE: dogr <IP>"
-    return
-  fi
-  echo "$1" | awk -F. '{print $4"."$3"."$2"."$1}' | xargs -I % dog %.in-addr.arpa ANY
 }

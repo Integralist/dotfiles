@@ -30,7 +30,11 @@ load_script ~/.config/zsh/bindings.zsh
 load_script ~/.config/zsh/shell.zsh
 
 export PATH="$MODIFIED_PATH:$PATH"
-dedupe
+typeset -U path
+
+# DISABLED: Zsh has its own approach (see above).
+#
+# dedupe
 
 echo .zshrc loaded
 
