@@ -1,4 +1,11 @@
-#!/usr/bin/env zsh
+#!/usr/bin/zsh
+
+if [[ -z "$path" ]]; then
+	# IMPORTANT: chpwd sources ~/.zshrc but then this script loses its PATH.
+	# So in chpwd ~/.config/zsh/tools.zsh we assign PATH to MODIFIED_PATH.
+	# If we don't then this script will fail to lookup certain binaries.
+	export PATH="$MODIFIED_PATH"
+fi
 
 # 1Password
 #
@@ -33,9 +40,12 @@ eval "$(pyenv virtualenv-init -)"
 #
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
-# to ensure there are no duplicates in the $PATH we call dedupe
-# the dedupe function is defined in .zshrc
+# ensure there are no duplicates in the $PATH
 #
-dedupe
+typeset -U path
+
+# DISABLED: Zsh has its own approach (see above).
+#
+# dedupe
 
 echo .localrc loaded

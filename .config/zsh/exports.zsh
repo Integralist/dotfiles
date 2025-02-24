@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # IMPORTANT: We MUST use MODIFIED_PATH (see notes in ~/.zshrc).
-# Also, other tools like `curl`, `sh` etc can't be found otherwise.
+# Otherwise tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
 # Homebrew

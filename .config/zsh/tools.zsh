@@ -1,7 +1,7 @@
 #!/usr/bin/zsh
 
 # IMPORTANT: We MUST use MODIFIED_PATH (see notes in ~/.zshrc).
-# Also, other tools like `curl`, `sh` etc can't be found otherwise.
+# Otherwise tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
 # WARNING: We have to add .cargo/bin directory into $PATH before installing.
@@ -287,6 +287,7 @@ function chpwd() {
 			fi
 		fi
 
+		export MODIFIED_PATH="$PATH" # see note in ~/.localrc
 		r # reload shell so starship can display the updated go version
 	fi
 
