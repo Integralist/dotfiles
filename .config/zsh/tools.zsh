@@ -50,9 +50,8 @@ fi
 if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
   cargo install cargo-edit
 fi
-# rust_update updates Homebrew and updates/installs necessary Rust tools.
+# rust_update updates/installs necessary Rust tools.
 function rust_update {
-  brew_update # called because of rust-analyzer
   rustup self update
   rustup update stable
   rustup component add rustfmt
