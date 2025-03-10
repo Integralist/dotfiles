@@ -47,7 +47,7 @@ export LS_COLORS="rs=0:di=36:ln=32:mh=00:pi=33:so=33:do=33:bd=00:cd=00:or=05;36:
 export EDITOR="nvim"
 export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_COMMAND="rg --hidden --no-ignore --files"
-export FZF_DEFAULT_OPTS='--style="full" --multi --ansi --preview="bat --color=always {}" --preview-window=right:50%:wrap'
+export FZF_DEFAULT_OPTS='--style="full" --multi --ansi' # --preview="bat --color=always {}" --preview-window=right:50%:wrap'
 export GPG_TTY=$tty_instance # tell gpg which terminal to use when prompting for a passphrase (set in ~/.zshrc)
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
