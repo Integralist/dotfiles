@@ -296,6 +296,9 @@ function chpwd() {
 		# find . -type f -name '.DS_Store' -delete
 		fd '.DS_Store' --type f --hidden --absolute-path | xargs -I {} rm {}
 	fi
+
+	# the Starship prompt can sometimes be misleading as it truncates the path
+	pwd
 }
 
 # zoxide is a directory switcher
