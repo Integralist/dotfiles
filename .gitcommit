@@ -12,6 +12,7 @@
 #    all:      Changes to multiple files/modules/packages.
 #    breaking: Changes that should result in a new major version release.
 #    build:    Changes that affect the build system or external dependencies
+#    chore:    Routine tasks, build process, or maintenance changes.
 #    ci:       Changes to our CI configuration files and scripts
 #    doc:      Documentation only changes
 #    feat:     A new feature
