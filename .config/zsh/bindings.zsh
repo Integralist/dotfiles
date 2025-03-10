@@ -12,8 +12,26 @@ export PATH="$MODIFIED_PATH"
 #
 bindkey '^[[3;5~' kill-word
 
-# Configure a shortcut for the `vf` alias
+# Configure a shortcut for the `vf` alias.
 bindkey -s '^f' 'nvim $(fzf)\n'
+
+# Search Zoxide list via FZF.
+function zoxide_fzf() {
+    local orig_buffer=$LBUFFER
+    local selection
+    selection=$(zoxide query --list | fzf --height 40% --reverse --border --no-preview) || {
+        LBUFFER=$orig_buffer
+        zle redisplay
+        return 0
+    }
+
+    if [[ -n "$selection" ]]; then
+        LBUFFER+="$selection"
+        zle redisplay
+    fi
+}
+zle -N zoxide_fzf
+bindkey '^o' zoxide_fzf
 
 # Allow yanking command input to system clipboard.
 #
