@@ -122,3 +122,30 @@ function digc() {
 	dig "$1" $2 +answer +authority | pcregrep -v '^(;[^;]|;;(?! (ANSWER|AUTHORITY)))'
 
 }
+
+# digg adds colors to the standard dig output.
+#
+# DIG_COMMENT_COLOR_SINGLE="\e[48;5;8m\e[1;37m"  # Grey background, bold white text
+# DIG_COMMENT_COLOR_SINGLE="\e[34m"  # Blue text, no background, no bold
+DIG_COMMENT_COLOR_SINGLE="\e[38;5;8m"  # Dark grey text, no background, no bold
+DIG_COMMENT_COLOR_DOUBLE="\e[48;5;88m\e[1;37m" # Dark red background, bold white text
+DIG_RESET_COLOR="\e[0m"
+digg() {
+  local dig_output=$(dig "$1" "$2") # Capture dig output
+
+  while IFS= read -r line; do
+    if [[ "$line" == ";"* ]]; then
+      if [[ "$line" == ";;"* ]]; then
+        if [[ "$line" == *'SECTION:'* ]]; then
+          echo -e "${DIG_COMMENT_COLOR_DOUBLE}${line#';;'}${DIG_RESET_COLOR}"
+        else
+          echo -e "${DIG_COMMENT_COLOR_SINGLE}${line#';;'}${DIG_RESET_COLOR}"
+        fi
+      else
+        echo -e "${DIG_COMMENT_COLOR_SINGLE}${line#';'}${DIG_RESET_COLOR}"
+      fi
+    else
+      echo "$line"
+    fi
+  done <<< "$dig_output"
+}
