@@ -120,7 +120,6 @@ function digc() {
   fi
 	# NOTE: I don't use `+noall` as it hides lines like `;; ANSWER` and `;; AUTHORITY` which I want to keep
 	dig "$1" $2 +answer +authority | pcregrep -v '^(;[^;]|;;(?! (ANSWER|AUTHORITY)))'
-
 }
 
 # digg adds colors to the standard dig output to improve readability while not losing contextual information.
@@ -160,4 +159,22 @@ digg() {
 			echo "$line";
 		fi
 	done <<< "$dig_output"
+}
+
+# use sips command to resize images
+#
+function imgr() {
+  if [ -z "$1" ]; then
+    echo "Please pass a width size in pixels"
+    return
+  fi
+  if [ -z "$2" ]; then
+    echo "Please pass an output path/filename"
+    return
+  fi
+  if [ -z "$3" ]; then
+    echo "Please pass an input path/filename"
+    return
+  fi
+	sips --resampleWidth "$1" -o "$2" "$3"
 }
