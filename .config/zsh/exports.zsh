@@ -57,7 +57,7 @@ export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
 # export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
 # export TERMINFO=/usr/share/terminfo
 
-export TIMEFORMAT="$(printf '\n\e[01;31m')elapsed:$(printf '\e[00m') %Rs, $(printf '\e[01;33m')user mode (cpu time):$(printf '\e[00m') %U, $(printf '\e[01;32m')system mode (cpu time):$(printf '\e[00m') %S"
+export TIMEFORMAT="$(printf '\n\e[01;31m')elapsed:$(printf '\e[00m') %Rs, $(printf '\e[01;33m')user mode (cpu time):$(printf '\e[00m') %U, $(printf '\e[01;32m')system mode (cpu time):$(printf '\e[00m') %S $(printf '\e[0m')"
 
 # DISABLED:
 # This tells pinentry to use a terminal-based interface (not the OS UI prompt).
@@ -85,13 +85,19 @@ export HISTSIZE=500000
 # Man Pages Colour Configuration
 # https://www.tuxarena.com/2012/04/tutorial-colored-man-pages-how-it-works/
 #
-export LESS_TERMCAP_mb=$(printf '\e[01;31m') # enter blinking mode – red
-export LESS_TERMCAP_md=$(printf '\e[01;33m') # enter double-bright mode – bold, yellow
-export LESS_TERMCAP_me=$(printf '\e[0m') # turn off all appearance modes (mb, md, so, us)
-export LESS_TERMCAP_se=$(printf '\e[0m') # leave standout mode
-export LESS_TERMCAP_so=$(printf '\e[01;33m') # enter standout mode – yellow
-export LESS_TERMCAP_ue=$(printf '\e[0m') # leave underline mode
-export LESS_TERMCAP_us=$(printf '\e[04;31m') # enter underline mode – red
+# IMPORTANT: We DO NOT use EXPORT as it breaks the `env` binary.
+# Instead we override `man` so it uses local values.
+#
+man() {
+  LESS_TERMCAP_mb=$(printf '\e[01;31m') \
+  LESS_TERMCAP_md=$(printf '\e[01;33m') \
+  LESS_TERMCAP_me=$(printf '\e[0m') \
+  LESS_TERMCAP_se=$(printf '\e[0m') \
+  LESS_TERMCAP_so=$(printf '\e[01;33m') \
+  LESS_TERMCAP_ue=$(printf '\e[0m') \
+  LESS_TERMCAP_us=$(printf '\e[04;31m') \
+  command man "$@"
+}
 
 # PATH Modifications
 #
