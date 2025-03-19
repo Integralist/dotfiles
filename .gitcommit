@@ -6,7 +6,7 @@
 #
 # STRUCTURE:
 #
-#		<type>(optional_scope): <description: imperative mood>
+#		<type[!]>(optional_scope): <description: imperative mood>
 #
 # TYPES:
 #    all:      Changes to multiple files/modules/packages.
@@ -25,6 +25,7 @@
 #    todo:     Adding notes like FIXME: WARNING: NOTE:
 #
 #    Use plural if multiple items affected.
+#    Can also use ! if it's a breaking change, e.g. feat!
 #
 # EXAMPLES:
 #   fix!: this indicates a fix that also is a breaking change
