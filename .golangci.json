@@ -1,8 +1,9 @@
 {
   "formatters": {
     "enable": [
+      "goimports",
       "gofumpt",
-      "goimports"
+      "golines"
     ],
     "exclusions": {
       "generated": "lax",
@@ -18,9 +19,6 @@
     "max-same-issues": 0
   },
   "linters": {
-    "disable": [
-      "godot"
-    ],
     "enable": [
       "asasalint",
       "asciicheck",
@@ -30,18 +28,27 @@
       "containedctx",
       "contextcheck",
       "copyloopvar",
+      "decorder",
       "dogsled",
+      "dupl",
+      "dupword",
       "durationcheck",
       "errchkjson",
       "errname",
       "errorlint",
       "exhaustive",
+      "exhaustruct",
+      "exptostd",
       "fatcontext",
       "forcetypeassert",
+      "gocheckcompilerdirectives",
       "goconst",
       "gocritic",
       "gosec",
+      "iface",
+      "importas",
       "inamedparam",
+      "interfacebloat ",
       "intrange",
       "makezero",
       "mirror",
@@ -49,15 +56,27 @@
       "mnd",
       "musttag",
       "nilerr",
+      "noctx",
+      "nolintlint",
+      "nonamedreturns",
+      "nosprintfhostport",
       "perfsprint",
       "prealloc",
       "predeclared",
+      "reassign",
+      "recvcheck",
       "revive",
+      "sloglint",
+      "spancheck",
       "staticcheck",
       "thelper",
+      "tparallel",
       "unconvert",
       "unparam",
       "usestdlibvars",
+      "usetesting",
+      "varnamelen",
+      "wastedassign",
       "wrapcheck"
     ],
     "exclusions": {
