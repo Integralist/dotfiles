@@ -125,4 +125,14 @@ doggo completions zsh > "${fpath[1]}/_doggo"
 
 # 1Password Autocomplete
 #
-eval "$(op completion zsh)"; compdef _op op
+if command -v op &> /dev/null
+then
+	eval "$(op completion zsh)"; compdef _op op
+fi
+
+# Golangci-lint Autocomplete
+#
+if command -v golangci-lint &> /dev/null
+then
+	eval "$(golangci-lint completion zsh)"
+fi
