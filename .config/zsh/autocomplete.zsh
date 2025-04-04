@@ -136,3 +136,10 @@ if command -v golangci-lint &> /dev/null
 then
 	eval "$(golangci-lint completion zsh)"
 fi
+
+# Dagger Autocomplete
+#
+if command -v dagger &> /dev/null
+then
+	eval "$(dagger completion zsh)"
+fi
