@@ -130,6 +130,8 @@ format = '[[ 󱑍 $time ](bg:#1C3A5E fg:#8DFBD2)]($style)'
 symbol = " +"
 style = "bg:#7DF9AA fg:#282A36"
 
+# TIP: You must set `when = true` if you always want the custom command to run.
+
 # Because the starship provided [git_commit] module don't work for me.
 [custom.gittag]
 command = '''
@@ -153,7 +155,7 @@ style = "fg:#ffffff bg:#bd4024"
 format = "[ $output ]($style)"
 
 [custom.infra_context]
-command = "cat ~/.infra_context 2>/dev/null || echo 'No context'"
-when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* ]]" # make sure we check if we're inside a nested directory
+command = "cat ~/.infra_context 2>/dev/null || echo 'no context'"
+when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* || \"$PWD\" == \"$HOME/Code/fastly/ascerta\"* ]]"
 style = "fg:#ffffff bg:#bd4024"
-format = "[$output ]($style)"
+format = "[ $output ]($style)"
