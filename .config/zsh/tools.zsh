@@ -165,6 +165,7 @@ function go_tools {
   go install github.com/incu6us/goimports-reviser/v3@latest
   go install github.com/google/gops@latest
   go install github.com/securego/gosec/v2/cmd/gosec@latest
+	go install github.com/davecheney/httpstat@latest
 }
 # go_install installs the specified version
 function go_install() {
