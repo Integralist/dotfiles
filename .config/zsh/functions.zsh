@@ -11,19 +11,6 @@ function brew_update {
   brew upgrade
 }
 
-# sshagent ensures each shell instance knows about our GitHub SSH connection key(s).
-#
-# NOTE: To figure out which local SSH key matches the SSH key in GitHub:
-# ssh-keygen -lf ~/.ssh/<private_ssh_filename> -E sha256
-#
-# Also try:
-# ssh -vT git@github.com
-function sshagent {
-  local private_key=$1
-  eval "$(ssh-agent -s)" > /dev/null
-  ssh-add --apple-use-keychain ~/.ssh/"$1" > /dev/null 2>&1
-}
-
 # dedupe ensures there are no duplicates in the $PATH
 function dedupe {
   export PATH=$(echo -n "$PATH" | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
