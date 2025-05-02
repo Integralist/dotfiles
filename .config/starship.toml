@@ -1,10 +1,7 @@
+# https://dev.to/therubberduckiee/how-to-configure-starship-to-look-exactly-like-p10k-zsh-warp-h9h
 # https://starship.rs/config/
 
 command_timeout = 5000
-
-# https://dev.to/therubberduckiee/how-to-configure-starship-to-look-exactly-like-p10k-zsh-warp-h9h
-#
-# NOTE: The Warp Terminal font size needs to be 15 rather than 13 now (otherwise line-height breaks the rendering).
 
 format = """\
 [](bg:#282A36 fg:#7DF9AA)\
@@ -13,12 +10,13 @@ format = """\
 $time\
 [](fg:#1C3A5E bg:#3B76F0)\
 $directory\
-[](fg:#3B76F0 bg:#FCF392)\
+[](fg:#3B76F0 bg:#f0af22)\
 $git_branch\
-[](fg:#FCF392 bg:#f0af22)\
+$git_commit\
+[](fg:#f0af22 bg:#f1dc7d)\
 $git_status\
 $git_metrics\
-[](fg:#f0af22 bg:#bd4024)\
+[](fg:#f1dc7d bg:#bd4024)\
 $custom\
 [](fg:#bd4024 bg:#ff8a9f)\
 $golang\
@@ -95,16 +93,25 @@ style = "fg:#282A36 bg:#ff8a9f"
 [git_branch]
 format = '[ $symbol$branch(:$remote_branch) ]($style)'
 symbol = "  "
-style = "fg:#1C3A5E bg:#FCF392"
+style = "fg:#1C3A5E bg:#f0af22"
+
+[git_commit]
+commit_hash_length = 7
+format = '[\($hash$tag\)]($style)'
+only_detached = false
+style = "fg:#1C3A5E bg:#f0af22"
+tag_disabled = false
+tag_max_candidates = 1
+tag_symbol = ' 🔖'
 
 [git_status]
 format = '([ $conflicted$deleted$renamed$modified$staged$untracked ]($style))'
-style = "bold fg:#1C3A5E bg:#f0af22"
+style = "bold fg:black bg:#f1dc7d"
 
 [git_metrics]
 format = "([+$added]($added_style))([ -$deleted ]($deleted_style))"
-added_style = "bold fg:#35a115 bg:#f0af22"
-deleted_style = "bold fg:#ff0000 bg:#f0af22"
+added_style = "bold fg:#35a115 bg:#f1dc7d"
+deleted_style = "bold fg:#ff0000 bg:#f1dc7d"
 disabled = false
 
 [hg_branch]
@@ -132,30 +139,24 @@ style = "bg:#7DF9AA fg:#282A36"
 
 # TIP: You must set `when = true` if you always want the custom command to run.
 
-# Because the starship provided [git_commit] module don't work for me.
-[custom.gittag]
-command = '''
-tag=$(git describe --tags --abbrev=0)
-if [ ${#tag} -gt 30 ]; then
-  echo "${tag:0:30}..."
-else
-  echo "$tag"
-fi
-'''
-when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
-ignore_timeout = true
-style = "fg:#ffffff bg:#bd4024"
-format = "([ $output]($style))"
-
-[custom.gitcommit]
-command = "echo \"$(git rev-parse --short HEAD)\""
-when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
-ignore_timeout = true
-style = "fg:#ffffff bg:#bd4024"
-format = "[ $output ]($style)"
-
 [custom.infra_context]
 command = "cat ~/.infra_context 2>/dev/null || echo 'no context'"
 when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* || \"$PWD\" == \"$HOME/Code/fastly/ascerta\"* ]]"
 style = "fg:#ffffff bg:#bd4024"
 format = "[ $output ]($style)"
+
+#  DISABLED: the following custom prompt as I got the starship provided [git_commit] module to work
+#
+# [custom.gittag]
+# command = '''
+# tag=$(git describe --tags --abbrev=0)
+# if [ ${#tag} -gt 30 ]; then
+#   echo "${tag:0:30}..."
+# else
+#   echo "$tag"
+# fi
+# '''
+# when = "[ -d .git ] && echo .git || git rev-parse --git-dir > /dev/null 2>&1 && [ $(git tag | wc -l | tr -d '[:space:]') -gt 0 ]"
+# ignore_timeout = true
+# style = "fg:#ffffff bg:#bd4024"
+# format = "([ $output]($style))"
