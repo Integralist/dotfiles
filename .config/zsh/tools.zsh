@@ -131,12 +131,14 @@ if [ ! -f $GOROOT/bin/go ]; then
 	rm "$TMP_DL"
 fi
 
+# DISABLED: https://github.com/humanlogio/humanlog/issues/304
+#
 # https://github.com/humanlogio/humanlog
 # You can't `go install`. You have to install via curl script piped to bash.
 # That custom install approach will install the binary into a custom directory.
 # You then run an `upgrade` command.
 #
-export PATH="$HOME/.humanlog/bin:$PATH"
+# export PATH="$HOME/.humanlog/bin:$PATH"
 
 # DISABLED:The following until I'm sure what workflow is best for me.
 #
