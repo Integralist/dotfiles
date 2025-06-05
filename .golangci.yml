@@ -2,7 +2,6 @@ formatters:
   enable:
     - goimports
     - gofumpt
-    - golines
   exclusions:
     generated: lax
     paths:
