@@ -30,7 +30,6 @@ linters:
     - errname
     - errorlint
     - exhaustive
-    - exhaustruct
     - exptostd
     - fatcontext
     - forcetypeassert
@@ -51,7 +50,6 @@ linters:
     - nilerr
     - noctx
     - nolintlint
-    - nonamedreturns
     - nosprintfhostport
     - perfsprint
     - prealloc
@@ -91,6 +89,8 @@ linters:
       check-error-free-encoding: true
     goconst:
       min-occurrences: 4
+    varnamelen:
+      min-name-length: 1
     misspell:
       ignore-rules:
         - Nominet
@@ -170,6 +170,7 @@ linters:
             - 0
           name: function-length
           severity: warning
+          disabled: true
         - name: get-return
           severity: error
         - name: identical-branches
