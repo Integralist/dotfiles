@@ -43,3 +43,6 @@ echo .zshrc loaded
 if [ -f "$HOME/.localrc" ]; then
   source "$HOME/.localrc"
 fi
+
+# The following is a modification from running `curl -sSL "https://humanlog.io/install.sh" | bash`
+export PATH="/Users/integralist/.humanlog/bin:$PATH"

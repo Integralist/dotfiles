@@ -16,6 +16,17 @@ function dedupe {
   export PATH=$(echo -n "$PATH" | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
 }
 
+# remove "" warning from a binary
+#
+function force_run() {
+  if [ -z "$1" ]; then
+    echo "Provide path to a binary you want to run."
+    return
+  fi
+  binpath=$1
+	xattr -d com.apple.quarantine $binpath
+}
+
 # create directory structure and cd into it
 #
 function mkcdir() {
