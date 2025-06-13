@@ -159,6 +159,16 @@ digg() {
 	done <<< "$dig_output"
 }
 
+# check ssl connection to a website
+#
+function ssl_check() {
+  if [ -z "$1" ]; then
+    echo "USAGE: ssl_check <DOMAIN>"
+    return
+  fi
+	openssl s_client -connect $1:443 | openssl x509 -noout -text
+}
+
 # use sips command to resize images
 #
 function imgr() {
