@@ -141,7 +141,7 @@ style = "bg:#7DF9AA fg:#282A36"
 
 [custom.infra_context]
 command = "cat ~/.infra_context 2>/dev/null || echo 'no context'"
-when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* || \"$PWD\" == \"$HOME/Code/fastly/ascerta\"* ]]"
+when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/Code/fastly/mustang\"* || \"$PWD\" == \"$HOME/Code/fastly/ascerta\"* || \"$PWD\" == \"$HOME/Code/fastly/spotless\"* ]]"
 style = "fg:#ffffff bg:#bd4024"
 format = "[ $output ]($style)"
 
