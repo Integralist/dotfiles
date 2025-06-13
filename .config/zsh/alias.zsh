@@ -141,7 +141,7 @@ alias rg="rg --glob '!node_modules/' --glob '!.git/' --no-ignore --hidden"
 alias ripall='rip * &> /dev/null ; rip .* &> /dev/null' # for redirection to work in Zsh we need to set `setopt +o nomatch`
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
-alias tf="terraform"
+alias tf="TF_LOG=DEBUG FASTLY_DEBUG_MODE=true FASTLY_TF_DISPLAY_SENSITIVE_FIELDS=true terraform"
 alias top='htop'
 alias tree='tree -I node_modules'
 alias uid="uuidgen" # this is a macOS binary (man uuidgen)
