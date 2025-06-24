@@ -101,6 +101,7 @@ alias ghosttydocs="ghostty +show-config --default --docs"
 alias gl="git log-graphstat" # defined in ~/.gitconfig
 alias glm="git log-me" # defined in ~/.gitconfig
 alias gls="git log-short" # defined in ~/.gitconfig
+alias gn="git config --add remote.origin.fetch '+refs/notes/*:refs/notes/*'" # track notes from the remote
 alias godoc="stdsym | fzf | xargs go doc " -- https://github.com/lotusirous/gostdsym
 alias gom="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix -diff ./... | delta"
 alias goma="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix ./..."
