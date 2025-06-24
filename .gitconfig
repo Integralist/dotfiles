@@ -26,9 +26,9 @@
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
   diff-word = diff --word-diff=color
   history = "!f() { git log -p --follow \"$1\"; }; f" # pass in a file path to see its complete history
-  log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n' --graph --stat
+	log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%n%b%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n' --graph --stat --notes
   log-me = log-graphstat --author='Integralist'
-  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n' --notes
   pr = "!f() { \
     if [ $# -lt 2 ]; then \
       echo \"Usage: git pr <pull_request_number> <branch_name>\"; \
