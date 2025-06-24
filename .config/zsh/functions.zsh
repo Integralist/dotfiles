@@ -186,3 +186,21 @@ function imgr() {
   fi
 	sips --resampleWidth "$1" -o "$2" "$3"
 }
+
+# add a git note to a commit
+#
+function gnote {
+  if [ -z "$1" ]; then
+		echo "Please pass reference (e.g. docs)"
+    return
+  fi
+  if [ -z "$2" ]; then
+    echo "Please pass message"
+    return
+  fi
+  if [ -z "$3" ]; then
+    echo "Please pass commit"
+    return
+  fi
+	git notes --ref=$1 add -m "$2" $3
+}
