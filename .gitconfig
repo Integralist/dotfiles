@@ -116,6 +116,7 @@
 
 [fetch]
   recurseSubmodules = true # still requires: git clone --recursive ...
+	notes = true
 
 [interactive]
   diffFilter = delta --color-only --dark --line-numbers
@@ -165,3 +166,5 @@
 
 [credential]
   helper = osxkeychain
+[log]
+	showNotes = true
