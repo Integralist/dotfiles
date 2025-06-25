@@ -204,3 +204,11 @@ function gnote {
   fi
 	git notes --ref=$1 add -m "$2" $3
 }
+
+# push all git notes
+#
+function gnoteup {
+	for ref in $(git for-each-ref --format='%(refname)' refs/notes/); do
+		git push origin "$ref"
+	done
+}
