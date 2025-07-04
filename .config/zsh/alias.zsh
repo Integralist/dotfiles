@@ -138,7 +138,7 @@ alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc" # reload zsh shell configuration
 alias rr="exec zsh" # completely replace the zsh shell process
-alias rg="rg --glob '!node_modules/' --glob '!.git/' --no-ignore --hidden"
+alias rg="rg --glob '!node_modules/' --glob '!.git/' --glob '!aider*' --glob '!.aider*' --no-ignore --hidden"
 alias ripall='rip * &> /dev/null ; rip .* &> /dev/null' # for redirection to work in Zsh we need to set `setopt +o nomatch`
 alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
