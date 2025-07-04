@@ -212,3 +212,53 @@ function gnoteup {
 		git push origin "$ref"
 	done
 }
+
+# curl with dump headers + json format
+#
+# EXAMPLES:
+#
+# GET request
+# curl_json http://localhost:8080/api
+#
+# POST request with data
+# curl_json --request POST --data '{"foo": "bar"}' http://localhost:8080/api
+#
+# PUT with data
+# curl_json -X PUT --data '{"id":123,"status":"active"}' http://localhost:8080/update
+#
+function curl_json() {
+  verb="GET"
+  data_flag=""
+  data_value=""
+  url=""
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -X|--request)
+        verb="$2"
+        shift 2
+        ;;
+      --data|--data-raw|--data-binary)
+        data_flag="$1"
+        data_value="$2"
+        shift 2
+        ;;
+      *)
+        url="$1"
+        shift
+        ;;
+    esac
+  done
+
+  if [ -z "$url" ]; then
+    echo "Usage: curl_json [--request VERB] [--data 'JSON'] URL"
+    return 1
+  fi
+
+  if [ -n "$data_flag" ]; then
+    curl -s -D - -X "$verb" "$data_flag" "$data_value" "$url"
+  else
+    curl -s -D - -X "$verb" "$url"
+  fi | awk 'BEGIN {body=0} /^[[:space:]]*$/ {body=1; next} {if (body) print > "/dev/stderr"; else print}' \
+    2> >(jq .)
+}
