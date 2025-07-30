@@ -46,3 +46,8 @@ fi
 
 # The following is a modification from running `curl -sSL "https://humanlog.io/install.sh" | bash`
 export PATH="/Users/integralist/.humanlog/bin:$PATH"
+
+# The following is a modification to support aider install:
+export PATH="/Users/integralist/.local/bin:$PATH"
+
+. "$HOME/.local/bin/env"

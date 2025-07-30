@@ -16,6 +16,13 @@ function dedupe {
   export PATH=$(echo -n "$PATH" | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
 }
 
+# fix gpg agent by restarting it
+#
+function gpgfix() {
+	gpgconf --kill gpg-agent
+	gpgconf --launch gpg-agent
+}
+
 # remove "" warning from a binary
 #
 function force_run() {
