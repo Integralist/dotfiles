@@ -1,0 +1,669 @@
+{
+	"version": 2,
+	"formatter": {
+		"themes": {
+			"light": {
+				"key": {
+					"foreground": {
+						"html_hex_color": "#146e23"
+					}
+				},
+				"value": {
+					"foreground": {
+						"html_hex_color": "#878376"
+					}
+				},
+				"time": {
+					"foreground": {
+						"html_hex_color": "#565454"
+					}
+				},
+				"msg": {
+					"foreground": {
+						"html_hex_color": "#000000"
+					}
+				},
+				"levels": {
+					"debug": {
+						"foreground": {
+							"html_hex_color": "#d33682"
+						}
+					},
+					"info": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"warn": {
+						"foreground": {
+							"html_hex_color": "#ff8800"
+						}
+					},
+					"error": {
+						"foreground": {
+							"html_hex_color": "#d82626"
+						}
+					},
+					"panic": {
+						"foreground": {
+							"html_hex_color": "#d82626"
+						},
+						"background": {
+							"html_hex_color": "#ffffff"
+						}
+					},
+					"fatal": {
+						"foreground": {
+							"html_hex_color": "#d82626"
+						},
+						"background": {
+							"html_hex_color": "#ffff00"
+						}
+					},
+					"unknown": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					}
+				},
+				"absent_msg": {
+					"foreground": {
+						"html_hex_color": "#a9a9a9"
+					}
+				},
+				"absent_time": {
+					"foreground": {
+						"html_hex_color": "#a9a9a9"
+					}
+				},
+				"logs": {
+					"key": {
+						"foreground": {
+							"html_hex_color": "#146e23"
+						}
+					},
+					"value": {
+						"foreground": {
+							"html_hex_color": "#878376"
+						}
+					},
+					"time": {
+						"foreground": {
+							"html_hex_color": "#565454"
+						}
+					},
+					"msg": {
+						"foreground": {
+							"html_hex_color": "#000000"
+						}
+					},
+					"levels": {
+						"debug": {
+							"foreground": {
+								"html_hex_color": "#d33682"
+							}
+						},
+						"info": {
+							"foreground": {
+								"html_hex_color": "#2aa198"
+							}
+						},
+						"warn": {
+							"foreground": {
+								"html_hex_color": "#ff8800"
+							}
+						},
+						"error": {
+							"foreground": {
+								"html_hex_color": "#d82626"
+							}
+						},
+						"panic": {
+							"foreground": {
+								"html_hex_color": "#d82626"
+							},
+							"background": {
+								"html_hex_color": "#ffffff"
+							}
+						},
+						"fatal": {
+							"foreground": {
+								"html_hex_color": "#d82626"
+							},
+							"background": {
+								"html_hex_color": "#ffff00"
+							}
+						},
+						"unknown": {
+							"foreground": {
+								"html_hex_color": "#a9a9a9"
+							}
+						}
+					},
+					"absent_msg": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					},
+					"absent_time": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					}
+				},
+				"spans": {
+					"trace_id": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"span_id": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"trace_state": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"parent_span_id": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"name": {
+						"foreground": {
+							"html_hex_color": "#000000"
+						}
+					},
+					"kind": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"service_name": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"scope_name": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"scope_version": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"time": {
+						"foreground": {
+							"html_hex_color": "#565454"
+						}
+					},
+					"duration": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"resource_key": {
+						"foreground": {
+							"html_hex_color": "#146e23"
+						}
+					},
+					"resource_val": {
+						"foreground": {
+							"html_hex_color": "#878376"
+						}
+					},
+					"attribute_key": {
+						"foreground": {
+							"html_hex_color": "#146e23"
+						}
+					},
+					"attribute_val": {
+						"foreground": {
+							"html_hex_color": "#878376"
+						}
+					},
+					"status_message": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"status_code": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"event_time": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"event_name": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"event_key": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"event_val": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"link_trace_id": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"link_span_id": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"link_trace_state": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"link_key": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"link_val": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"absent_parent_span_id": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					}
+				},
+				"tables": {
+					"column_name": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"column_type": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					},
+					"value": {
+						"foreground": {
+							"html_hex_color": "#1b645e"
+						}
+					}
+				}
+			},
+			"dark": {
+				"key": {
+					"foreground": {
+						"html_hex_color": "#48df61"
+					}
+				},
+				"value": {
+					"foreground": {
+						"html_hex_color": "#8c887c"
+					}
+				},
+				"time": {
+					"foreground": {
+						"html_hex_color": "#9e9e9e"
+					}
+				},
+				"msg": {
+					"foreground": {
+						"html_hex_color": "#ffffff"
+					}
+				},
+				"levels": {
+					"debug": {
+						"foreground": {
+							"html_hex_color": "#d33682"
+						}
+					},
+					"info": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"warn": {
+						"foreground": {
+							"html_hex_color": "#ff8800"
+						}
+					},
+					"error": {
+						"foreground": {
+							"html_hex_color": "#ff6a6a"
+						}
+					},
+					"panic": {
+						"foreground": {
+							"html_hex_color": "#ff6a6a"
+						},
+						"background": {
+							"html_hex_color": "#ffffff"
+						}
+					},
+					"fatal": {
+						"foreground": {
+							"html_hex_color": "#ff6a6a"
+						},
+						"background": {
+							"html_hex_color": "#ffff00"
+						}
+					},
+					"unknown": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					}
+				},
+				"absent_msg": {
+					"foreground": {
+						"html_hex_color": "#a9a9a9"
+					}
+				},
+				"absent_time": {
+					"foreground": {
+						"html_hex_color": "#a9a9a9"
+					}
+				},
+				"logs": {
+					"key": {
+						"foreground": {
+							"html_hex_color": "#48df61"
+						}
+					},
+					"value": {
+						"foreground": {
+							"html_hex_color": "#8c887c"
+						}
+					},
+					"time": {
+						"foreground": {
+							"html_hex_color": "#9e9e9e"
+						}
+					},
+					"msg": {
+						"foreground": {
+							"html_hex_color": "#ffffff"
+						}
+					},
+					"levels": {
+						"debug": {
+							"foreground": {
+								"html_hex_color": "#d33682"
+							}
+						},
+						"info": {
+							"foreground": {
+								"html_hex_color": "#2aa198"
+							}
+						},
+						"warn": {
+							"foreground": {
+								"html_hex_color": "#ff8800"
+							}
+						},
+						"error": {
+							"foreground": {
+								"html_hex_color": "#ff6a6a"
+							}
+						},
+						"panic": {
+							"foreground": {
+								"html_hex_color": "#ff6a6a"
+							},
+							"background": {
+								"html_hex_color": "#ffffff"
+							}
+						},
+						"fatal": {
+							"foreground": {
+								"html_hex_color": "#ff6a6a"
+							},
+							"background": {
+								"html_hex_color": "#ffff00"
+							}
+						},
+						"unknown": {
+							"foreground": {
+								"html_hex_color": "#a9a9a9"
+							}
+						}
+					},
+					"absent_msg": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					},
+					"absent_time": {
+						"foreground": {
+							"html_hex_color": "#a9a9a9"
+						}
+					}
+				},
+				"spans": {
+					"trace_id": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"span_id": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"trace_state": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"parent_span_id": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"name": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"kind": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"service_name": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"scope_name": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"scope_version": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"time": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"duration": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"resource_key": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"resource_val": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"attribute_key": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"attribute_val": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"status_message": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"status_code": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"event_time": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"event_name": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"event_key": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"event_val": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"link_trace_id": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"link_span_id": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"link_trace_state": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"link_key": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"link_val": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"absent_parent_span_id": {
+						"foreground": {
+							"html_hex_color": "#888888"
+						}
+					}
+				},
+				"tables": {
+					"column_name": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"column_type": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					},
+					"value": {
+						"foreground": {
+							"html_hex_color": "#2aa198"
+						}
+					}
+				}
+			}
+		},
+		"sort_longest": true,
+		"skip_unchanged": true,
+		"time": {
+			"format": "Jan _2 15:04:05.000"
+		},
+		"terminal_color_mode": 0
+	},
+	"parser": {
+		"timestamp": {
+			"field_names": [
+				"time",
+				"ts",
+				"@timestamp",
+				"timestamp",
+				"Timestamp"
+			]
+		},
+		"message": {
+			"field_names": [
+				"message",
+				"msg",
+				"Body"
+			]
+		},
+		"level": {
+			"field_names": [
+				"level",
+				"lvl",
+				"loglevel",
+				"severity",
+				"SeverityText"
+			]
+		}
+	},
+	"runtime": {
+		"interrupt": false,
+		"skip_check_for_updates": false,
+		"features": {},
+		"experimental_features": {
+			"release_channel": "main",
+			"serve_localhost": {
+				"port": 32764,
+				"engine": "advanced",
+				"engine_config": {
+					"path": "/Users/integralist/.state/humanlog/data/db.humanlog"
+				},
+				"show_in_systray": true,
+				"log_dir": "/Users/integralist/.state/humanlog/logs",
+				"otlp": {
+					"grpc_port": 4317,
+					"http_port": 4318
+				}
+			}
+		}
+	}
+}
