@@ -11,3 +11,4 @@
 Session.vim
 
 .config/nvim/plugin
+.aider*
