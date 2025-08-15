@@ -233,11 +233,16 @@ function gnoteup {
 # PUT with data
 # curl_json -X PUT --data '{"id":123,"status":"active"}' http://localhost:8080/update
 #
+# Set HTTP header(s)
+# curl_json -H "Foo: Bar" -H "Baz: Qux" http://localhost:8080/api
+# curl_json -X POST --data '{"foo":"bar"}' -H "Content-Type: application/json" http://localhost:8080/api
+#
 function curl_json() {
   verb="GET"
   data_flag=""
   data_value=""
   url=""
+  extra_args=()
 
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -250,22 +255,32 @@ function curl_json() {
         data_value="$2"
         shift 2
         ;;
+      -H|--header)
+        extra_args+=("$1" "$2")
+        shift 2
+        ;;
       *)
-        url="$1"
-        shift
+        if [[ "$1" =~ ^https?:// ]]; then
+          url="$1"
+          shift
+        else
+          # anything else not matching above gets passed to curl as-is
+          extra_args+=("$1")
+          shift
+        fi
         ;;
     esac
   done
 
   if [ -z "$url" ]; then
-    echo "Usage: curl_json [--request VERB] [--data 'JSON'] URL"
+    echo "Usage: curl_json [--request VERB] [--data 'JSON'] [-H 'Header: Value'] URL"
     return 1
   fi
 
   if [ -n "$data_flag" ]; then
-    curl -s -D - -X "$verb" "$data_flag" "$data_value" "$url"
+    curl -s -D - -X "$verb" "$data_flag" "$data_value" "${extra_args[@]}" "$url"
   else
-    curl -s -D - -X "$verb" "$url"
+    curl -s -D - -X "$verb" "${extra_args[@]}" "$url"
   fi | awk 'BEGIN {body=0} /^[[:space:]]*$/ {body=1; next} {if (body) print > "/dev/stderr"; else print}' \
     2> >(jq .)
 }
