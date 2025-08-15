@@ -143,3 +143,12 @@ if command -v dagger &> /dev/null
 then
 	eval "$(dagger completion zsh)"
 fi
+
+# DISABLED:
+#
+# Example Autocomplete
+# Uses https://github.com/integralist/zsh-cli-json-parser (installed earlier)
+#
+# path_example_completion="$dir_zsh/_example"
+# chmod +x $path_example_completion
+# source "$path_example_completion"
