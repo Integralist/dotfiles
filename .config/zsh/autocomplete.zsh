@@ -33,6 +33,29 @@ if ! test -f $path_json_parser; then
 fi
 source $path_json_parser
 
+# install fzf
+#
+if ! command -v fzf &> /dev/null
+then
+  brew install fzf
+fi
+
+# fzf shell support
+#
+# The `brew install fzf` installation provides an `install` script, which:
+#
+# Enables ctrl-r for fuzzy searching command history.
+# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
+# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
+#
+path_fzf_script="$HOME/.fzf.zsh"
+if test -f $path_fzf_script; then
+  source $path_fzf_script
+else
+	$(brew --prefix)/opt/fzf/install
+  source $path_fzf_script
+fi
+
 # fzf-tab
 #
 dir_fzf_tab="$dir_zsh/fzf-tab"
@@ -86,22 +109,6 @@ fi
 fpath=($dir_zsh $fpath)
 zstyle ':completion:*:*:git:*' script $path_bash_git_completion
 zstyle ':completion:*:default' menu select=2 # Highlight the selected option when using auto-complete.
-
-# fzf shell support
-#
-# The `brew install fzf` installation provides an `install` script, which:
-#
-# Enables ctrl-r for fuzzy searching command history.
-# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
-# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
-#
-path_fzf_script="$HOME/.fzf.zsh"
-if test -f $path_fzf_script; then
-  source $path_fzf_script
-else
-	$(brew --prefix)/opt/fzf/install
-  source $path_fzf_script
-fi
 
 # zsh-users/zsh-autosuggestions
 #

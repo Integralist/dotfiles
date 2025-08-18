@@ -4,6 +4,9 @@
 # Otherwise tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
+# NOTE: Some tools are installed from within earlier loaded script files.
+# An example of this is fzf which is needed for ./autocomplete.zsh
+
 # WARNING: We have to add .cargo/bin directory into $PATH before installing.
 # This helps avoid https://github.com/rust-analyzer/rust-analyzer/issues/4172
 #
