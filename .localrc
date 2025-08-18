@@ -23,6 +23,8 @@ export GOPRIVATE=github.com/fastly
 
 # example 1Password secret reference:
 # export EXAMPLE_API_KEY=$(op read "op://<VAULT_NAME>/<ENTRY_NAME>/<SECTION_NAME>/<FIELD_NAME>")
+# lazy_op EXAMPLE_API_KEY "op://<VAULT_NAME>/<ENTRY_NAME>/<SECTION_NAME>/<FIELD_NAME>"
+# NOTE: use lazy_op to speed up shell loading times
 
 # ensure fnm supports yarn
 # https://github.com/Schniz/fnm/issues/87#issuecomment-751366346

@@ -28,6 +28,7 @@ load_script ~/.config/zsh/autocomplete.zsh
 load_script ~/.config/zsh/functions.zsh
 load_script ~/.config/zsh/bindings.zsh
 load_script ~/.config/zsh/shell.zsh
+load_script ~/.config/zsh/lazy_op.zsh
 
 export PATH="$MODIFIED_PATH:$PATH"
 typeset -U path
