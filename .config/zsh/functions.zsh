@@ -11,6 +11,14 @@ function brew_update {
   brew upgrade
 }
 
+# update updates Homebrew and Rust.
+# Rust function is defined in ./tools.zsh
+# Go is done separately on cd (see `chpwd` in ./tools.zsh)
+function update {
+  brew_update
+  rust_update
+}
+
 # dedupe ensures there are no duplicates in the $PATH
 function dedupe {
   export PATH=$(echo -n "$PATH" | awk -v RS=: '!($0 in a) {a[$0]; printf("%s%s", length(a) > 1 ? ":" : "", $0)}')
