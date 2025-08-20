@@ -295,6 +295,7 @@ function chpwd() {
 
 		export MODIFIED_PATH="$PATH" # see note in ~/.localrc
 		r # reload shell so starship can display the updated go version
+		export PATH="$MODIFIED_PATH" # needed otherwise after shell reload we lose the path setting
 	fi
 
 	# clean out any .DS_Store files

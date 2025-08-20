@@ -28,7 +28,6 @@ load_script ~/.config/zsh/autocomplete.zsh
 load_script ~/.config/zsh/functions.zsh
 load_script ~/.config/zsh/bindings.zsh
 load_script ~/.config/zsh/shell.zsh
-load_script ~/.config/zsh/lazy_op.zsh
 
 export PATH="$MODIFIED_PATH:$PATH"
 typeset -U path
@@ -40,9 +39,15 @@ typeset -U path
 echo .zshrc loaded
 
 # Configuration you don't want as part of your main .zshrc
+# For me, this is a template file that includes 1Password secret references.
+# Meaning, I need to source the file via `op inject` so I can interpolate my secrets.
 #
 if [ -f "$HOME/.localrc" ]; then
-  source "$HOME/.localrc"
+	if command -v op >/dev/null; then
+		op signin --account fastly.1password.com
+		# op signin --account my.1password.com << PERSONAL ACCOUNT
+		source <(op inject -i $HOME/.localrc)
+	fi
 fi
 
 # The following is a modification from running `curl -sSL "https://humanlog.io/install.sh" | bash`

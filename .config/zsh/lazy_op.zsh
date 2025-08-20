@@ -6,6 +6,13 @@ export PATH="$MODIFIED_PATH"
 
 # A Zsh script to provide a lazy-loading function for 1Password secrets,
 # with a one-hour cache to speed up shell initialization.
+#
+# It helps avoid doing...
+#
+# export FASTLY_API_KEY=$(op read "op://VaultName/SomeSecret/SomeSection/SomeToken")
+#
+# ...which is very slow when you have lots of environment variables that need
+# 1Password to load their secrets from.
 
 # Define the path for the cache file.
 _LAZY_OP_CACHE_FILE="/tmp/cache-lazy-op"
@@ -24,6 +31,7 @@ touch -a "$_LAZY_OP_CACHE_FILE"
 lazy_op() {
     if [[ $# -ne 2 ]]; then
         echo "lazy_op: usage: lazy_op <ENV_VAR_NAME> <OP_PATH>" >&2
+				echo "EXAMPLE: lazy_op FASTLY_API_KEY \"op://VaultName/SomeSecret/SomeSection/SomeToken\""
         return 1
     fi
 
