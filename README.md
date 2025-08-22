@@ -6,9 +6,9 @@
 
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
-[This blog post](https://www.integralist.co.uk/posts/tools/) which gives a summary of all my favourite developer tools.
+[This blog post](https://www.integralist.co.uk/posts/dev-tools/) which gives a summary of all my favourite developer tools.
 
-[This blog post](https://www.integralist.co.uk/posts/new-laptop-configuration/) which gives a detailed break down of how to set up a new macOS laptop.
+[This blog post](https://www.integralist.co.uk/posts/laptop-setup-v2) which gives a detailed break down of how to set up a new macOS laptop.
 
 [This gist](https://gist.github.com/Integralist/05e5415de6743e66b112574a1a5c1970) which gives a concise summary of the steps from the blog post.
 
