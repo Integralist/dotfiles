@@ -45,3 +45,5 @@ if [ -f "$HOME/.localrc" ]; then
 		source <(op inject -i $HOME/.localrc)
 	fi
 fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
