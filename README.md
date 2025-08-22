@@ -1,5 +1,9 @@
 # dotfiles
 
+> \[!TIP\]
+> Clone this repo to `~/code/dotfiles` then symlink files.\
+> e.g. `ln -s ~/code/dotfiles/.config ~/.config`
+
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
 [This blog post](https://www.integralist.co.uk/posts/tools/) which gives a summary of all my favourite developer tools.

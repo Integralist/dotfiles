@@ -7,47 +7,13 @@ if [[ -z "$path" ]]; then
 	export PATH="$MODIFIED_PATH"
 fi
 
-# 1Password
-#
-# When signing into our personal account it means the `op read` for API keys will work.
-# But it also means other scripts that use `op` have to call `op signin`.
-# Otherwise, they'll have the wrong 1Password vault context.
-#
-op signin --account my.1password.com
-
 # environment
 #
-export PATH="$PATH:$HOME/.rvm/bin"
-export PATH="$HOME/.pyenv/shims:$PATH"
+# export EXAMPLE_API_KEY={{ op://VaultName/SecretName/SectionName/TokenName }}
 export GOPRIVATE=github.com/fastly
-
-# example 1Password secret reference:
-# export EXAMPLE_API_KEY=$(op read "op://<VAULT_NAME>/<ENTRY_NAME>/<SECTION_NAME>/<FIELD_NAME>")
-# lazy_op EXAMPLE_API_KEY "op://<VAULT_NAME>/<ENTRY_NAME>/<SECTION_NAME>/<FIELD_NAME>"
-# NOTE: use lazy_op to speed up shell loading times
-
-# ensure fnm supports yarn
-# https://github.com/Schniz/fnm/issues/87#issuecomment-751366346
-#
-export YARN_GLOBAL_FOLDER="$FNM_MULTISHELL_PATH/yarn-global"
-export YARN_PREFIX="$FNM_MULTISHELL_PATH"
-
-# configure python environment
-#
-eval "$(python3 -m pip completion --bash)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# configure ruby environment
-#
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # ensure there are no duplicates in the $PATH
 #
 typeset -U path
-
-# DISABLED: Zsh has its own approach (see above).
-#
-# dedupe
 
 echo .localrc loaded

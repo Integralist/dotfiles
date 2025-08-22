@@ -32,10 +32,6 @@ load_script ~/.config/zsh/shell.zsh
 export PATH="$MODIFIED_PATH:$PATH"
 typeset -U path
 
-# DISABLED: Zsh has its own approach (see above).
-#
-# dedupe
-
 echo .zshrc loaded
 
 # Configuration you don't want as part of your main .zshrc
@@ -49,11 +45,3 @@ if [ -f "$HOME/.localrc" ]; then
 		source <(op inject -i $HOME/.localrc)
 	fi
 fi
-
-# The following is a modification from running `curl -sSL "https://humanlog.io/install.sh" | bash`
-export PATH="/Users/integralist/.humanlog/bin:$PATH"
-
-# The following is a modification to support aider install:
-export PATH="/Users/integralist/.local/bin:$PATH"
-
-. "$HOME/.local/bin/env"
