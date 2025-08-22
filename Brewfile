@@ -1,6 +1,4 @@
 tap "cue-lang/tap"
-tap "homebrew/bundle"
-tap "homebrew/services"
 tap "sergiobenitez/osxct"
 tap "warrensbox/tap"
 brew "bandwhich"
