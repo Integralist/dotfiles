@@ -10,5 +10,11 @@
 
 Session.vim
 
+# Ignore everything in .gnupg
+.gnupg/*
+# But keep these two config files
+!.gnupg/gpg-agent.conf
+!.gnupg/gpg.conf
+
 .config/nvim/plugin
 .aider*
