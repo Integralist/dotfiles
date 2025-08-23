@@ -47,3 +47,7 @@ if [ -f "$HOME/.localrc" ]; then
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The following line is required for aider
+# curl -LsSf https://aider.chat/install.sh | sh
+. "$HOME/.local/bin/env"
