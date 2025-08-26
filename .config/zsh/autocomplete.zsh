@@ -8,16 +8,17 @@ export PATH="$MODIFIED_PATH"
 #
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 fi
 
 # Bash Autocomplete Helpers
+# Some tools provide only Bash completion scripts (.bash_completion files).
+# This enables Zsh to interpret those Bash completion scripts.
 #
 autoload -U +X bashcompinit && bashcompinit
 
 # Zsh Autocomplete Helpers
-#
-# Extended with help from fzf-tab (https://github.com/Aloxaf/fzf-tab)
+# This enables Zsh to support any completion functions written in native Zsh syntax.
+# This feature is later extended with help from fzf-tab (https://github.com/Aloxaf/fzf-tab)
 #
 autoload -U compinit; compinit
 
@@ -32,52 +33,6 @@ if ! test -f $path_json_parser; then
 	chmod +x $path_json_parser
 fi
 source $path_json_parser
-
-# install fzf
-#
-if ! command -v fzf &> /dev/null
-then
-  brew install fzf
-fi
-
-# fzf shell support
-#
-# The `brew install fzf` installation provides an `install` script, which:
-#
-# Enables ctrl-r for fuzzy searching command history.
-# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
-# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
-#
-path_fzf_script="$HOME/.fzf.zsh"
-if test -f $path_fzf_script; then
-  source $path_fzf_script
-else
-	$(brew --prefix)/opt/fzf/install
-  source $path_fzf_script
-fi
-
-# fzf-tab
-#
-dir_fzf_tab="$dir_zsh/fzf-tab"
-path_fzf_tab="$dir_fzf_tab/fzf-tab.plugin.zsh"
-if test -f $path_fzf_tab; then
-  source $path_fzf_tab
-else
-	mkdir -p "$dir_zsh"
-	git clone https://github.com/Aloxaf/fzf-tab $dir_fzf_tab
-  source $path_fzf_tab
-fi
-# The following are common configurations for fzf-tab
-# https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
-#
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
-zstyle ':completion:*' menu no
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# # switch group using `<` and `>`
-zstyle ':fzf-tab:*' switch-group '<' '>'
 
 # Git Autocomplete
 #
@@ -159,3 +114,50 @@ fi
 # path_example_completion="$dir_zsh/_example"
 # chmod +x $path_example_completion
 # source "$path_example_completion"
+
+# install fzf
+#
+if ! command -v fzf &> /dev/null
+then
+  brew install fzf
+fi
+
+# fzf shell support
+#
+# The `brew install fzf` installation provides an `install` script, which:
+#
+# Enables ctrl-r for fuzzy searching command history.
+# Enables ctrl-t for selecting multiple files to append to command line (see also vf alias).
+# Enables esc-c for cd'ing to the selected directory (esc == alt/meta).
+#
+path_fzf_script="$HOME/.fzf.zsh"
+if test -f $path_fzf_script; then
+  source $path_fzf_script
+else
+	$(brew --prefix)/opt/fzf/install
+  source $path_fzf_script
+fi
+
+# fzf-tab
+#
+dir_fzf_tab="$dir_zsh/fzf-tab"
+path_fzf_tab="$dir_fzf_tab/fzf-tab.plugin.zsh"
+if test -f $path_fzf_tab; then
+  source $path_fzf_tab
+else
+	mkdir -p "$dir_zsh"
+	git clone https://github.com/Aloxaf/fzf-tab $dir_fzf_tab
+  source $path_fzf_tab
+fi
+
+# The following are common configurations for fzf-tab
+# https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
+#
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+# preview directory's content with eza when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+# # switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'

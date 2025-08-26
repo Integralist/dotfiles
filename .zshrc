@@ -24,10 +24,10 @@ load_script ~/.config/zsh/options.zsh
 load_script ~/.config/zsh/exports.zsh
 load_script ~/.config/zsh/alias.zsh
 load_script ~/.config/zsh/tools.zsh
-load_script ~/.config/zsh/autocomplete.zsh
 load_script ~/.config/zsh/functions.zsh
 load_script ~/.config/zsh/bindings.zsh
 load_script ~/.config/zsh/shell.zsh
+load_script ~/.config/zsh/autocomplete.zsh
 
 export PATH="$MODIFIED_PATH:$PATH"
 typeset -U path
@@ -45,8 +45,6 @@ if [ -f "$HOME/.localrc" ]; then
 		source <(op inject -i $HOME/.localrc)
 	fi
 fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # The following line is added automatically by humanlog if missing:
 #

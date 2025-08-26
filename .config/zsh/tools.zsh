@@ -134,26 +134,6 @@ if [ ! -f $GOROOT/bin/go ]; then
 	rm "$TMP_DL"
 fi
 
-# DISABLED: https://github.com/humanlogio/humanlog/issues/304
-#
-# https://github.com/humanlogio/humanlog
-# You can't `go install`. You have to install via curl script piped to bash.
-# That custom install approach will install the binary into a custom directory.
-# You then run an `upgrade` command.
-#
-# export PATH="$HOME/.humanlog/bin:$PATH"
-
-# DISABLED:The following until I'm sure what workflow is best for me.
-#
-# # each new shell instance should start from the ROOT go install (not the symlink)
-# # but don't remove it when a second `source ~/.zshrc`.
-# # this is because when we install/switch to a new go version we reload the shell.
-# # we do this to ensure the Starship prompt can read the symlinked Go version.
-# if [ -z "$GO_RESET_SYMLINK" ]; then
-# 	echo "delete Go symlink (i.e. using GOROOT Go version)"
-# 	rm -f "$GOPATH/bin/go"
-# 	GO_RESET_SYMLINK=1
-# fi
 # go_tools installs/updates necessary Go tools.
 function go_tools {
   local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
