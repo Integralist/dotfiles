@@ -655,10 +655,10 @@
 				"port": 32764,
 				"engine": "advanced",
 				"engine_config": {
-					"path": "/Users/integralist/.state/humanlog/data/db.humanlog"
+					"path": "~/.state/humanlog/data/db.humanlog"
 				},
 				"show_in_systray": true,
-				"log_dir": "/Users/integralist/.state/humanlog/logs",
+				"log_dir": "~/.state/humanlog/logs",
 				"otlp": {
 					"grpc_port": 4317,
 					"http_port": 4318

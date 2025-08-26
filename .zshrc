@@ -48,6 +48,10 @@ fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# The following line is added automatically by humanlog if missing:
+#
+export PATH=$HOME/.humanlog/bin:$PATH
+
 # The following line is required for aider
 # curl -LsSf https://aider.chat/install.sh | sh
 . "$HOME/.local/bin/env"
