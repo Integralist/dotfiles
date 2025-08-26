@@ -34,7 +34,13 @@ As of Dec 2024 I'm using [Ghostty](https://ghostty.org/).
 
 There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew:
 
-```bash
+```shell
+brew bundle install --file=~/code/dotfiles/Brewfile
+```
+
+You can also regenerate it using:
+
+```shell
 brew bundle dump --force
 brew bundle install
 ```
