@@ -93,7 +93,7 @@
 
 [commit]
   gpgsign = true
-  template = /Users/integralist/.gitcommit
+  template = ~/.gitcommit
 
 [core]
   editor = nvim
