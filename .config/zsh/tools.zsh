@@ -152,6 +152,7 @@ function go_tools {
   go install github.com/securego/gosec/v2/cmd/gosec@latest
 	go install github.com/davecheney/httpstat@latest
 	go install github.com/segmentio/golines@latest
+	go install github.com/rhysd/actionlint/cmd/actionlint@latest
 }
 # go_install installs the specified version
 function go_install() {
