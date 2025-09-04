@@ -330,7 +330,7 @@
 				"levels": {
 					"debug": {
 						"foreground": {
-							"html_hex_color": "#d33682"
+							"html_hex_color": "#8CBBFF"
 						}
 					},
 					"info": {
