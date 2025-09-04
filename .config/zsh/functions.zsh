@@ -70,6 +70,27 @@ function hiddenchars() {
   cat -e -t -v "$filename"
 }
 
+# restore a file to either the main branch (default) or to an earlier commit
+# version.
+#
+git_restore() {
+  local file=$1
+  local commit=$2
+
+  if [[ -z "$file" ]]; then
+    echo "Usage: git_restore <file> [commit]"
+    return 1
+  fi
+
+  if [[ -z "$commit" ]]; then
+    # restore file from current branch (e.g., main)
+    git restore -- "$file"
+  else
+    # restore file from specific commit
+    git restore --source="$commit" -- "$file"
+  fi
+}
+
 # delete tag from both local and remote repositories
 #
 function git_tag_delete() {
