@@ -11,6 +11,7 @@ auto-update = check
 clipboard-paste-protection=true
 clipboard-trim-trailing-spaces = true
 copy-on-select = clipboard
+custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
 font-family = Menlo
 font-feature = -liga
 font-thicken = true
@@ -24,6 +25,7 @@ keybind = super+shift+alt+s=write_screen_file:open
 macos-option-as-alt = right
 quick-terminal-autohide = false
 quick-terminal-position = center
+quick-terminal-size = 75%,50%
 scrollback-limit = 100000000
 split-divider-color = #666666
 theme = nightfox
