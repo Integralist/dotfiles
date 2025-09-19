@@ -77,25 +77,20 @@ alias fd='fd --hidden --no-ignore-vcs'
 
 alias g="git"
 alias ga="git add"
-alias gb="git branch-verbose" # defined in ~/.gitconfig
-alias gc="git checkout"
-alias gd="git diff"
-alias gdw="git diff-word" # defined in ~/.gitconfig
-alias gup="git push"
-alias gdown="git pull"
-alias gr="git rebase"
-alias grs="git restore"
-alias gsh="git stash"
-alias gsw="git switch"
 alias gam="git add -u" # stage only modified files
 alias gan='git add $(git ls-files -o --exclude-standard)' # stage only new files
 alias gap="git add --patch"
-alias gbi="git branch --list 'integralist*'"
+alias gb="git branch-verbose" # defined in ~/.gitconfig
 alias gbd="git branch -D" # pass branch name to delete
-alias gcm="git commit"
+alias gbi="git branch --list 'integralist*'"
+alias gc="git checkout"
 alias gca="git commit --amend"
+alias gcm="git commit"
 alias gco="git checkout origin/main --" # followed by path to file to checkout
 alias gcv="git commit -v"
+alias gd="git diff"
+alias gdown="git pull"
+alias gdw="git diff-word" # defined in ~/.gitconfig
 alias gf="git pushit" # push with force lease - defined in ~/.gitconfig
 alias ghosttydocs="ghostty +show-config --default --docs"
 alias gl="git log-graphstat" # defined in ~/.gitconfig
@@ -103,14 +98,20 @@ alias glm="git log-me" # defined in ~/.gitconfig
 alias gls="git log-short" # defined in ~/.gitconfig
 alias gn="git config --add remote.origin.fetch '+refs/notes/*:refs/notes/*'" # track notes from the remote
 alias godoc="stdsym | fzf | xargs go doc " -- https://github.com/lotusirous/gostdsym
-alias gom="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix -diff ./... | delta"
-alias goma="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix ./..."
 alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | rg '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | grep -v 'rc' | awk NR==1 | rg '\d.+' -o"
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
+alias gom="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix -diff ./... | delta"
+alias goma="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix ./..."
 alias gpr="git pull --rebase origin" # pass branch name
+alias gr="git rebase"
+alias grm="git remote prune origin"
+alias grs="git restore"
+alias gsh="git stash"
 alias gst="git st" # defined in ~/.gitconfig
 alias gstm="git stm" # display only modified files (exclude untracked) - defined in ~/.gitconfig
+alias gsw="git switch"
 alias gt="git tag --sort=-creatordate | tac" # brew install tac (cat backwards)
+alias gup="git push"
 alias gwip="git wip" # defined in ~/.gitconfig
 
 # To view built-in command help documentation Zsh doesn't have a `help` command like Bash.
