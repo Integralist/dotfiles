@@ -21,8 +21,8 @@ font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 keybind = super+page_down=scroll_page_fractional:0.5
 keybind = super+page_up=scroll_page_fractional:-0.5
-keybind = super+shift+page_down=scroll_page_lines:1
-keybind = super+shift+page_up=scroll_page_lines:-1
+keybind = super+shift+arrow_down=scroll_page_lines:1
+keybind = super+shift+arrow_up=scroll_page_lines:-1
 keybind = super+shift+s=write_screen_file:paste
 keybind = super+shift+alt+s=write_screen_file:open
 macos-option-as-alt = right
