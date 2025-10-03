@@ -19,3 +19,4 @@ Session.vim
 .config/nvim/plugin
 .aider*
 CLAUDE.md
+.claude/
