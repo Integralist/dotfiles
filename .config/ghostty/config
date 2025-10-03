@@ -5,6 +5,9 @@
 # cmd+<triple-mouse-click> == copy command output
 # cmd+shift+c == copy selected text inside of neovim
 # cmd+shift+v == paste whatever was selected using the mouse (vs cmd+v which pastes anything selected with the keyboard selection)
+#
+# super == cmd
+# page_up and page_down == fn + arrow key
 
 adjust-cell-height = +20%
 auto-update = check
