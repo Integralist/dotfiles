@@ -11,6 +11,22 @@ function brew_update {
   brew upgrade
 }
 
+# certdns displays the SAN (Subject Alternative Names) for a website's TLS
+# certificate.
+function certdns() {
+  if [ -z "$1" ]; then
+      echo "Usage: certdns <domain>" >&2
+      return 1
+  fi
+  openssl s_client -connect "$1:443" </dev/null 2>/dev/null | \
+      openssl x509 -noout -text | \
+      grep "DNS:" | \
+      sed 's/^[[:space:]]*//' | \
+      tr ',' '\n' | \
+      sed 's/^[[:space:]]*DNS://' | \
+      sed 's/^[[:space:]]*//'
+}
+
 # update updates Homebrew and Rust.
 # Rust function is defined in ./tools.zsh
 # Go is done separately on cd (see `chpwd` in ./tools.zsh)
