@@ -28,7 +28,7 @@ keybind = super+shift+alt+s=write_screen_file:open
 macos-option-as-alt = right
 quick-terminal-autohide = false
 quick-terminal-position = center
-quick-terminal-size = 75%,50%
+quick-terminal-size = 75%,75%
 scrollback-limit = 100000000
 split-divider-color = #666666
 theme = nightfox
