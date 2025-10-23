@@ -8,27 +8,63 @@
 #
 
 [alias]
+	# List all aliases and their descriptions from the config comments
+  alias = "!awk ' /^\\[alias\\]/ { f=1; next } /^\\[/ { f=0 } f && /^ *#/ { gsub(/^ *# */, \"\"); c = (c==\"\" ? \"\" : c\"\\n\") $0 } f && /=/ && $1 != \"alias\" { printf \"\\033[1;36m%s\\033[0m\\n\", $1; if (c!=\"\") { print c; print \"\" } c=\"\" } ' ~/.gitconfig"
+
+  # Watches GitHub Action runs for the current branch
   # https://github.com/nedbat/watchgha
   action = "!f() { \
-      watch_gha_runs \
-          \"$(git remote get-url origin)\" \
-          \"$(git rev-parse --abbrev-ref HEAD)\"; \
+    watch_gha_runs \
+      \"$(git remote get-url origin)\" \
+      \"$(git rev-parse --abbrev-ref HEAD)\"; \
   }; f"
-  ; branch-verbose = branch -vv
+
+  # Show local branches with tracking information and commit details
+  branch-verbose = branch -vv
+
+  # Show who last modified each line of a file, ignoring whitespace and finding original authors of copied/moved code
   blame = blame -w -C -C -C
+
+  # Display branches in a detailed, custom-formatted table
   branch-verbose = "!git branch --format '%(HEAD) %(refname:short),%(color:green)%(objectname:short)%(color:reset),%(color:blue)[%(upstream)]%(color:reset),%(color:red)%(contents:subject)%(color:reset)' | column -t -s ','"
+
+  # List the top 10 most frequently changed files in the project's history
   code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
+
+  # Shortcut for the 'code-changes' alias
   cc = "!git code-changes"
+
+  # Forcefully remove all untracked files and directories
   clean-untracked = "clean -fd"
+
+  # List all contributors and the number of commits they have made
   collaborators =! bash -c 'git shortlog -s -- $0 | sort -r'
+
+  # List the names of all files with merge conflicts
   conflicts = diff --name-only --diff-filter=U
-  diff = diff -w ; ignore whitespace
+
+  # Ignore whitespace changes in diffs
+  diff = diff -w
+
+  # Find all files with merge conflicts and open them in the default editor
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
+
+  # Show a color-highlighted, word-by-word diff instead of line-by-line
   diff-word = diff --word-diff=color
-  history = "!f() { git log -p --follow \"$1\"; }; f" # pass in a file path to see its complete history
-	log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%n%b%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n%nNotes:%n%N' --graph --stat --notes=*
+
+  # Pass in a file path to see its complete history, including renames
+  history = "!f() { git log -p --follow \"$1\"; }; f"
+
+  # A detailed log view with a commit graph, file change statistics, and notes
+  log-graphstat = log --pretty=format:'%C(auto)%h%d%n%s%n%n%b%C(auto)%C(blue)%an <%ae>%C(reset), %C(auto)%C(dim)%ad%n%nNotes:%n%N' --graph --stat --notes=*
+
+  # Use 'log-graphstat' to show only commits by the author 'Integralist'
   log-me = log-graphstat --author='Integralist'
-	log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+
+  # A compact log format showing only the commit subject, hash, and branch/tag info
+  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+
+  # Fetch a GitHub Pull Request into a new local branch
   pr = "!f() { \
     if [ $# -lt 2 ]; then \
       echo \"Usage: git pr <pull_request_number> <branch_name>\"; \
@@ -38,15 +74,38 @@
       git checkout $2; \
     fi \
   }; f"
+
+  # A safer force-push that won't overwrite remote changes you don't have locally
   pushit = push --force-with-lease origin head
+
+  # List local branches sorted by the most recent commit
   recent = branch --sort=-committerdate
+
+  # Search for a string across all files in the entire git history
   search =! bash -c 'git rev-list --all | xargs git grep "$1"'
+
+  # Set the upstream for a local branch to the corresponding branch on 'origin'
   set-upstream = "!f() { git branch --set-upstream-to=origin/\"$1\" \"$1\"; }; f"
+
+  # Show commit details, ignoring whitespace changes in the diff
   show = show -w
+
+  # Shortcut for 'git status'
   st = status
-  stm = "!git status --porcelain | grep '^ M' | cut -c 4-" # display only modified files (exclude untracked)
+
+  # Display all changed files (including untracked)
+  sta = "!git status --porcelain | awk '{print $2}'"
+
+  # Display only modified files (exclude untracked)
+  stm = "!git status --porcelain | grep '^ M' | cut -c 4-"
+
+  # Unstage all currently staged files
   unstage = reset HEAD --
+
+  # List all untracked files (respecting .gitignore)
   untracked = ls-files --others --exclude-standard
+
+  # Show local branches sorted by when they were last worked on
   wip = for-each-ref --sort='authordate:iso8601' --format=' %(color:green)%(authordate:relative)%09%(color:white)%(refname:short)' refs/heads
 
 [apply]
