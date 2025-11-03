@@ -108,7 +108,7 @@ alias gr="git rebase"
 alias grm="git remote prune origin"
 alias grs="git restore"
 alias gsh="git stash"
-alias gst="git st" # defined in ~/.gitconfig
+alias gst="git st --short" # defined in ~/.gitconfig
 alias gstm="git stm" # display only modified files (exclude untracked) - defined in ~/.gitconfig
 alias gsw="git switch"
 alias gt="git tag --sort=-creatordate | tac" # brew install tac (cat backwards)
