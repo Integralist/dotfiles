@@ -169,7 +169,8 @@ function digc() {
     return
   fi
 	# NOTE: I don't use `+noall` as it hides lines like `;; ANSWER` and `;; AUTHORITY` which I want to keep
-	dig "$1" $2 +answer +authority | pcregrep -v '^(;[^;]|;;(?! (ANSWER|AUTHORITY)))'
+	# The regex also filters out empty lines (^$)
+	dig "$1" $2 +answer +authority | pcregrep -v '^(;[^;]|;;(?! (ANSWER|AUTHORITY))|^$)'
 }
 
 # digg adds colors to the standard dig output to improve readability while not losing contextual information.
