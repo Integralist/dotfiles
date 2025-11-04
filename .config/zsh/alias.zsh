@@ -125,6 +125,7 @@ alias help=run-help
 alias history="history 0" # force history to show full history
 alias ips="arp -a" # some IPs (like my NAS DS220) don't show up until I'm able to ping it (as that starts up the box).
 alias json="python -m json.tool"
+alias kubectl="kubecolor"
 
 bold=$(tput bold)
 normal=$(tput sgr0)
