@@ -62,7 +62,7 @@
   log-me = log-graphstat --author='Integralist'
 
   # A compact log format showing only the commit subject, hash, and branch/tag info
-  log-short = log --pretty=format:'%s%n%C(green)%h %C(yellow)%D%n'
+	log-short = log --pretty=format:'----------------------------------------------%n%n%s%n%C(green)%h %C(yellow)%D%n'
 
   # Fetch a GitHub Pull Request into a new local branch
   pr = "!f() { \
