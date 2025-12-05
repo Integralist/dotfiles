@@ -107,6 +107,7 @@ alias gpr="git pull --rebase origin" # pass branch name
 alias gr="git rebase"
 alias grm="git remote prune origin"
 alias grs="git restore"
+alias gs="git diff-stat"
 alias gsh="git stash"
 alias gst="git st --short" # defined in ~/.gitconfig
 alias gstm="git stm" # display only modified files (exclude untracked) - defined in ~/.gitconfig

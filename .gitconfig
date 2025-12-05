@@ -52,6 +52,9 @@
   # Show a color-highlighted, word-by-word diff instead of line-by-line
   diff-word = diff --word-diff=color
 
+	# Show stats difference between current branch and main branch
+	diff-stat = diff main --shortstat
+
   # Pass in a file path to see its complete history, including renames
   history = "!f() { git log -p --follow \"$1\"; }; f"
 
