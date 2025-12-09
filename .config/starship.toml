@@ -140,8 +140,8 @@ style = "bg:#7DF9AA fg:#282A36"
 # TIP: You must set `when = true` if you always want the custom command to run.
 
 [custom.infra_context]
-command = "cat ~/.infra_context 2>/dev/null || echo 'no context'"
-when = "[ -f ~/.infra_context ] && [[ \"$PWD\" == \"$HOME/code/fastly/mustang\"* || \"$PWD\" == \"$HOME/code/fastly/ascerta\"* || \"$PWD\" == \"$HOME/code/fastly/spotless\"* || \"$PWD\" == \"$HOME/code/fastly/blue-ribbon\"* ]]"
+command = "kubectl config get-contexts --no-headers | awk '$1==\"*\" {sub(/^infra:/, \"\", $2); if ($5!=\"\") print $2 \" (\" $5 \")\"; else print $2}'"
+when = "[ -f ~/.kube/config ]"
 style = "fg:#ffffff bg:#bd4024"
 format = "[ $output ]($style)"
 
