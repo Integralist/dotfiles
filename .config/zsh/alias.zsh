@@ -96,6 +96,7 @@ alias ghconfig="ghostty +edit-config"
 alias ghdocs="ghostty +show-config --default --docs | less -R -X -r" # opens less with extended regex mode
 alias gl="git log-graphstat" # defined in ~/.gitconfig
 alias glm="git log-me" # defined in ~/.gitconfig
+alias glow="glow -w 120" # you can set -w multiple times and it'll override the previous value
 alias gls="git log-short" # defined in ~/.gitconfig
 alias gn="git config --add remote.origin.fetch '+refs/notes/*:refs/notes/*'" # track notes from the remote
 alias godoc="stdsym | fzf | xargs go doc " -- https://github.com/lotusirous/gostdsym
