@@ -67,6 +67,12 @@ function rust_update {
 
 # Golang environment
 #
+# NOTE: We install Go manually (not via Homebrew).
+# We then rely on the Go toolchain behaviours added in go1.21
+# Which are, in the go.mod file, the `go` directive controls language rules.
+# While the `toolchain` directive controls which Go binary actually runs.
+# Go then handles automatically installing that `toolchain` binary for you.
+#
 # For complete list of all go versions:
 # https://go.dev/dl/
 #
@@ -95,30 +101,23 @@ function rust_update {
 # When installing a tool (like revive) it is installed into the $GOPATH/bin:
 # go install github.com/mgechev/revive@latest
 #
-# NOTE: Installing the same tool using a different Go version overwrites the tool.
-# e.g. the tool will be downloaded into the global $GOPATH/bin directory.
-# go1.22.10 install github.com/mgechev/revive@latest
-#
-# WARNING: Don't run the non-mainline binary in a go.mod directory!
-# It'll attempt to download/use the version defined by the module.
-#
 # IMPORTANT: We modify the PATH hence we have to re-assign MODIFIED_PATH below.
-#
-# Auto-switching Go versions is done using .go-version file.
-# See chpwd() function further down below.
 #
 export GOPATH="$HOME/go"
 export GOROOT="$HOME/.go"
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH";
-if [ ! -f $GOROOT/bin/go ]; then
+
+# go_install_latest installs the latest go version.
+#
+function go_install_latest {
 	mkdir -p "$GOPATH"
 	mkdir -p "$GOROOT"
 
-	GO_VERSION=$(golatest)
-	OS=$(uname | tr '[:upper:]' '[:lower:]')
-	ARCH=$(uname -m)
-	URL="https://go.dev/dl/go${GO_VERSION}.${OS}-${ARCH}.tar.gz"
-	TMP_DL="/tmp/go.tar.gz"
+	local GO_VERSION=$(golatest)
+	local OS=$(uname | tr '[:upper:]' '[:lower:]')
+	local ARCH=$(uname -m)
+	local URL="https://go.dev/dl/go${GO_VERSION}.${OS}-${ARCH}.tar.gz"
+	local TMP_DL="/tmp/go.tar.gz"
 
 	echo "Downloading latest Go archive from $URL"
 	curl -Lo "$TMP_DL" "$URL"
@@ -132,9 +131,9 @@ if [ ! -f $GOROOT/bin/go ]; then
 	# Cleanup the downloaded archive
 	echo "Cleaning up Go archive from $TMP_DL"
 	rm "$TMP_DL"
-fi
-
+}
 # go_tools installs/updates necessary Go tools.
+#
 function go_tools {
   local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
   curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin "$golangcilatest"
@@ -155,130 +154,53 @@ function go_tools {
 	go install github.com/rhysd/actionlint/cmd/actionlint@latest
 	go install fillmore-labs.com/scopeguard@latest
 }
-# go_install installs the specified version
-function go_install() {
-  if [ -z "$1" ]; then
-		echo "Pass a Go version (e.g. 1.21.13)"
-    return
-  fi
-	local v="$1"
-	go install "golang.org/dl/go$v@latest"
-	"$GOPATH/bin/go$v" download
-	"$GOPATH/bin/go$v" version
-}
-# go_alias creates an alias for the specified version
-function go_alias() {
-  if [ -z "$1" ]; then
-		echo "Pass a Go version (e.g. 1.21.13)"
-    return
-  fi
-	local v="$1"
-	alias go="$GOPATH/bin/go$v"
-}
-# go_symlink is called by chpwd to allow a different go version binary to be used.
-# if the specified version binary doesn't exist, we install it first.
-function go_symlink() {
-  if [ -z "$1" ]; then
-		echo "Pass a Go version (e.g. 1.21.13)"
-    return
-  fi
-	local v=$1
-	if [ ! -f "$GOPATH/bin/go$v" ]; then
-		go_install "$v"
-	fi
-	ln -sf "$GOPATH/bin/go$v" "$GOPATH/bin/go"
-}
-# go_symlink_remove deletes the symlink so we're back to using the GOROOT version.
-function go_symlink_remove() {
-	rm -f "$GOPATH/bin/go"
-}
 # go_list lists all installed tools
+#
 function go_list() {
 	echo "GOPATH: $GOPATH/bin"
 	ls $GOPATH/bin
 }
-# go_rm deletes the specified Go version and the symlink
-function go_rm() {
-  if [ -z "$1" ]; then
-		echo "Pass a Go version (e.g. 1.21.13)"
-    return
-  fi
-	local v=$1
-	go_symlink_remove
-	rm -rf "$HOME/.cache/go-deps/go$v"
-}
 # go_clean deletes the Go installation completely.
+#
 function go_clean() {
-	go_symlink_remove
 	sudo rm -rf ~/go ~/.go ~/sdk
 }
+
+if [ ! -f $GOROOT/bin/go ]; then
+	go_install_latest
+	go_tools
+else
+	# Check for updates
+	# WARNING: This runs a network call on every shell startup which can be slow.
+	#
+	CURRENT_GO_VERSION=$($GOROOT/bin/go version 2>/dev/null | cut -d ' ' -f 3 | sed 's/go//')
+	LATEST_GO_VERSION=$(golatest)
+	
+	if [ -n "$LATEST_GO_VERSION" ] && [ "$CURRENT_GO_VERSION" != "$LATEST_GO_VERSION" ]; then
+		echo "Updating Go from $CURRENT_GO_VERSION to $LATEST_GO_VERSION..."
+		go_clean
+		go_install_latest
+		go_tools
+	fi
+fi
+# # go_install installs the specified version into ~/go/...
+# function go_install() {
+#   if [ -z "$1" ]; then
+# 		echo "Pass a Go version (e.g. 1.21.13)"
+#     return
+#   fi
+# 	local v="$1"
+# 	go install "golang.org/dl/go$v@latest"
+# 	"$GOPATH/bin/go$v" download
+# 	"$GOPATH/bin/go$v" version
+# }
 
 # chpwd overrides the cd command to call ls when changing directories as it's
 # nice to see what's in each directory. We do this using a Zsh hook function.
 # https://zsh.sourceforge.io/Doc/Release/Functions.html#Hook-Functions
 #
-# IMPORTANT: We need chpwd to be defined AFTER the go_* functions above.
-# As we need to call them from this function.
-#
 function chpwd() {
 	ls
-
-	# figure out go version
-	#
-	local v=""
-	if [ -e go.mod ]; then
-		v=$(awk '/^go [0-9]+\.[0-9]+/ { print $2 }' go.mod)
-		# go.mod isn't always going to contain a complete version (e.g. 1.20 vs 1.20.1)
-		# we need a complete version for installing and symlinking.
-		#
-		if [[ ! "$v" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-			latest_patch=$(gh api repos/golang/go/tags --jq '.[].name' --paginate \
-				| grep -E "^go${v}\.[0-9]+$" \
-				| sed 's/^go//' \
-				| sort -V \
-				| tail -n 1)
-			if [ -n "$latest_patch" ]; then
-				v="$latest_patch"
-			else
-				echo "Failed to fetch the latest patch version for $v"
-				go_symlink_remove # remove symlink so the PATH lookup finds the GOROOT binary.
-				v="" # Ensure v is empty to prevent executing the install steps
-			fi
-		fi
-	elif [ -e .go-version ]; then
-		v="$(cat .go-version)"
-	fi
-	if [ -n "$v" ]; then
-		# create go dependencies cache directory if it doesn't exist.
-		local cache_dir="$HOME/.cache/go-deps"
-		if [[ ! -d "$cache_dir" ]]; then
-			mkdir -p "$HOME/.cache/go-deps"
-		fi
-		local cache_file="$cache_dir/go$v"
-
-		if [[ ! -f "$cache_file" ]]; then
-			go_install "$v" # installs the specified Go version
-			go_symlink "$v" # ensures `go` now references the specified Go version
-			go_tools # ensures we have all the tools we need for this Go version
-			touch "$cache_file" # update last_modified date
-		else
-			go_symlink "$v" # ensures `go` now references the specified Go version
-
-			local current_day=$(date +%Y-%m-%d)
-			local last_modified_day=$(date -r "$cache_file" +%Y-%m-%d)
-
-			# if the cache file was last modified on a different day, run the command
-			if [ "$current_day" != "$last_modified_day" ]; then
-				echo "updating go$v dependencies (last updated: $last_modified_day)"
-				go_tools # ensures we have all the tools we need for this Go version
-				touch "$cache_file" # update last_modified date
-			fi
-		fi
-
-		export MODIFIED_PATH="$PATH" # see note in ~/.localrc
-		r # reload shell so starship can display the updated go version
-		export PATH="$MODIFIED_PATH" # needed otherwise after shell reload we lose the path setting
-	fi
 
 	# clean out any .DS_Store files
 	#
