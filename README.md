@@ -1,6 +1,6 @@
 # dotfiles
 
-> \[!TIP\]
+> [!TIP]
 > Clone this repo to `~/code/dotfiles` then symlink files.\
 > e.g. `ln -s ~/code/dotfiles/.config ~/.config`
 
@@ -24,7 +24,7 @@ As of Dec 2024 I'm using [Ghostty](https://ghostty.org/).
 
 ![Terminal Prompt](./terminal-prompt-ui.png)
 
-> \[!NOTE\]
+> [!NOTE]
 > If using Ghostty, it comes with Nerd Fonts installed `ghostty +list-fonts`.\
 > Otherwise you'll need [nerdfonts.com](https://www.nerdfonts.com/) installed and selected as the terminal's font.\
 > e.g. `brew install font-hack-nerd-font`\
@@ -55,3 +55,28 @@ brew bundle install
 - [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
 - [flameshot](https://flameshot.org/): annotate images.
 - [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
+
+## Android Phone Access
+
+> [!IMPORTANT]
+> You need to enable developer and debug mode on your phone when connected via
+> USB.
+>
+> 1. Enable USB Debugging on your Pixel 10:
+>
+> - Go to Settings > About phone.
+> - Tap Build number 7 times until it says "You are now a developer".
+> - Go back to Settings > System > Developer options.
+> - Enable USB debugging.
+>
+> 2. Connect and Authorize:
+>
+> - Connect your phone via USB-C.
+> - A prompt should appear on your phone asking to "Allow USB debugging?". Check "Always allow..." and tap Allow.
+
+```
+brew install --cask android-platform-tools
+adb devices
+adb shell ls -lh /sdcard/DCIM/Camera/
+adb pull /sdcard/DCIM/Camera/PXL_20260106_093830288.mp4 .
+```
