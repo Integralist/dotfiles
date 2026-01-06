@@ -22,6 +22,8 @@ font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 keybind = super+page_down=scroll_page_fractional:0.5
 keybind = super+page_up=scroll_page_fractional:-0.5
+keybind = super+ctrl+arrow_down=jump_to_prompt:1
+keybind = super+ctrl+arrow_up=jump_to_prompt:-1
 keybind = super+shift+arrow_down=scroll_page_lines:1
 keybind = super+shift+arrow_up=scroll_page_lines:-1
 keybind = super+shift+s=write_screen_file:paste
