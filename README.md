@@ -80,3 +80,9 @@ adb devices
 adb shell ls -lh /sdcard/DCIM/Camera/
 adb pull /sdcard/DCIM/Camera/PXL_20260106_093830288.mp4 .
 ```
+
+> [!IMPORTANT]
+> You MUST authorize the device to have access to your phone.\
+> It might take a moment, but you should see a prompt on your phone.\
+> Press to allow your laptop.\
+> Then the device will show as authorized.
