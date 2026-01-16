@@ -330,3 +330,39 @@ function curl_json() {
   fi | awk 'BEGIN {body=0} /^[[:space:]]*$/ {body=1; next} {if (body) print > "/dev/stderr"; else print}' \
     2> >(jq .)
 }
+
+# claude_cost reads the Claude Session Costs log file to sum up the costs for
+# today. you can specify a date if you want to check a day other than today.
+claude_cost() {
+    local log_file="$HOME/.claude/session-costs.log"
+    # Use the first argument if provided, otherwise default to today
+    local target_date="${1:-$(date +%F)}"
+
+    if [[ ! -f "$log_file" ]]; then
+        echo "Log file not found."
+        return 1
+    fi
+
+    awk -v date="$target_date" '
+    # Match lines starting with the target date
+    $0 ~ "^"date {
+        found = 1
+        for (i=1; i<=NF; i++) {
+            if ($i ~ /^total_cost=/) {
+                # Split "total_cost=$0.0381"
+                split($i, parts, "=")
+                # Strip the leading "$" to get the number
+                val = substr(parts[2], 2)
+                sum += val
+            }
+        }
+    }
+    END {
+        if (found) {
+            printf "Total for %s: $%.4f\n", date, sum
+        } else {
+            printf "No entries found for %s.\n", date
+        }
+    }
+    ' "$log_file"
+}
