@@ -176,7 +176,7 @@ else
 	#
 	CURRENT_GO_VERSION=$($GOROOT/bin/go version 2>/dev/null | cut -d ' ' -f 3 | sed 's/go//')
 	LATEST_GO_VERSION=$(golatest)
-	
+
 	if [ -n "$LATEST_GO_VERSION" ] && [ "$CURRENT_GO_VERSION" != "$LATEST_GO_VERSION" ]; then
 		echo "Updating Go from $CURRENT_GO_VERSION to $LATEST_GO_VERSION..."
 		go_clean
