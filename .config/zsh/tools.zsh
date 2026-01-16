@@ -153,6 +153,7 @@ function go_tools {
 	go install github.com/segmentio/golines@latest
 	go install github.com/rhysd/actionlint/cmd/actionlint@latest
 	go install fillmore-labs.com/scopeguard@latest
+	go install github.com/fastly/mcp/cmd/fastly-mcp@latest
 }
 # go_list lists all installed tools
 #
