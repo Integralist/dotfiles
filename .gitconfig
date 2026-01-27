@@ -44,7 +44,7 @@
   conflicts = diff --name-only --diff-filter=U
 
   # Ignore whitespace changes in diffs
-  diff = diff -w
+  diff = diff -w --color-moved=dimmed_zebra
 
   # Find all files with merge conflicts and open them in the default editor
   diff-unmerged =! bash -c 'git diff --name-only --diff-filter=U | uniq  | xargs "$EDITOR"'
@@ -161,12 +161,12 @@
   editor = nvim
   excludesfile = ~/.gitignore
   ignorecase = false
-  pager = delta --color-only --dark --line-numbers
+  ; pager = delta --color-only --dark --line-numbers
 
-[delta]
-  keep-plus-minus-markers = true
-  minus-style = 'syntax darkred'
-  plus-style = 'syntax darkgreen'
+; [delta]
+;   keep-plus-minus-markers = true
+;   minus-style = 'syntax darkred'
+;   plus-style = 'syntax darkgreen'
 
 [diff]
   algorithm = histogram
@@ -180,8 +180,8 @@
   recurseSubmodules = true # still requires: git clone --recursive ...
 	notes = true
 
-[interactive]
-  diffFilter = delta --color-only --dark --line-numbers
+; [interactive]
+;   diffFilter = delta --color-only --dark --line-numbers
 
 [merge]
 	conflictStyle = zdiff3
