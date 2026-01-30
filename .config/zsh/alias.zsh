@@ -88,7 +88,7 @@ alias gca="git commit --amend"
 alias gcm="git commit"
 alias gco="git checkout origin/main --" # followed by path to file to checkout
 alias gcv="git commit -v"
-alias gd="git diff -w --color-moved=dimmed_zebra"
+alias gd="git diff -w"
 alias gdown="git pull"
 alias gdw="git diff-word" # defined in ~/.gitconfig
 alias gf="git pushit" # push with force lease - defined in ~/.gitconfig
