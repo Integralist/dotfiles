@@ -42,7 +42,7 @@ if ! cargo audit --version &> /dev/null; then
   cargo install cargo-audit --features=fix
 fi
 if ! cargo nextest --version &> /dev/null; then
-  cargo install cargo-nextest
+	cargo install --locked cargo-nextest
 fi
 if ! cargo fmt --version &> /dev/null; then
   rustup component add rustfmt
