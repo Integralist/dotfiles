@@ -60,7 +60,7 @@ function rust_update {
   rustup component add rustfmt
   rustup component add clippy
   cargo install cargo-audit --features=fix
-  cargo install cargo-nextest
+  cargo install cargo-nextest --locked
   cargo install cargo-edit
   rustup update
 }
