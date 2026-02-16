@@ -230,3 +230,5 @@
   helper = osxkeychain
 [log]
 	showNotes = true
+[pager]
+	diff = diffnav
