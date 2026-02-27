@@ -336,6 +336,11 @@ function curl_json() {
 # e.g. claude_cost 2026-02-22
 # or you can calculate multiple days:
 # e.g. claude_cost -5
+#
+# REQUIRES:
+# ~/.claude/scripts/log-session-cost.sh to generate the costs log.
+# That script is invoked via Claude Code's "SessionEnd" hook.
+#
 claude_cost() {
     local log_file="$HOME/.claude/session-costs.log"
 
