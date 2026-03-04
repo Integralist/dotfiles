@@ -11,6 +11,9 @@ disabled = true
 [rule.cyclomatic]
 disabled = true
 
+[rule.enforce-switch-style]
+disabled = true
+
 [rule.line-length-limit]
 disabled = true
 
