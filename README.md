@@ -74,11 +74,35 @@ brew bundle install
 > - Connect your phone via USB-C.
 > - A prompt should appear on your phone asking to "Allow USB debugging?". Check "Always allow..." and tap Allow.
 
-```
+```bash
 brew install --cask android-platform-tools
 adb devices
 adb shell ls -lh /sdcard/DCIM/Camera/
 adb pull /sdcard/DCIM/Camera/PXL_20260106_093830288.mp4 .
+```
+
+### Pull all images to external drive
+
+Files are sorted into year directories based on the filename (e.g.
+`PXL_20260106_...` goes into `2026/`).
+
+```bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE="/Volumes/LaCie 1/Photos/Google"
+
+adb shell ls /sdcard/DCIM/Camera/ | tr -d '\r' | while read -r file; do
+  year="${file:4:4}"
+  dest="$BASE/$year"
+  mkdir -p "$dest"
+  if [ ! -f "$dest/$file" ]; then
+    echo "Pulling $file -> $dest/"
+    adb pull "/sdcard/DCIM/Camera/$file" "$dest/"
+  else
+    echo "Skipping $file (already exists)"
+  fi
+done
 ```
 
 > [!IMPORTANT]
