@@ -154,6 +154,7 @@ function go_tools {
 	go install github.com/rhysd/actionlint/cmd/actionlint@latest
 	go install fillmore-labs.com/scopeguard@latest
 	go install github.com/fastly/mcp/cmd/fastly-mcp@latest
+	go install -v github.com/go-critic/go-critic/cmd/go-critic@latest
 }
 # go_list lists all installed tools
 #
