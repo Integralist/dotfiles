@@ -8,14 +8,19 @@
 #
 # super == cmd
 # page_up and page_down == fn + arrow key
+#
+# IMPORTANT: System Preferences > Notifications > Enable Ghostty
 
 adjust-cell-height = +20%
 auto-update = check
 auto-update-channel = tip
+bell-audio-volume = 1
+bell-features = system,audio,attention,title,border 
 clipboard-paste-protection=true
 clipboard-trim-trailing-spaces = true
 copy-on-select = clipboard
 custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
+desktop-notifications = true
 font-family = Menlo
 font-feature = -liga
 font-thicken = true
