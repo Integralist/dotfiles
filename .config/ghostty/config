@@ -33,22 +33,6 @@ keybind = super+shift+arrow_down=scroll_page_lines:1
 keybind = super+shift+arrow_up=scroll_page_lines:-1
 keybind = super+shift+s=write_screen_file:paste
 keybind = super+shift+alt+s=write_screen_file:open
-
-# tmux style trigger of custom bindings
-# before assigning to super+<letter> check `ghostty +list-keybinds`
-#
-keybind = search/arrow_up=navigate_search:next
-keybind = search/arrow_down=navigate_search:previous
-keybind = search/escape=deactivate_key_table
-keybind = search/catch_all=ignore
-keybind = super+s=activate_key_table:search
-
-# Once we start a search we automatically trigger the "search" key table.
-# You still need to manually press ESCAPE to get your cursor focus back to the prompt though
-#
-keybind = super+f=start_search
-keybind = chain=activate_key_table:search
-
 macos-option-as-alt = right
 notify-on-command-finish = always
 notify-on-command-finish-action = bell,notify
