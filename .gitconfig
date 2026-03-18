@@ -231,4 +231,4 @@
 [log]
 	showNotes = true
 [pager]
-	diff = diffnav
+	diff = "diffnav --unified" # brew install dlvhdr/formulae/diffnav (https://github.com/dlvhdr/diffnav)
