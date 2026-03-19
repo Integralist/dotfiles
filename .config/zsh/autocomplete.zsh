@@ -153,11 +153,13 @@ fi
 # The following are common configurations for fzf-tab
 # https://github.com/Aloxaf/fzf-tab?tab=readme-ov-file#configure
 #
+# only show local branches for git-switch completion
+export GIT_COMPLETION_CHECKOUT_NO_GUESS=1
 # disable sort when completing `git checkout`
 zstyle ':completion:*:git-checkout:*' sort false
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
 # preview directory's content with eza when completing cd
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-# # switch group using `<` and `>`
+# switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
