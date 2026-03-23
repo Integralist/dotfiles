@@ -94,6 +94,17 @@ linters:
     misspell:
       ignore-rules:
         - Nominet
+    sloglint:
+      attr-only: true
+      static-msg: true
+      key-naming-case: snake
+      context-only: scope
+      msg-style: lowercased
+      forbidden-keys:
+        - time
+        - level
+        - msg
+        - source
     revive:
       enable-all-rules: true
       rules:
