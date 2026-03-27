@@ -240,6 +240,18 @@ function imgr() {
 	sips --resampleWidth "$1" -o "$2" "$3"
 }
 
+# Git Notes: metadata attached to commits without modifying the commit SHA.
+# Unlike trailers (Signed-off-by, Co-authored-by) which live inside the commit
+# message, notes are stored in separate refs (refs/notes/*) and can be
+# added/edited/removed after the fact. Multiple namespaces are supported via
+# --ref (e.g. refs/notes/docs, refs/notes/review).
+#
+# Requires fetch.notes=true and log.showNotes=true in ~/.gitconfig to
+# automatically fetch and display notes. See also the `gn` alias in alias.zsh
+# which adds a fetch refspec for pulling all remote note refs.
+#
+# Docs: https://git-scm.com/docs/git-notes
+#
 # add a git note to a commit
 #
 function gnote {
