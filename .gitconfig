@@ -163,10 +163,12 @@
   ignorecase = false
   ; pager = delta --color-only --dark --line-numbers
 
-; [delta]
-;   keep-plus-minus-markers = true
-;   minus-style = 'syntax darkred'
-;   plus-style = 'syntax darkgreen'
+; even if we don't use delta for git paging
+; it is still configured via the git config
+[delta]
+  keep-plus-minus-markers = true
+  minus-style = 'syntax darkred'
+  plus-style = 'syntax darkgreen'
 
 [diff]
   algorithm = histogram
