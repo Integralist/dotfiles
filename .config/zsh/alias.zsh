@@ -161,6 +161,18 @@ alias vi='vi -c "set nocompatible" -c "set number" -c "set cursorline" -c "set e
 alias weather="curl wttr.in/southend-on-sea"
 alias where='whence -va'
 
+read -r -d '' workflow_help <<- EOF
+• code-research (creates docs/research/{repo}.md documents)
+• research-plan (creates docs/research/{topic}.md + docs/plans/{project}.md documents)
+• critique (reviews plans and highlights issues)
+• next-task (finds latest plan and starts next task)
+• commit (commit code changes; or you can do at the end)
+• code-review (reviews implementation code)
+• cleanup (cleans up obvious AI code; like verbose code comments)
+• refactor (redesigns a code feature)
+EOF
+alias workflow='echo "$workflow_help"'
+
 read -r -d '' git_icons <<- EOF
 # starship prompt...
 
