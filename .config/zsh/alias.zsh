@@ -172,6 +172,21 @@ read -r -d '' workflow_help <<- EOF
 EOF
 alias workflow='echo "$workflow_help"'
 
+read -r -d '' hotkeys_help <<- EOF
+⌘ Space        Spotlight
+⌥\\             Gemini AI
+⌘\\             1Password
+⌘ \`            Switch windows (same app)
+⌘⌥ Esc         Force quit
+⌃⌘ Space       Emoji picker
+⌘⇧ 3           Screenshot (full)
+⌘⇧ 4           Screenshot (selection)
+⌘⇧ 5           Screenshot/record options
+⌘⇧ .           Show hidden files (Finder)
+⌃ ←/→          Switch desktop/space
+EOF
+alias hotkeys='echo "$hotkeys_help"'
+
 read -r -d '' git_icons <<- EOF
 # starship prompt...
 
