@@ -16,8 +16,11 @@ Session.vim
 !.gnupg/gpg-agent.conf
 !.gnupg/gpg.conf
 
-.config/nvim/plugin
+# AI
 .aider*
-CLAUDE.md
 .claude/
+.config/nvim/plugin
+.swival/
+AGENTS.md
+CLAUDE.md
 GEMINI.md
