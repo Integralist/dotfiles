@@ -141,6 +141,7 @@ alias nv="novowels"
 alias ping="gping"
 alias ps="procs"
 alias psw="pwgen -sy 20 1" # brew install pwgen
+alias qt="make test-all 2>&1 | tee /tmp/output | grep -E '^(\s*--- (PASS|FAIL)|PASS|FAIL|ok\s+.*e2e)'"
 alias r="source ~/.zshrc" # reload zsh shell configuration
 alias rr="exec zsh" # completely replace the zsh shell process
 alias rg="rg --glob '!node_modules/' --glob '!.git/' --glob '!aider*' --glob '!.aider*' --no-ignore --hidden"
