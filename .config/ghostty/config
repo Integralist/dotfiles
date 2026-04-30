@@ -35,7 +35,7 @@ keybind = super+shift+s=write_screen_file:paste
 keybind = super+shift+alt+s=write_screen_file:open
 macos-option-as-alt = right
 notify-on-command-finish = always
-notify-on-command-finish-action = bell,notify
+notify-on-command-finish-action = notify
 notify-on-command-finish-after = 5s
 quick-terminal-autohide = false
 quick-terminal-position = center
