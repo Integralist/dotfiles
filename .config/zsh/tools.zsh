@@ -135,8 +135,7 @@ function go_install_latest {
 # go_tools installs/updates necessary Go tools.
 #
 function go_tools {
-  local golangcilatest=$(curl -s "https://github.com/golangci/golangci-lint/releases" | grep -o 'tag/v[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n 1 | cut -d '/' -f 2)
-  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin "$golangcilatest"
+  curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin
   go install github.com/rakyll/gotest@latest
   go install github.com/mgechev/revive@latest
   go install golang.org/x/tools/gopls@latest
