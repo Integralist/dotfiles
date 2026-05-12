@@ -18,6 +18,5 @@ Session.vim
 
 # AI
 .aider*
-.claude/
 .config/nvim/plugin
 .swival/
