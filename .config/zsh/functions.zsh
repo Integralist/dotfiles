@@ -33,6 +33,7 @@ function certdns() {
 function update {
   brew_update
   rust_update
+	go_tools
 }
 
 # dedupe ensures there are no duplicates in the $PATH
