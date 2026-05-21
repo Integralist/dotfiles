@@ -20,3 +20,5 @@ Session.vim
 .aider*
 .config/nvim/plugin
 .swival/
+.claude/settings.local.json
+.antigravitycli/
