@@ -166,9 +166,10 @@ alias where='whence -va'
 
 read -r -d '' workflow_help <<- EOF
 • research-plan (creates docs/research/{repo,topic}.md + docs/plans/{project}.md documents)
-• grill-me (validate our understanding is aligned)
+• grill-with-docs (validate our understanding and terminology is aligned)
 • critique (reviews plans and highlights issues)
 • next-task (finds latest plan and starts next task)
+• handoff (create handoff doc for side quests or avoiding context exhaustion)
 • commit (commit code changes)
 • code-review (reviews code)
 • cleanup (cleans up sloppy AI code)
