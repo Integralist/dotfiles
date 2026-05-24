@@ -4,6 +4,20 @@
 # Otherwise tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
+# qt runs the full test suite, filters to just status lines, and highlights
+# FAIL in red and PASS in green.
+#
+# The `|$` in the colorising greps matches the zero-width end-of-line on every
+# line, so non-matching lines pass through untouched while FAIL/PASS get
+# coloured. Without it, grep would filter out lines that don't contain the
+# keyword.
+function qt() {
+  make test-all 2>&1 | tee /tmp/output | \
+    grep -E '^(\s*--- (PASS|FAIL)|PASS|FAIL|ok\s+.*e2e)' | \
+    GREP_COLORS='mt=01;31' grep --color=always -E 'FAIL|$' | \
+    GREP_COLORS='mt=01;32' grep --color=always -E 'PASS|$'
+}
+
 # brew_update updates Homebrew and checks for outdated packages
 function brew_update {
   brew update
