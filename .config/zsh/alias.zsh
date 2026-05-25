@@ -116,6 +116,7 @@ alias gst="git st --short" # defined in ~/.gitconfig
 alias gstm="git stm" # display only modified files (exclude untracked) - defined in ~/.gitconfig
 alias gsw="git switch"
 alias gt="git tag --sort=-creatordate | tac" # brew install tac (cat backwards)
+alias gun="git ls-files -o --exclude-standard"
 alias gup="git push"
 alias gwip="git wip" # defined in ~/.gitconfig
 
@@ -156,6 +157,7 @@ alias uid="uuidgen" # this is a macOS binary (man uuidgen)
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias v=/opt/homebrew/bin/nvim # brew stable version
 alias vmod='v $(git diff --name-only)' # open git modified files
+alias vun='v $(gun)' # open git untracked files
 alias vn=/usr/local/bin/nvim # nightly version manually compiled
 alias vf='/opt/homebrew/bin/nvim $(fzf)'
 alias vim=/opt/homebrew/bin/nvim # brew stable version
