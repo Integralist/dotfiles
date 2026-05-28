@@ -167,15 +167,26 @@ alias weather="curl wttr.in/southend-on-sea"
 alias where='whence -va'
 
 read -r -d '' workflow_help <<- EOF
+PLANNING
+
 • research-plan (creates docs/research/{repo,topic}.md + docs/plans/{project}.md documents)
 • grill-with-docs (validate our understanding and terminology is aligned)
 • critique (reviews plans and highlights issues)
+• consensus (cross-model second opinion)
+• decide (help you decide on a approach to take)
+
+DEVELOPMENT
+
 • next-task (finds latest plan and starts next task)
 • handoff (create handoff doc for side quests or avoiding context exhaustion)
 • commit (commit code changes)
+
+POST DEVELOPMENT
+
 • code-review (reviews code)
 • cleanup (cleans up sloppy AI code)
 • refactor (redesigns a code feature)
+• redesign (codebase-wide aspirational audit)
 EOF
 alias workflow='echo "$workflow_help"'
 
