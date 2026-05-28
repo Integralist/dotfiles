@@ -83,6 +83,7 @@ alias gap="git add --patch"
 alias gb="git branch-verbose" # defined in ~/.gitconfig
 alias gbd="git branch -D" # pass branch name to delete
 alias gbi="git branch --list 'integralist*'"
+alias gbf="git --no-pager diff --name-only main...HEAD" # list files changed in branch vs main
 alias gc="git checkout"
 alias gca="git commit --amend"
 alias gcm="git commit"
