@@ -11,6 +11,7 @@ export PATH="$MODIFIED_PATH"
 #
 alias c="clear"
 alias cat="bat"
+alias cleantest='go clean -testcache && make test'
 alias commit='cat ~/.gitcommit'
 alias datets='date -u +"%s"'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
