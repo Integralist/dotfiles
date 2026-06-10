@@ -22,3 +22,5 @@ Session.vim
 .swival/
 .claude/settings.local.json
 .antigravitycli/
+
+**/.claude/settings.local.json
