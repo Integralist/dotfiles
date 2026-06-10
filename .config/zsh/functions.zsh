@@ -14,8 +14,7 @@ export PATH="$MODIFIED_PATH"
 function qt() {
   make test-all 2>&1 | tee /tmp/output | \
     grep -E '^(\s*--- (PASS|FAIL)|PASS|FAIL|ok\s+.*e2e)' | \
-    GREP_COLORS='mt=01;31' grep --color=always -E 'FAIL|$' | \
-    GREP_COLORS='mt=01;32' grep --color=always -E 'PASS|$'
+    sed -e $'s/FAIL/\033[01;31m&\033[0m/g' -e $'s/PASS/\033[01;32m&\033[0m/g'
 }
 
 # brew_update updates Homebrew and checks for outdated packages
@@ -358,6 +357,39 @@ function curl_json() {
     2> >(jq .)
 }
 
+# psw generates a password using pwgen.
+# Pass NO_SYM=true to omit symbols (drops the -y flag).
+#
+# brew install pwgen
+#
+function psw() {
+  if [[ "$1" == "--help" || "$1" == "-h" ]]; then
+    cat <<-EOF
+	Usage: psw [LENGTH]
+
+	Generate a secure password using pwgen.
+
+	Arguments:
+	  LENGTH         password length (default: 20)
+
+	Environment overrides:
+	  NO_SYM=true    omit symbols (drops the -y flag)
+
+	Examples:
+	  psw
+	  psw 32
+	  NO_SYM=true psw 32
+	EOF
+    return
+  fi
+  local length="${1:-20}"
+  if [[ "$NO_SYM" == "true" ]]; then
+    pwgen -s "$length" 1
+  else
+    pwgen -sy "$length" 1
+  fi
+}
+
 # claude_cost reads the Claude Session Costs log file to sum up the costs for
 # today. you can specify a date if you want to check a day other than today.
 # e.g. claude_cost 2026-02-22
@@ -426,4 +458,14 @@ claude_cost() {
         }
         ' "$log_file"
     fi
+}
+
+# aicosts calculates all AI CLI harness usage for the last N days (default: 7)
+# npm install -g ccusage
+# https://github.com/ryoppippi/ccusage
+#
+aicosts() {
+	local days=${1:-7}
+	local since_date=$(date -v-"${days}"d +%Y-%m-%d)
+	ccusage daily --since "$since_date"
 }

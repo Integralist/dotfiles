@@ -145,7 +145,6 @@ alias mtr="sudo mtr --report-wide --show-ips --aslookup"
 alias nv="novowels"
 alias ping="gping"
 alias ps="procs"
-alias psw="pwgen -sy 20 1" # brew install pwgen
 alias r="source ~/.zshrc" # reload zsh shell configuration
 alias rr="exec zsh" # completely replace the zsh shell process
 alias rg="rg --glob '!node_modules/' --glob '!.git/' --glob '!aider*' --glob '!.aider*' --no-ignore --hidden"
