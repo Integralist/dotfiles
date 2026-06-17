@@ -180,10 +180,12 @@ DEVELOPMENT
 • next-task (finds latest plan and starts next task)
 • handoff (create handoff doc for side quests or avoiding context exhaustion)
 • commit (commit code changes)
+• draft-pr (open pr with problem/solution)
 
 POST DEVELOPMENT
 
 • code-review (reviews code)
+• code-review-feedback (addresses code change analysis)
 • cleanup (cleans up sloppy AI code)
 • refactor (redesigns a code feature)
 • redesign (codebase-wide aspirational audit)
