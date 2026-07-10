@@ -460,12 +460,13 @@ claude_cost() {
     fi
 }
 
-# aicosts calculates all AI CLI harness usage for the last N days (default: 7)
+# aicosts calculates all AI CLI harness usage for the last N days
+# Default: 0 (the current day)
 # npm install -g ccusage
 # https://github.com/ryoppippi/ccusage
 #
 aicosts() {
-	local days=${1:-7}
+	local days=${1:-0}
 	local since_date=$(date -v-"${days}"d +%Y-%m-%d)
 	ccusage daily --since "$since_date"
 }

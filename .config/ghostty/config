@@ -23,6 +23,7 @@ custom-shader = ~/.config/ghostty/shaders/cursor_blaze.glsl
 desktop-notifications = true
 font-family = Menlo
 font-feature = -liga
+font-size = 16
 font-thicken = true
 keybind = global:cmd+shift+w=toggle_quick_terminal
 keybind = super+page_down=scroll_page_fractional:0.5
@@ -45,7 +46,7 @@ shell-integration = zsh
 split-divider-color = #666666
 split-inherit-working-directory = true
 tab-inherit-working-directory = true
-theme = nightfox
+theme = Gruvbox Material Dark
 unfocused-split-opacity = 0.40
 window-inherit-working-directory = false
 window-new-tab-position = end

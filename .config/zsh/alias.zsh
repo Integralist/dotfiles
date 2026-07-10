@@ -169,11 +169,13 @@ alias where='whence -va'
 read -r -d '' workflow_help <<- EOF
 PLANNING
 
-• research-plan (creates docs/research/{repo,topic}.md + docs/plans/{project}.md documents)
-• grill-with-docs (validate our understanding and terminology is aligned)
+• task (elicit intent before starting work)
+• architect (orchestrates: research, to-spec, project-plan)
+• grill-with-docs (validate understanding + terminology, writes ADRs/glossary)
 • critique (reviews plans and highlights issues)
-• consensus (cross-model second opinion)
-• decide (help you decide on a approach to take)
+• distill (rewrite a plan concise/clear without losing critical info)
+• consensus (multi-agent deliberation to consensus)
+• decide (decision memo + contrarian check)
 
 DEVELOPMENT
 
