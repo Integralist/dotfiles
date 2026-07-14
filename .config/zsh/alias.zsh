@@ -13,6 +13,7 @@ alias c="clear"
 alias cat="bat"
 alias cleantest='go clean -testcache && make test'
 alias commit='cat ~/.gitcommit'
+alias copilot-usage="gh api copilot_internal/user | jq -r '.quota_snapshots.premium_interactions as \$p | \"Usage this cycle: \(\$p.credits_used) / \(\$p.entitlement) AI credits (\(\$p.percent_remaining)% remaining) — Resets on \(.quota_reset_date)\"'"
 alias datets='date -u +"%s"'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 
