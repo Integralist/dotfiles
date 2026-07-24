@@ -47,6 +47,16 @@ function update {
   brew_update
   rust_update
 	go_tools
+	ai_update
+}
+
+# ai_update updates various AI clients
+function ai_update {
+	pi update && pi update --extensions
+	claude update
+	opencode upgrade
+	agy update
+	copilot update
 }
 
 # dedupe ensures there are no duplicates in the $PATH
