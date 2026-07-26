@@ -81,6 +81,12 @@ adb shell ls -lh /sdcard/DCIM/Camera/
 adb pull /sdcard/DCIM/Camera/PXL_20260106_093830288.mp4 .
 ```
 
+> [!IMPORTANT]
+> You MUST authorize the device to have access to your phone.\
+> The first time you run `adb devices` you'll see a pop-up on your phone.\
+> Press to allow your laptop.\
+> Then the device will show as authorized.
+
 ### Pull all images to external drive
 
 Files are sorted into year directories based on the filename (e.g.
@@ -104,9 +110,3 @@ adb shell ls /sdcard/DCIM/Camera/ | tr -d '\r' | while read -r file; do
   fi
 done
 ```
-
-> [!IMPORTANT]
-> You MUST authorize the device to have access to your phone.\
-> The first time you run `adb devices` you'll see a pop-up on your phone.\
-> Press to allow your laptop.\
-> Then the device will show as authorized.
