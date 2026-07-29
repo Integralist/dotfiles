@@ -40,7 +40,7 @@ function certdns() {
       sed 's/^[[:space:]]*//'
 }
 
-# update updates Homebrew and Rust.
+# update updates various software (e.g. Homebrew, Go packages etc).
 # Rust function is defined in ./tools.zsh
 # Go is done separately on cd (see `chpwd` in ./tools.zsh)
 function update {
