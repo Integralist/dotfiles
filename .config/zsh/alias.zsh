@@ -9,6 +9,7 @@ export PATH="$MODIFIED_PATH"
 #       alternatively use the `list` alias to show all defined alias' from this file
 #       the `alias` function itself with no arguments will actually print all too
 #
+alias au='c && printf "\n💡 GitHub Copilot:\n\n" && copilot-usage && aicosts'
 alias c="clear"
 alias cat="bat"
 alias cleantest='go clean -testcache && make test'
