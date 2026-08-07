@@ -52,10 +52,15 @@ function update {
 
 # ai_update updates various AI clients
 function ai_update {
-	pi update && pi update --extensions
+	echo "Running: pi update"
+	pi update && echo "Running: pi update --extensions" && pi update --extensions
+	echo "Running: claude update"
 	claude update
+	echo "Running: opencode upgrade"
 	opencode upgrade
+	echo "Running: agy update"
 	agy update
+	echo "Running: copilot update"
 	copilot update
 }
 
