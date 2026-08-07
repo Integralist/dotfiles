@@ -19,8 +19,11 @@ function qt() {
 
 # brew_update updates Homebrew and checks for outdated packages
 function brew_update {
+  echo "🚀 Running: brew update"
   brew update
+  echo "🚀 Running: brew outdated"
   brew outdated
+  echo "🚀 Running: brew upgrade"
   brew upgrade
 }
 
@@ -44,9 +47,13 @@ function certdns() {
 # Rust function is defined in ./tools.zsh
 # Go is done separately on cd (see `chpwd` in ./tools.zsh)
 function update {
+  echo "🔄 Running: brew_update"
   brew_update
+  echo "🔄 Running: rust_update"
   rust_update
+  echo "🔄 Running: go_tools"
 	go_tools
+  echo "🔄 Running: ai_update"
 	ai_update
 }
 

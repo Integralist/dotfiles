@@ -55,13 +55,21 @@ if ! ls ~/.cargo/bin | grep 'cargo-upgrade' &> /dev/null; then
 fi
 # rust_update updates/installs necessary Rust tools.
 function rust_update {
+  echo "🚀 Running: rustup self update"
   rustup self update
+  echo "🚀 Running: rustup update stable"
   rustup update stable
+  echo "🚀 Running: rustup component add rustfmt"
   rustup component add rustfmt
+  echo "🚀 Running: rustup component add clippy"
   rustup component add clippy
+  echo "🚀 Running: cargo install cargo-audit --features=fix"
   cargo install cargo-audit --features=fix
+  echo "🚀 Running: cargo install cargo-nextest --locked"
   cargo install cargo-nextest --locked
+  echo "🚀 Running: cargo install cargo-edit"
   cargo install cargo-edit
+  echo "🚀 Running: rustup update"
   rustup update
 }
 
@@ -135,24 +143,43 @@ function go_install_latest {
 # go_tools installs/updates necessary Go tools.
 #
 function go_tools {
+  echo "🚀 Running: curl golangci-lint install script"
   curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin
+  echo "🚀 Running: go install github.com/rakyll/gotest@latest"
   go install github.com/rakyll/gotest@latest
+  echo "🚀 Running: go install github.com/mgechev/revive@latest"
   go install github.com/mgechev/revive@latest
+  echo "🚀 Running: go install golang.org/x/tools/gopls@latest"
   go install golang.org/x/tools/gopls@latest
+  echo "🚀 Running: go install mvdan.cc/gofumpt@latest"
   go install mvdan.cc/gofumpt@latest
+  echo "🚀 Running: go install honnef.co/go/tools/cmd/staticcheck@latest"
   go install honnef.co/go/tools/cmd/staticcheck@latest # https://github.com/dominikh/go-tools
+  echo "🚀 Running: go install golang.org/x/vuln/cmd/govulncheck@latest"
   go install golang.org/x/vuln/cmd/govulncheck@latest
+  echo "🚀 Running: go install github.com/go-delve/delve/cmd/dlv@latest"
   go install github.com/go-delve/delve/cmd/dlv@latest
+  echo "🚀 Running: go install go.uber.org/nilaway/cmd/nilaway@latest"
   go install go.uber.org/nilaway/cmd/nilaway@latest
+  echo "🚀 Running: go install golang.org/x/tools/cmd/goimports@latest"
   go install golang.org/x/tools/cmd/goimports@latest
+  echo "🚀 Running: go install github.com/incu6us/goimports-reviser/v3@latest"
   go install github.com/incu6us/goimports-reviser/v3@latest
+  echo "🚀 Running: go install github.com/google/gops@latest"
   go install github.com/google/gops@latest
+  echo "🚀 Running: go install github.com/securego/gosec/v2/cmd/gosec@latest"
   go install github.com/securego/gosec/v2/cmd/gosec@latest
+  echo "🚀 Running: go install github.com/davecheney/httpstat@latest"
 	go install github.com/davecheney/httpstat@latest
+  echo "🚀 Running: go install github.com/segmentio/golines@latest"
 	go install github.com/segmentio/golines@latest
+  echo "🚀 Running: go install github.com/rhysd/actionlint/cmd/actionlint@latest"
 	go install github.com/rhysd/actionlint/cmd/actionlint@latest
+  echo "🚀 Running: go install fillmore-labs.com/scopeguard@latest"
 	go install fillmore-labs.com/scopeguard@latest
+  echo "🚀 Running: go install -v github.com/go-critic/go-critic/cmd/go-critic@latest"
 	go install -v github.com/go-critic/go-critic/cmd/go-critic@latest
+  echo "🚀 Running: go install github.com/cweill/gotests/gotests@latest"
 	go install github.com/cweill/gotests/gotests@latest
 }
 # go_list lists all installed tools
