@@ -497,21 +497,33 @@ aicosts() {
 # under a directory (default: ~/code/fastly) without disturbing work in
 # progress.
 #
-# It never runs checkout, stash, reset or pull, and never force-updates a local
-# branch. When the default branch is not the one checked out it uses
+# Each repo costs exactly one network round trip, and that round trip only ever
+# writes remote-tracking refs:
 #
-#   git fetch origin main:main
+#   git fetch origin +refs/heads/*:refs/remotes/origin/*
 #
-# which writes the fetched commits straight into refs/heads/main and never
+# refs/remotes/origin/* mirror origin and are always safe to force, so this is
+# performed in dry-run mode too. Everything after it is local: the repo is
+# classified from those refs, and only then, and only in a live run, is the
+# local branch moved with
+#
+#   git fetch . refs/remotes/origin/<branch>:<branch>
+#
+# which writes the fetched commits straight into refs/heads/<branch> and never
 # reads or writes the working tree, the index or HEAD. Without a leading `+`
 # that refspec is fast-forward only, so a diverged local branch is rejected
 # rather than clobbered. That is also why there is no stash/pop here: nothing
 # in the working tree is ever at risk, and stash/pop is the step that would
-# actually put it at risk.
+# actually put it at risk. It never runs checkout, stash, reset or pull.
 #
-# Git refuses `main:main` when main is checked out here or in a linked
-# worktree, so that case falls back to `git merge --ff-only`, and only when the
-# working tree is clean. Anything else is skipped with a printed reason.
+# Git refuses that refspec when <branch> is checked out here or in a linked
+# worktree. Being checked out here falls back to `git merge --ff-only`, and
+# only when the working tree is clean; a linked worktree is skipped. Anything
+# else is skipped with a printed reason.
+#
+# Classifying before mutating is what makes --dry-run trustworthy: both modes
+# run the same checks in the same order and diverge only at the final update,
+# so a preview cannot promise something a live run then refuses.
 #
 # Usage: repos_update [-n|--dry-run] [directory]
 function repos_update {
@@ -541,15 +553,27 @@ function repos_update {
 		return 1
 	fi
 
-	# Across 80+ repos a single credential or passphrase prompt would stall the
-	# whole run, so fail those fast rather than block.
+	# Across 80+ repos a single credential prompt would stall the whole run, and
+	# an unresponsive host would stall it just as effectively, so both fail fast
+	# rather than block. The ssh options bound the ssh transport; the
+	# http.lowSpeed* pair does the same for https by aborting a transfer that
+	# sits under 1KB/s for 20s. Neither transport is left able to hang forever.
 	local ssh_cmd="${GIT_SSH_COMMAND:-ssh}"
 	local -x GIT_TERMINAL_PROMPT=0
-	local -x GIT_SSH_COMMAND="$ssh_cmd -o BatchMode=yes"
+	local -x GIT_SSH_COMMAND="$ssh_cmd -o BatchMode=yes -o ConnectTimeout=10 -o ServerAliveInterval=10 -o ServerAliveCountMax=3"
+	local -a timeout_opts=(-c http.lowSpeedLimit=1000 -c http.lowSpeedTime=20)
 
-	local green=$'\033[32m' yellow=$'\033[33m' red=$'\033[31m' dim=$'\033[2m' off=$'\033[0m'
+	# Escapes only when stdout is a terminal, so piping to a file or a pager
+	# yields plain text rather than literal control codes.
+	local green= yellow= red= dim= off=
+	if [[ -t 1 && -z ${NO_COLOR:-} ]]; then
+		green=$'\033[32m' yellow=$'\033[33m' red=$'\033[31m' dim=$'\033[2m' off=$'\033[0m'
+	fi
+
 	local -i updated=0 uptodate=0 skipped=0 failed=0
-	local dir name git_dir top origin_head branch cur_branch before after err msg counts ahead behind b
+	local dir name git_dir top branch cur_branch before remote_sha after err msg counts b
+	local -i ahead behind
+	local -a g
 
 	# Pointing at a repo root should act on that one repo, not on its
 	# subdirectories.
@@ -572,99 +596,109 @@ function repos_update {
 		git_dir=$(git -C $dir rev-parse --absolute-git-dir 2>/dev/null) || continue
 		printf '%-34s ' $name
 
-		if ! git -C $dir remote get-url origin >/dev/null 2>&1; then
+		# Pin git to this repo once instead of repeating -C on every call.
+		g=(git $timeout_opts -C $dir)
+
+		if ! $g remote get-url origin >/dev/null 2>&1; then
 			printf '%s\n' "${dim}skip: no origin remote${off}"; (( skipped++ )); continue
 		fi
 
 		# A rebase/merge/cherry-pick/bisect leaves HEAD detached, which would let
-		# the refspec fetch move a branch the operation is still replaying onto.
+		# the update move a branch the operation is still replaying onto.
 		if [[ -e $git_dir/rebase-merge || -e $git_dir/rebase-apply || -e $git_dir/MERGE_HEAD || -e $git_dir/CHERRY_PICK_HEAD || -e $git_dir/BISECT_LOG ]]; then
 			printf '%s\n' "${yellow}skip: git operation in progress${off}"; (( skipped++ )); continue
 		fi
 
 		# Resolve the default branch from the cached origin/HEAD; set-head only
 		# rewrites a remote-tracking ref, so it is safe to repair on the fly.
-		origin_head=$(git -C $dir symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
-		if [[ -z $origin_head ]]; then
-			git -C $dir remote set-head origin --auto >/dev/null 2>&1
-			origin_head=$(git -C $dir symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		branch=$($g symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		if [[ -z $branch ]]; then
+			$g remote set-head origin --auto >/dev/null 2>&1
+			branch=$($g symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
 		fi
-		branch=${origin_head#origin/}
+		branch=${branch#origin/}
 		if [[ -z $branch ]]; then
 			for b in main master; do
-				git -C $dir show-ref --verify --quiet refs/remotes/origin/$b && { branch=$b; break }
+				$g show-ref --verify --quiet refs/remotes/origin/$b && { branch=$b; break }
 			done
 		fi
 		if [[ -z $branch ]]; then
 			printf '%s\n' "${yellow}skip: cannot determine default branch${off}"; (( skipped++ )); continue
 		fi
 
-		cur_branch=$(git -C $dir symbolic-ref --quiet --short HEAD 2>/dev/null)
-		before=$(git -C $dir rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
+		# The one network operation, and the only one. It writes nothing but
+		# remote-tracking refs, so a dry run performs it too and both modes go on
+		# to classify from byte-identical data.
+		if ! err=$($g fetch --quiet origin "+refs/heads/*:refs/remotes/origin/*" 2>&1 >/dev/null); then
+			msg=$(printf '%s\n' $err | grep -m1 -E '^(fatal|error):')
+			printf '%s\n' "${red}fetch failed: ${msg:-${err##*$'\n'}}${off}"; (( failed++ )); continue
+		fi
 
-		if (( dry_run )); then
-			if ! err=$(git -C $dir fetch --quiet origin 2>&1 >/dev/null); then
-				printf '%s\n' "${red}fetch failed: ${err%%$'\n'*}${off}"; (( failed++ )); continue
-			fi
-			if [[ -z $before ]]; then
-				printf '%s\n' "${green}would create $branch${off}"; (( updated++ )); continue
-			fi
-			counts=$(git -C $dir rev-list --left-right --count refs/heads/$branch...refs/remotes/origin/$branch 2>/dev/null)
+		before=$($g rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
+		remote_sha=$($g rev-parse --quiet --verify refs/remotes/origin/$branch 2>/dev/null)
+		if [[ -z $remote_sha ]]; then
+			printf '%s\n' "${yellow}skip: origin/$branch missing after fetch${off}"; (( skipped++ )); continue
+		fi
+
+		# Nothing to do beats every other outcome: a repo that is already current
+		# is reported as such even if its tree is dirty, because no update is
+		# being withheld.
+		ahead=0 behind=0
+		if [[ -n $before ]]; then
+			# left = commits only we have, right = commits only origin has.
+			counts=$($g rev-list --left-right --count refs/heads/$branch...refs/remotes/origin/$branch 2>/dev/null)
 			ahead=${counts%%[[:space:]]*}
 			behind=${counts##*[[:space:]]}
 			if (( ahead > 0 )); then
-				printf '%s\n' "${yellow}skip: $branch diverged (ahead $ahead, behind $behind)${off}"; (( skipped++ ))
-			elif (( behind > 0 )) && [[ $cur_branch == $branch && -n $(git -C $dir status --porcelain --untracked-files=no 2>/dev/null) ]]; then
-				# Mirror the guard the real run applies, so the preview matches.
-				printf '%s\n' "${yellow}skip: $branch checked out with uncommitted changes${off}"; (( skipped++ ))
-			elif (( behind > 0 )); then
-				printf '%s\n' "${green}would fast-forward $branch by $behind${off}"; (( updated++ ))
-			else
-				printf '%s\n' "${dim}up to date${off}"; (( uptodate++ ))
+				printf '%s\n' "${yellow}skip: $branch diverged (ahead $ahead, behind $behind)${off}"; (( skipped++ )); continue
 			fi
-			continue
+			if (( behind == 0 )); then
+				printf '%s\n' "${dim}up to date${off}"; (( uptodate++ )); continue
+			fi
+		fi
+
+		# An update is due. Rule out the cases where it cannot be applied before
+		# attempting it, so that a dry run reaches the same verdict a live run
+		# would rather than inferring it from a failure message afterwards.
+		cur_branch=$($g symbolic-ref --quiet --short HEAD 2>/dev/null)
+		if [[ $cur_branch == $branch ]]; then
+			# $branch is checked out here, so the branch update is refused by
+			# design and this falls back to a merge. Untracked files are not
+			# checked because merge aborts itself rather than overwrite them.
+			if [[ -n $($g status --porcelain --untracked-files=no 2>/dev/null) ]]; then
+				printf '%s\n' "${yellow}skip: $branch checked out with uncommitted changes${off}"; (( skipped++ )); continue
+			fi
+		elif $g worktree list --porcelain 2>/dev/null | grep -qxF "branch refs/heads/$branch"; then
+			printf '%s\n' "${yellow}skip: $branch checked out in another worktree${off}"; (( skipped++ )); continue
+		fi
+
+		if (( dry_run )); then
+			if [[ -z $before ]]; then
+				printf '%s\n' "${green}would create $branch${off}"
+			else
+				printf '%s\n' "${green}would fast-forward $branch by $behind${off}"
+			fi
+			(( updated++ )); continue
 		fi
 
 		if [[ $cur_branch == $branch ]]; then
-			# $branch is checked out, so the refspec fetch is refused by design.
-			# Merge instead, but only into a clean tree. Untracked files are not
-			# checked because merge aborts itself rather than overwrite them.
-			if [[ -n $(git -C $dir status --porcelain --untracked-files=no 2>/dev/null) ]]; then
-				printf '%s\n' "${yellow}skip: $branch checked out with uncommitted changes${off}"; (( skipped++ )); continue
-			fi
-			if ! err=$(git -C $dir fetch --quiet origin 2>&1 >/dev/null); then
-				printf '%s\n' "${red}fetch failed: ${err%%$'\n'*}${off}"; (( failed++ )); continue
-			fi
-			if ! err=$(git -C $dir merge --ff-only --quiet origin/$branch 2>&1 >/dev/null); then
+			if ! err=$($g merge --ff-only --quiet origin/$branch 2>&1 >/dev/null); then
 				printf '%s\n' "${yellow}skip: $branch not fast-forwardable${off}"; (( skipped++ )); continue
 			fi
-		else
-			# One round trip: refresh every remote-tracking ref (always safe to
-			# force, they only mirror origin) and fast-forward the local branch
-			# (no `+`, so a diverged branch is rejected, not overwritten).
-			# No --quiet here: the "! [rejected] ... (non-fast-forward)" line we
-			# classify on is part of the status table that --quiet suppresses.
-			# Output is captured, not shown, so this stays silent on success.
-			if ! err=$(git -C $dir fetch origin "+refs/heads/*:refs/remotes/origin/*" "$branch:$branch" 2>&1 >/dev/null); then
-				case $err in
-					*"refusing to fetch into branch"*) printf '%s\n' "${yellow}skip: $branch checked out in another worktree${off}"; (( skipped++ )) ;;
-					*non-fast-forward*|*"[rejected]"*)  printf '%s\n' "${yellow}skip: $branch diverged from origin${off}"; (( skipped++ )) ;;
-					*)
-						msg=$(printf '%s\n' $err | grep -m1 -E '^(fatal|error):')
-						printf '%s\n' "${red}fetch failed: ${msg:-${err##*$'\n'}}${off}"; (( failed++ )) ;;
-				esac
-				continue
-			fi
+		elif ! err=$($g fetch . "refs/remotes/origin/$branch:$branch" 2>&1 >/dev/null); then
+			# Purely local, and every expected refusal was ruled out above, so a
+			# failure here is genuinely unexpected rather than a known skip.
+			msg=$(printf '%s\n' $err | grep -m1 -E '^(fatal|error):')
+			printf '%s\n' "${red}update failed: ${msg:-${err##*$'\n'}}${off}"; (( failed++ )); continue
 		fi
 
-		after=$(git -C $dir rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
+		after=$($g rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
 		if [[ -z $before ]]; then
-			printf '%s\n' "${green}created $branch @ ${after:0:7}${off}"; (( updated++ ))
-		elif [[ $before == $after ]]; then
-			printf '%s\n' "${dim}up to date${off}"; (( uptodate++ ))
+			printf '%s\n' "${green}created $branch @ ${after:0:7}${off}"
 		else
-			printf '%s\n' "${green}$branch ${before:0:7} → ${after:0:7} (+$(git -C $dir rev-list --count $before..$after))${off}"; (( updated++ ))
+			printf '%s\n' "${green}$branch ${before:0:7} → ${after:0:7} (+$behind)${off}"
 		fi
+		(( updated++ ))
 	done
 
 	printf '\n%d updated, %d up to date, %d skipped, %d failed\n' $updated $uptodate $skipped $failed
