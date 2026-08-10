@@ -64,8 +64,20 @@
   # Use 'log-graphstat' to show only commits by the author 'Integralist'
   log-me = log-graphstat --author='Integralist'
 
-  # A compact log format showing only the commit subject, hash, and branch/tag info
-	log-short = log --pretty=format:'----------------------------------------------%n%n%s%n%C(green)%h %C(yellow)%D%n'
+  # A compact log format showing the commit subject, hash, commit date, and branch/tag info.
+  # Commits from the last 30 days also get a relative "(N days ago)" suffix.
+  #
+  # The date is printed as '%cs' (YYYY-MM-DD) followed by the raw commit timestamp
+  # '%ct' wrapped in NUL bytes ('%x00'), which perl swaps for the relative suffix.
+  # That suffix is coloured with a raw escape ('\e[36m', cyan) rather than '%C(...)',
+  # since git has already rendered the line by the time perl inserts it; the trailing
+  # '%C(yellow)' before '%D' resets the colour for the branch/tag info.
+  # Git's pretty-format has no conditionals, so that suffix needs a pipe, which is
+  # why this is a '!' (shell) alias rather than a plain expansion to 'git log'.
+  # Consequence: git only auto-pages builtins, so paging is restored via
+  # 'pager.log-short' below, and colour is forced with '--color=always' because
+  # 'git log' writes to a pipe here rather than to the terminal.
+  log-short = "!f() { git log --color=always --pretty=format:'----------------------------------------------%n%n%s%n%C(green)%h %C(magenta)%cs%x00%ct%x00 %C(yellow)%D%n' \"$@\" | perl -pe 's{\\0(\\d+)\\0}{my $d=int((time-$1)/86400); $d>30 ? \"\" : \"\\e[36m\" . ($d==0 ? \" (today)\" : $d==1 ? \" (1 day ago)\" : \" ($d days ago)\")}e'; }; f"
 
   # Fetch a GitHub Pull Request into a new local branch
   pr = "!f() { \
@@ -234,3 +246,8 @@
 	showNotes = true
 [pager]
 	diff = "diffnav --unified" # brew install dlvhdr/formulae/diffnav (https://github.com/dlvhdr/diffnav)
+	# 'log-short' is our own alias (see [alias]), not a git subcommand: 'pager.<cmd>'
+	# matches whatever name is typed on the command line, aliases included. It's a
+	# '!' shell alias, which git treats as an external command and never auto-pages,
+	# so paging has to be opted into here. 'true' means "use the default pager".
+	log-short = true
