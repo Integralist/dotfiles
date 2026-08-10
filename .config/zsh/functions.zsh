@@ -492,3 +492,181 @@ aicosts() {
 	local since_date=$(date -v-"${days}"d +%Y-%m-%d)
 	ccusage daily --since "$since_date"
 }
+
+# repos_update fast-forwards the default branch (main/master) of every git repo
+# under a directory (default: ~/code/fastly) without disturbing work in
+# progress.
+#
+# It never runs checkout, stash, reset or pull, and never force-updates a local
+# branch. When the default branch is not the one checked out it uses
+#
+#   git fetch origin main:main
+#
+# which writes the fetched commits straight into refs/heads/main and never
+# reads or writes the working tree, the index or HEAD. Without a leading `+`
+# that refspec is fast-forward only, so a diverged local branch is rejected
+# rather than clobbered. That is also why there is no stash/pop here: nothing
+# in the working tree is ever at risk, and stash/pop is the step that would
+# actually put it at risk.
+#
+# Git refuses `main:main` when main is checked out here or in a linked
+# worktree, so that case falls back to `git merge --ff-only`, and only when the
+# working tree is clean. Anything else is skipped with a printed reason.
+#
+# Usage: repos_update [-n|--dry-run] [directory]
+function repos_update {
+	# Flags are accepted in any position. A misplaced flag must never be treated
+	# as a path or silently dropped: doing so would turn a requested preview
+	# into a live run.
+	local dry_run=0 root= arg
+	for arg in "$@"; do
+		case $arg in
+			-n|--dry-run) dry_run=1 ;;
+			-*)
+				echo "repos_update: unknown option: $arg" >&2
+				echo "usage: repos_update [-n|--dry-run] [directory]" >&2
+				return 2 ;;
+			*)
+				if [[ -n $root ]]; then
+					echo "repos_update: unexpected argument: $arg" >&2
+					return 2
+				fi
+				root=$arg ;;
+		esac
+	done
+
+	root=${root:-$HOME/code/fastly}
+	if [[ ! -d $root ]]; then
+		echo "repos_update: not a directory: $root" >&2
+		return 1
+	fi
+
+	# Across 80+ repos a single credential or passphrase prompt would stall the
+	# whole run, so fail those fast rather than block.
+	local ssh_cmd="${GIT_SSH_COMMAND:-ssh}"
+	local -x GIT_TERMINAL_PROMPT=0
+	local -x GIT_SSH_COMMAND="$ssh_cmd -o BatchMode=yes"
+
+	local green=$'\033[32m' yellow=$'\033[33m' red=$'\033[31m' dim=$'\033[2m' off=$'\033[0m'
+	local -i updated=0 uptodate=0 skipped=0 failed=0
+	local dir name git_dir top origin_head branch cur_branch before after err msg counts ahead behind b
+
+	# Pointing at a repo root should act on that one repo, not on its
+	# subdirectories.
+	local -a repos
+	top=$(git -C $root rev-parse --show-toplevel 2>/dev/null)
+	if [[ -n $top && ${top:A} == ${root:A} ]]; then
+		repos=($root)
+	else
+		repos=($root/*(N-/))
+	fi
+
+	for dir in $repos; do
+		name=${dir:t}
+
+		# rev-parse discovers the *enclosing* repo, so without this check any
+		# plain subdirectory of a repo masquerades as a repo of its own and the
+		# same repo gets processed once per subdirectory.
+		top=$(git -C $dir rev-parse --show-toplevel 2>/dev/null) || continue
+		[[ -n $top && ${top:A} == ${dir:A} ]] || continue
+		git_dir=$(git -C $dir rev-parse --absolute-git-dir 2>/dev/null) || continue
+		printf '%-34s ' $name
+
+		if ! git -C $dir remote get-url origin >/dev/null 2>&1; then
+			printf '%s\n' "${dim}skip: no origin remote${off}"; (( skipped++ )); continue
+		fi
+
+		# A rebase/merge/cherry-pick/bisect leaves HEAD detached, which would let
+		# the refspec fetch move a branch the operation is still replaying onto.
+		if [[ -e $git_dir/rebase-merge || -e $git_dir/rebase-apply || -e $git_dir/MERGE_HEAD || -e $git_dir/CHERRY_PICK_HEAD || -e $git_dir/BISECT_LOG ]]; then
+			printf '%s\n' "${yellow}skip: git operation in progress${off}"; (( skipped++ )); continue
+		fi
+
+		# Resolve the default branch from the cached origin/HEAD; set-head only
+		# rewrites a remote-tracking ref, so it is safe to repair on the fly.
+		origin_head=$(git -C $dir symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		if [[ -z $origin_head ]]; then
+			git -C $dir remote set-head origin --auto >/dev/null 2>&1
+			origin_head=$(git -C $dir symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		fi
+		branch=${origin_head#origin/}
+		if [[ -z $branch ]]; then
+			for b in main master; do
+				git -C $dir show-ref --verify --quiet refs/remotes/origin/$b && { branch=$b; break }
+			done
+		fi
+		if [[ -z $branch ]]; then
+			printf '%s\n' "${yellow}skip: cannot determine default branch${off}"; (( skipped++ )); continue
+		fi
+
+		cur_branch=$(git -C $dir symbolic-ref --quiet --short HEAD 2>/dev/null)
+		before=$(git -C $dir rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
+
+		if (( dry_run )); then
+			if ! err=$(git -C $dir fetch --quiet origin 2>&1 >/dev/null); then
+				printf '%s\n' "${red}fetch failed: ${err%%$'\n'*}${off}"; (( failed++ )); continue
+			fi
+			if [[ -z $before ]]; then
+				printf '%s\n' "${green}would create $branch${off}"; (( updated++ )); continue
+			fi
+			counts=$(git -C $dir rev-list --left-right --count refs/heads/$branch...refs/remotes/origin/$branch 2>/dev/null)
+			ahead=${counts%%[[:space:]]*}
+			behind=${counts##*[[:space:]]}
+			if (( ahead > 0 )); then
+				printf '%s\n' "${yellow}skip: $branch diverged (ahead $ahead, behind $behind)${off}"; (( skipped++ ))
+			elif (( behind > 0 )) && [[ $cur_branch == $branch && -n $(git -C $dir status --porcelain --untracked-files=no 2>/dev/null) ]]; then
+				# Mirror the guard the real run applies, so the preview matches.
+				printf '%s\n' "${yellow}skip: $branch checked out with uncommitted changes${off}"; (( skipped++ ))
+			elif (( behind > 0 )); then
+				printf '%s\n' "${green}would fast-forward $branch by $behind${off}"; (( updated++ ))
+			else
+				printf '%s\n' "${dim}up to date${off}"; (( uptodate++ ))
+			fi
+			continue
+		fi
+
+		if [[ $cur_branch == $branch ]]; then
+			# $branch is checked out, so the refspec fetch is refused by design.
+			# Merge instead, but only into a clean tree. Untracked files are not
+			# checked because merge aborts itself rather than overwrite them.
+			if [[ -n $(git -C $dir status --porcelain --untracked-files=no 2>/dev/null) ]]; then
+				printf '%s\n' "${yellow}skip: $branch checked out with uncommitted changes${off}"; (( skipped++ )); continue
+			fi
+			if ! err=$(git -C $dir fetch --quiet origin 2>&1 >/dev/null); then
+				printf '%s\n' "${red}fetch failed: ${err%%$'\n'*}${off}"; (( failed++ )); continue
+			fi
+			if ! err=$(git -C $dir merge --ff-only --quiet origin/$branch 2>&1 >/dev/null); then
+				printf '%s\n' "${yellow}skip: $branch not fast-forwardable${off}"; (( skipped++ )); continue
+			fi
+		else
+			# One round trip: refresh every remote-tracking ref (always safe to
+			# force, they only mirror origin) and fast-forward the local branch
+			# (no `+`, so a diverged branch is rejected, not overwritten).
+			# No --quiet here: the "! [rejected] ... (non-fast-forward)" line we
+			# classify on is part of the status table that --quiet suppresses.
+			# Output is captured, not shown, so this stays silent on success.
+			if ! err=$(git -C $dir fetch origin "+refs/heads/*:refs/remotes/origin/*" "$branch:$branch" 2>&1 >/dev/null); then
+				case $err in
+					*"refusing to fetch into branch"*) printf '%s\n' "${yellow}skip: $branch checked out in another worktree${off}"; (( skipped++ )) ;;
+					*non-fast-forward*|*"[rejected]"*)  printf '%s\n' "${yellow}skip: $branch diverged from origin${off}"; (( skipped++ )) ;;
+					*)
+						msg=$(printf '%s\n' $err | grep -m1 -E '^(fatal|error):')
+						printf '%s\n' "${red}fetch failed: ${msg:-${err##*$'\n'}}${off}"; (( failed++ )) ;;
+				esac
+				continue
+			fi
+		fi
+
+		after=$(git -C $dir rev-parse --quiet --verify refs/heads/$branch 2>/dev/null)
+		if [[ -z $before ]]; then
+			printf '%s\n' "${green}created $branch @ ${after:0:7}${off}"; (( updated++ ))
+		elif [[ $before == $after ]]; then
+			printf '%s\n' "${dim}up to date${off}"; (( uptodate++ ))
+		else
+			printf '%s\n' "${green}$branch ${before:0:7} → ${after:0:7} (+$(git -C $dir rev-list --count $before..$after))${off}"; (( updated++ ))
+		fi
+	done
+
+	printf '\n%d updated, %d up to date, %d skipped, %d failed\n' $updated $uptodate $skipped $failed
+	(( failed == 0 ))
+}
