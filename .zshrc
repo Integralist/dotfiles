@@ -32,13 +32,15 @@ load_script ~/.config/zsh/autocomplete.zsh
 export PATH="$MODIFIED_PATH:$PATH"
 typeset -U path
 
-echo .zshrc loaded
+[[ -o interactive ]] && echo .zshrc loaded
 
 # Configuration you don't want as part of your main .zshrc
 # For me, this is a template file that includes 1Password secret references.
 # Meaning, I need to source the file via `op inject` so I can interpolate my secrets.
 #
-if [ -f "$HOME/.localrc" ]; then
+# Only in a real interactive terminal: `op signin` prompts, and a prompt in a
+# shell with no tty blocks forever.
+if [[ -o interactive ]] && [ -t 0 ] && [ -f "$HOME/.localrc" ]; then
 	if command -v op >/dev/null; then
 		op signin --account fastly.1password.com
 		# op signin --account my.1password.com << PERSONAL ACCOUNT
@@ -49,7 +51,3 @@ fi
 # The following line is added automatically by humanlog if missing:
 #
 export PATH=$HOME/.humanlog/bin:$PATH
-
-# The following line is required for aider
-# curl -LsSf https://aider.chat/install.sh | sh
-. "$HOME/.local/bin/env"

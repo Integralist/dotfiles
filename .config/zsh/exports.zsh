@@ -104,10 +104,11 @@ man() {
 #
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"                                            # rust executables
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"                                  # ruby executables
-export PATH="$HOME/bin:$PATH"                                                   # terraform executables (via tfswitch)
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH" # yarn executables
+export PATH="$HOME/bin:$PATH"                                                   # terraform executables (via tfswitch)
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"                                  # ruby executables
 
 # IMPORTANT: We MUST assign the modified path to a new environment variable.
 # The parent scope (~/.zshrc) will then prefix it to its current path value.
