@@ -1,5 +1,3 @@
-.PHONY: all clean test
-
 .DEFAULT_GOAL := help
 
 .PHONY: sync_ghostty
@@ -14,6 +12,10 @@ sync_starship:  ## Sync the Starship prompt configuration
 sync_zsh:  ## Sync the ZSH shell configuration
 	cp $$HOME/.zshrc .zshrc
 	cp -r $$HOME/.config/zsh/ .config/zsh/
+
+.PHONY: test
+test:  ## Run the shell function tests
+	@./test/repos_update.zsh
 
 help:
 	@printf "Targets\n"

@@ -1,0 +1,68 @@
+########## DRY RUN leaves every repo untouched
+=== repos_update --dry-run WS/root
+behind would fast-forward main by 1
+broken fetch failed: fatal: 'WS/origins/does-not-exist.git' does not appear to be a git repository
+current up to date
+dirty skip: main checked out with uncommitted changes
+dirtycurrent up to date
+diverged skip: main diverged (ahead 1, behind 1)
+legacy would fast-forward master by 1
+missing would create main
+noremote skip: no origin remote
+onmain would fast-forward main by 1
+rebasing skip: git operation in progress
+worktree skip: main checked out in another worktree
+
+4 updated, 2 up to date, 5 skipped, 1 failed
+--- exit=1
+########## LIVE
+=== repos_update WS/root
+behind main SHA → SHA (+1)
+broken fetch failed: fatal: 'WS/origins/does-not-exist.git' does not appear to be a git repository
+current up to date
+dirty skip: main checked out with uncommitted changes
+dirtycurrent up to date
+diverged skip: main diverged (ahead 1, behind 1)
+legacy master SHA → SHA (+1)
+missing created main @ SHA
+noremote skip: no origin remote
+onmain main SHA → SHA (+1)
+rebasing skip: git operation in progress
+worktree skip: main checked out in another worktree
+
+4 updated, 2 up to date, 5 skipped, 1 failed
+--- exit=1
+########## LIVE is idempotent
+=== repos_update WS/root
+behind up to date
+broken fetch failed: fatal: 'WS/origins/does-not-exist.git' does not appear to be a git repository
+current up to date
+dirty skip: main checked out with uncommitted changes
+dirtycurrent up to date
+diverged skip: main diverged (ahead 1, behind 1)
+legacy up to date
+missing up to date
+noremote skip: no origin remote
+onmain up to date
+rebasing skip: git operation in progress
+worktree skip: main checked out in another worktree
+
+0 updated, 6 up to date, 5 skipped, 1 failed
+--- exit=1
+########## a repo root acts on itself, not its subdirectories
+=== repos_update WS/root/onmain
+onmain up to date
+
+0 updated, 1 up to date, 0 skipped, 0 failed
+--- exit=0
+########## argument handling
+=== repos_update --bogus WS/root
+repos_update: unknown option: --bogus
+usage: repos_update [-n|--dry-run] [directory]
+--- exit=2
+=== repos_update WS/root extra-arg
+repos_update: unexpected argument: extra-arg
+--- exit=2
+=== repos_update WS/nope
+repos_update: not a directory: WS/nope
+--- exit=1
