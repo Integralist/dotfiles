@@ -172,27 +172,39 @@ alias where='whence -va'
 read -r -d '' workflow_help <<- EOF
 PLANNING
 
-• task (elicit intent before starting work)
-• architect (orchestrates: research, to-spec, project-plan)
+• clarify (elicit intent before starting work)
+• perspectives (quickly explore risks, benefits, evidence, and alternatives)
 • grill-with-docs (validate understanding + terminology, writes ADRs/glossary)
+• architect (orchestrates: research, to-spec, project-plan)
+• distill (rewrite a plan clearly without losing critical information)
 • critique (reviews plans and highlights issues)
-• distill (rewrite a plan concise/clear without losing critical info)
-• consensus (multi-agent deliberation to consensus)
 • decide (decision memo + contrarian check)
+• consensus (multi-agent deliberation to consensus)
+• tasks (turn a settled plan into an executable TDD task list)
 
 DEVELOPMENT
 
 • next-task (finds latest plan and starts next task)
+• systematic-debugging (find root causes before making fixes)
+• test-feedback (diagnose supplied test failures, then fix them)
 • handoff (create handoff doc for side quests or avoiding context exhaustion)
+• durable-rules (capture reusable conventions or anti-patterns before forgetting)
+
+DELIVERY
+
+• changelog (record the current changes)
+• branch (create a new branch)
 • commit (commit code changes)
 • draft-pr (open pr with problem/solution)
+• bcp (combine: branch, commit, and open a PR)
 
-POST DEVELOPMENT
+REVIEW & IMPROVEMENT
 
+• precedent (align changes with patterns established by peer files)
 • code-review (reviews code)
-• code-review-feedback (addresses code change analysis)
-• cleanup (cleans up sloppy AI code)
-• refactor (redesigns a code feature)
+• code-review-feedback (verify review suggestions before implementing them)
+• cleanup (remove AI-generated clutter)
+• refactor (plan a simpler reimplementation of a feature)
 • redesign (codebase-wide aspirational audit)
 EOF
 alias workflow='echo "$workflow_help"'
