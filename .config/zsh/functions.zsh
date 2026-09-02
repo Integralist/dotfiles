@@ -4,6 +4,26 @@
 # Otherwise tools like `curl`, `sh` etc can't be found otherwise.
 export PATH="$MODIFIED_PATH"
 
+# gochangelog opens the Go release notes for the active (or specified) Go version.
+# For minor/point releases, it opens both the major release doc and the direct
+# anchor on the release history page.
+function gochangelog() {
+  local version="${1:-$(go env GOVERSION 2>/dev/null)}"
+  if [[ -z "$version" ]]; then
+    echo "gochangelog: go not found or GOVERSION unavailable" >&2
+    return 1
+  fi
+  [[ "$version" != go* ]] && version="go$version"
+
+  local major=$(echo "$version" | cut -d. -f1,2)
+  open "https://go.dev/doc/$major"
+
+  local patch=$(echo "$version" | cut -s -d. -f3)
+  if [[ -n "$patch" && "$patch" != "0" ]]; then
+    open "https://go.dev/doc/devel/release#${version}"
+  fi
+}
+
 # qt runs the full test suite, filters to just status lines, and highlights
 # FAIL in red and PASS in green.
 #
