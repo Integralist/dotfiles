@@ -26,7 +26,7 @@
   blame = blame -w -C -C -C
 
   # Display branches in a detailed, custom-formatted table
-  branch-verbose = "!git branch --format '%(HEAD) %(refname:short),%(color:green)%(objectname:short)%(color:reset),%(color:blue)[%(upstream)]%(color:reset),%(color:red)%(contents:subject)%(color:reset)' | column -t -s ','"
+  branch-verbose = "!f() { if [ -t 1 ]; then trap 'tput smam' EXIT INT; tput rmam; fi; git branch \"$@\" --format '%(HEAD) %(refname:short),%(color:green)%(objectname:short)%(color:reset),%(color:blue)[%(upstream:short)]%(color:reset),%(color:red)%(contents:subject)%(color:reset)' | column -t -s ','; }; f"
 
   # List the top 10 most frequently changed files in the project's history
   code-changes = "!git log --format=format: --name-only | egrep -v '^$' | sort | uniq -c | sort -rg | head -10"
