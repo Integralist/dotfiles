@@ -77,7 +77,7 @@
   # Consequence: git only auto-pages builtins, so paging is restored via
   # 'pager.log-short' below, and colour is forced with '--color=always' because
   # 'git log' writes to a pipe here rather than to the terminal.
-  log-short = "!f() { git log --color=always --pretty=format:'----------------------------------------------%n%n%s%n%C(green)%h %C(magenta)%cs%x00%ct%x00 %C(yellow)%D%n' \"$@\" | perl -pe 's{\\0(\\d+)\\0}{my $d=int((time-$1)/86400); $d>30 ? \"\" : \"\\e[36m\" . ($d==0 ? \" (today)\" : $d==1 ? \" (1 day ago)\" : \" ($d days ago)\")}e'; }; f"
+  log-short = "!f() { git log --color=always --pretty=format:'----------------------------------------------%n%n%s%n%C(green)%h %C(magenta)%cs%x00%ct%x00 %C(yellow)%D%n' \"$@\" | perl -MTime::Piece -pe 'BEGIN { $now = localtime->truncate(to => \"day\") } s{\\0(\\d+)\\0}{my $d=int(($now-localtime($1)->truncate(to=>\"day\")+43200)/86400); $d>30 ? \"\" : \"\\e[36m\" . ($d<=0 ? \" (today)\" : $d==1 ? \" (1 day ago)\" : \" ($d days ago)\")}e'; }; f"
 
   # Fetch a GitHub Pull Request into a new local branch
   pr = "!f() { \
