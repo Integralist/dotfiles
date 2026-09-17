@@ -89,6 +89,8 @@ function ai_update {
 	agy update
 	echo "🚀 Running: copilot update"
 	copilot update
+	echo "🚀 Running: gemini update"
+	npm install -g @google/gemini-cli@latest && echo "🚀 Running: gemini extensions update --all" && gemini extensions update --all
 }
 
 # dedupe ensures there are no duplicates in the $PATH
