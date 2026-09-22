@@ -75,6 +75,8 @@ function update {
 	go_tools
   echo "🔄 Running: ai_update"
 	ai_update
+  echo "🔄 Running: repos_update"
+	repos_update
 }
 
 # ai_update updates various AI clients
