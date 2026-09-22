@@ -51,3 +51,10 @@ fi
 # The following line is added automatically by humanlog if missing:
 #
 export PATH=$HOME/.humanlog/bin:$PATH
+
+# Prevent uv installers from appending 'source .../env' to shell rc files (~/.zshrc, ~/.profile).
+# This stops temporary worktrees or scripts from injecting ephemeral paths into your shell.
+# For uv usage generally: uv continues to work normally via your existing PATH (~/.local/bin),
+# python tools manage their own venvs, and uv will not attempt to manage your shell PATH.
+export UV_NO_MODIFY_PATH=1
+
