@@ -10,6 +10,7 @@ export PATH="$MODIFIED_PATH"
 #       the `alias` function itself with no arguments will actually print all too
 #
 alias au='printf "\n💡 GitHub Copilot:\n\n" && copilot-usage && aicosts'
+alias aws-bedrock='aws sso login --profile=bedrock'
 alias c="clear"
 alias cat="bat"
 alias cleantest='go clean -testcache && make test'

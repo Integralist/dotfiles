@@ -25,7 +25,7 @@ font-family = Menlo
 font-feature = -liga
 font-size = 16
 font-thicken = true
-keybind = global:cmd+shift+w=toggle_quick_terminal
+keybind = global:cmd+shift+f=toggle_quick_terminal
 keybind = super+page_down=scroll_page_fractional:0.5
 keybind = super+page_up=scroll_page_fractional:-0.5
 keybind = super+ctrl+arrow_down=jump_to_prompt:1
