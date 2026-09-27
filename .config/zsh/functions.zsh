@@ -521,8 +521,10 @@ aicosts() {
 # under a directory (default: ~/code/fastly) without disturbing work in
 # progress.
 #
-# Each repo costs exactly one network round trip, and that round trip only ever
-# writes remote-tracking refs:
+# Each Git repository costs one network round trip, and independent Git common
+# directories are fetched concurrently (up to 8 at a time). Linked worktrees
+# share a common directory and therefore share one fetch. Fetches only write
+# remote-tracking refs:
 #
 #   git fetch origin +refs/heads/*:refs/remotes/origin/*
 #
@@ -551,10 +553,14 @@ aicosts() {
 #
 # Usage: repos_update [-n|--dry-run] [directory]
 function repos_update {
+	# Keep zsh from printing job-control messages for the background fetches.
+	setopt localoptions no_monitor
+
 	# Flags are accepted in any position. A misplaced flag must never be treated
 	# as a path or silently dropped: doing so would turn a requested preview
 	# into a live run.
 	local dry_run=0 root= arg
+	local -i show_progress=0
 	for arg in "$@"; do
 		case $arg in
 			-n|--dry-run) dry_run=1 ;;
@@ -576,6 +582,10 @@ function repos_update {
 		echo "repos_update: not a directory: $root" >&2
 		return 1
 	fi
+	[[ -t 1 ]] && show_progress=1
+	if (( show_progress )); then
+		printf 'Thinking...'
+	fi
 
 	# Across 80+ repos a single credential prompt would stall the whole run, and
 	# an unresponsive host would stall it just as effectively, so both fail fast
@@ -596,8 +606,11 @@ function repos_update {
 
 	local -i updated=0 uptodate=0 skipped=0 failed=0
 	local dir name git_dir top branch cur_branch before remote_sha after err msg counts b
-	local -i ahead behind
-	local -a g
+	local common_dir fetch_tmp fetch_index pid
+	local -i ahead behind fetch_count=0 i
+	local -i completed=0 batch_start=1 batch_end=0 batch_done=0 batch_size=0 last_progress=-1
+	local -a g fetch_dirs pids
+	local -A fetch_index_by_common
 
 	# Pointing at a repo root should act on that one repo, not on its
 	# subdirectories.
@@ -607,6 +620,88 @@ function repos_update {
 		repos=($root)
 	else
 		repos=($root/*(N-/))
+	fi
+
+	# Schedule one fetch per Git common directory. Linked worktrees share
+	# remote-tracking refs, so fetching each common directory only once avoids
+	# competing writes to the same refs. Preflight the same conditions as the
+	# processing loop so repos that would be skipped do not fetch needlessly.
+	fetch_tmp=$(mktemp -d "${TMPDIR:-/tmp}/repos_update.XXXXXXXX") || {
+		echo "repos_update: could not create temporary directory" >&2
+		return 1
+	}
+	for dir in $repos; do
+		top=$(git -C "$dir" rev-parse --show-toplevel 2>/dev/null) || continue
+		[[ -n $top && ${top:A} == ${dir:A} ]] || continue
+		g=(git "${timeout_opts[@]}" -C "$dir")
+		$g remote get-url origin >/dev/null 2>&1 || continue
+		git_dir=$($g rev-parse --absolute-git-dir 2>/dev/null) || continue
+		[[ -e $git_dir/rebase-merge || -e $git_dir/rebase-apply || -e $git_dir/MERGE_HEAD || -e $git_dir/CHERRY_PICK_HEAD || -e $git_dir/BISECT_LOG ]] && continue
+
+		branch=$($g symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		if [[ -z $branch ]]; then
+			$g remote set-head origin --auto >/dev/null 2>&1
+			branch=$($g symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+		fi
+		branch=${branch#origin/}
+		if [[ -z $branch ]]; then
+			for b in main master; do
+				$g show-ref --verify --quiet refs/remotes/origin/$b && { branch=$b; break }
+			done
+		fi
+		[[ -n $branch ]] || continue
+
+		common_dir=$($g rev-parse --path-format=absolute --git-common-dir 2>/dev/null) || continue
+		if [[ -z ${fetch_index_by_common[$common_dir]-} ]]; then
+			(( fetch_count++ ))
+			fetch_index_by_common[$common_dir]=$fetch_count
+			fetch_dirs[$fetch_count]=$dir
+		fi
+	done
+
+	# Fetch independent Git repositories in batches of 8. Each task writes its
+	# result separately so reporting and local branch updates stay ordered.
+	if (( show_progress )); then
+		printf '\rThinking... 0/%d repos fetched' $fetch_count
+	fi
+	while (( batch_start <= fetch_count )); do
+		batch_end=$(( batch_start + 7 ))
+		(( batch_end > fetch_count )) && batch_end=$fetch_count
+		batch_size=$(( batch_end - batch_start + 1 ))
+		pids=()
+		for (( i = batch_start; i <= batch_end; i++ )); do
+			dir=$fetch_dirs[$i]
+			(
+				if err=$(git "${timeout_opts[@]}" -C "$dir" fetch --quiet origin "+refs/heads/*:refs/remotes/origin/*" 2>&1 >/dev/null); then
+					print -r -- 0 > "$fetch_tmp/$i.status"
+				else
+					print -r -- "$err" > "$fetch_tmp/$i.error"
+					print -r -- 1 > "$fetch_tmp/$i.status"
+				fi
+			) &
+			pids+=($!)
+		done
+
+		if (( show_progress )); then
+			batch_done=0
+			while (( batch_done < batch_size )); do
+				batch_done=0
+				for (( i = batch_start; i <= batch_end; i++ )); do
+					[[ -f $fetch_tmp/$i.status ]] && (( batch_done++ ))
+				done
+				completed=$(( batch_start - 1 + batch_done ))
+				if (( completed != last_progress )); then
+					printf '\rThinking... %d/%d repos fetched' $completed $fetch_count
+					last_progress=$completed
+				fi
+				(( batch_done < batch_size )) && sleep 0.1
+			done
+		fi
+		for pid in $pids; do wait $pid || true; done
+		batch_start=$(( batch_end + 1 ))
+	done
+	if (( show_progress )); then
+		printf '\r\033[K'
 	fi
 
 	for dir in $repos; do
@@ -650,10 +745,16 @@ function repos_update {
 			printf '%s\n' "${yellow}skip: cannot determine default branch${off}"; (( skipped++ )); continue
 		fi
 
-		# The one network operation, and the only one. It writes nothing but
-		# remote-tracking refs, so a dry run performs it too and both modes go on
-		# to classify from byte-identical data.
-		if ! err=$($g fetch --quiet origin "+refs/heads/*:refs/remotes/origin/*" 2>&1 >/dev/null); then
+		# The fetch was the only network operation and ran in the bounded batch
+		# above. It writes only remote-tracking refs, so dry-run and live mode
+		# classify the same fetched state.
+		common_dir=$($g rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+		fetch_index=${fetch_index_by_common[$common_dir]-}
+		if [[ -z $fetch_index || ! -f $fetch_tmp/$fetch_index.status ]]; then
+			printf '%s\n' "${red}fetch failed: no fetch result${off}"; (( failed++ )); continue
+		fi
+		if [[ $(<"$fetch_tmp/$fetch_index.status") != 0 ]]; then
+			err=$(<"$fetch_tmp/$fetch_index.error")
 			msg=$(printf '%s\n' $err | grep -m1 -E '^(fatal|error):')
 			printf '%s\n' "${red}fetch failed: ${msg:-${err##*$'\n'}}${off}"; (( failed++ )); continue
 		fi
@@ -725,6 +826,7 @@ function repos_update {
 		(( updated++ ))
 	done
 
+	rm -rf "$fetch_tmp"
 	printf '\n%d updated, %d up to date, %d skipped, %d failed\n' $updated $uptodate $skipped $failed
 	(( failed == 0 ))
 }
