@@ -53,6 +53,7 @@ export GPG_TTY=$tty_instance # tell gpg which terminal to use when prompting for
 export GREP_COLOR="1;32"
 export GREP_OPTIONS="--color=auto"
 export MANPAGER="less -X" # Don't clear the screen after quitting a manual page
+export PI_STATUSBAR_NERD_FONTS=1 # configuration for https://github.com/Integralist/pi-statusbar
 
 # DISABLED: I'm using ghostty now with neovim and not vim or tmux anymore.
 # export TERM="xterm-256color" # avoid "terminals database is inaccessible" and not being able to run `clear` command (also fixes tmux/vim colour issues).
