@@ -79,10 +79,111 @@ function update {
 	repos_update
 }
 
+# pi_update updates pi and all installed extensions with clean in-place status reporting
+function pi_update {
+	if ! command -v pi >/dev/null 2>&1; then
+		echo "pi: command not found" >&2
+		return 1
+	fi
+
+	local green="" red="" dim="" off=""
+	local -i is_tty=0
+	if [[ -t 1 && -z ${NO_COLOR:-} ]]; then
+		is_tty=1
+		green=$'\033[32m'
+		red=$'\033[31m'
+		dim=$'\033[2m'
+		off=$'\033[0m'
+	fi
+
+	local pi_output
+	pi_output=$(pi update --self 2>&1)
+	local -i pi_exit=$?
+	if (( pi_exit != 0 )); then
+		printf "%s❌ pi: %s%s\n" "$red" "$pi_output" "$off"
+	elif [[ "$pi_output" =~ "up to date" ]]; then
+		printf "%s\n" "$pi_output"
+	else
+		printf "%s✅ %s%s\n" "$green" "$pi_output" "$off"
+	fi
+
+	local list_output
+	list_output=$(pi list 2>/dev/null)
+	typeset -a pkg_sources pkg_paths pkg_before
+
+	local current_pkg=""
+	while IFS= read -r line; do
+		if [[ "$line" =~ "^[[:space:]]{2}[^[:space:]]" ]]; then
+			current_pkg="${line#"${line%%[! ]*}"}"
+			current_pkg="${current_pkg% \(filtered\)}"
+		elif [[ "$line" =~ "^[[:space:]]{4}[^[:space:]]" && -n "$current_pkg" ]]; then
+			pkg_sources+=("$current_pkg")
+			pkg_paths+=("${line#"${line%%[! ]*}"}")
+			current_pkg=""
+		fi
+	done <<< "$list_output"
+
+	local -i total_pkgs=$#pkg_sources
+	if (( total_pkgs == 0 )); then
+		return 0
+	fi
+
+	local -i i
+	for (( i = 1; i <= total_pkgs; i++ )); do
+		local pkg_dir="${pkg_paths[i]}"
+		if [[ -d "$pkg_dir/.git" ]]; then
+			pkg_before+=("$(git -C "$pkg_dir" rev-parse HEAD 2>/dev/null)")
+		elif [[ -f "$pkg_dir/package.json" ]]; then
+			pkg_before+=("$(grep -m1 '"version":' "$pkg_dir/package.json" 2>/dev/null | tr -d '", ' | cut -d: -f2)")
+		else
+			pkg_before+=("")
+		fi
+		(( is_tty )) && printf "Updating %s...\n" "${pkg_sources[i]}"
+	done
+
+	local tmp_log
+	tmp_log=$(mktemp "${TMPDIR:-/tmp}/pi_update.XXXXXX") || return 1
+	pi update --extensions > "$tmp_log" 2>&1
+	local -i update_exit=$?
+
+	(( is_tty )) && printf "\033[%dA" "$total_pkgs"
+
+	for (( i = 1; i <= total_pkgs; i++ )); do
+		local pkg="${pkg_sources[i]}"
+		local pkg_dir="${pkg_paths[i]}"
+		local before="${pkg_before[i]}"
+		local after=""
+		if [[ -d "$pkg_dir/.git" ]]; then
+			after=$(git -C "$pkg_dir" rev-parse HEAD 2>/dev/null)
+		elif [[ -f "$pkg_dir/package.json" ]]; then
+			after=$(grep -m1 '"version":' "$pkg_dir/package.json" 2>/dev/null | tr -d '", ' | cut -d: -f2)
+		fi
+
+		local line_prefix=""
+		(( is_tty )) && line_prefix=$'\r\033[K'
+
+		if [[ -n "$before" && -n "$after" && "$before" != "$after" ]] || [[ -z "$before" && -n "$after" ]]; then
+			printf "%s%s✅ %s%s\n" "$line_prefix" "$green" "$pkg" "$off"
+		elif (( update_exit != 0 )) && grep -qi "$pkg" "$tmp_log"; then
+			printf "%s%s❌ %s%s\n" "$line_prefix" "$red" "$pkg" "$off"
+		else
+			printf "%s%s• %s%s\n" "$line_prefix" "$dim" "$pkg" "$off"
+		fi
+	done
+
+	if (( update_exit != 0 )); then
+		printf "\n%sUpdate errors occurred:%s\n" "$red" "$off"
+		cat "$tmp_log" >&2
+	fi
+
+	rm -f "$tmp_log"
+	return $update_exit
+}
+
 # ai_update updates various AI clients
 function ai_update {
-	echo "🚀 Running: pi update"
-	pi update && echo "🚀 Running: pi update --extensions" && pi update --extensions
+	echo "🚀 Running: pi_update"
+	pi_update
 	echo "🚀 Running: claude update"
 	claude update
 	echo "🚀 Running: opencode upgrade"
