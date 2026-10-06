@@ -268,6 +268,12 @@ git_restore() {
   fi
 }
 
+# open files modified in a commit hash (defaults to HEAD) in neovim
+#
+vcom() {
+  v $(git show --pretty="" --name-only "${1:-HEAD}")
+}
+
 # delete tag from both local and remote repositories
 #
 function git_tag_delete() {
