@@ -161,6 +161,7 @@ alias tree='tree -I node_modules'
 alias uid="uuidgen" # this is a macOS binary (man uuidgen)
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias v=/opt/homebrew/bin/nvim # brew stable version
+alias vall='v $(git ls-files -m -o --exclude-standard)' # open modified and untracked files
 alias vmod='v $(git diff --name-only)' # open git modified files
 alias vun='v $(gun)' # open git untracked files
 alias vn=/usr/local/bin/nvim # nightly version manually compiled
