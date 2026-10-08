@@ -9,7 +9,7 @@ ui:
   # showFileTree: false
 
   # Press <T> to change themes at runtime.
-  theme: dracula
+  theme: catppuccin_frappe
 
   # Customize the file tree width (default: 26)
   fileTreeWidth: 50
