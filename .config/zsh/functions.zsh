@@ -274,6 +274,19 @@ vcom() {
   v $(git show --pretty="" --name-only "${1:-HEAD}")
 }
 
+# open files changed in a commit and every later commit up to HEAD in neovim
+#
+vcomall() {
+  if [[ -z "$1" ]]; then
+    echo "Usage: vcomall <commit>"
+    return 1
+  fi
+
+  local -a files
+  files=("${(@uf)$(git log --reverse --pretty= --name-only --diff-filter=ACMRT "$1^..HEAD")}") || return 1
+  v "${files[@]}"
+}
+
 # delete tag from both local and remote repositories
 #
 function git_tag_delete() {
