@@ -14,8 +14,12 @@ sync_zsh:  ## Sync the ZSH shell configuration
 	cp -r $$HOME/.config/zsh/ .config/zsh/
 
 .PHONY: test
-test:  ## Run the shell function tests
+test: test_diffnav  ## Run the shell tests
 	@./test/repos_update.zsh
+
+.PHONY: test_diffnav
+test_diffnav:  ## Test Diffnav's word-highlight overrides
+	@./test/diffnav.sh
 
 help:
 	@printf "Targets\n"
