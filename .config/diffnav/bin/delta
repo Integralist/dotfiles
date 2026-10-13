@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Replace only Diffnav's changed-word highlight styles.
+arguments=()
+for argument in "$@"; do
+  case "$argument" in
+    --plus-emph-style=*)
+      arguments+=('--plus-emph-style="#ffffff" "#285c3e"')
+      ;;
+    --minus-emph-style=*)
+      arguments+=('--minus-emph-style="#ffffff" "#642b36"')
+      ;;
+    *)
+      arguments+=("$argument")
+      ;;
+  esac
+done
+
+exec /opt/homebrew/bin/delta "${arguments[@]}"

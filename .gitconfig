@@ -245,7 +245,9 @@
 [log]
 	showNotes = true
 [pager]
-	diff = "diffnav --unified" # brew install dlvhdr/formulae/diffnav (https://github.com/dlvhdr/diffnav)
+	# Diffnav forces Delta's highlight colors; this private wrapper replaces them.
+	# PATH is scoped to this pager, so standalone Delta keeps its normal settings.
+	diff = "PATH=\"$HOME/.config/diffnav/bin:$PATH\" diffnav --unified" # brew install dlvhdr/formulae/diffnav (https://github.com/dlvhdr/diffnav)
 	# 'log-short' is our own alias (see [alias]), not a git subcommand: 'pager.<cmd>'
 	# matches whatever name is typed on the command line, aliases included. It's a
 	# '!' shell alias, which git treats as an external command and never auto-pages,
