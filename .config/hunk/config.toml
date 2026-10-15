@@ -1,4 +1,4 @@
-theme = "github-dark"
+theme = "integralist"
 mode = "unified"
 hunk_headers = false
 agent_notes = true
@@ -7,3 +7,23 @@ sidebar = true
 # Watch native repository reviews, not stdin-based pager input.
 [vcs]
 watch = true
+
+[themes.integralist]
+base = "nord"
+background = "#263247"
+panel = "#2b3850"
+panelAlt = "#34435b"
+border = "#50627c"
+accent = "#88c0d0"
+addedBg = "#2c4f39"
+removedBg = "#603a45"
+movedAddedBg = "#355b5a"
+movedRemovedBg = "#5f455a"
+addedContentBg = "#366446"
+removedContentBg = "#774751"
+addedSignColor = "#a5c47e"
+removedSignColor = "#e07a83"
+badgeAdded = "#a5c47e"
+badgeRemoved = "#e07a83"
+fileNew = "#a5c47e"
+fileDeleted = "#e07a83"
