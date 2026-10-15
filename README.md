@@ -1,8 +1,27 @@
 # dotfiles
 
 > [!TIP]
-> Clone this repo to `~/code/dotfiles` then symlink files.\
-> e.g. `ln -s ~/code/dotfiles/.config ~/.config`
+> Clone this repo to `~/code/dotfiles`, then symlink the configurations you want
+> to manage.
+>
+> If `~/.config` does not exist and you want the whole directory managed, run:
+>
+> ```sh
+> ln -s ~/code/dotfiles/.config ~/.config
+> ```
+>
+> This also means app-created files in `~/.config` appear in this repo. If
+> `~/.config` already exists, don't run that command: it creates a nested
+> `~/.config/.config` link. Keep the existing directory and link only the app
+> configurations you want to manage. For example, to link Hunk's config file:
+>
+> ```sh
+> mkdir -p ~/.config/hunk
+> ln -s ~/code/dotfiles/.config/hunk/config.toml \
+>   ~/.config/hunk/config.toml
+> ```
+>
+> Back up or merge an existing app config before linking it.
 
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
