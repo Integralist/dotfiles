@@ -109,7 +109,7 @@ alias gn="git config --add remote.origin.fetch '+refs/notes/*:refs/notes/*'" # t
 alias godoc="stdsym | fzf | xargs go doc " -- https://github.com/lotusirous/gostdsym
 alias golatest="curl -L https://github.com/golang/go/tags 2>&1 | rg '/golang/go/releases/tag/go[\w.]+' -o | cut -d '/' -f 6 | grep -v 'rc' | awk NR==1 | rg '\d.+' -o"
 alias golatestall="curl -s 'https://go.dev/dl/?mode=json' | jq -c '.[]' | jq -c '.files[] | select(.os == \"darwin\" or .os == \"linux\" or .os == \"freebsd\") | select(.arch == \"386\" or .arch == \"amd64\" or .arch == \"armv6l\" or .arch == \"arm64\") | select(.kind == \"archive\")'"
-alias gom="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix -diff ./... | delta"
+alias gom="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix -diff ./... | hunk patch -"
 alias goma="go run golang.org/x/tools/gopls/internal/analysis/modernize/cmd/modernize@latest -test -fix ./..."
 alias gpr="git pull --rebase origin" # pass branch name
 alias gr="git rebase"
