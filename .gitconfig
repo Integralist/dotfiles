@@ -236,6 +236,7 @@
 [pager]
 	# Git supplies a snapshot; use hunk diff --watch for live reviews.
 	diff = "hunk pager"
+	show = "hunk pager"
 	# 'log-short' is our own alias (see [alias]), not a git subcommand: 'pager.<cmd>'
 	# matches whatever name is typed on the command line, aliases included. It's a
 	# '!' shell alias, which git treats as an external command and never auto-pages,

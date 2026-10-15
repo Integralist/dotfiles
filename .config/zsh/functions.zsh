@@ -247,6 +247,17 @@ function hiddenchars() {
   cat -e -t -v "$filename"
 }
 
+# Route `g show` to Hunk's native commit review; use Git for other commands.
+unalias g 2>/dev/null || true
+function g() {
+  if [[ "$1" == "show" ]]; then
+    shift
+    hunk show "$@"
+  else
+    command git "$@"
+  fi
+}
+
 # restore a file to either the main branch (default) or to an earlier commit
 # version.
 #
