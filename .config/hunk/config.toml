@@ -1,0 +1,9 @@
+theme = "github-dark"
+mode = "unified"
+hunk_headers = false
+agent_notes = true
+sidebar = true
+
+# Watch native repository reviews, not stdin-based pager input.
+[vcs]
+watch = true
