@@ -653,16 +653,38 @@ aicosts() {
 # the local logs that ccusage reads.
 #
 claude-usage() {
-	local workdir="${CLAUDE_USAGE_DIR:-$HOME/code/dotfiles}" # must be a trusted folder
+	# An empty folder, so accepting Claude's trust prompt there grants nothing.
+	local workdir="${CLAUDE_USAGE_DIR:-$HOME/.cache/claude-usage}"
+	mkdir -p "$workdir" || return 1
 	(cd -q "$workdir" && CLAUDE_USAGE_WAIT="${CLAUDE_USAGE_WAIT:-15}" expect -c '
 		log_user 0
-		set timeout $env(CLAUDE_USAGE_WAIT)
 		set stty_init "cols 200 rows 60"
 		spawn claude
-		sleep 3
+
+		# First run in this folder shows a trust prompt defaulting to "No, exit",
+		# so move down to "Yes, I trust this folder" before confirming. Claude
+		# drops input for the rest of that session, so relaunch it; the answer is
+		# saved, so later runs skip this.
+		set timeout 3
+		expect {
+			-re {trust[^\n]{0,40}folder} {
+				sleep 0.5
+				send "\033\[B"
+				sleep 0.5
+				send "\r"
+				sleep 2
+				close
+				wait
+				spawn claude
+				sleep 3
+			}
+			timeout {}
+		}
+
+		set timeout $env(CLAUDE_USAGE_WAIT)
 		send "/usage\r"
 		expect {
-			-re {\$[0-9][0-9.,]* (of|/) \$[0-9][0-9.,]*[^\r\n]*} {
+			-re {\$[0-9][0-9.,]* (of|/) \$[0-9][0-9.,]* spent} {
 				puts [string trim $expect_out(0,string)]
 			}
 			timeout { puts stderr "claude-usage: no spend line"; exit 1 }
