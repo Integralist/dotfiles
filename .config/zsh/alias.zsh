@@ -9,7 +9,7 @@ export PATH="$MODIFIED_PATH"
 #       alternatively use the `list` alias to show all defined alias' from this file
 #       the `alias` function itself with no arguments will actually print all too
 #
-alias au='printf "\n💡 GitHub Copilot:\n\n" && copilot-usage && aicosts'
+alias au='printf "\n💡 GitHub Copilot:\n\n" && copilot-usage; printf "\n💡 Claude Code (Enterprise):\n\n"; claude-usage; aicosts'
 alias aws-bedrock='aws sso login --profile=bedrock'
 alias c="clear"
 alias cat="bat"

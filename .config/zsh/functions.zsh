@@ -648,6 +648,28 @@ aicosts() {
 	ccusage daily --since "$since_date"
 }
 
+# claude-usage prints the spend line from Claude Code's /usage screen by
+# driving the TUI with expect (ships with macOS). Enterprise spend isn't in
+# the local logs that ccusage reads.
+#
+claude-usage() {
+	local workdir="${CLAUDE_USAGE_DIR:-$HOME/code/dotfiles}" # must be a trusted folder
+	(cd -q "$workdir" && CLAUDE_USAGE_WAIT="${CLAUDE_USAGE_WAIT:-15}" expect -c '
+		log_user 0
+		set timeout $env(CLAUDE_USAGE_WAIT)
+		set stty_init "cols 200 rows 60"
+		spawn claude
+		sleep 3
+		send "/usage\r"
+		expect {
+			-re {\$[0-9][0-9.,]* (of|/) \$[0-9][0-9.,]*[^\r\n]*} {
+				puts [string trim $expect_out(0,string)]
+			}
+			timeout { puts stderr "claude-usage: no spend line"; exit 1 }
+		}
+	')
+}
+
 # repos_update fast-forwards the default branch (main/master) of every git repo
 # under a directory (default: ~/code/fastly) without disturbing work in
 # progress.
