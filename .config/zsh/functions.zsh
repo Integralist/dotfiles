@@ -645,7 +645,14 @@ claude_cost() {
 aicosts() {
 	local days=${1:-0}
 	local since_date=$(date -v-"${days}"d +%Y-%m-%d)
-	ccusage daily --since "$since_date"
+	setopt local_options pipefail
+	ccusage daily --since "$since_date" | awk '
+		/^╭/ { banner = 1; next }
+		banner && /^╰/ { banner = 0; next }
+		banner { next }
+		!printed && NF == 0 { next }
+		{ printed = 1; print }
+	'
 }
 
 # claude-usage prints the spend line from Claude Code's /usage screen by
