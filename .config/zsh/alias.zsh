@@ -15,7 +15,7 @@ alias c="clear"
 alias cat="bat"
 alias cleantest='go clean -testcache && make test'
 alias commit='cat ~/.gitcommit'
-alias copilot-usage="gh api copilot_internal/user | jq -r '.quota_snapshots.premium_interactions as \$p | \"Usage this cycle: \(\$p.credits_used) / \(\$p.entitlement) AI credits (\(\$p.percent_remaining)% remaining) — Resets on \(.quota_reset_date)\"'"
+alias copilot-usage="gh api copilot_internal/user | jq -r '.quota_snapshots.premium_interactions as \$p | \"Usage this cycle: \$\((\$p.credits_used / 100) | floor).\(((\$p.credits_used % 100) | tostring) | if length == 1 then \"0\" + . else . end) — \(\$p.credits_used) / \(\$p.entitlement) AI credits (\(\$p.percent_remaining)% remaining) — Resets on \(.quota_reset_date)\"'"
 alias datets='date -u +"%s"'
 alias dns="scutil --dns | grep 'nameserver\\[[0-9]*\\]'"
 alias hunk='GH_TOKEN="$(gh auth token)" command hunk'
