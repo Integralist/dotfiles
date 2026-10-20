@@ -699,6 +699,228 @@ claude-usage() {
 	')
 }
 
+# au reports month-to-date AI costs and today's ccusage total. Each report runs
+# once in parallel; the Claude enterprise spend is reused in the combined total.
+# If it is unavailable, keep the all-agent ccusage total to avoid dropping Claude.
+# Copilot via Pi is identified by provider; it is a breakdown, not added to that total.
+#
+au() {
+	setopt local_options no_err_exit no_monitor pipefail
+
+	local c_reset='' c_bold='' c_total='' c_copilot='' c_claude='' c_pi='' c_day='' c_warning='' c_detail=''
+	if [[ -t 1 && -z ${NO_COLOR:-} ]]; then
+		c_reset=$'\033[0m'
+		c_bold=$'\033[1m'
+		c_total=$'\033[38;5;81m'
+		c_copilot=$'\033[38;5;83m'
+		c_claude=$'\033[38;5;208m'
+		c_pi=$'\033[38;5;141m'
+		c_day=$'\033[38;5;75m'
+		c_warning=$'\033[38;5;220m'
+		c_detail=$'\033[2m'
+	fi
+
+	local today month_start month_start_compact today_compact tmpdir
+	local all_pid claude_pid copilot_pid pi_copilot_pid enterprise_pid
+	today=$(date +%F)
+	month_start=$(date +%Y-%m-01)
+	month_start_compact=${month_start//-/}
+	today_compact=${today//-/}
+	local pi_copilot_script=${PI_COPILOT_COST_SCRIPT:-$HOME/.config/zsh/pi-copilot-cost.cjs}
+	local pi_sessions_dir=${PI_COPILOT_SESSIONS_DIR:-$HOME/.pi/agent/sessions}
+	tmpdir=$(mktemp -d "${TMPDIR:-/tmp}/au.XXXXXX") || return 1
+
+	(
+		setopt local_options no_err_exit
+		ccusage daily --json --since "$month_start" --until "$today" >"$tmpdir/all.json" 2>"$tmpdir/all.err"
+		print -r -- "$?" >"$tmpdir/all.status"
+	) &
+	all_pid=$!
+	(
+		setopt local_options no_err_exit
+		ccusage claude daily --json --since "$month_start_compact" --until "$today_compact" >"$tmpdir/claude.json" 2>"$tmpdir/claude.err"
+		print -r -- "$?" >"$tmpdir/claude.status"
+	) &
+	claude_pid=$!
+	(
+		setopt local_options no_err_exit
+		ccusage copilot daily --json --since "$month_start" --until "$today" >"$tmpdir/copilot.json" 2>"$tmpdir/copilot.err"
+		print -r -- "$?" >"$tmpdir/copilot.status"
+	) &
+	copilot_pid=$!
+	(
+		setopt local_options no_err_exit
+		node "$pi_copilot_script" "$pi_sessions_dir" "$month_start" "$today" >"$tmpdir/pi-copilot.out" 2>"$tmpdir/pi-copilot.err"
+		print -r -- "$?" >"$tmpdir/pi-copilot.status"
+	) &
+	pi_copilot_pid=$!
+	(
+		setopt local_options no_err_exit
+		claude-usage >"$tmpdir/enterprise.out" 2>"$tmpdir/enterprise.err"
+		print -r -- "$?" >"$tmpdir/enterprise.status"
+	) &
+	enterprise_pid=$!
+
+	local -a frames
+	frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+	local pending completed task frame=1 spin progress
+	local interactive_spinner=0 report_count=5
+	[[ -t 2 ]] && interactive_spinner=1
+	if (( interactive_spinner )); then
+		printf '%s Calculating costs... 0%% (0/5 reports)' "${frames[1]}" >&2
+	fi
+	while true; do
+		pending=0
+		completed=0
+		for task in all claude copilot pi-copilot enterprise; do
+			if [[ -f "$tmpdir/$task.status" ]]; then
+				completed=$((completed + 1))
+			else
+				pending=$((pending + 1))
+			fi
+		done
+		progress=$((completed * 100 / report_count))
+		if (( interactive_spinner )); then
+			frame=$((frame % ${#frames} + 1))
+			spin=${frames[$frame]}
+			printf '\r\033[K%s Calculating costs... %d%% (%d/5 reports)' "$spin" "$progress" "$completed" >&2
+		fi
+		if (( pending == 0 )); then
+			if (( interactive_spinner )); then sleep 0.5; fi
+			break
+		fi
+		sleep 0.1
+	done
+	if (( interactive_spinner )); then
+		printf '\r\033[K' >&2
+	fi
+	wait "$all_pid" 2>/dev/null || true
+	wait "$claude_pid" 2>/dev/null || true
+	wait "$copilot_pid" 2>/dev/null || true
+	wait "$pi_copilot_pid" 2>/dev/null || true
+	wait "$enterprise_pid" 2>/dev/null || true
+
+	local all_rc claude_rc copilot_rc pi_copilot_rc enterprise_rc
+	all_rc=$(<"$tmpdir/all.status")
+	claude_rc=$(<"$tmpdir/claude.status")
+	copilot_rc=$(<"$tmpdir/copilot.status")
+	pi_copilot_rc=$(<"$tmpdir/pi-copilot.status")
+	enterprise_rc=$(<"$tmpdir/enterprise.status")
+
+	local all_total claude_total copilot_total pi_copilot_total one_day_total
+	if [[ $all_rc == 0 ]]; then
+		all_total=$(jq -er '.totals.totalCost | numbers' "$tmpdir/all.json" 2>/dev/null) || all_rc=1
+		one_day_total=$(jq -er --arg today "$today" '([.daily[]? | select(.period == $today) | .totalCost] | add // 0)' "$tmpdir/all.json" 2>/dev/null) || all_rc=1
+	fi
+	if [[ $claude_rc == 0 ]]; then
+		claude_total=$(jq -er '.totals.totalCost | numbers' "$tmpdir/claude.json" 2>/dev/null) || claude_rc=1
+	fi
+	if [[ $copilot_rc == 0 ]]; then
+		copilot_total=$(jq -er '.totals.totalCost | numbers' "$tmpdir/copilot.json" 2>/dev/null) || copilot_rc=1
+	fi
+	if [[ $pi_copilot_rc == 0 ]]; then
+		pi_copilot_total=$(jq -er 'numbers' "$tmpdir/pi-copilot.out" 2>/dev/null) || pi_copilot_rc=1
+	fi
+
+	local enterprise_line='' enterprise_spend='' total_cost='' copilot_cost='' cli_cost='' pi_cost='' claude_cost='' day_cost='' other_cost='' other_label='∑ Other AI (ccusage remainder)' failed=0 claude_fallback=0
+	if [[ $enterprise_rc == 0 ]]; then
+		enterprise_line=$(<"$tmpdir/enterprise.out")
+		if [[ $enterprise_line == \$* ]]; then
+			enterprise_spend=${enterprise_line#\$}
+			enterprise_spend=${enterprise_spend%% *}
+			enterprise_spend=${enterprise_spend//,/}
+			jq -en --arg amount "$enterprise_spend" '$amount | tonumber' >/dev/null 2>&1 || enterprise_rc=1
+		else
+			enterprise_rc=1
+		fi
+	fi
+
+	if [[ $all_rc == 0 && $claude_rc == 0 && $enterprise_rc == 0 ]]; then
+		total_cost=$(LC_NUMERIC=C awk -v all="$all_total" -v claude="$claude_total" -v enterprise="$enterprise_spend" 'BEGIN { printf "%.2f", all - claude + enterprise }')
+		print -r -- "${c_bold}${c_total}Total AI costs to date:${c_reset} ${c_bold}\$$total_cost${c_reset}"
+	elif [[ $all_rc == 0 && $enterprise_rc != 0 ]]; then
+		total_cost=$(LC_NUMERIC=C awk -v all="$all_total" 'BEGIN { printf "%.2f", all }')
+		claude_fallback=1
+		print -r -- "${c_bold}${c_total}Total AI costs to date:${c_reset} ${c_bold}\$$total_cost${c_reset}"
+		print -r -- "${c_warning}⚠️ Claude Enterprise costs unavailable; total includes ccusage Claude costs instead.${c_reset}"
+	else
+		print -r -- "${c_bold}${c_total}Total AI costs to date:${c_reset} unavailable"
+		failed=1
+	fi
+	print
+
+	if [[ $copilot_rc == 0 ]]; then
+		cli_cost=$(LC_NUMERIC=C awk -v cost="$copilot_total" 'BEGIN { printf "%.2f", cost }')
+	fi
+	if [[ $pi_copilot_rc == 0 ]]; then
+		pi_cost=$(LC_NUMERIC=C awk -v cost="$pi_copilot_total" 'BEGIN { printf "%.2f", cost }')
+	fi
+	if [[ $copilot_rc == 0 && $pi_copilot_rc == 0 ]]; then
+		copilot_cost=$(LC_NUMERIC=C awk -v cli="$copilot_total" -v pi="$pi_copilot_total" 'BEGIN { printf "%.2f", cli + pi }')
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$copilot_cost"
+		print -r -- "  ${c_detail}Copilot CLI:${c_reset} \$$cli_cost"
+		print -r -- "  ${c_pi}π Copilot via Pi:${c_reset} \$$pi_cost"
+	elif [[ $copilot_rc == 0 ]]; then
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$cli_cost (CLI only)"
+		print -r -- "${c_warning}⚠️ Pi Copilot costs unavailable; subtotal excludes Pi.${c_reset}"
+		failed=1
+	elif [[ $pi_copilot_rc == 0 ]]; then
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$pi_cost (Pi only)"
+		print -r -- "${c_warning}⚠️ Copilot CLI costs unavailable; subtotal excludes CLI.${c_reset}"
+		failed=1
+	else
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} unavailable"
+		failed=1
+	fi
+	print
+
+	if [[ $enterprise_rc == 0 ]]; then
+		claude_cost=$(LC_NUMERIC=C awk -v cost="$enterprise_spend" 'BEGIN { printf "%.2f", cost }')
+		print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} $enterprise_line"
+	elif (( claude_fallback )); then
+		if [[ $claude_rc == 0 ]]; then
+			claude_cost=$(LC_NUMERIC=C awk -v cost="$claude_total" 'BEGIN { printf "%.2f", cost }')
+			print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} unavailable; ccusage Claude fallback: \$$claude_cost"
+		else
+			other_label='∑ Other AI (includes unseparated Claude)'
+			print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} unavailable; Claude costs remain included in ccusage total"
+		fi
+	else
+		print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} unavailable"
+		failed=1
+	fi
+	if [[ $all_rc == 0 && $copilot_rc == 0 && $pi_copilot_rc == 0 ]]; then
+		if [[ $enterprise_rc == 0 && $claude_rc == 0 ]] || (( claude_fallback )); then
+			if [[ $claude_rc == 0 ]]; then
+				other_cost=$(LC_NUMERIC=C awk -v total="$total_cost" -v copilot="$copilot_cost" -v claude="$claude_cost" 'BEGIN { printf "%.2f", total - copilot - claude }')
+			else
+				other_cost=$(LC_NUMERIC=C awk -v total="$total_cost" -v copilot="$copilot_cost" 'BEGIN { printf "%.2f", total - copilot }')
+			fi
+		fi
+	fi
+	print
+	if [[ -n $other_cost ]]; then
+		print -r -- "${c_detail}$other_label:${c_reset} \$$other_cost"
+	else
+		print -r -- "${c_detail}$other_label:${c_reset} unavailable"
+	fi
+	print
+
+	if [[ $all_rc == 0 ]]; then
+		day_cost=$(LC_NUMERIC=C awk -v cost="$one_day_total" 'BEGIN { printf "%.2f", cost }')
+		print -r -- "${c_day} One-day usage total ($today, included in MTD):${c_reset} \$$day_cost"
+	else
+		print -r -- "${c_day} One-day usage total ($today, included in MTD):${c_reset} unavailable"
+		failed=1
+	fi
+
+	if (( failed )); then
+		print -u2 -r -- "au: one or more cost reports failed"
+	fi
+	rm -rf "$tmpdir"
+	return $failed
+}
+
 # repos_update fast-forwards the default branch (main/master) of every git repo
 # under a directory (default: ~/code/fastly) without disturbing work in
 # progress.

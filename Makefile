@@ -15,6 +15,8 @@ sync_zsh:  ## Sync the ZSH shell configuration
 
 .PHONY: test
 test:  ## Run the shell tests
+	@node ./test/pi_copilot_cost.test.cjs
+	@./test/au.zsh
 	@./test/repos_update.zsh
 
 help:
