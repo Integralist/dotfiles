@@ -645,14 +645,88 @@ claude_cost() {
 aicosts() {
 	local days=${1:-0}
 	local since_date=$(date -v-"${days}"d +%Y-%m-%d)
-	setopt local_options pipefail
-	ccusage daily --since "$since_date" | awk '
-		/^╭/ { banner = 1; next }
-		banner && /^╰/ { banner = 0; next }
-		banner { next }
-		!printed && NF == 0 { next }
-		{ printed = 1; print }
+	local today_date=$(date +%Y-%m-%d)
+	local reports_dir json_pid json_status format_status
+	local interactive_spinner=0 frame=1 spin
+	local c_reset='' c_bold='' c_header='' c_subtotal='' c_grand=''
+	local -a frames
+	frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
+	if [[ -t 1 && -z ${NO_COLOR:-} ]]; then
+		c_reset=$'\033[0m'
+		c_bold=$'\033[1m'
+		c_header=$'\033[38;5;81m'
+		c_subtotal=$'\033[38;5;220m'
+		c_grand=$'\033[38;5;83m'
+	fi
+	setopt local_options no_err_exit no_err_return no_monitor pipefail
+	reports_dir=$(mktemp -d "${TMPDIR:-/tmp}/aicosts.XXXXXX") || return 1
+
+	(
+		setopt local_options no_err_exit no_err_return
+		ccusage daily --json --since "$since_date" --until "$today_date" >"$reports_dir/models.json" 2>"$reports_dir/models.err"
+		print -r -- "$?" >"$reports_dir/models.status"
+	) &
+	json_pid=$!
+
+	[[ -t 2 ]] && interactive_spinner=1
+	if (( interactive_spinner )); then
+		printf '%s 💸 Calculating AI costs...' "${frames[1]}" >&2
+	fi
+	while [[ ! -f "$reports_dir/models.status" ]]; do
+		if (( interactive_spinner )); then
+			frame=$((frame % ${#frames} + 1))
+			spin=${frames[$frame]}
+			printf '\r\033[K%s Calculating AI costs...' "$spin" >&2
+		fi
+		sleep 0.1
+	done
+	if (( interactive_spinner )); then
+		printf '\r\033[K' >&2
+	fi
+	wait "$json_pid" 2>/dev/null || true
+	json_status=$(<"$reports_dir/models.status")
+	if (( json_status != 0 )); then
+		cat "$reports_dir/models.err" >&2
+		rm -rf "$reports_dir"
+		return 1
+	fi
+
+	printf '📊 Per-model breakdown:\n\n'
+	jq -r '
+		def usd:
+			(.*100 | round) as $cents
+			| "$" + (($cents / 100 | floor | tostring) + "." + (($cents % 100 | tostring) | if length == 1 then "0" + . else . end));
+		def rule($width): [range(0; $width)] | map("-") | join("");
+		def spaces($width): [range(0; $width)] | map(" ") | join("");
+		.daily as $days
+		| (([14] + [$days[] | .modelBreakdowns[]? | (.modelName | length)]) | max) as $model_width
+		| (
+			[["Date", "Model", "Cost (USD)"]]
+			+ (
+				reduce range(0; ($days | length)) as $i
+					([]; . + (
+						($days[$i].modelBreakdowns // [] | map([
+							$days[$i].period,
+							.modelName,
+							(.cost | usd)
+						]))
+						+ [[spaces(10), spaces($model_width), (((($days[$i].modelBreakdowns // [] | map(.cost) | add) // 0) | usd) + " (daily subtotal) 📅")]]
+						+ (if $i < ($days | length) - 1 then [[rule(10), rule($model_width), rule(10)]] else [] end)
+					))
+			)
+			+ (if ($days | length) > 1 then [[rule(10), rule($model_width), rule(10)], [spaces(10), spaces($model_width), (((($days | map((.modelBreakdowns // [] | map(.cost) | add) // 0) | add) // 0) | usd) + " (grand total) 🏁")]] else [] end)
+		) | .[] | @tsv
+	' "$reports_dir/models.json" | column -t -s $'\t' | awk \
+		-v bold="$c_bold" -v header="$c_header" -v subtotal="$c_subtotal" \
+		-v grand="$c_grand" -v reset="$c_reset" '
+		NR == 1 { print bold header $0 reset; next }
+		/\(daily subtotal\)/ { print bold subtotal $0 reset; next }
+		/\(grand total\)/ { print bold grand $0 reset; next }
+		{ print }
 	'
+	format_status=$?
+	rm -rf "$reports_dir"
+	return $format_status
 }
 
 # claude-usage prints the spend line from Claude Code's /usage screen by
