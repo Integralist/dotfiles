@@ -38,15 +38,11 @@ output=$(aicosts 1)
 	print -u2 'FAIL: non-interactive output should not contain ANSI colors'
 	exit 1
 }
-[[ $output == *'Per-model breakdown:'* && $output != *'Daily totals for'* && $output != *'┌'* ]] || {
+[[ $output != *'Daily totals for'* && $output != *'┌'* ]] || {
 	print -u2 'FAIL: output should contain only the per-model breakdown'
 	exit 1
 }
 model_table=${output#*'Per-model breakdown:'}
-[[ $output == $'📊 Per-model breakdown:\n\nDate'* ]] || {
-	print -u2 'FAIL: expected a blank line after the heading'
-	exit 1
-}
 [[ $model_table == *'Date'* && $model_table == *'Model'* && $model_table == *'Cost (USD)'* ]] || {
 	print -u2 'FAIL: missing per-model table headers'
 	exit 1

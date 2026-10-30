@@ -691,7 +691,6 @@ aicosts() {
 		return 1
 	fi
 
-	printf '📊 Per-model breakdown:\n\n'
 	jq -r '
 		def usd:
 			(.*100 | round) as $cents
