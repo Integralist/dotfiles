@@ -181,6 +181,8 @@ function go_tools {
 	go install -v github.com/go-critic/go-critic/cmd/go-critic@latest
   echo "🚀 Running: go install github.com/cweill/gotests/gotests@latest"
 	go install github.com/cweill/gotests/gotests@latest
+  echo "🚀 Running: go install github.com/kojah/gohawk@latest"
+  go install github.com/kojah/gohawk@latest
 }
 # go_list lists all installed tools
 #
