@@ -794,7 +794,7 @@ au() {
 	fi
 
 	local today month_start month_start_compact today_compact tmpdir
-	local all_pid claude_pid copilot_pid pi_copilot_pid enterprise_pid
+	local all_pid claude_pid copilot_pid pi_copilot_pid enterprise_pid copilot_limit_pid
 	today=$(date +%F)
 	month_start=$(date +%Y-%m-01)
 	month_start_compact=${month_start//-/}
@@ -833,19 +833,25 @@ au() {
 		print -r -- "$?" >"$tmpdir/enterprise.status"
 	) &
 	enterprise_pid=$!
+	(
+		setopt local_options no_err_exit
+		gh api copilot_internal/user >"$tmpdir/copilot-user.json" 2>"$tmpdir/copilot-user.err"
+		print -r -- "$?" >"$tmpdir/copilot-limit.status"
+	) &
+	copilot_limit_pid=$!
 
 	local -a frames
 	frames=(⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏)
 	local pending completed task frame=1 spin progress
-	local interactive_spinner=0 report_count=5
+	local interactive_spinner=0 report_count=6
 	[[ -t 2 ]] && interactive_spinner=1
 	if (( interactive_spinner )); then
-		printf '%s Calculating costs... 0%% (0/5 reports)' "${frames[1]}" >&2
+		printf '%s Calculating costs... 0%% (0/6 reports)' "${frames[1]}" >&2
 	fi
 	while true; do
 		pending=0
 		completed=0
-		for task in all claude copilot pi-copilot enterprise; do
+		for task in all claude copilot pi-copilot enterprise copilot-limit; do
 			if [[ -f "$tmpdir/$task.status" ]]; then
 				completed=$((completed + 1))
 			else
@@ -856,7 +862,7 @@ au() {
 		if (( interactive_spinner )); then
 			frame=$((frame % ${#frames} + 1))
 			spin=${frames[$frame]}
-			printf '\r\033[K%s Calculating costs... %d%% (%d/5 reports)' "$spin" "$progress" "$completed" >&2
+			printf '\r\033[K%s Calculating costs... %d%% (%d/6 reports)' "$spin" "$progress" "$completed" >&2
 		fi
 		if (( pending == 0 )); then
 			if (( interactive_spinner )); then sleep 0.5; fi
@@ -872,15 +878,27 @@ au() {
 	wait "$copilot_pid" 2>/dev/null || true
 	wait "$pi_copilot_pid" 2>/dev/null || true
 	wait "$enterprise_pid" 2>/dev/null || true
+	wait "$copilot_limit_pid" 2>/dev/null || true
 
-	local all_rc claude_rc copilot_rc pi_copilot_rc enterprise_rc
+	local all_rc claude_rc copilot_rc pi_copilot_rc enterprise_rc copilot_limit_rc
 	all_rc=$(<"$tmpdir/all.status")
 	claude_rc=$(<"$tmpdir/claude.status")
 	copilot_rc=$(<"$tmpdir/copilot.status")
 	pi_copilot_rc=$(<"$tmpdir/pi-copilot.status")
 	enterprise_rc=$(<"$tmpdir/enterprise.status")
+	copilot_limit_rc=$(<"$tmpdir/copilot-limit.status")
 
-	local all_total claude_total copilot_total pi_copilot_total one_day_total
+	local all_total claude_total copilot_total pi_copilot_total one_day_total copilot_limit=''
+	if [[ $copilot_limit_rc == 0 ]]; then
+		local copilot_entitlement
+		copilot_entitlement=$(jq -er '.quota_snapshots.premium_interactions.entitlement | numbers' "$tmpdir/copilot-user.json" 2>/dev/null) || copilot_limit_rc=1
+		if [[ $copilot_limit_rc == 0 ]]; then
+			# Match copilot-usage's conversion: 100 AI credits per dollar.
+			copilot_limit=$(LC_NUMERIC=C awk -v credits="$copilot_entitlement" 'BEGIN { amount = credits / 100; if (amount == int(amount)) printf "%.0f", amount; else printf "%.2f", amount }')
+		fi
+	fi
+	local copilot_limit_suffix=''
+	[[ -n $copilot_limit ]] && copilot_limit_suffix=" / \$$copilot_limit"
 	if [[ $all_rc == 0 ]]; then
 		all_total=$(jq -er '.totals.totalCost | numbers' "$tmpdir/all.json" 2>/dev/null) || all_rc=1
 		one_day_total=$(jq -er --arg today "$today" '([.daily[]? | select(.period == $today) | .totalCost] | add // 0)' "$tmpdir/all.json" 2>/dev/null) || all_rc=1
@@ -930,15 +948,15 @@ au() {
 	fi
 	if [[ $copilot_rc == 0 && $pi_copilot_rc == 0 ]]; then
 		copilot_cost=$(LC_NUMERIC=C awk -v cli="$copilot_total" -v pi="$pi_copilot_total" 'BEGIN { printf "%.2f", cli + pi }')
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$copilot_cost"
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$copilot_cost$copilot_limit_suffix"
 		print -r -- "  ${c_detail}Copilot CLI:${c_reset} \$$cli_cost"
 		print -r -- "  ${c_pi}π Copilot via Pi:${c_reset} \$$pi_cost"
 	elif [[ $copilot_rc == 0 ]]; then
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$cli_cost (CLI only)"
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$cli_cost$copilot_limit_suffix (CLI only)"
 		print -r -- "${c_warning}⚠️ Pi Copilot costs unavailable; subtotal excludes Pi.${c_reset}"
 		failed=1
 	elif [[ $pi_copilot_rc == 0 ]]; then
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$pi_cost (Pi only)"
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$pi_cost$copilot_limit_suffix (Pi only)"
 		print -r -- "${c_warning}⚠️ Copilot CLI costs unavailable; subtotal excludes CLI.${c_reset}"
 		failed=1
 	else

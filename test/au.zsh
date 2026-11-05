@@ -48,6 +48,10 @@ node() {
 	[[ ${AU_FAIL:-} != pi && ${AU_FAIL:-} != copilot-pi ]] || return 1
 	print -r -- 2.10847918
 }
+gh() {
+	[[ ${AU_FAIL:-} != copilot-limit ]] || return 1
+	print -r -- '{"quota_snapshots":{"premium_interactions":{"entitlement":80000}}}'
+}
 
 output=$(au)
 first_line=${output%%$'\n'*}
@@ -63,8 +67,8 @@ first_line=${output%%$'\n'*}
 	print -u2 'FAIL: cost sections need breathing room'
 	exit 1
 }
-[[ $output == *'GitHub Copilot month-to-date: $3.36'* ]] || {
-	print -u2 'FAIL: missing combined Copilot month-to-date cost'
+[[ $output == *'GitHub Copilot month-to-date: $3.36 / $800'* ]] || {
+	print -u2 'FAIL: missing combined Copilot month-to-date cost and allowance'
 	exit 1
 }
 [[ $output == *'Copilot CLI: $1.25'* && $output == *'Copilot via Pi: $2.11'* ]] || {
@@ -84,6 +88,16 @@ first_line=${output%%$'\n'*}
 	exit 1
 }
 print 'PASS  au calculates all four sections from month-to-date reports'
+
+AU_FAIL=copilot-limit
+unsetopt err_exit
+output=$(au 2>&1); rc=$?
+setopt err_exit
+[[ $rc == 0 && $output == *'GitHub Copilot month-to-date: $3.36'* && $output != *' / $800'* ]] || {
+	print -u2 'FAIL: unavailable Copilot allowance should not hide the cost or fail au'
+	exit 1
+}
+print 'PASS  au keeps Copilot costs available when the allowance lookup fails'
 
 assert_unavailable() {
 	local failure=$1 expected=$2 output rc
@@ -112,8 +126,8 @@ assert_copilot_partial() {
 	}
 	print "PASS  au reports partial Copilot usage when $failure fails"
 }
-assert_copilot_partial copilot 'GitHub Copilot month-to-date: $2.11 (Pi only)'
-assert_copilot_partial pi 'GitHub Copilot month-to-date: $1.25 (CLI only)'
+assert_copilot_partial copilot 'GitHub Copilot month-to-date: $2.11 / $800 (Pi only)'
+assert_copilot_partial pi 'GitHub Copilot month-to-date: $1.25 / $800 (CLI only)'
 assert_unavailable copilot-pi 'GitHub Copilot month-to-date: unavailable'
 
 AU_FAIL=enterprise
@@ -177,6 +191,10 @@ ccusage() {
 		print -r -- '{"daily":[{"period":"2026-10-20","totalCost":5.25}],"totals":{"totalCost":15.25}}'
 	fi
 }
+gh() {
+	sleep 0.5
+	print -r -- '{"quota_snapshots":{"premium_interactions":{"entitlement":80000}}}'
+}
 claude-usage() {
 	sleep "${AU_ENTERPRISE_DELAY:-2.35}"
 	print -r -- '$3.50 of $10.00 spent'
@@ -203,7 +221,7 @@ grep -Fq 'Calculating costs...' "$TTY_LOG" || {
 	print -u2 'FAIL: missing generic calculation status'
 	exit 1
 }
-for percent in 0 20 40 60 80 100; do
+for percent in 0 16 33 50 66 83 100; do
 	grep -Fq "Calculating costs... $percent%" "$TTY_LOG" || {
 		print -u2 "FAIL: progress did not reach $percent percent"
 		exit 1
