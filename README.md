@@ -54,6 +54,12 @@ As of Dec 2024 I'm using [Ghostty](https://ghostty.org/).
 There is a [`Brewfile`](./Brewfile) which can help you install any programs that were installed via Homebrew:
 
 ```shell
+brew tap jamesmontemagno/tiny-clips https://github.com/jamesmontemagno/tiny-clips
+brew tap terraform-linters/tap
+brew tap warrensbox/tap
+brew trust --cask jamesmontemagno/tiny-clips/tiny-clips 2>/dev/null || true
+brew trust --cask terraform-linters/tap/tflint 2>/dev/null || true
+brew trust --cask warrensbox/tap/tfswitch 2>/dev/null || true
 brew bundle install --file=~/code/dotfiles/Brewfile
 ```
 
@@ -61,19 +67,21 @@ You can also regenerate it using:
 
 ```shell
 brew bundle dump --force
+brew tap jamesmontemagno/tiny-clips https://github.com/jamesmontemagno/tiny-clips
+brew tap terraform-linters/tap
+brew tap warrensbox/tap
+brew trust --cask jamesmontemagno/tiny-clips/tiny-clips 2>/dev/null || true
+brew trust --cask terraform-linters/tap/tflint 2>/dev/null || true
+brew trust --cask warrensbox/tap/tfswitch 2>/dev/null || true
 brew bundle install
 ```
 
 ## GUIs
 
 - [Android File Transfer](https://www.android.com/filetransfer/): `brew install --cask android-file-transfer`
-- [Rio Terminal](https://raphamorim.io/rio/): `brew install --cask rio`
-- [Warp Terminal](https://www.warp.dev/): `brew install --cask warp`.
 - [goread](https://github.com/TypicalAM/goread): `brew install goread`.
 - [alltomp3](https://alltomp3.org/): for backing up Spotify music.
 - [makemkv](https://makemkv.com/): rip DVDs and Blu-ray discs.
-- [flameshot](https://flameshot.org/): annotate images.
-- [owly](https://apps.apple.com/us/app/owly-display-sleep-prevention/id882812218): prevent screen going to sleep.
 
 ## Android Phone Access
 
