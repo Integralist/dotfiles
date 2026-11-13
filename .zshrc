@@ -5,11 +5,11 @@
 tty_instance=$(tty)
 
 function load_script {
-	local path=$1
-	if test -f $path; then
-		source $path
+	local script_path=$1
+	if test -f "$script_path"; then
+		source "$script_path"
 	else
-		echo "no $path found"
+		echo "no $script_path found"
 	fi
 }
 
