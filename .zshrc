@@ -42,9 +42,12 @@ typeset -U path
 # shell with no tty blocks forever.
 if [[ -o interactive ]] && [ -t 0 ] && [ -f "$HOME/.localrc" ]; then
 	if command -v op >/dev/null; then
-		op signin --account fastly.1password.com
+		if op_signin_output=$(op signin --account fastly.1password.com); then
+			eval "$op_signin_output" &&
+				source <(op inject -i "$HOME/.localrc")
+		fi
+		unset op_signin_output
 		# op signin --account my.1password.com << PERSONAL ACCOUNT
-		source <(op inject -i $HOME/.localrc)
 	fi
 fi
 
