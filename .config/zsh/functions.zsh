@@ -823,7 +823,7 @@ au() {
 	copilot_pid=$!
 	(
 		setopt local_options no_err_exit
-		node "$pi_copilot_script" "$pi_sessions_dir" "$month_start" "$today" >"$tmpdir/pi-copilot.out" 2>"$tmpdir/pi-copilot.err"
+		node "$pi_copilot_script" --by-provider "$pi_sessions_dir" "$month_start" "$today" >"$tmpdir/pi-copilot.out" 2>"$tmpdir/pi-copilot.err"
 		print -r -- "$?" >"$tmpdir/pi-copilot.status"
 	) &
 	pi_copilot_pid=$!
@@ -910,10 +910,10 @@ au() {
 		copilot_total=$(jq -er '.totals.totalCost | numbers' "$tmpdir/copilot.json" 2>/dev/null) || copilot_rc=1
 	fi
 	if [[ $pi_copilot_rc == 0 ]]; then
-		pi_copilot_total=$(jq -er 'numbers' "$tmpdir/pi-copilot.out" 2>/dev/null) || pi_copilot_rc=1
+		pi_copilot_total=$(jq -er 'if type == "object" then (."github-copilot" // 0 | numbers) elif type == "number" then . else error("unexpected") end' "$tmpdir/pi-copilot.out" 2>/dev/null) || pi_copilot_rc=1
 	fi
 
-	local enterprise_line='' enterprise_spend='' total_cost='' copilot_cost='' cli_cost='' pi_cost='' claude_cost='' day_cost='' other_cost='' other_label='∑ Other AI (ccusage remainder)' failed=0 claude_fallback=0
+	local enterprise_line='' enterprise_spend='' enterprise_limit='' enterprise_pct='' total_cost='' copilot_cost='' cli_cost='' pi_cost='' claude_cost='' day_cost='' other_cost='' other_label='∑ Other AI (ccusage remainder)' failed=0 claude_fallback=0
 	if [[ $enterprise_rc == 0 ]]; then
 		enterprise_line=$(<"$tmpdir/enterprise.out")
 		if [[ $enterprise_line == \$* ]]; then
@@ -921,6 +921,13 @@ au() {
 			enterprise_spend=${enterprise_spend%% *}
 			enterprise_spend=${enterprise_spend//,/}
 			jq -en --arg amount "$enterprise_spend" '$amount | tonumber' >/dev/null 2>&1 || enterprise_rc=1
+			local enterprise_rest=${enterprise_line#\$}
+			if [[ $enterprise_rc == 0 && $enterprise_rest == *\$* ]]; then
+				enterprise_limit=${enterprise_rest#*\$}
+				enterprise_limit=${enterprise_limit%% *}
+				enterprise_limit=${enterprise_limit//,/}
+				jq -en --arg amount "$enterprise_limit" '$amount | tonumber | . > 0' >/dev/null 2>&1 || enterprise_limit=''
+			fi
 		else
 			enterprise_rc=1
 		fi
@@ -946,17 +953,29 @@ au() {
 	if [[ $pi_copilot_rc == 0 ]]; then
 		pi_cost=$(LC_NUMERIC=C awk -v cost="$pi_copilot_total" 'BEGIN { printf "%.2f", cost }')
 	fi
+	local copilot_pct='' copilot_meta=''
 	if [[ $copilot_rc == 0 && $pi_copilot_rc == 0 ]]; then
 		copilot_cost=$(LC_NUMERIC=C awk -v cli="$copilot_total" -v pi="$pi_copilot_total" 'BEGIN { printf "%.2f", cli + pi }')
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$copilot_cost$copilot_limit_suffix"
+		if [[ -n $copilot_limit ]]; then
+			copilot_pct=$(LC_NUMERIC=C awk -v spend="$copilot_cost" -v limit="$copilot_limit" 'BEGIN { if (limit > 0) { s = sprintf("%.1f", (spend / limit) * 100); sub(/\.0$/, "", s); printf " (%s%%)", s } }')
+		fi
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$copilot_cost$copilot_limit_suffix$copilot_pct"
 		print -r -- "  ${c_detail}Copilot CLI:${c_reset} \$$cli_cost"
 		print -r -- "  ${c_pi}π Copilot via Pi:${c_reset} \$$pi_cost"
 	elif [[ $copilot_rc == 0 ]]; then
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$cli_cost$copilot_limit_suffix (CLI only)"
+		if [[ -n $copilot_limit ]]; then
+			copilot_pct=$(LC_NUMERIC=C awk -v spend="$cli_cost" -v limit="$copilot_limit" 'BEGIN { if (limit > 0) { s = sprintf("%.1f", (spend / limit) * 100); sub(/\.0$/, "", s); printf "%s%%", s } }')
+		fi
+		copilot_meta="${copilot_pct:+$copilot_pct, }CLI only"
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$cli_cost$copilot_limit_suffix ($copilot_meta)"
 		print -r -- "${c_warning}⚠️ Pi Copilot costs unavailable; subtotal excludes Pi.${c_reset}"
 		failed=1
 	elif [[ $pi_copilot_rc == 0 ]]; then
-		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$pi_cost$copilot_limit_suffix (Pi only)"
+		if [[ -n $copilot_limit ]]; then
+			copilot_pct=$(LC_NUMERIC=C awk -v spend="$pi_cost" -v limit="$copilot_limit" 'BEGIN { if (limit > 0) { s = sprintf("%.1f", (spend / limit) * 100); sub(/\.0$/, "", s); printf "%s%%", s } }')
+		fi
+		copilot_meta="${copilot_pct:+$copilot_pct, }Pi only"
+		print -r -- "${c_copilot} GitHub Copilot month-to-date:${c_reset} \$$pi_cost$copilot_limit_suffix ($copilot_meta)"
 		print -r -- "${c_warning}⚠️ Copilot CLI costs unavailable; subtotal excludes CLI.${c_reset}"
 		failed=1
 	else
@@ -967,7 +986,10 @@ au() {
 
 	if [[ $enterprise_rc == 0 ]]; then
 		claude_cost=$(LC_NUMERIC=C awk -v cost="$enterprise_spend" 'BEGIN { printf "%.2f", cost }')
-		print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} $enterprise_line"
+		if [[ -n $enterprise_limit ]]; then
+			enterprise_pct=$(LC_NUMERIC=C awk -v spend="$enterprise_spend" -v limit="$enterprise_limit" 'BEGIN { if (limit > 0) { s = sprintf("%.1f", (spend / limit) * 100); sub(/\.0$/, "", s); printf " (%s%%)", s } }')
+		fi
+		print -r -- "${c_claude}󰚩 Claude Code (Enterprise):${c_reset} $enterprise_line$enterprise_pct"
 	elif (( claude_fallback )); then
 		if [[ $claude_rc == 0 ]]; then
 			claude_cost=$(LC_NUMERIC=C awk -v cost="$claude_total" 'BEGIN { printf "%.2f", cost }')
@@ -992,6 +1014,38 @@ au() {
 	print
 	if [[ -n $other_cost ]]; then
 		print -r -- "${c_detail}$other_label:${c_reset} \$$other_cost"
+		local pi_other_rows pi_provider pi_provider_raw pi_provider_cost pi_other_sum=0 pi_other_count=0 other_agents='' other_cli_delta formatted_delta cli_label
+		pi_other_rows=$(jq -r 'if type == "object" then to_entries | map(select(.key != "github-copilot" and (.value | numbers) >= 0.005)) | sort_by(-.value, .key) | .[] | "\(.key)\t\(.value)" else empty end' "$tmpdir/pi-copilot.out" 2>/dev/null)
+		other_agents=$(jq -r '[.daily[]?.metadata?.agents[]? | select(. != "claude" and . != "copilot" and . != "pi")] | unique | sort | join(", ")' "$tmpdir/all.json" 2>/dev/null)
+		if [[ -n $pi_other_rows ]]; then
+			while IFS=$'\t' read -r pi_provider pi_provider_raw; do
+				pi_provider_cost=$(LC_NUMERIC=C awk -v cost="$pi_provider_raw" 'BEGIN { printf "%.2f", cost }')
+				pi_other_sum=$(LC_NUMERIC=C awk -v sum="$pi_other_sum" -v cost="$pi_provider_cost" 'BEGIN { printf "%.2f", sum + cost }')
+				pi_other_count=$((pi_other_count + 1))
+				print -r -- "  ${c_pi}π Pi via $pi_provider:${c_reset} \$$pi_provider_cost"
+			done <<< "$pi_other_rows"
+		fi
+		if (( pi_other_count > 0 )); then
+			other_cli_delta=$(LC_NUMERIC=C awk -v other="$other_cost" -v pi_sum="$pi_other_sum" 'BEGIN { d = other - pi_sum; if (d > -0.005 && d < 0.005) d = 0; printf "%.2f", d }')
+			if [[ $other_cli_delta != 0.00 || -n $other_agents ]]; then
+				if [[ $other_cli_delta == -* ]]; then
+					formatted_delta="-\$${other_cli_delta#-}"
+				else
+					formatted_delta="\$$other_cli_delta"
+				fi
+				if (( claude_fallback )) && [[ $claude_rc != 0 ]]; then
+					cli_label=${other_agents:+"Other CLIs ($other_agents) + unseparated Claude"}
+					cli_label=${cli_label:-Other / unseparated Claude}
+				elif [[ -n $other_agents ]]; then
+					cli_label="Other CLIs ($other_agents)"
+				else
+					cli_label='Pricing / rounding delta'
+				fi
+				print -r -- "  ${c_detail}$cli_label:${c_reset} $formatted_delta"
+			fi
+		elif [[ -n $other_agents ]]; then
+			print -r -- "  ${c_detail}Other CLIs ($other_agents):${c_reset} \$$other_cost"
+		fi
 	else
 		print -r -- "${c_detail}$other_label:${c_reset} unavailable"
 	fi

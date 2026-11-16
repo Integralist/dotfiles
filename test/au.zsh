@@ -63,11 +63,11 @@ first_line=${output%%$'\n'*}
 	print -u2 'FAIL: missing Nerd Font and Pi icons'
 	exit 1
 }
-[[ $output == *$'Total AI costs to date: $16.75\n\n GitHub Copilot'* && $output == *$'Copilot via Pi: $2.11\n\n󰚩 Claude Code'* && $output == *$'Claude Code (Enterprise): $3.50 of $10.00 spent\n\n∑ Other AI'* && $output == *$'∑ Other AI (ccusage remainder): $9.89\n\n One-day'* ]] || {
+[[ $output == *$'Total AI costs to date: $16.75\n\n GitHub Copilot'* && $output == *$'Copilot via Pi: $2.11\n\n󰚩 Claude Code'* && $output == *$'Claude Code (Enterprise): $3.50 of $10.00 spent (35%)\n\n∑ Other AI'* && $output == *$'∑ Other AI (ccusage remainder): $9.89\n\n One-day'* ]] || {
 	print -u2 'FAIL: cost sections need breathing room'
 	exit 1
 }
-[[ $output == *'GitHub Copilot month-to-date: $3.36 / $800'* ]] || {
+[[ $output == *'GitHub Copilot month-to-date: $3.36 / $800 (0.4%)'* ]] || {
 	print -u2 'FAIL: missing combined Copilot month-to-date cost and allowance'
 	exit 1
 }
@@ -75,7 +75,7 @@ first_line=${output%%$'\n'*}
 	print -u2 'FAIL: missing Copilot source breakdown'
 	exit 1
 }
-[[ $output == *'Claude Code (Enterprise): $3.50 of $10.00 spent'* ]] || {
+[[ $output == *'Claude Code (Enterprise): $3.50 of $10.00 spent (35%)'* ]] || {
 	print -u2 'FAIL: missing Claude Enterprise usage'
 	exit 1
 }
@@ -93,7 +93,7 @@ AU_FAIL=copilot-limit
 unsetopt err_exit
 output=$(au 2>&1); rc=$?
 setopt err_exit
-[[ $rc == 0 && $output == *'GitHub Copilot month-to-date: $3.36'* && $output != *' / $800'* ]] || {
+[[ $rc == 0 && $output == *'GitHub Copilot month-to-date: $3.36'* && $output != *' / $800'* && $output != *'GitHub Copilot month-to-date: $3.36 ('* ]] || {
 	print -u2 'FAIL: unavailable Copilot allowance should not hide the cost or fail au'
 	exit 1
 }
@@ -126,8 +126,8 @@ assert_copilot_partial() {
 	}
 	print "PASS  au reports partial Copilot usage when $failure fails"
 }
-assert_copilot_partial copilot 'GitHub Copilot month-to-date: $2.11 / $800 (Pi only)'
-assert_copilot_partial pi 'GitHub Copilot month-to-date: $1.25 / $800 (CLI only)'
+assert_copilot_partial copilot 'GitHub Copilot month-to-date: $2.11 / $800 (0.3%, Pi only)'
+assert_copilot_partial pi 'GitHub Copilot month-to-date: $1.25 / $800 (0.2%, CLI only)'
 assert_unavailable copilot-pi 'GitHub Copilot month-to-date: unavailable'
 
 AU_FAIL=enterprise
@@ -163,6 +163,46 @@ first_line=${output%%$'\n'*}
 	exit 1
 }
 print 'PASS  au falls back to all-agent totals if Claude details also fail'
+
+# Verify Other AI breakdown by Pi provider and remaining CLIs.
+AU_OTHER_MODE=breakdown
+ccusage() {
+	if [[ "$*" == *claude\ daily* ]]; then
+		print -r -- '{"daily":[{"period":"2026-10-20","totalCost":2}],"totals":{"totalCost":2}}'
+	elif [[ "$*" == *copilot\ daily* ]]; then
+		print -r -- '{"daily":[{"date":"2026-10-20","totalCost":1.25}],"totals":{"totalCost":1.25}}'
+	else
+		print -r -- '{"daily":[{"period":"2026-10-01","totalCost":10,"metadata":{"agents":["pi","gemini"]}},{"period":"2026-10-20","totalCost":5.25,"metadata":{"agents":["claude","codex","copilot","pi"]}}],"totals":{"totalCost":15.25}}'
+	fi
+}
+node() {
+	[[ $* == *--by-provider* ]] || {
+		print -u2 'FAIL: expected au to pass --by-provider to Pi cost script'
+		exit 1
+	}
+	if [[ ${AU_OTHER_MODE:-} == negative-delta ]]; then
+		print -r -- '{"github-copilot":2.10847918,"google-vertex":7.00,"amazon-bedrock":3.10}'
+	else
+		print -r -- '{"github-copilot":2.10847918,"google-vertex":6.50,"amazon-bedrock":1.38,"pi-auto-model":0}'
+	fi
+}
+AU_FAIL=''
+output=$(au)
+[[ $output == *$'∑ Other AI (ccusage remainder): $9.89\n  π Pi via google-vertex: $6.50\n  π Pi via amazon-bedrock: $1.38\n  Other CLIs (codex, gemini): $2.01'* ]] || {
+	print -u2 "FAIL: missing Other AI provider and CLI breakdown:\n$output"
+	exit 1
+}
+[[ $output != *'pi-auto-model'* ]] || {
+	print -u2 'FAIL: zero-cost Pi provider should not be displayed'
+	exit 1
+}
+AU_OTHER_MODE=negative-delta
+output=$(au)
+[[ $output == *'Other CLIs (codex, gemini): -$0.21'* ]] || {
+	print -u2 "FAIL: negative pricing delta should format as -\$0.21:\n$output"
+	exit 1
+}
+print 'PASS  au breaks down Other AI by Pi provider and remaining CLIs'
 
 # Exercise interactive job control and spinner redraws in a pseudo-terminal.
 TTY_SCRIPT=$WS/terminal.zsh
