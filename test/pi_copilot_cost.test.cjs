@@ -2,7 +2,9 @@ const assert = require('node:assert/strict')
 const fs = require('node:fs')
 const os = require('node:os')
 const path = require('node:path')
+const { execFileSync } = require('node:child_process')
 const sumProviderCosts = require('../.config/zsh/pi-copilot-cost.cjs')
+const { sumCostsByProvider } = sumProviderCosts
 
 const sessions = fs.mkdtempSync(path.join(os.tmpdir(), 'pi-copilot-cost-test-'))
 const writeSession = (name, records) => {
@@ -34,6 +36,21 @@ async function main() {
 		const copilotTotal = await sumProviderCosts(sessions, 'github-copilot', '2026-10-01', '2026-10-20')
 		assert.equal(copilotTotal, 1.75)
 		assert.equal(await sumProviderCosts(sessions, 'amazon-bedrock', '2026-10-01', '2026-10-20'), 0)
+		assert.deepEqual(await sumCostsByProvider(sessions, '2026-10-01', '2026-10-20'), {
+			'github-copilot': 1.75,
+			'google-vertex': 10,
+		})
+		const cliJson = execFileSync(process.execPath, [
+			path.join(__dirname, '../.config/zsh/pi-copilot-cost.cjs'),
+			'--by-provider',
+			sessions,
+			'2026-10-01',
+			'2026-10-20',
+		], { encoding: 'utf8' })
+		assert.deepEqual(JSON.parse(cliJson), {
+			'github-copilot': 1.75,
+			'google-vertex': 10,
+		})
 		await assert.rejects(sumProviderCosts(sessions, 'github-copilot', 'not-a-date', '2026-10-20'), /YYYY-MM-DD/)
 		console.log('PASS  Pi provider costs are filtered by provider and local date range')
 	} finally {

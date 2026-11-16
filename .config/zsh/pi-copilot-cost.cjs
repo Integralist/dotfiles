@@ -16,15 +16,12 @@ function parseLocalDate(value, endOfDay = false) {
 	return date
 }
 
-async function sumProviderCosts(sessionsDir, provider, since, until) {
-	if (typeof provider !== 'string' || provider.length === 0) {
-		throw new Error('provider is required')
-	}
+async function sumCostsByProvider(sessionsDir, since, until) {
 	const start = parseLocalDate(since)
 	const end = parseLocalDate(until, true)
 	if (start > end) throw new Error('since date must not be after until date')
 
-	let total = 0
+	const totals = {}
 	async function scan(directory) {
 		const entries = await fs.promises.readdir(directory, { withFileTypes: true })
 		for (const entry of entries) {
@@ -55,7 +52,7 @@ async function sumProviderCosts(sessionsDir, provider, since, until) {
 					throw new Error(`invalid JSON in Pi session ${path.basename(file)} at line ${lineNumber}`)
 				}
 				const message = record?.message
-				if (record?.type !== 'message' || message?.role !== 'assistant' || message?.provider !== provider) continue
+				if (record?.type !== 'message' || message?.role !== 'assistant') continue
 
 				const timestamp = new Date(message.timestamp)
 				if (!Number.isFinite(timestamp.getTime())) {
@@ -67,19 +64,37 @@ async function sumProviderCosts(sessionsDir, provider, since, until) {
 				if (!Number.isFinite(cost)) {
 					throw new Error(`missing numeric cost in Pi session ${path.basename(file)} at line ${lineNumber}`)
 				}
-				total += cost
+				const provider = typeof message.provider === 'string' && message.provider.length > 0
+					? message.provider
+					: 'unknown'
+				totals[provider] = (totals[provider] ?? 0) + cost
 			}
 		}
 	}
 
 	await scan(sessionsDir)
-	return total
+	return totals
+}
+
+async function sumProviderCosts(sessionsDir, provider, since, until) {
+	if (typeof provider !== 'string' || provider.length === 0) {
+		throw new Error('provider is required')
+	}
+	const totals = await sumCostsByProvider(sessionsDir, since, until)
+	return totals[provider] ?? 0
 }
 
 async function main() {
-	const [sessionsDir, since, until] = process.argv.slice(2)
+	const args = process.argv.slice(2)
+	const byProvider = args[0] === '--by-provider'
+	const [sessionsDir, since, until] = byProvider ? args.slice(1) : args
 	if (!sessionsDir || !since || !until) {
-		throw new Error('usage: pi-copilot-cost.cjs <sessions-dir> <since> <until>')
+		throw new Error('usage: pi-copilot-cost.cjs [--by-provider] <sessions-dir> <since> <until>')
+	}
+	if (byProvider) {
+		const totals = await sumCostsByProvider(sessionsDir, since, until)
+		process.stdout.write(`${JSON.stringify(totals)}\n`)
+		return
 	}
 	const total = await sumProviderCosts(sessionsDir, 'github-copilot', since, until)
 	process.stdout.write(`${total}\n`)
@@ -93,3 +108,4 @@ if (require.main === module) {
 }
 
 module.exports = sumProviderCosts
+module.exports.sumCostsByProvider = sumCostsByProvider
