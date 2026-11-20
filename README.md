@@ -76,6 +76,37 @@ brew trust --cask warrensbox/tap/tfswitch 2>/dev/null || true
 brew bundle install
 ```
 
+### Global Node tools
+
+With fnm, global npm packages are installed per Node version. After changing
+the default, run this to recreate the current tool set:
+
+```shell
+fnm exec --using=default npm install -g \
+  @earendil-works/pi-coding-agent@1.6.0 \
+  @github/copilot@1.0.59 \
+  @google/gemini-cli@0.70.0 \
+  @mermaid-js/mermaid-cli@11.16.0 \
+  @poai/mcpm-aider@1.2.0 \
+  @shuv1337/pi-mcp-adapter@2.2.3 \
+  @stoplight/spectral-cli@6.15.0 \
+  alex@11.0.1 \
+  ccusage@20.0.6 \
+  corepack@0.34.0 \
+  eslint_d@14.3.0 \
+  fixjson@1.1.2 \
+  js-beautify@1.15.4 \
+  markdownlint-cli@0.50.0 \
+  npm@12.2.2 \
+  pi-intercom@0.13.0
+```
+
+The `npm` pin sets the npm version for the selected Node installation.
+If you switch to an older Node release, check that it supports this npm
+version or keep the npm version bundled with Node.
+
+In a fresh shell, run `node -v && npm -v && pi --version` to verify the setup.
+
 ## GUIs
 
 - [Android File Transfer](https://www.android.com/filetransfer/): `brew install --cask android-file-transfer`
