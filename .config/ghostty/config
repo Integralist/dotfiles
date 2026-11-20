@@ -34,6 +34,7 @@ keybind = super+shift+arrow_down=scroll_page_lines:1
 keybind = super+shift+arrow_up=scroll_page_lines:-1
 keybind = super+shift+s=write_screen_file:paste
 keybind = super+shift+alt+s=write_screen_file:open
+keybind = super+shift+u=copy_url_to_clipboard
 macos-option-as-alt = right
 notify-on-command-finish = always
 notify-on-command-finish-action = notify
