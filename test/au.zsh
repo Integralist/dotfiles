@@ -14,6 +14,7 @@ source "$FN"
 
 AU_LOG=$WS/calls
 : > "$AU_LOG"
+AU_ENTERPRISE_RETRY_DELAY=0
 date() {
 	case "$1" in
 		+%F) print -r -- 2026-10-20 ;;
@@ -203,6 +204,36 @@ output=$(au)
 	exit 1
 }
 print 'PASS  au breaks down Other AI by Pi provider and remaining CLIs'
+
+# Verify claude-usage retries up to 2 times (3 total attempts) before falling back.
+AU_FAIL=''
+claude-usage() {
+	local n=0
+	[[ -s $WS/enterprise_attempts ]] && n=$(<"$WS/enterprise_attempts")
+	n=$((n + 1))
+	print -r -- "$n" > "$WS/enterprise_attempts"
+	(( n >= 3 )) || return 1
+	print -r -- '$3.50 of $10.00 spent'
+}
+: > "$WS/enterprise_attempts"
+output=$(au)
+[[ $(<"$WS/enterprise_attempts") == 3 && $output == *'Claude Code (Enterprise): $3.50 of $10.00 spent (35%)'* ]] || {
+	print -u2 'FAIL: expected au to retry claude-usage twice and succeed on the 3rd attempt'
+	exit 1
+}
+claude-usage() {
+	local n=0
+	[[ -s $WS/enterprise_attempts ]] && n=$(<"$WS/enterprise_attempts")
+	print -r -- "$((n + 1))" > "$WS/enterprise_attempts"
+	return 1
+}
+: > "$WS/enterprise_attempts"
+output=$(au)
+[[ $(<"$WS/enterprise_attempts") == 3 && $output == *'Claude Code (Enterprise): unavailable; ccusage Claude fallback: $2.00'* ]] || {
+	print -u2 'FAIL: expected au to fall back after 3 failed claude-usage attempts'
+	exit 1
+}
+print 'PASS  au retries claude-usage up to 2 times before falling back'
 
 # Exercise interactive job control and spinner redraws in a pseudo-terminal.
 TTY_SCRIPT=$WS/terminal.zsh

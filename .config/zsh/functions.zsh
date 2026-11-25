@@ -829,8 +829,15 @@ au() {
 	pi_copilot_pid=$!
 	(
 		setopt local_options no_err_exit
-		claude-usage >"$tmpdir/enterprise.out" 2>"$tmpdir/enterprise.err"
-		print -r -- "$?" >"$tmpdir/enterprise.status"
+		local attempt=1 max_attempts=3 rc=1
+		while (( attempt <= max_attempts )); do
+			claude-usage >"$tmpdir/enterprise.out" 2>"$tmpdir/enterprise.err"
+			rc=$?
+			[[ $rc == 0 ]] && break
+			(( attempt < max_attempts )) && sleep "${AU_ENTERPRISE_RETRY_DELAY:-1}"
+			attempt=$((attempt + 1))
+		done
+		print -r -- "$rc" >"$tmpdir/enterprise.status"
 	) &
 	enterprise_pid=$!
 	(
