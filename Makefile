@@ -13,6 +13,17 @@ sync_zsh:  ## Sync the ZSH shell configuration
 	cp $$HOME/.zshrc .zshrc
 	cp -r $$HOME/.config/zsh/ .config/zsh/
 
+.PHONY: setup
+setup: setup_links setup_hunk  ## Symlink dotfiles and install Hunk extensions
+
+.PHONY: setup_hunk
+setup_hunk:  ## Install or update Hunk extensions
+	hunk extension install --yes evantravers/hunk-mark-as-reviewed || hunk extension update hunk-mark-as-reviewed
+
+.PHONY: setup_links
+setup_links:  ## Symlink dotfiles into HOME (backs up existing files)
+	./scripts/link_dotfiles.sh $(CURDIR)
+
 .PHONY: test
 test:  ## Run the shell tests
 	@node ./test/pi_copilot_cost.test.cjs

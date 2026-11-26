@@ -1,27 +1,17 @@
 # dotfiles
 
 > [!TIP]
-> Clone this repo to `~/code/dotfiles`, then symlink the configurations you want
-> to manage.
->
-> If `~/.config` does not exist and you want the whole directory managed, run:
->
-> ```sh
-> ln -s ~/code/dotfiles/.config ~/.config
-> ```
->
-> This also means app-created files in `~/.config` appear in this repo. If
-> `~/.config` already exists, don't run that command: it creates a nested
-> `~/.config/.config` link. Keep the existing directory and link only the app
-> configurations you want to manage. For example, to link Hunk's config file:
+> Run `make setup` (after installing `hunk` via the `Brewfile` below) to
+> symlink all managed dotfiles and app configs individually (any existing files
+> are backed up with a warning showing the backup path) and install Hunk
+> extensions:
 >
 > ```sh
-> mkdir -p ~/.config/hunk
-> ln -s ~/code/dotfiles/.config/hunk/config.toml \
->   ~/.config/hunk/config.toml
+> make setup
 > ```
 >
-> Back up or merge an existing app config before linking it.
+> You can also run either step on its own with `make setup_links` or
+> `make setup_hunk` (`make setup_links` has no prerequisites).
 
 The ultimate source of truth is this dotfile repo, all other published content is likely stale. This includes...
 
