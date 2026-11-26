@@ -8,6 +8,9 @@ sidebar = true
 [vcs]
 watch = true
 
+[extension.mark-as-reviewed]
+hideReviewedFiles = true
+
 [themes.integralist]
 base = "nord"
 background = "#243751"
