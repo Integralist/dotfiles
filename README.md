@@ -107,6 +107,15 @@ version or keep the npm version bundled with Node.
 
 In a fresh shell, run `node -v && npm -v && pi --version` to verify the setup.
 
+To keep `pi` working in directories where `fnm` switches to another Node
+version, symlink the wrapper from this repo into `~/.local/bin` (which already
+exists for other local binaries, so link the file rather than the directory):
+
+```sh
+mkdir -p ~/.local/bin
+ln -s ~/code/dotfiles/.local/bin/pi ~/.local/bin/pi
+```
+
 ## GUIs
 
 - [Android File Transfer](https://www.android.com/filetransfer/): `brew install --cask android-file-transfer`

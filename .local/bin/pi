@@ -1,0 +1,32 @@
+#!/bin/sh
+# Keep `pi` available regardless of the Node version `fnm` activates.
+#
+# Why this exists:
+# - `fnm env --use-on-cd` switches Node per directory, and global npm packages
+#   live inside each Node version. Directories on another Node version (such as
+#   `~/code/hunk/`) fail to find `pi` if it is only in `default`.
+# - Even with `default/bin` on `$PATH`, `default/bin/pi` uses
+#   `#!/usr/bin/env node` and needs Node >= 22.19.0 (`enableCompileCache`), so
+#   it crashes in directories pinned to Node <= 20.
+# - Invoking `default/bin/node` directly runs `pi` on the default Node runtime
+#   while leaving `node`/`npm` on the project's active version for subshells.
+#
+# Requirements:
+# - `~/.local/bin` must be on `$PATH` (set in `.config/zsh/exports.zsh`).
+# - Ordering relative to the `fnm` multishell bin in `$PATH`:
+#   - After `fnm` multishell (current setup): a project's own `pi` wins if
+#     installed for that Node version; otherwise this wrapper is the fallback.
+#   - Before `fnm` multishell: still works; this wrapper always handles `pi`.
+# - An `fnm` `default` alias must exist with `@earendil-works/pi-coding-agent`
+#   installed globally.
+
+set -eu
+
+fnm_default_bin="${FNM_DIR:-$HOME/.local/share/fnm}/aliases/default/bin"
+
+if [ ! -x "$fnm_default_bin/node" ] || [ ! -r "$fnm_default_bin/pi" ]; then
+	printf 'pi wrapper: missing node or pi under %s\n' "$fnm_default_bin" >&2
+	exit 1
+fi
+
+exec "$fnm_default_bin/node" "$fnm_default_bin/pi" "$@"
