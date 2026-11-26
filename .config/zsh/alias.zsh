@@ -156,7 +156,7 @@ alias sizeit="du -ahc" # can also add on a path at the end `sizeit ~/some/path`
 alias sys='sw_vers && echo && system_profiler SPSoftwareDataType && curl -s https://en.wikipedia.org/wiki/MacOS_version_history | grep -Eo "Version $(version=$(sw_vers -productVersion) && echo ${version%.*}): \"[^\"]+\"" | uniq'
 alias tf="TF_LOG=DEBUG FASTLY_DEBUG_MODE=true FASTLY_TF_DISPLAY_SENSITIVE_FIELDS=true terraform"
 alias top='htop'
-alias tree='tree -I node_modules'
+alias tree='tree -I "node_modules|.git"'
 alias uid="uuidgen" # this is a macOS binary (man uuidgen)
 alias updates="softwareupdate --list" # --install --all (or) --install <product name>
 alias v=/opt/homebrew/bin/nvim # brew stable version
